@@ -37,26 +37,32 @@ class registrarForm {
          * Si se utiliza esta técnica es necesario realizar un mezcla entre este arreglo y el específico en cada control:
          * $atributos= array_merge($atributos,$atributosGlobales);
          */
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        
         $atributosGlobales ['campoSeguro'] = 'true';
 
         $_REQUEST ['tiempo'] = time();
         $tiempo = $_REQUEST ['tiempo'];
 
-        // -------------------------------------------------------------------------------------------------
-        $conexion = "inventarios";
+        // ------------------------Declaracion Recursos de Conexion-------------------------------------------------------------------------
+        $conexionSiCapital = "sicapital";
+        $DBSiCapital = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSiCapital);
+        $conexionContractual = "contractual";
+        $DBContractual = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionContractual);
+        $conexionFrameWork = "estructura";
+        $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
 
-        $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
-        
-        $conexionArgo = "estructura";
-
-        $esteRecursoDBArgo = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionArgo);
-
-
+        //--------------------------------------------------------------------------------------------------
         $cadenaSql = $this->miSql->getCadenaSql('polizas');
-
-        $resultado_polizas = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-        $resultado_polizas = $resultado_polizas [0];
+        $resultado_polizas = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
 
         $letras = array(
             '1',
@@ -67,14 +73,12 @@ class registrarForm {
         );
 
         $cadenaSql = $this->miSql->getCadenaSql('textos');
-
-        $resultado_textos = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
+        $resultado_textos = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
+        
         $texto = array(
-            'forma_pago' => $resultado_textos [0] [1],
-            'objeto_contrato' => $resultado_textos [1] [1]
+            'forma_pago' => $resultado_textos [1] [1],
+            'objeto_contrato' => $resultado_textos [0] [1]
         );
-
         $_REQUEST = array_merge($_REQUEST, $texto);
 
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -97,7 +101,7 @@ class registrarForm {
         $atributos ['tipoEtiqueta'] = 'inicio';
         echo $this->miFormulario->formulario($atributos); {
             // ---------------- SECCION: Controles del Formulario -----------------------------------------------
-
+          
             $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
 
             $directorio = $this->miConfigurador->getVariableConfiguracion("host");
@@ -141,23 +145,20 @@ class registrarForm {
                 }
 
                 $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipo_orden");
-                $matrizItems = $esteRecursoDB->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+                $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
                 $atributos ['matrizItems'] = $matrizItems;
-
-                // Utilizar lo siguiente cuando no se pase un arreglo:
-                // $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
-                // $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
                 $tab ++;
                 $atributos = array_merge($atributos, $atributosGlobales);
                 echo $this->miFormulario->campoCuadroLista($atributos);
                 unset($atributos);
 
-
+                
                 // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                 $miSesion = Sesion::singleton();
                 $id_usuario = $miSesion->idUsuario();
                 $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
-                $unidadEjecutora = $esteRecursoDBArgo->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
+                $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
+               
                 
                 $esteCampo = 'unidad_ejecutora';
                 $atributos ['id'] = $esteCampo;
@@ -184,7 +185,7 @@ class registrarForm {
                 $atributos ['maximoTamanno'] = '';
                 $atributos ['anchoEtiqueta'] = 220;
                 $tab ++;
-
+                
                 // Aplica atributos globales al control
                 $atributos = array_merge($atributos, $atributosGlobales);
                 echo $this->miFormulario->campoCuadroTexto($atributos);
@@ -221,9 +222,10 @@ class registrarForm {
                     }
 
                     $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("sede");
-                    $matrizItems = $esteRecursoDB->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+                    $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
                     $atributos ['matrizItems'] = $matrizItems;
-
+                    $sql = $this->miSql->getCadenaSql("dependenciasConsultadas");
+                    echo $sql;
                     // Utilizar lo siguiente cuando no se pase un arreglo:
                     // $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
                     // $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';

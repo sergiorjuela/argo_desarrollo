@@ -31,7 +31,56 @@ class Sql extends \Sql {
 			/**
 			 * Clausulas específicas
 			 */
+                    
+                        case "obtenerInfoUsuario" :
+				$cadenaSql = "SELECT u.dependencia_especifica ||' - '|| u.dependencia as nombre ";
+				$cadenaSql .= "FROM frame_work.argo_usuario u  ";
+				$cadenaSql .= "WHERE u.id_usuario='" . $variable . "' ";
+				break;
 			
+			case "polizas" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " id_poliza,";
+				$cadenaSql .= " nombre_de_la_poliza, ";
+				$cadenaSql .= " descripcion_poliza ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " poliza; ";
+				break;
+                            
+                        case "textos" :
+				$cadenaSql =  " SELECT ";
+				$cadenaSql .= " id_parametro, ";
+                                $cadenaSql .= " descripcion ";
+				$cadenaSql .= " FROM";
+				$cadenaSql .= " parametros ";
+				$cadenaSql .= " WHERE ";
+				$cadenaSql .= " estado_registro=TRUE ";
+				$cadenaSql .= " AND ";
+				$cadenaSql .= " rel_parametro=29;  ";
+				break;  
+                       
+                        case "tipo_orden" :
+				
+				$cadenaSql = " 	SELECT 	id_parametro, ";
+				$cadenaSql .= " descripcion ";
+				$cadenaSql .= " FROM  ";
+				$cadenaSql .= " parametros ";
+				$cadenaSql .= " WHERE  ";
+				$cadenaSql .= " estado_registro=TRUE  ";
+				$cadenaSql .= " AND  ";
+				$cadenaSql .= " rel_parametro=30;  ";
+				
+				break;  
+                            
+                        
+			case "sede" :
+				
+				$cadenaSql = "SELECT DISTINCT  \"ESF_ID_SEDE\", \"ESF_SEDE\" ";
+				$cadenaSql .= " FROM \"SICapital\".\"sedes_SIC\" ";
+				$cadenaSql .= " WHERE   \"ESF_ESTADO\"='A' ";
+				$cadenaSql .= " AND    \"ESF_COD_SEDE\" >  0 ;";
+				break;    
+                            
 			case "buscarUsuario" :
 				$cadenaSql = "SELECT ";
 				$cadenaSql .= "FECHA_CREACION, ";
@@ -151,9 +200,9 @@ class Sql extends \Sql {
 			
 			case "dependenciasConsultadas" :
 				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
-				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
-				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
-				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " FROM \"SICapital\".\"dependencia_SIC\" ad ";
+				$cadenaSql .= " JOIN  \"SICapital\".\"espaciosfisicos_SIC\" ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  \"SICapital\".\"sedes_SIC\" sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
 				$cadenaSql .= " WHERE sa.\"ESF_ID_SEDE\"='" . $variable . "' ";
 				$cadenaSql .= " AND  ad.\"ESF_ESTADO\"='A'";
 				
@@ -325,32 +374,9 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM DEPENDENCIAS ";
 				break;
 			
-			case "polizas" :
-				$cadenaSql = " SELECT ";
-				$cadenaSql .= " id_polizas,";
-				$cadenaSql .= " poliza_1, ";
-				$cadenaSql .= " poliza_2, ";
-				$cadenaSql .= " poliza_3,";
-				$cadenaSql .= " poliza_4 ";
-				$cadenaSql .= " FROM";
-				$cadenaSql .= " polizas ";
-				$cadenaSql .= " WHERE ";
-				$cadenaSql .= " estado=TRUE ";
-				$cadenaSql .= " AND ";
-				$cadenaSql .= " modulo_tipo=2 ";
-				break;
 			
-			case "textos" :
-				$cadenaSql = " SELECT ";
-				$cadenaSql .= " tipo_parrafo,parrafo";
-				$cadenaSql .= " FROM";
-				$cadenaSql .= " parrafos ";
-				$cadenaSql .= " WHERE ";
-				$cadenaSql .= " estado=TRUE ";
-				$cadenaSql .= " AND ";
-				$cadenaSql .= " modulo_parrafo=2  ";
-				$cadenaSql .= " ORDER BY id_parrafos DESC ";
-				break;
+			
+			
 			
 			case "insertarSolicitante" :
 				$cadenaSql = " INSERT INTO solicitante_servicios(";
@@ -548,11 +574,6 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND  CON_IDENTIFICADOR ='" . $variable [0] . "' ";
 				break;
                             
-			case "obtenerInfoUsuario" :
-				$cadenaSql = "SELECT u.dependencia_especifica ||' - '|| u.dependencia as nombre ";
-				$cadenaSql .= "FROM frame_work.argo_usuario u  ";
-				$cadenaSql .= "WHERE u.id_usuario='" . $variable . "' ";
-				break;
 			
 			case "consultarCosntraistaServicios" :
 				$cadenaSql = " SELECT nombre_razon_social, identificacion, direccion,telefono, cargo ";
@@ -588,14 +609,6 @@ class Sql extends \Sql {
 				
 				break;
 			
-			case "tipo_orden" :
-				
-				$cadenaSql = " 	SELECT 	id_tipo , descripcion ";
-				$cadenaSql .= " FROM tipo_contrato ";
-				$cadenaSql .= " WHERE id_tipo =  1 ";
-				$cadenaSql .= "OR   id_tipo =  9  ";
-				
-				break;
 			
 			case "consecutivo_compra" :
 				
