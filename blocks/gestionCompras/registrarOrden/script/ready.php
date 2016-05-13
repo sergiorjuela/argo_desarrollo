@@ -219,6 +219,9 @@ $("#<?php echo $this->campoSeguro('rubro')?>").select2({
 $('#<?php echo $this->campoSeguro('sede')?>').width(300);
 $("#<?php echo $this->campoSeguro('sede')?>").select2();
 
+$('#<?php echo $this->campoSeguro('formaPago')?>').width(200);
+$("#<?php echo $this->campoSeguro('formaPago')?>").select2();
+
 $('#<?php echo $this->campoSeguro('cargosExistentes')?>').width(300);
 $("#<?php echo $this->campoSeguro('cargosExistentes')?>").select2();
 

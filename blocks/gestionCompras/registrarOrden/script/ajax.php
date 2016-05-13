@@ -255,34 +255,19 @@ $urlFinalProveedor = $url . $cadena;
 <script type='text/javascript'>
 
 
-    function datosInfo(elem, request, response) {
-        $.ajax({
-            url: "<?php echo $urlFinal18 ?>",
-            dataType: "json",
-            data: {proveedor: $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val()},
-            success: function (data) {
+    
 
-                if (data[0] != 'null') {
+    //--------------Inicio JavaScript y Ajax Sede y Dependencia Solicitante ---------------------------------------------------------------------------------------------    
 
-                    $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data[0]);
-                    $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val(data[1]);
-                    $("#<?php echo $this->campoSeguro('direccion_proveedor') ?>").val(data[2]);
-                    $("#<?php echo $this->campoSeguro('telefono_proveedor') ?>").val(data[3]);
+    $("#<?php echo $this->campoSeguro('sede') ?>").change(function () {
 
+        if ($("#<?php echo $this->campoSeguro('sede') ?>").val() != '') {
+            consultarDependencia();
+        } else {
+            $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").attr('disabled', '');
+        }
 
-                } else {
-
-
-
-
-
-                }
-
-            }
-
-        });
-    }
-    ;
+    });
 
     function consultarDependencia(elem, request, response) {
         $.ajax({
@@ -319,7 +304,20 @@ $urlFinalProveedor = $url . $cadena;
     }
     ;
 
+    //--------------Fin JavaScript y Ajax Sede y Dependencia Suepervisor --------------------------------------------------------------------------------------------------   
 
+
+    //--------------Inicio JavaScript y Ajax Sede y Dependencia Suepervisor ---------------------------------------------------------------------------------------------    
+    $("#<?php echo $this->campoSeguro('sede_super') ?>").change(function () {
+
+        if ($("#<?php echo $this->campoSeguro('sede_super') ?>").val() != '') {
+            alert("entro");
+            consultarDependenciaSuper();
+        } else {
+            $("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>").attr('disabled', '');
+        }
+
+    });
 
 
     function consultarDependenciaSuper(elem, request, response) {
@@ -328,9 +326,6 @@ $urlFinalProveedor = $url . $cadena;
             dataType: "json",
             data: {valor: $("#<?php echo $this->campoSeguro('sede_super') ?>").val()},
             success: function (data) {
-
-
-
                 if (data[0] != " ") {
 
                     $("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>").html('');
@@ -346,8 +341,6 @@ $urlFinalProveedor = $url . $cadena;
                     $('#<?php echo $this->campoSeguro('dependencia_supervisor') ?>').width(350);
                     $("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>").select2();
 
-
-
                 }
 
 
@@ -356,9 +349,18 @@ $urlFinalProveedor = $url . $cadena;
         });
     }
     ;
+//--------------Fin JavaScript y Ajax Sede y Dependencia Suepervisor --------------------------------------------------------------------------------------------------   
+
+//--------------Inicio JavaScript y Ajax Cargo Suepervisor ---------------------------------------------------------------------------------------------    
 
 
+    $("#<?php echo $this->campoSeguro('nombre_supervisor') ?>").change(function () {
 
+        if ($("#<?php echo $this->campoSeguro('nombre_supervisor') ?>").val() != '') {
+            cargoSuper();
+        }
+
+    });
 
     function cargoSuper(elem, request, response) {
         $.ajax({
@@ -376,8 +378,53 @@ $urlFinalProveedor = $url . $cadena;
     }
     ;
 
+//--------------Fin JavaScript y Ajax Cargo Suepervisor ---------------------------------------------------------------------------------------------    
 
 
+//--------------Inicio JavaScript y Ajax Nombre Ordenador ---------------------------------------------------------------------------------------------    
+
+    $("#<?php echo $this->campoSeguro('asignacionOrdenador') ?>").change(function () {
+
+        if ($("#<?php echo $this->campoSeguro('asignacionOrdenador') ?>").val() != '') {
+            datosOrdenador();
+        } else {
+            $("#<?php echo $this->campoSeguro('nombreOrdenador') ?>").val('');
+        }
+
+
+
+    });
+    function datosOrdenador(elem, request, response) {
+        $.ajax({
+            url: "<?php echo $urlFinal6 ?>",
+            dataType: "json",
+            data: {ordenador: $("#<?php echo $this->campoSeguro('asignacionOrdenador') ?>").val()},
+            success: function (data) {
+
+                if (data[0] != 'null') {
+
+                    $("#<?php echo $this->campoSeguro('nombreOrdenador') ?>").val(data[0]);
+                    $("#<?php echo $this->campoSeguro('id_ordenador') ?>").val(data[1]);
+                    $("#<?php echo $this->campoSeguro('tipo_ordenador') ?>").val(data[2]);
+
+                } else {
+
+
+
+
+
+                }
+
+            }
+
+        });
+    }
+    ;
+//--------------Fin JavaScript y Ajax Nombre Ordenador ---------------------------------------------------------------------------------------------    
+
+
+
+//---------------Inicio JavaScript y Ajax Letras ---------------------------------------------------------------------------------------------------
 
     function valorLetras(elem, request, response) {
         $.ajax({
@@ -431,6 +478,69 @@ $urlFinalProveedor = $url . $cadena;
         });
     }
     ;
+
+//---------------Fin JavaScript y Ajax Letras --------------selec_proveedor-------------------------------------------------------------------------------------
+
+//---------------Inicio JavaScript y Ajax Proveedor ---------------------------------------------------------------------------------------------------
+    $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").keyup(function () {
+        $('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val($('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val());
+    });
+
+
+    $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").autocomplete({
+        minChars: 3,
+        serviceUrl: '<?php echo $urlFinalProveedor; ?>',
+        onSelect: function (suggestion) {
+
+            $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val(suggestion.data);
+
+            datosInfo();
+        }
+
+    });
+
+    function datosInfo(elem, request, response) {
+        $.ajax({
+            url: "<?php echo $urlFinal18 ?>",
+            dataType: "json",
+            data: {proveedor: $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val()},
+            success: function (data) {
+
+                if (data[0] != 'null') {
+                    
+                    $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val(data[0]);
+                    $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data[1]);
+                    $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data[2]);
+                    $("#<?php echo $this->campoSeguro('direccion_proveedor') ?>").val(data[3]);
+                    $("#<?php echo $this->campoSeguro('correo_proveedor') ?>").val(data[4]);
+                    $("#<?php echo $this->campoSeguro('telefono_proveedor') ?>").val(data[5]);
+                    $("#<?php echo $this->campoSeguro('pais') ?>").val(data[6]);
+                    $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(data[7]);
+                    $("#<?php echo $this->campoSeguro('nombre_contratista') ?>").val(data[8]);
+                    $("#<?php echo $this->campoSeguro('tipo_documento') ?>").val(data[9]);
+                    $("#<?php echo $this->campoSeguro('identifcacion_contratista') ?>").val(data[10]);
+                    $("#<?php echo $this->campoSeguro('registro_mercantil') ?>").val(data[11]);
+                    
+
+
+                } else {
+
+
+
+
+
+                }
+
+            }
+
+        });
+    }
+    ;
+
+//---------------Fin JavaScript y Ajax Proveedor ---------------------------------------------------------------------------------------------------
+
+
+
 
 
 
@@ -491,79 +601,7 @@ $urlFinalProveedor = $url . $cadena;
     }
     ;
 
-
-    function datosOrdenador(elem, request, response) {
-        $.ajax({
-            url: "<?php echo $urlFinal6 ?>",
-            dataType: "json",
-            data: {ordenador: $("#<?php echo $this->campoSeguro('asignacionOrdenador') ?>").val()},
-            success: function (data) {
-
-                if (data[0] != 'null') {
-
-                    $("#<?php echo $this->campoSeguro('nombreOrdenador') ?>").val(data[0]);
-                    $("#<?php echo $this->campoSeguro('id_ordenador') ?>").val(data[1]);
-                    $("#<?php echo $this->campoSeguro('tipo_ordenador') ?>").val(data[2]);
-
-                } else {
-
-
-
-
-
-                }
-
-            }
-
-        });
-    }
-    ;
-
-
-
-
-
-
-
-
     $(function () {
-
-
-
-        $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").keyup(function () {
-
-
-            $('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val($('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val().toUpperCase());
-
-
-        });
-
-
-
-
-
-
-
-
-
-        $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").autocomplete({
-            minChars: 3,
-            serviceUrl: '<?php echo $urlFinalProveedor; ?>',
-            onSelect: function (suggestion) {
-
-                $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val(suggestion.data);
-
-                datosInfo();
-
-            }
-
-        });
-
-
-
-
-
-
 
 
         $("#<?php echo $this->campoSeguro('vigencia_contratista') ?>").change(function () {
@@ -590,11 +628,6 @@ $urlFinalProveedor = $url . $cadena;
 
         });
 
-
-
-
-
-
         $("#<?php echo $this->campoSeguro('unidad_ejecutora') ?>").change(function () {
 
             if ($("#<?php echo $this->campoSeguro('unidad_ejecutora') ?>").val() != '') {
@@ -620,11 +653,6 @@ $urlFinalProveedor = $url . $cadena;
 
 
         });
-
-
-
-
-
 
         $("#<?php echo $this->campoSeguro('registro') ?>").change(function () {
 
@@ -655,69 +683,13 @@ $urlFinalProveedor = $url . $cadena;
 
         });
 
-
-
-        $("#<?php echo $this->campoSeguro('asignacionOrdenador') ?>").change(function () {
-
-            if ($("#<?php echo $this->campoSeguro('asignacionOrdenador') ?>").val() != '') {
-                datosOrdenador();
-            } else {
-                $("#<?php echo $this->campoSeguro('nombreOrdenador') ?>").val('');
-            }
-
-
-
-        });
-
-
-
-        $("#<?php echo $this->campoSeguro('sede') ?>").change(function () {
-
-            if ($("#<?php echo $this->campoSeguro('sede') ?>").val() != '') {
-                consultarDependencia();
-            } else {
-                $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").attr('disabled', '');
-            }
-
-        });
-
-
-
-
-        $("#<?php echo $this->campoSeguro('sede_super') ?>").change(function () {
-
-            if ($("#<?php echo $this->campoSeguro('sede_super') ?>").val() != '') {
-                consultarDependenciaSuper();
-            } else {
-                $("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>").attr('disabled', '');
-            }
-
-        });
-
-
-        $("#<?php echo $this->campoSeguro('nombre_supervisor') ?>").change(function () {
-
-            if ($("#<?php echo $this->campoSeguro('nombre_supervisor') ?>").val() != '') {
-                cargoSuper();
-            }
-
-        });
-
-
-
-
-
-
-
-
-
         $("#<?php echo $this->campoSeguro('cargoJefeSeccion') ?>").change(function () {
 
 
             if ($("#<?php echo $this->campoSeguro('cargoJefeSeccion') ?>").val() != '') {
                 datosCargo();
             } else {
-                $("#<?php echo $this->campoSeguro('nombreJefeSeccion') ?>").val('');
+                $Inicio("#<?php echo $this->campoSeguro('nombreJefeSeccion') ?>").val('');
             }
 
 
@@ -735,11 +707,6 @@ $urlFinalProveedor = $url . $cadena;
 
 
         });
-
-
-
-
-
 
     });
 

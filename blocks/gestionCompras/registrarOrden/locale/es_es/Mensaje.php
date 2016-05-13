@@ -85,8 +85,12 @@ $this->idioma ["direccion_proveedorTitulo"] = "Ingrese Dirección del Proveedor"
 $this->idioma ["telefono_proveedor"] = "Teléfono Fijo :";
 $this->idioma ["telefono_proveedorTitulo"] = "Ingrese Teléfono Fijo del Proveedor";
 
-$this->idioma ["nombre_contratista"] = "Nombre Contratista :";
-$this->idioma ["nombre_contratistaTitulo"] = "Ingrese Nombre del Contratista";
+
+$this->idioma ["correo_proveedor"] = "Correo :";
+$this->idioma ["correo_proveedorTitulo"] = "Ingrese el correo";
+
+$this->idioma ["nombre_contratista"] = "Nombre Representante :";
+$this->idioma ["nombre_contratistaTitulo"] = "Ingrese Nombre del Representante";
 
 
 $this->idioma ["identifcacion_contratista"] = "Identificación Contratista:";
@@ -103,6 +107,9 @@ $this->idioma ["cargosExistentesTitulo"] = "Seleccione un Cargo";
 
 $this->idioma ["objeto_contrato"] = "";
 $this->idioma ["objeto_contratoTitulo"] = "Modifique o Ingrese Objeto General del Contrato";
+
+$this->idioma ["formaPago"] = "Forma de Pago: ";
+$this->idioma ["formapagoTitulo"] = "Seleccione la forma de pago  del Contrato";
 
 $this->idioma ["duracion"] = "Duración (en Dias) :";
 $this->idioma ["duracionTitulo"] = "Ingrese Duración Dependencia";

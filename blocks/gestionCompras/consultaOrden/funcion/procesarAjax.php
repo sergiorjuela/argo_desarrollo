@@ -1,5 +1,5 @@
 <?php
-$conexion = "inventarios";
+$conexion = "contractual";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 class EnLetras {
 	var $Void = "";
@@ -383,6 +383,8 @@ if ($_REQUEST ['funcion'] == 'consultarCargoSuper') {
 	
 	echo $resultado;
 }
+
+//------------------------obtener Numero de Ordenes a partit de la calsificacion tipo de orden -------------------------
 if ($_REQUEST ['funcion'] == 'consultarNumeroOrden') {
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_numero_orden', $_REQUEST ['valor'] );
@@ -411,14 +413,12 @@ if ($_REQUEST ['funcion'] == 'consultaProveedor') {
 	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
 }
 
+//------------------------obtener Dependencias de acuerdo al identificador de la sede -------------------------
 if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciasConsultadas', $_REQUEST ['valor'] );
-	
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
 	$resultado = json_encode ( $resultado );
-	
 	echo $resultado;
 }
 

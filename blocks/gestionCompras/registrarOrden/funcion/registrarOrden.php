@@ -32,22 +32,23 @@ class RegistradorOrden {
         $SQLs = [];
         $fechaActual = date('Y-m-d');
 
-        $conexion = "inventarios";
+        $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
-
-        if ($_REQUEST ['objeto_contrato'] == '') {
-
-            redireccion::redireccionar('notextos');
-            exit();
-        }
-
-        if ($_REQUEST ['forma_pago'] == '') {
-
-            redireccion::redireccionar('notextos');
-            exit();
-        }
-
-
+        
+        
+        
+        $arregloContratista =  array($_REQUEST ['nombre_supervisor']);
+        $arregloContratoGeneral =  array($_REQUEST ['nombre_supervisor']);
+        $arregloOrden =  array($_REQUEST ['nombre_supervisor']);
+        $arregloPoliza = array($_REQUEST ['nombre_supervisor']); 
+        
+        
+        
+        
+        
+        
+        
+        
         $cadenaIdSupervisor = $this->miSql->getCadenaSql('obtenerIdSupervisor');
         $id_supervisor = $esteRecursoDB->ejecutarAcceso($cadenaIdSupervisor, "busqueda");
         if (is_null($id_supervisor [0] [0])) {

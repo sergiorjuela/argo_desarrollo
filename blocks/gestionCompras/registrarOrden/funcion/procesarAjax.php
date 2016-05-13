@@ -1,7 +1,7 @@
 <?php
 use inventarios\gestionCompras\registrarOrdenServicios\Sql;
 
-$conexion = "inventarios";
+$conexion = "contractual";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 class EnLetras {
 	var $Void = "";
@@ -272,16 +272,6 @@ if ($_REQUEST ['funcion'] == 'letrasNumeros') {
 	echo $Letras;
 }
 
-if ($_REQUEST ['funcion'] == 'SeleccionOrdenador') {
-	
-	$cadenaSql = $this->sql->getCadenaSql ( 'informacion_ordenador', $_REQUEST ['ordenador'] );
-	
-	
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	$resultado = json_encode ( $resultadoItems [0] );
-	
-	echo $resultado;
-}
 
 if ($_REQUEST ['funcion'] == 'SeleccionCargo') {
 	
@@ -368,43 +358,47 @@ if ($_REQUEST ['funcion'] == 'consultarContratistas') {
 	echo $resultado;
 }
 
+//-------------------------Obtener Dependencias de acuerdo a la Sede---------------------------------
 if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciasConsultadas', $_REQUEST ['valor'] );
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
 	$resultado = json_encode ( $resultado );
-	
 	echo $resultado;
 }
-
+//-------------------------Obtener Cargo de Supervisor-----------------------------------------------
 if ($_REQUEST ['funcion'] == 'consultarCargoSuper') {
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'cargoSuper', $_REQUEST ['valor'] );
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
 	$resultado = json_encode ( $resultado [0] );
 	
 	echo $resultado;
 }
+//-------------------------Obtener Informacion  del Ordenador----------------------------------------------
+if ($_REQUEST ['funcion'] == 'SeleccionOrdenador') {
+	
+	$cadenaSql = $this->sql->getCadenaSql ( 'informacion_ordenador', $_REQUEST ['ordenador'] );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultado = json_encode ( $resultadoItems [0] );
+	echo $resultado;
+}
 
+//-------------------------Obtener Informacion del Proveedor ----------------------------------------------------------
 if ($_REQUEST ['funcion'] == 'SeleccionProveedor') {
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'informacion_proveedor', $_REQUEST ['proveedor'] );
 	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
 	$resultado = json_encode ( $resultadoItems [0] );
-	
 	echo $resultado;
 }
 
+//-------------------------Obtener Proveedor ----------------------------------------------------------
 if ($_REQUEST ['funcion'] == 'consultaProveedor') {
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_Proveedores', $_GET ['query'] );
-	
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
-	foreach ( $resultadoItems as $key => $values ) {
+  	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+        foreach ( $resultadoItems as $key => $values ) {
 		$keys = array (
 				'value',
 				'data' 

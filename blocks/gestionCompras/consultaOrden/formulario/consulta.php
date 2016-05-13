@@ -38,8 +38,8 @@ class registrarForm {
 		$_REQUEST ['tiempo'] = time ();
 		//-----Esto es una Actualizacion del repositorio 
 		// -------------------------------------------------------------------------------------------------
-		$conexion = "inventarios";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$conexionContractual = "contractual";
+                $DBContractual = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionContractual);
 		
 		// Limpia Items Tabla temporal
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -94,7 +94,7 @@ class registrarForm {
 		}
 		
 		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "tipo_orden" );
-		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+		$matrizItems = $DBContractual->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 		$atributos ['matrizItems'] = $matrizItems;
 		
 		// Utilizar lo siguiente cuando no se pase un arreglo:
@@ -227,7 +227,7 @@ class registrarForm {
 		
 		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "sede" );
 		
-		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+		$matrizItems = $DBContractual->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 		$atributos ['matrizItems'] = $matrizItems;
 		
 		// Utilizar lo siguiente cuando no se pase un arreglo:
