@@ -83,17 +83,10 @@ class registrarForm {
 		$_REQUEST ['tiempo'] = time ();
 		
 		$atributosGlobales ['campoSeguro'] = 'true';
-		
+               	
 		// -------------------------------------------------------------------------------------------------
-		$conexion = "inventarios";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		$cadenaSql = $this->miSql->getCadenaSql ( 'polizas' );
-		$resultado_polizas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		$resultado_polizas = $resultado_polizas [0];
 		
-		// Limpia Items Tabla temporal
-		
-		// $cadenaSql = $this->miSql->getCadenaSql ( 'limpiar_tabla_items' );
+				// $cadenaSql = $this->miSql->getCadenaSql ( 'limpiar_tabla_items' );
 		// $resultado_secuancia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -154,7 +147,7 @@ class registrarForm {
 					
 					
 					
-					$mensaje = "SE REGISTRO " . $_REQUEST ['mensaje_titulo'];
+					$mensaje = "Resultado: " . $_REQUEST ['mensaje_titulo'];
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';

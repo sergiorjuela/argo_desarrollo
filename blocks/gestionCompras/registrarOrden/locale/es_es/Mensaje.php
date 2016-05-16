@@ -16,7 +16,7 @@ $this->idioma ["sede_super"] = "Sede : ";
 $this->idioma ["sede_superTitulo"] = "Seleccione Sede";
 
 $this->idioma ["botonDocumento"] = "Generar Documento PDF";
-$this->idioma ["clausula_presupuesto"] = "Sujeto a disponibilidad presupuestal(Hasta Agotar Presupuesto): ";
+$this->idioma ["clausula_presupuesto"] = "Sujeto a registro presupuestal (Hasta Agotar Presupuesto): ";
 // --
 $this->idioma ["vigencia_registro"] = "Vigencia Registro : ";
 $this->idioma ["vigencia_registroTitulo"] = "Seleccione Vigencia Registro";
@@ -93,8 +93,10 @@ $this->idioma ["nombre_contratista"] = "Nombre Representante :";
 $this->idioma ["nombre_contratistaTitulo"] = "Ingrese Nombre del Representante";
 
 
-$this->idioma ["identifcacion_contratista"] = "Identificación Contratista:";
-$this->idioma ["identifcacion_contratistaTitulo"] = "Ingrese Identificación del Contratista";
+
+
+$this->idioma ["identifcacion_contratista"] = "Id. Representante:";
+$this->idioma ["identifcacion_contratistaTitulo"] = "Ingrese Identificación del Representante";
 
 
 $this->idioma ["cargo_contratista"] = "Cargo :";
@@ -113,6 +115,9 @@ $this->idioma ["formapagoTitulo"] = "Seleccione la forma de pago  del Contrato";
 
 $this->idioma ["duracion"] = "Duración (en Dias) :";
 $this->idioma ["duracionTitulo"] = "Ingrese Duración Dependencia";
+
+$this->idioma ["plazo_ejecucion"] = "Plazo de Ejecución (N° dias):";
+$this->idioma ["plazo_ejecucion"] = "Ingrese el Plazo de Ejecución (N° dias)";
 
 $this->idioma ["fecha_inicio_pago"] = "Fecha de Inicio :";
 $this->idioma ["fecha_inicio_pagoTitulo"] = "Seleccione Fecha de Inicio";

@@ -311,8 +311,7 @@ $urlFinalProveedor = $url . $cadena;
     $("#<?php echo $this->campoSeguro('sede_super') ?>").change(function () {
 
         if ($("#<?php echo $this->campoSeguro('sede_super') ?>").val() != '') {
-            alert("entro");
-            consultarDependenciaSuper();
+             consultarDependenciaSuper();
         } else {
             $("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>").attr('disabled', '');
         }

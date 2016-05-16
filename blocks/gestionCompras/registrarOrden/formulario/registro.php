@@ -887,42 +887,7 @@ class registrarForm {
                     echo $this->miFormulario->campoTextArea($atributos);
                     unset($atributos);
                     
-                    // ---------------- CONTROL: Select Forma de Pago --------------------------------------------------------
-                    $esteCampo = 'formaPago';
-                    $atributos ['nombre'] = $esteCampo;
-                    $atributos ['id'] = $esteCampo;
-                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                    $atributos ["etiquetaObligatorio"] = false;
-                    $atributos ['tab'] = $tab ++;
-                    $atributos ['anchoEtiqueta'] = 170;
-                    $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
-                    $atributos ['evento'] = '';
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['seleccion'] = $_REQUEST [$esteCampo];
-                    } else {
-                        $atributos ['seleccion'] = - 1;
-                    }
-                    $atributos ['deshabilitado'] = false;
-                    $atributos ['columnas'] = 2;
-                    $atributos ['tamanno'] = 1;
-                    $atributos ['estilo'] = "jqueryui";
-                    $atributos ['validar'] = "";
-                    $atributos ['limitar'] = true;
-                    $atributos ['anchoCaja'] = 52;
-                    $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("forma_pago");
-                    $matrizItems = array(
-                        array(
-                            0,
-                            ' '
-                        )
-                    );
-                    $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
-                    $atributos ['matrizItems'] = $matrizItems;
-                    $atributos = array_merge($atributos, $atributosGlobales);
-                    echo $this->miFormulario->campoCuadroLista($atributos);
-                    unset($atributos);
-                    // ---------------- FIN CONTROL: Select Forma de Pago --------------------------------------------------------
-                 
+                   
 
                     $esteCampo = "AgrupacionPoliza";
                     $atributos ['id'] = $esteCampo;
@@ -950,7 +915,7 @@ class registrarForm {
                             if (isset($_REQUEST [$esteCampo])) {
                                 $atributos ['valor'] = $_REQUEST [$esteCampo];
                             } else {
-                                $atributos ['valor'] = 'poliza' . $i;
+                                $atributos ['valor'] = 'TRUE';
                             }
 
                             $atributos ['deshabilitado'] = false;
@@ -981,7 +946,7 @@ class registrarForm {
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
                     $atributos ["etiquetaObligatorio"] = false;
-                    $atributos ['columnas'] = 4;
+                    $atributos ['columnas'] = 3;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
@@ -1014,7 +979,7 @@ class registrarForm {
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
                     $atributos ["etiquetaObligatorio"] = false;
-                    $atributos ['columnas'] = 4;
+                    $atributos ['columnas'] = 3;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
@@ -1047,7 +1012,38 @@ class registrarForm {
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
                     $atributos ["etiquetaObligatorio"] = false;
-                    $atributos ['columnas'] = 4;
+                    $atributos ['columnas'] = 3;
+                    $atributos ['dobleLinea'] = 0;
+                    $atributos ['tabIndex'] = $tab;
+                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+                    $atributos ['validar'] = 'required, minSize[1],maxSize[10],custom[onlyNumberSp]';
+
+                    if (isset($_REQUEST [$esteCampo])) {
+                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    } else {
+                        $atributos ['valor'] = '';
+                    }
+                    $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+                    $atributos ['deshabilitado'] = false;
+                    $atributos ['tamanno'] = 11;
+                    $atributos ['maximoTamanno'] = '';
+                    $atributos ['anchoEtiqueta'] = 160;
+                    $tab ++;
+
+                    // Aplica atributos globales al control
+                    $atributos = array_merge($atributos, $atributosGlobales);
+                    echo $this->miFormulario->campoCuadroTexto($atributos);
+                    unset($atributos);
+                    // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+                    $esteCampo = 'plazo_ejecucion';
+                    $atributos ['id'] = $esteCampo;
+                    $atributos ['nombre'] = $esteCampo;
+                    $atributos ['tipo'] = 'text';
+                    $atributos ['estilo'] = 'jqueryui';
+                    $atributos ['marco'] = true;
+                    $atributos ['estiloMarco'] = '';
+                    $atributos ["etiquetaObligatorio"] = false;
+                    $atributos ['columnas'] = 3;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
@@ -1070,6 +1066,44 @@ class registrarForm {
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
 
+                    
+                     // ---------------- CONTROL: Select Forma de Pago --------------------------------------------------------
+                    $esteCampo = 'formaPago';
+                    $atributos ['nombre'] = $esteCampo;
+                    $atributos ['id'] = $esteCampo;
+                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+                    $atributos ["etiquetaObligatorio"] = false;
+                    $atributos ['tab'] = $tab ++;
+                    $atributos ['anchoEtiqueta'] = 170;
+                    $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+                    $atributos ['evento'] = '';
+                    if (isset($_REQUEST [$esteCampo])) {
+                        $atributos ['seleccion'] = $_REQUEST [$esteCampo];
+                    } else {
+                        $atributos ['seleccion'] = - 1;
+                    }
+                    $atributos ['deshabilitado'] = false;
+                    $atributos ['columnas'] = 3;
+                    $atributos ['tamanno'] = 1;
+                    $atributos ['estilo'] = "jqueryui";
+                    $atributos ['validar'] = "";
+                    $atributos ['limitar'] = true;
+                    $atributos ['anchoCaja'] = 52;
+                    $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("forma_pago");
+                    $matrizItems = array(
+                        array(
+                            0,
+                            ' '
+                        )
+                    );
+                    $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+                    $atributos ['matrizItems'] = $matrizItems;
+                    $atributos = array_merge($atributos, $atributosGlobales);
+                    echo $this->miFormulario->campoCuadroLista($atributos);
+                    unset($atributos);
+                    // ---------------- FIN CONTROL: Select Forma de Pago --------------------------------------------------------
+                 
+                    
                     //---------Campo de Seleccion Clausula Presupuestal-------------------------------
                     $esteCampo = 'clausula_presupuesto';
                     $atributos ['id'] = $esteCampo;
@@ -1078,7 +1112,8 @@ class registrarForm {
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = true;
                     $atributos ["etiquetaObligatorio"] = true;
-                    $atributos ['columnas'] = 4;
+                    $atributos ['anchoEtiqueta'] = 70;
+                    $atributos ['columnas'] =3;
                     $atributos ['dobleLinea'] = 1;
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
@@ -1110,38 +1145,7 @@ class registrarForm {
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
 
-                    // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-                    $esteCampo = 'forma_pago';
-                    $atributos ['id'] = $esteCampo;
-                    $atributos ['nombre'] = $esteCampo;
-                    $atributos ['tipo'] = 'text';
-                    $atributos ['estilo'] = 'jqueryui';
-                    $atributos ['marco'] = true;
-                    $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
-                    $atributos ['columnas'] = 95;
-                    $atributos ['filas'] = 3;
-                    $atributos ['dobleLinea'] = 0;
-                    $atributos ['tabIndex'] = $tab;
-                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                    $atributos ['validar'] = 'required, minSize[1]';
-                    $atributos ['deshabilitado'] = false;
-                    $atributos ['tamanno'] = 20;
-                    $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 220;
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
-                    } else {
-                        $atributos ['valor'] = '';
-                    }
-                    $tab ++;
-
-                    // Aplica atributos globales al control
-                    $atributos = array_merge($atributos, $atributosGlobales);
-                    echo $this->miFormulario->campoTextArea($atributos);
-                    unset($atributos);
-
-
+                   
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                 }
 

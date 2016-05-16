@@ -28,200 +28,110 @@ class RegistradorOrden {
     }
 
     function procesarFormulario() {
-
+        
         $SQLs = [];
         $fechaActual = date('Y-m-d');
 
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
-        
-        
-        
-        $arregloContratista =  array($_REQUEST ['nombre_supervisor']);
-        $arregloContratoGeneral =  array($_REQUEST ['nombre_supervisor']);
-        $arregloOrden =  array($_REQUEST ['nombre_supervisor']);
-        $arregloPoliza = array($_REQUEST ['nombre_supervisor']); 
-        
-        
-        
-        
-        
-        
-        
-        
-        $cadenaIdSupervisor = $this->miSql->getCadenaSql('obtenerIdSupervisor');
-        $id_supervisor = $esteRecursoDB->ejecutarAcceso($cadenaIdSupervisor, "busqueda");
-        if (is_null($id_supervisor [0] [0])) {
 
-            $id_supervisor = 1;
+        if ($_REQUEST ['tipo_persona'] == 'N') {
+            $tipo_persona = 1;
         } else {
-
-            $id_supervisor = $id_supervisor [0] [0] + 1;
+            $tipo_persona = 2;
         }
-
-        $datosSupervisor = array(
-            $_REQUEST ['nombre_supervisor'],
-            $_REQUEST ['cargo_supervisor'],
-            $_REQUEST ['dependencia_supervisor'],
-            $_REQUEST ['sede_super'],
-            $id_supervisor
-        );
-
-        // Registro Supervisor
-        $SQLs[0] = $this->miSql->getCadenaSql('insertarSupervisor', $datosSupervisor);
-   
-        $cadenaIdProveedor = $this->miSql->getCadenaSql('obtenerIdProveedor');
-        $id_Proveedor = $esteRecursoDB->ejecutarAcceso($cadenaIdProveedor, "busqueda");
-        if (is_null($id_Proveedor [0] [0])) {
-
-            $id_Proveedor = 1;
+        if ($_REQUEST ['tipo_documento'] == 'CC') {
+            $tipo_documento = 184;
         } else {
-
-            $id_Proveedor = $id_Proveedor [0] [0] + 1;
+            $tipo_documento = 186;
         }
-
-        
-        $datosProveedor = array(
-            $_REQUEST ['nombre_razon_proveedor'],
-            $_REQUEST ['identifcacion_proveedor'],
-            $_REQUEST ['direccion_proveedor'],
-            $_REQUEST ['telefono_proveedor'],
-            $id_Proveedor
-        );
-
-        // Registro Proveedor
-        $SQLs[1] = $this->miSql->getCadenaSql('insertarProveedor', $datosProveedor);
-
-        $cadenaIdContratista = $this->miSql->getCadenaSql('obtenerIdContratista');
-        $id_Contratista = $esteRecursoDB->ejecutarAcceso($cadenaIdContratista, "busqueda");
-        if (is_null($id_Contratista [0] [0])) {
-
-            $id_Contratista = 1;
+        if ($_REQUEST ['pais'] == '') {
+            $nacionalidad = 'Colombia';
         } else {
-
-            $id_Contratista = $id_Contratista [0] [0] + 1;
+            $nacionalidad = $_REQUEST ['pais'];
         }
-        
-        $datosContratista = array(
-            $_REQUEST ['nombre_contratista'],
-            $_REQUEST ['identifcacion_contratista'],
-            $_REQUEST ['cargo_contratista'],
-            $id_Contratista
-        );
+        $datosContratista = array('razonSocial' => $_REQUEST ['nombre_razon_proveedor'],
+            'direcccion' => $_REQUEST ['direccion_proveedor'],
+            'nombreRepresentante' => $_REQUEST ['nombre_contratista'],
+            'identificacionRepresentante' => $_REQUEST ['identifcacion_contratista'],
+            'cargo_contratista' => $_REQUEST ['cargo_contratista'],
+            'nit' => $_REQUEST ['identifcacion_proveedor'],
+            'telefono' => $_REQUEST ['telefono_proveedor'],
+            'correo' => $_REQUEST ['correo_proveedor'],
+            'digito_verificacion' => $_REQUEST ['digito_verificacion'],
+            'nacionalidad' => $nacionalidad,
+            'fecha' => date('Y-m-d'),
+            'tipo_persona' => $tipo_persona,
+            'tipo_documento' => $tipo_documento,
+            'registro_mercantil' => $_REQUEST ['registro_mercantil']);
+
+        $unidad_ejecutura = strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD');
+        if ($unidad_ejecutura == false) {
+            $unidad_ejecutura = 209;
+        } else {
+            $unidad_ejecutura = 208;
+        }
+        if (isset($_POST['clausula_presupuesto'])) {
+            $clausula_presupuesto = $_POST['clausula_presupuesto'];
+        } else {
+            $clausula_presupuesto = 'false';
+        }
+        $datosContratoGeneral = array('vigencia' => (int) date('Y'),
+            'id_orden_contrato' => 1,
+            'tipo_contrato' => 98,
+            'unidad_ejecutura' => $unidad_ejecutura,
+            'objeto_contrato' => $_REQUEST ['objeto_contrato'],
+            'fecha_inicio' => $_REQUEST ['fecha_inicio_pago'],
+            'fecha_fin' => $_REQUEST ['fecha_final_pago'],
+            'plazo_ejecucion' => $_REQUEST ['plazo_ejecucion'],
+            'clausula_presupuesto' => $clausula_presupuesto,
+            'ordenador_gasto' => $_REQUEST ['asignacionOrdenador'],
+            'supervisor' => $_REQUEST ['nombre_supervisor'],
+            'forma_pago' => $_REQUEST ['formaPago']);
+
+        $datosOrden = array('tipo_orden' => $_REQUEST ['tipo_orden'],
+            'numero_contrato' => "currval('numero_unico_contrato_seq')",
+            'vigencia' => (int) date('Y'),
+            'fecha' => date('Y-m-d'),
+            'proveedor' => $_REQUEST ['identifcacion_proveedor']);
+
+        $PolizasOrden = array('numero_contrato' => "curval('id_orden_seq')",
+            'poliza' => "curval('numero_unico_contrato_seq')",
+            'numero_contrato' => "currval('numero_unico_contrato_seq')");
+
+        $polizas = [];
+        for ($i = 0; $i < count($_POST); $i++) {
+            if (isset($_POST["poliza" . "$i"])) {
+                array_push($polizas, $i);
+            }
+        }
 
         // Registro Contratista
-        $SQLs[2] = $this->miSql->getCadenaSql('insertarContratista', $datosContratista);
-
-       
-        if (strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD') === false) {
-            $_REQUEST ['unidad_ejecutora'] = 1;
-        } else {
-            $_REQUEST ['unidad_ejecutora'] = 2;
+        $SQLs[0] = $this->miSql->getCadenaSql('insertarContratista', $datosContratista);
+        // Registro Contrato General
+        $SQLs[1] = $this->miSql->getCadenaSql('insertarContratoGeneral', $datosContratoGeneral);
+        // Registro Orden
+        $SQLs[2] = $this->miSql->getCadenaSql('insertarOrden', $datosOrden);
+        // Registro de Polizas
+    
+        for ($i = 0; $i < count($polizas); $i++) {
+            $datosPoliza = array('poliza' => $polizas[$i],
+                'orden' => "currval('id_orden_seq')");
+            $sqlPoliza = $this->miSql->getCadenaSql('insertarPoliza', $datosPoliza);
+            array_push($SQLs, $sqlPoliza);
         }
 
-        switch ($_REQUEST ['tipo_orden']) {
-            case '1' :
-                $nombre = "ORDEN DE COMPRA";
-                $cadenaSql = $this->miSql->getCadenaSql('consecutivo_compra', array(
-                    "vigencia" => date('Y'),
-                    "unidad_ejecutora" => $_REQUEST ['unidad_ejecutora']
-                ));
-
-                $consecutivo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-                $consecutivo_servicio = 'NULL';
-                if (is_null($consecutivo [0] [0])) {
-
-                    $consecutivo_compra = 1;
-                } else {
-
-                    $consecutivo_compra = $consecutivo [0] [0] + 1;
-                }
-
-                break;
-
-            case '9' :
-
-                $nombre = "ORDEN DE SERVICIO";
-
-                $cadenaSql = $this->miSql->getCadenaSql('consecutivo_servicios', array(
-                    "vigencia" => date('Y'),
-                    "unidad_ejecutora" => $_REQUEST ['unidad_ejecutora']
-                ));
-
-                $consecutivo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-                $consecutivo_compra = 'NULL';
-                if (is_null($consecutivo [0] [0])) {
-
-                    $consecutivo_servicio = 1;
-                } else {
-
-                    $consecutivo_servicio = $consecutivo [0] [0] + 1;
-                }
-
-                break;
-        }
-
-        //Validacion campos nulos de fecha de inicio y finalizacion
-        if (isset($_REQUEST ['fecha_inicio_pago']) && $_REQUEST ['fecha_inicio_pago'] != "") {
-            $fecha_inicio_pago = "'" . $_REQUEST ['fecha_inicio_pago'] . "'";
-        } else {
-            $fecha_inicio_pago = 'NULL';
-        }
-        if (isset($_REQUEST ['fecha_final_pago']) && $_REQUEST ['fecha_final_pago'] != "") {
-            $fecha_final_pago = "'" . $_REQUEST ['fecha_final_pago'] . "'";
-        } else {
-            $fecha_final_pago = 'NULL';
-        }
-        if (isset($_POST ['clausula_presupuesto']) && $_POST ['clausula_presupuesto'] != "") {
-            $clausula_presupuesto = $_POST ['clausula_presupuesto'];
-        } else {
-            $clausula_presupuesto = 'FALSE';
-        }
-
-        $datosOrden = array(
-            "tipo_orden" => $_REQUEST ['tipo_orden'],
-            "vigencia" => date('Y'),
-            "consecutivo_servicio" => $consecutivo_servicio,
-            "consecutivo_compras" => $consecutivo_compra,
-            "fecha_registro" => date('Y-m-d'),
-            "dependencia_solicitante" => $_REQUEST ['dependencia_solicitante'],
-            "sede_solicitante" => $_REQUEST ['sede'],
-            "objeto_contrato" => $_REQUEST ['objeto_contrato'],
-            "poliza1" => isset($_REQUEST ['polizaA']),
-            "poliza2" => isset($_REQUEST ['polizaB']),
-            "poliza3" => isset($_REQUEST ['polizaC']),
-            "poliza4" => isset($_REQUEST ['polizaD']),
-            "duracion_pago" => $_REQUEST ['duracion'],
-            "fecha_inicio_pago" => $fecha_inicio_pago,
-            "fecha_final_pago" => $fecha_final_pago,
-            "forma_pago" => $_REQUEST ['forma_pago'],
-            "id_contratista" => $id_Contratista,
-            "id_supervisor" => $id_supervisor,
-            "id_ordenador_encargado" => $_REQUEST ['id_ordenador'],
-            "tipo_ordenador" => $_REQUEST ['tipo_ordenador'],
-            "id_proveedor" => $id_Proveedor,
-            "unidad_ejecutora" => $_REQUEST['unidad_ejecutora'],
-            "clausula_presupuesto" => $clausula_presupuesto,
-        );
-
-        $SQLs[3] = $this->miSql->getCadenaSql('insertarOrden', $datosOrden);
-        $consecutivos_orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosOrden, 'insertarOrden');
         $trans_Registro_Orden = $esteRecursoDB->transaccion($SQLs);
+        $sqlNumeroContrato = $this->miSql->getCadenaSql('obtenerInfoOrden');
+        $resultado = $esteRecursoDB->ejecutarAcceso($sqlNumeroContrato, "busqueda");
+        $identificadorOrden = $resultado[0];
         if ($trans_Registro_Orden != false) {
-            if($consecutivo_compra!='NULL'){
-                $consecutivo=$consecutivo_compra;
-            }else{
-                $consecutivo=$consecutivo_servicio;
-            }            
-            $datos = "NÚMERO DE " . $nombre . " # " . $consecutivo . "<br> Y VIGENCIA " . date('Y');
+            $datos = "Contrato de Orden de Compra Almacenado Con Éxito, Numero: " . $identificadorOrden['numero_contrato'] . " con . VIGENCIA " . date('Y');
             $this->miConfigurador->setVariableConfiguracion("cache", true);
-            redireccion::redireccionar('inserto', array(
-                $datos,
-                $consecutivo
-            ));
+            redireccion::redireccionar('inserto', array( $datos ));
             exit();
         } else {
+            $datos = "No se pudo llevar a cabo el registro del contrato";
             redireccion::redireccionar('noInserto', $datos);
             exit();
         }

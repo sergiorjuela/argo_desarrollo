@@ -460,7 +460,7 @@ $urlFinaliva = $url . $cadenaiva;
                     $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_orden') ?>");
                     $.each(data, function (indice, valor) {
 
-                        $("<option value='" + data[ indice ].id_orden + "'>" + data[ indice ].valor + "</option>").appendTo("#<?php echo $this->campoSeguro('numero_orden') ?>");
+                        $("<option value='" + data[ indice ].value + "'>" + data[ indice ].orden + "</option>").appendTo("#<?php echo $this->campoSeguro('numero_orden') ?>");
 
                     });
                     $("#<?php echo $this->campoSeguro('numero_orden') ?>").removeAttr('disabled');
@@ -977,7 +977,7 @@ $urlFinaliva = $url . $cadenaiva;
         $("#<?php echo $this->campoSeguro('nitproveedor') ?>").keyup(function () {
 
 
-            $('#<?php echo $this->campoSeguro('nitproveedor') ?>').val($('#<?php echo $this->campoSeguro('nitproveedor') ?>').val().toUpperCase());
+            $('#<?php echo $this->campoSeguro('nitproveedor') ?>').val($('#<?php echo $this->campoSeguro('nitproveedor') ?>').val());
 
 
         });

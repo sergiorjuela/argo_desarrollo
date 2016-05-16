@@ -153,6 +153,74 @@ class Sql extends \Sql {
                 $cadenaSql .= " WHERE nit= $variable ";
 
                 break;
+            
+            case "insertarContratista" :
+                $cadenaSql = " INSERT INTO contratista(";
+                $cadenaSql .= " nombre_razon_social,direccion, telefono,digito_verificacion, ";
+                $cadenaSql .= " correo,identificacion,tipo_naturaleza,tipo_documento,fecha_registro,nacionalidad) ";
+                $cadenaSql .= " VALUES (";
+                $cadenaSql .= "'".$variable ['razonSocial'] . "',";
+                $cadenaSql .= "'" . $variable ['direcccion'] . "',";
+                $cadenaSql .= $variable ['telefono'] . ",";
+                $cadenaSql .= $variable ['digito_verificacion'] . ",";
+                $cadenaSql .= "'" . $variable ['correo'] . "',";
+                $cadenaSql .= "'" . $variable ['nit'] . "',";
+                $cadenaSql .=  $variable ['tipo_persona'] . ",";
+                $cadenaSql .=  $variable ['tipo_documento'] . ",";
+                $cadenaSql .= "'" . $variable ['fecha'] . "',";
+                $cadenaSql .= "'" . $variable ['nacionalidad'] . "');";
+             
+                break;
+            
+            case "insertarContratoGeneral" :
+                $cadenaSql = " INSERT INTO contrato_general(";
+                $cadenaSql .= " vigencia,id_orden_contrato, tipo_contrato,unidad_ejecutora, ";
+                $cadenaSql .= " objeto_contrato,fecha_inicio,fecha_final,plazo_ejecucion, ";
+                $cadenaSql .= " forma_pago,ordenador_gasto,supervisor,clausula_registro_presupuestal) ";
+                $cadenaSql .= " VALUES (";
+                $cadenaSql .= $variable ['vigencia'] . ",";
+                $cadenaSql .= $variable ['id_orden_contrato'] . ",";
+                $cadenaSql .= $variable ['tipo_contrato'] . ",";
+                $cadenaSql .= $variable ['unidad_ejecutura'] . ",";
+                $cadenaSql .= "'" . $variable ['objeto_contrato'] . "',";
+                $cadenaSql .= "'" . $variable ['fecha_inicio'] . "',";
+                $cadenaSql .= "'".$variable ['fecha_fin'] . "',";
+                $cadenaSql .= $variable ['plazo_ejecucion'] . ",";
+                $cadenaSql .= $variable ['forma_pago'] . ",";
+                $cadenaSql .= "'" . $variable ['ordenador_gasto'] . "',";
+                $cadenaSql .= "'" . $variable ['supervisor'] . "',";
+                $cadenaSql .= $variable ['clausula_presupuesto'] . ");";
+             
+                break;
+            case "insertarOrden" :
+                $cadenaSql = " INSERT INTO orden(";
+                $cadenaSql .= " tipo_orden,numero_contrato, vigencia,fecha_registro, ";
+                $cadenaSql .= " proveedor) ";
+                $cadenaSql .= " VALUES (";
+                $cadenaSql .= $variable ['tipo_orden'] . ",";
+                $cadenaSql .= $variable ['numero_contrato'] . ",";
+                $cadenaSql .= $variable ['vigencia'] . ",";
+                $cadenaSql .= "'".$variable ['fecha'] . "',";
+                $cadenaSql .= "'" . $variable ['proveedor'] ."');";
+             
+                break;
+            
+            case "insertarPoliza" :
+                $cadenaSql = " INSERT INTO orden_poliza(";
+                $cadenaSql .= " orden, poliza) ";
+                $cadenaSql .= " VALUES (";
+                $cadenaSql .= $variable ['orden'] . ",";
+                $cadenaSql .= $variable ['poliza'] . ");";
+                
+                break;
+
+            case "obtenerInfoOrden" :
+                $cadenaSql = " SELECT MAX(numero_contrato) as numero_contrato";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= "contrato_general; ";
+              
+                
+                break;
 
 
 //-----------------------------------------------------------SQLs SIN DDEFINIR USO-----------------------------------------------------------------------------------
@@ -443,18 +511,7 @@ class Sql extends \Sql {
 
                 break;
 
-            case "insertarContratista" :
-                $cadenaSql = " INSERT INTO contratistas_adquisiones(";
-                $cadenaSql .= " id_contratista_adq,nombres, identificacion,cargo,fecha_registro) ";
-                $cadenaSql .= " VALUES (";
-                $cadenaSql .= $variable [3] . ",";
-                $cadenaSql .= "'" . $variable [0] . "',";
-                $cadenaSql .= "'" . $variable [1] . "',";
-                $cadenaSql .= "'" . $variable [2] . "',";
-                $cadenaSql .= "'" . date('Y-m-d') . "') ";
-                $cadenaSql .= "RETURNING  id_contratista_adq; ";
-
-                break;
+          
 
             case "insertarEncargado" :
                 $cadenaSql = " INSERT INTO arka_inventarios.encargado(";
