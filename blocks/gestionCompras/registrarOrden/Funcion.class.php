@@ -78,17 +78,14 @@ class Funcion {
 			) );
 			
 			exit ();
-		} elseif (isset ( $_REQUEST ["opcion"] )) {
+		} 
+//		
+		 elseif (isset ( $_REQUEST ["botonContinuar"] )) {
 			
-			switch ($_REQUEST ['opcion']) {
-				case 'registrarOrden' :
-					$this->regitrarOrden ();
-					break;
-				
-				case 'documento' :
-					$this->documento ();
-					break;
-			}
+			redireccion::redireccionar ( "ConsultarOrdenes" );
+			
+			exit ();
+                        
 			// Realizar una validación específica para los campos de este formulario:
 			// $validacion = $this->verificarCampos ();
 		}

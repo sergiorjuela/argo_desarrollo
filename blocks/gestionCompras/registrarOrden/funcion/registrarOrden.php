@@ -29,6 +29,16 @@ class RegistradorOrden {
 
     function procesarFormulario() {
         
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        
         $SQLs = [];
         $fechaActual = date('Y-m-d');
 
@@ -76,19 +86,29 @@ class RegistradorOrden {
         } else {
             $clausula_presupuesto = 'false';
         }
+        if (isset($_REQUEST ['fecha_inicio_pago']) && $_REQUEST ['fecha_inicio_pago'] != '') {
+            $fecha_inicio = "'".$_REQUEST ['fecha_inicio_pago']."'";
+        } else {
+            $fecha_inicio = 'null';
+        }
+        if (isset($_REQUEST ['fecha_final_pago']) && $_REQUEST ['fecha_final_pago'] != '' ) {
+            $fecha_fin = "'".$_REQUEST ['fecha_final_pago']."'";
+        } else {
+            $fecha_fin = 'null';
+        }
         $datosContratoGeneral = array('vigencia' => (int) date('Y'),
             'id_orden_contrato' => 1,
             'tipo_contrato' => 98,
             'unidad_ejecutura' => $unidad_ejecutura,
             'objeto_contrato' => $_REQUEST ['objeto_contrato'],
-            'fecha_inicio' => $_REQUEST ['fecha_inicio_pago'],
-            'fecha_fin' => $_REQUEST ['fecha_final_pago'],
+            'fecha_inicio' =>$fecha_inicio,
+            'fecha_fin' => $fecha_fin,
             'plazo_ejecucion' => $_REQUEST ['plazo_ejecucion'],
             'clausula_presupuesto' => $clausula_presupuesto,
             'ordenador_gasto' => $_REQUEST ['asignacionOrdenador'],
             'supervisor' => $_REQUEST ['nombre_supervisor'],
             'forma_pago' => $_REQUEST ['formaPago']);
-
+       
         $datosOrden = array('tipo_orden' => $_REQUEST ['tipo_orden'],
             'numero_contrato' => "currval('numero_unico_contrato_seq')",
             'vigencia' => (int) date('Y'),
@@ -113,22 +133,28 @@ class RegistradorOrden {
         // Registro Orden
         $SQLs[2] = $this->miSql->getCadenaSql('insertarOrden', $datosOrden);
         // Registro de Polizas
-    
+        
         for ($i = 0; $i < count($polizas); $i++) {
             $datosPoliza = array('poliza' => $polizas[$i],
                 'orden' => "currval('id_orden_seq')");
             $sqlPoliza = $this->miSql->getCadenaSql('insertarPoliza', $datosPoliza);
             array_push($SQLs, $sqlPoliza);
         }
+        
+       
+        
 
         $trans_Registro_Orden = $esteRecursoDB->transaccion($SQLs);
         $sqlNumeroContrato = $this->miSql->getCadenaSql('obtenerInfoOrden');
         $resultado = $esteRecursoDB->ejecutarAcceso($sqlNumeroContrato, "busqueda");
         $identificadorOrden = $resultado[0];
+
         if ($trans_Registro_Orden != false) {
-            $datos = "Contrato de Orden de Compra Almacenado Con Éxito, Numero: " . $identificadorOrden['numero_contrato'] . " con . VIGENCIA " . date('Y');
+            $datos = array('mensaje'=>"Contrato de Orden de Compra Almacenado Con Éxito, Numero: ".
+                $identificadorOrden['numero_contrato'] . ". VIGENCIA " . date('Y'),
+                'id_orden'=> $identificadorOrden['numero_contrato'] );
             $this->miConfigurador->setVariableConfiguracion("cache", true);
-            redireccion::redireccionar('inserto', array( $datos ));
+            redireccion::redireccionar('inserto',  $datos);
             exit();
         } else {
             $datos = "No se pudo llevar a cabo el registro del contrato";

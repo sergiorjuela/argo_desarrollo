@@ -86,13 +86,20 @@ $this->idioma ["telefono_proveedor"] = "Teléfono Fijo :";
 $this->idioma ["telefono_proveedorTitulo"] = "Ingrese Teléfono Fijo del Proveedor";
 
 
-$this->idioma ["correo_proveedor"] = "Correo :";
+$this->idioma ["correo_proveedor"] = "Correo Electronico:";
 $this->idioma ["correo_proveedorTitulo"] = "Ingrese el correo";
 
 $this->idioma ["nombre_contratista"] = "Nombre Representante :";
 $this->idioma ["nombre_contratistaTitulo"] = "Ingrese Nombre del Representante";
 
+$this->idioma ["digito_verificacion"] = "Digito de Verificación:";
+$this->idioma ["digito_verificacionTitulo"] = "Ingrese el Digito de Verificación";
 
+$this->idioma ["tipo_persona"] = "Tipo de Pesona: ";
+$this->idioma ["tipo_personaTitulo"] = "Ingrese la Naturaleza";
+
+$this->idioma ["tipo_documento"] = "Tipo Documento :";
+$this->idioma ["tipo_documentoTitulo"] = "Ingrese el Tipo Documento del Representante";
 
 
 $this->idioma ["identifcacion_contratista"] = "Id. Representante:";

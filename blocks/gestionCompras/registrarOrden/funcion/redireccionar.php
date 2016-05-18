@@ -17,9 +17,9 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=confirma";
-				$variable .= "&mensaje_titulo=" . $valor [0];
-				
-                                break;
+				$variable .= "&mensaje_titulo=".$valor ['mensaje'];
+				$variable .= "&id_orden=". $valor ['id_orden'];
+				break;
 			
 			case "noInserto" :
 				$variable = "pagina=" . $miPaginaActual;
@@ -48,6 +48,13 @@ class redireccion {
 				$variable .= "&mensaje_titulo=" . $valor [1];
 				$variable .= "&registroOrden=true";
 				
+				break;
+			
+			case "ConsultarOrdenes" :
+				
+				$variable ="pagina=ConsultaOrden";
+				$variable.="&opcion=mostrar";
+                                
 				break;
 		}
 		

@@ -183,8 +183,8 @@ class Sql extends \Sql {
                 $cadenaSql .= $variable ['tipo_contrato'] . ",";
                 $cadenaSql .= $variable ['unidad_ejecutura'] . ",";
                 $cadenaSql .= "'" . $variable ['objeto_contrato'] . "',";
-                $cadenaSql .= "'" . $variable ['fecha_inicio'] . "',";
-                $cadenaSql .= "'".$variable ['fecha_fin'] . "',";
+                $cadenaSql .= $variable ['fecha_inicio'] . ",";
+                $cadenaSql .= $variable ['fecha_fin'] . ",";
                 $cadenaSql .= $variable ['plazo_ejecucion'] . ",";
                 $cadenaSql .= $variable ['forma_pago'] . ",";
                 $cadenaSql .= "'" . $variable ['ordenador_gasto'] . "',";

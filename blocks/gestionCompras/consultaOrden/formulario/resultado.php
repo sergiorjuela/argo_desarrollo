@@ -25,15 +25,7 @@ class registrarForm {
     }
 
     function miForm() {
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
+        
         // Rescatar los datos de este bloque
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
         $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
@@ -194,7 +186,9 @@ class registrarForm {
             for ($i = 0; $i < count($Orden); $i ++) {
                 $variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
                 $variable .= "&opcion=modificarOrden";
-                $variable .= "&id_orden=" . $Orden [$i] ['id_orden'];
+                $variable .= "&id_orden=" . $Orden [$i] ['numero_contrato'];
+                $variable .= "&vigencia=" . $Orden [$i] ['vigencia'];
+                $variable .= "&id_contratista=" . $Orden [$i] ['proveedor'];
                 $variable .= "&arreglo=" . $arreglo;
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
                 $variable .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "  VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];

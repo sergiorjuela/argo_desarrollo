@@ -28,8 +28,12 @@
 
 $('#<?php echo $this->campoSeguro('dependencia_solicitante')?>').width(350);
 $("#<?php echo $this->campoSeguro('dependencia_solicitante')?>").select2();                 
+
 $('#<?php echo $this->campoSeguro('sede')?>').width(350);
 $("#<?php echo $this->campoSeguro('sede')?>").select2();                 
+
+$('#<?php echo $this->campoSeguro('formaPago')?>').width(150);
+$("#<?php echo $this->campoSeguro('formaPago')?>").select2();                 
 
 $('#<?php echo $this->campoSeguro('sede_super')?>').width(300);
 $("#<?php echo $this->campoSeguro('sede_super')?>").select2();

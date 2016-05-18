@@ -40,7 +40,7 @@
 			onClose: function() { 
 		 	    if ($('input#<?php echo $this->campoSeguro('fecha_inicio_pago')?>').val()!='')
                     {
-                        $('#<?php echo $this->campoSeguro('fecha_final_pago')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all   validate[required]");
+                        $('#<?php echo $this->campoSeguro('fecha_final_pago')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all  ");
                 }else {
                         $('#<?php echo $this->campoSeguro('fecha_final_pago')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all ");
                     }
@@ -219,7 +219,7 @@ $("#<?php echo $this->campoSeguro('rubro')?>").select2({
 $('#<?php echo $this->campoSeguro('sede')?>').width(300);
 $("#<?php echo $this->campoSeguro('sede')?>").select2();
 
-$('#<?php echo $this->campoSeguro('formaPago')?>').width(200);
+$('#<?php echo $this->campoSeguro('formaPago')?>').width(150);
 $("#<?php echo $this->campoSeguro('formaPago')?>").select2();
 
 $('#<?php echo $this->campoSeguro('cargosExistentes')?>').width(300);

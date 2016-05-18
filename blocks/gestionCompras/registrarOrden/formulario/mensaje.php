@@ -144,8 +144,8 @@ class registrarForm {
 				
 				
 				if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'confirma') {
-					
-					
+                                    
+                                   
 					
 					$mensaje = "Resultado: " . $_REQUEST ['mensaje_titulo'];
 					
@@ -202,6 +202,7 @@ class registrarForm {
 					
 					$this->botonCargarElemento ( $tab, 2 );
 					$this->botonRegresar ( $tab, 2 );
+                                       
 					
 					echo $this->miFormulario->division ( 'fin' );
 				}
@@ -298,6 +299,7 @@ class registrarForm {
 			$valorCodificado .= "&id_orden=" . $_REQUEST ['id_orden'];
 			$valorCodificado .= "&mensajeTitulo=" . $_REQUEST ['mensaje_titulo'];
 		}
+                
 		
 		/**
 		 * }

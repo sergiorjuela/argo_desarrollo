@@ -302,6 +302,15 @@ $this->idioma ["jefeSeccion"] = "Jefe de Sección";
 
 $this->idioma ["contratista"] = "Contratista";
 
+$this->idioma ["formaPago"] = "Forma de Pago: ";
+$this->idioma ["formaPagoTitulo"] = "Seleccione la forma de pago.";
+
+$this->idioma ["plazo_ejecucion"] = "Ingrese el Plazo de Ejecución (N° dias): ";
+$this->idioma ["plazo_ejecucionTitulo"] = "Ingrese el Plazo de Ejecución (N° dias).";
+
+$this->idioma ["correo_proveedor"] = "Correo:  ";
+$this->idioma ["correo_proveedorTitulo"] = "Ingrese el correo del proveedor.";
+
 $this->idioma ["ordenadorGasto"] = "Ordenador Gasto";
 
 $this->idioma ["botonAceptar"] = "Actualizar Orden";
