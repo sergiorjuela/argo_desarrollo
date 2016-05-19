@@ -34,6 +34,86 @@ class Sql extends \Sql {
             /**
              * Clausulas específicas
              */
+            
+            
+             case "vigencias_solicitudes" :
+
+                $cadenaSql = "SELECT DISTINCT vigencia , vigencia valor  ";
+                $cadenaSql .= " FROM \"SICapital\".solicitud_necesidad  ";
+                $cadenaSql .= "WHERE estado_registro=TRUE; ";
+
+                break;
+            
+             case "ConsultarNumeroNecesidades" :
+
+                $cadenaSql = "SELECT numero_solicitud id , numero_solicitud descripcion ";
+                $cadenaSql .= "FROM \"SICapital\".solicitud_necesidad  ";
+                $cadenaSql .= "WHERE estado_registro=TRUE and vigencia=$variable;";
+
+                break;
+            
+             case "consultarSolicitud" :
+                $cadenaSql = "SELECT DISTINCT ";
+                $cadenaSql .= "id_sol_necesidad, sl.vigencia, sl.numero_solicitud, sl.fecha_solicitud,"
+                        . "sl.valor_contratacion, sl.unidad_tiempo_ejecucion ||' '||pr.descripcion duracion, sl.objeto_contrato ";
+                $cadenaSql .= "FROM \"SICapital\".solicitud_necesidad sl ";
+                $cadenaSql .= "JOIN parametros pr ON pr.id_parametro = sl.ejecucion   ";
+                $cadenaSql .= "WHERE sl.estado_registro= TRUE ";
+
+
+                if ($variable ['vigencia'] != '') {
+                    $cadenaSql .= " AND sl.vigencia = '" . $variable ['vigencia'] . "' ";
+                }
+                if ($variable ['numero_solicitud'] != '') {
+                    $cadenaSql .= " AND sl.numero_solicitud = '" . $variable ['numero_solicitud'] . "' ";
+                }
+
+                if ($variable ['fecha_inicial'] != '') {
+                    $cadenaSql .= " AND sl.fecha_solicitud BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
+                    $cadenaSql .= " AND  CAST ( '" . $variable ['fecha_final'] . "' AS DATE)  ";
+                }
+
+                $cadenaSql .= "  ; ";
+
+                break;
+                
+                case "dependenciasConsultadas" :
+                $cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+                $cadenaSql .= " FROM \"SICapital\".\"dependencia_SIC\" ad ";
+                $cadenaSql .= " JOIN  \"SICapital\".\"espaciosfisicos_SIC\" ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+                $cadenaSql .= " JOIN  \"SICapital\".\"sedes_SIC\" sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+                $cadenaSql .= " WHERE ad.\"ESF_ESTADO\"='A'";
+
+                break;
+                
+             case "ordenadorGasto" :
+
+                $cadenaSql = " 	SELECT f.\"identificacion\",p.descripcion ||' ('|| f.\"nombre_cp\" ||')' as ordenador";
+                $cadenaSql .= " FROM \"SICapital\".\"funcionario\" f ,\"SICapital\".\"funcionario_tipo_ordenador\"  o, parametros p ";
+                $cadenaSql .= " WHERE o.\"estado\"=True and f.\"identificacion\"= o.\"funcionario\" and p.id_parametro= o.\"tipo_ordenador\";";
+
+                break;
+            
+            case "Consultar_Registro_Presupuestales" :
+                $cadenaSql = "SELECT id_registro_pres, numero_registro, valor_registro,"
+                    . "disponibilidad_presupuestal, fecha_rgs_pr  ";
+                $cadenaSql .= "FROM \"SICapital\".registro_presupuestal rp  ";
+                $cadenaSql .= "JOIN \"SICapital\".disponibilidad_presupuestal dp ON dp.id_disponibilidad=rp.disponibilidad_presupuestal  ";
+                $cadenaSql .= "JOIN \"SICapital\".solicitud_necesidad sl ON sl.id_sol_necesidad=dp.solicitud_necesidad  ";
+                $cadenaSql .= "WHERE rp.estado_registro= TRUE ";
+                $cadenaSql .= " AND sl.id_sol_necesidad='" . $variable . "' ;";
+                break;
+            
+            case "Consultar_Disponibilidad" :
+                $cadenaSql = "SELECT DISTINCT ";
+                $cadenaSql .= " *  ";
+                $cadenaSql .= "FROM \"SICapital\".disponibilidad_presupuestal  ";
+                $cadenaSql .= "WHERE estado_registro=TRUE ";
+                $cadenaSql .= " AND solicitud_necesidad='" . $variable . "' ;";
+                break;
+            
+            
+//------------------------------SQLs Sin Uso            
             case "buscarUsuario" :
                 $cadenaSql = "SELECT ";
                 $cadenaSql .= "FECHA_CREACION, ";
@@ -149,21 +229,9 @@ class Sql extends \Sql {
             /**
              * Clausulas Del Caso Uso.
              */
-            case "vigencias_solicitudes" :
+           
 
-                $cadenaSql = "SELECT DISTINCT vigencia , vigencia valor  ";
-                $cadenaSql .= " FROM contractual.solicitud_necesidad  ";
-                $cadenaSql .= "WHERE estado_registro=TRUE; ";
-
-                break;
-
-            case "ConsultarNumeroNecesidades" :
-
-                $cadenaSql = "SELECT DISTINCT numero_solicitud id , numero_solicitud descripcion   ";
-                $cadenaSql .= " FROM solicitud_necesidad  ";
-                $cadenaSql .= "WHERE vigencia='" . $variable . "';";
-
-                break;
+         
 
             case "tipo_identificacion" :
 
@@ -358,31 +426,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "WHERE rl.descripcion ='tipo_control'; ";
                 break;
 
-            case "consultarSolicitud" :
-                $cadenaSql = "SELECT DISTINCT ";
-                $cadenaSql .= "id_sol_necesidad, sl.vigencia, sl.numero_solicitud, sl.fecha_solicitud,
-				               sl.valor_contratacion, sl.unidad_tiempo_ejecucion ||' '||pr.descripcion duracion, sl.objeto_contrato ";
-                $cadenaSql .= "FROM solicitud_necesidad sl ";
-                $cadenaSql .= "JOIN parametros pr ON pr.id_parametro = sl.ejecucion   ";
-                $cadenaSql .= "LEFT JOIN contrato cn ON cn.solicitud_necesidad= id_sol_necesidad     ";
-                $cadenaSql .= "WHERE sl.estado_registro= TRUE ";
-
-
-                if ($variable ['vigencia'] != '') {
-                    $cadenaSql .= " AND sl.vigencia = '" . $variable ['vigencia'] . "' ";
-                }
-                if ($variable ['numero_solicitud'] != '') {
-                    $cadenaSql .= " AND sl.numero_solicitud = '" . $variable ['numero_solicitud'] . "' ";
-                }
-
-                if ($variable ['fecha_inicial'] != '') {
-                    $cadenaSql .= " AND sl.fecha_solicitud BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
-                    $cadenaSql .= " AND  CAST ( '" . $variable ['fecha_final'] . "' AS DATE)  ";
-                }
-
-                $cadenaSql .= " AND cn.solicitud_necesidad IS NULL ; ";
-
-                break;
+           
 
             case "Consultar_Solicitud_Particular" :
                 $cadenaSql = "SELECT DISTINCT ";
@@ -393,23 +437,9 @@ class Sql extends \Sql {
 
                 break;
 
-            case "Consultar_Disponibilidad" :
-                $cadenaSql = "SELECT DISTINCT ";
-                $cadenaSql .= " *  ";
-                $cadenaSql .= "FROM disponibilidad_presupuestal  ";
-                $cadenaSql .= "WHERE estado_registro=TRUE ";
-                $cadenaSql .= " AND solicitud_necesidad='" . $variable . "' ;";
-                break;
+            
 
-            case "Consultar_Registro_Presupuestales" :
-                $cadenaSql = "SELECT id_registro_pres, numero_registro, valor_registro,
-									disponibilidad_presupuestal, fecha_rgs_pr  ";
-                $cadenaSql .= "FROM registro_presupuestal rp  ";
-                $cadenaSql .= "JOIN disponibilidad_presupuestal dp ON dp.id_disponibilidad=rp.disponibilidad_presupuestal  ";
-                $cadenaSql .= "JOIN solicitud_necesidad sl ON sl.id_sol_necesidad=dp.solicitud_necesidad  ";
-                $cadenaSql .= "WHERE rp.estado_registro= TRUE ";
-                $cadenaSql .= " AND sl.id_sol_necesidad='" . $variable . "' ;";
-                break;
+            
 
             case "Consultar_Contratista" :
                 $cadenaSql = " SELECT cns.*, ib.tipo_cuenta,ib.nombre_banco,ib.numero_cuenta,ib.id_inf_bancaria,oc.id_orden_contr, sl.funcionario_solicitante  ";

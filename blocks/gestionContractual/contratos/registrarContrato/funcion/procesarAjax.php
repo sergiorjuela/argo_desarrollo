@@ -5,13 +5,15 @@ use contratos\registrarContrato\Sql;
 $conexion = "contractual";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
+//---------------Obtener Numeros de Solicitud de Necesidad
 if ($_REQUEST ['funcion'] == 'NumeroSolicitud') {
 
     $cadenaSql = $this->sql->getCadenaSql('ConsultarNumeroNecesidades', $_REQUEST ['valor']);
-
     $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
     echo json_encode($resultadoItems);
 }
+
+
 if ($_REQUEST ['funcion'] == 'AlmacenarDatos') {
 
     $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");

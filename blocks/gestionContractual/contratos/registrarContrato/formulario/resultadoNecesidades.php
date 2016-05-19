@@ -107,6 +107,7 @@ class registrarForm {
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarSolicitud', $arreglo );
 			
 			$solicitudes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+                       
 			
 		}
 		
@@ -150,10 +151,9 @@ class registrarForm {
 			echo "<thead>
                              <tr>
                                 <th>Vigencia</th>
-                    			<th>Fecha Solicitud</th>            
-            					<th>Número de Solicitud</th>
+                                <th>Fecha Solicitud</th>            
+            			<th>Número de Solicitud</th>
                                 <th>Objeto</th>
-                                 <th>Duración</th>
                                 <th>($) Valor</th>
 			        			<th>Registrar<br>Contrato</th>
                              </tr>
@@ -178,9 +178,8 @@ class registrarForm {
                     <td><center>" . $valor ['vigencia'] . "</center></td>
                     <td><center>" . $valor ['fecha_solicitud'] . "</center></td>		
                     <td><center>" . $valor ['numero_solicitud'] . "</center></td>
-                   	<td><center>" . $valor ['objeto_contrato'] . "</center></td>
+                    <td><center>" . $valor ['objeto_contrato'] . "</center></td>
                     <td><center>" . $valor ['valor_contratacion'] . "</center></td>
-                    <td><center>" . $valor ['duracion'] . "</center></td>
                     <td><center>
                     	<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/contrato.png' width='15px'>

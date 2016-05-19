@@ -102,8 +102,6 @@
 					$atributos ['seleccion'] = - 1;
 				}
 				
-				// $atributos ['matrizItems'] = $matrizItems;
-				
 				// Utilizar lo siguiente cuando no se pase un arreglo:
 				$atributos ['baseDatos'] = 'contractual';
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "vigencias_solicitudes" );
@@ -145,7 +143,7 @@
 				
 				// Utilizar lo siguiente cuando no se pase un arreglo:
 				$atributos ['baseDatos'] = 'contractual';
-				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "vigencias_solicitudes" );
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "ConsultarNumeroNecesidades" );
 				$tab ++;
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				echo $this->miFormulario->campoCuadroLista ( $atributos );

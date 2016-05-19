@@ -37,7 +37,7 @@ class registrarForm {
 		$atributosGlobales ['campoSeguro'] = 'true';
 		
 		// -------------------------------------------------------------------------------------------------
-		$conexion = "inventarios";
+		$conexion = "contractual";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		// Limpia Items Tabla temporal

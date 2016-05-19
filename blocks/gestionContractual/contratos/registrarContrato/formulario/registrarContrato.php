@@ -191,36 +191,7 @@ class registrarForm {
                 echo "<h3>Datos Personales</h3>
 							<section>";
                 {
-                    $esteCampo = 'numero_contrato';
-                    $atributos ['id'] = $esteCampo;
-                    $atributos ['nombre'] = $esteCampo;
-                    $atributos ['tipo'] = 'text';
-                    $atributos ['estilo'] = 'jqueryui';
-                    $atributos ['marco'] = true;
-                    $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
-                    $atributos ['columnas'] = 1;
-                    $atributos ['dobleLinea'] = 0;
-                    $atributos ['tabIndex'] = $tab;
-                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                    $atributos ['validar'] = 'required,custom[onlyNumberSp]';
-
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
-                    } else {
-                        $atributos ['valor'] = '';
-                    }
-                    $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
-                    $atributos ['deshabilitado'] = false;
-                    $atributos ['tamanno'] = 8;
-                    $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 213;
-                    $tab ++;
-
-                    // Aplica atributos globales al control
-                    $atributos = array_merge($atributos, $atributosGlobales);
-                    echo $this->miFormulario->campoCuadroTexto($atributos);
-                    unset($atributos);
+                    
 
                     // ------------------Division para los botones-------------------------
                     $atributos ["id"] = "division";
@@ -418,7 +389,7 @@ class registrarForm {
                         }
                         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                         $atributos ['deshabilitado'] = false;
-                        $atributos ['tamanno'] = 30;
+                        $atributos ['tamanno'] = 20;
                         $atributos ['maximoTamanno'] = '';
                         $atributos ['anchoEtiqueta'] = 213;
                         $tab ++;
@@ -1611,7 +1582,7 @@ class registrarForm {
                         // $atributos ['matrizItems'] = $matrizItems;
                         // Utilizar lo siguiente cuando no se pase un arreglo:
                         $atributos ['baseDatos'] = 'contractual';
-                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("consulta_dependencia");
+                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("dependenciasConsultadas");
                         $tab ++;
                         $atributos = array_merge($atributos, $atributosGlobales);
                         echo $this->miFormulario->campoCuadroLista($atributos);
@@ -1631,7 +1602,7 @@ class registrarForm {
                         $atributos ['limitar'] = false;
                         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                         $atributos ['anchoEtiqueta'] = 213;
-                        $atributos ['anchoCaja'] = 27;
+                        $atributos ['anchoCaja'] = 15;
                         if (isset($_REQUEST [$esteCampo])) {
                             $atributos ['seleccion'] = $_REQUEST [$esteCampo];
                         } else {
@@ -2011,7 +1982,7 @@ class registrarForm {
                     // $atributos ['matrizItems'] = $matrizItems;
                     // Utilizar lo siguiente cuando no se pase un arreglo:
                     $atributos ['baseDatos'] = 'contractual';
-                    $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("consulta_ordenador");
+                    $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("ordenadorGasto");
                     $tab ++;
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroLista($atributos);

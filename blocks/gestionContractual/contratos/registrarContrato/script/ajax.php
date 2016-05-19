@@ -43,7 +43,20 @@ $urlDatosPaso = $url . $cadena2;
 <script type='text/javascript'>
 
 
-
+//---------------------Inicio Ajax Numero de Solicitud de Necesidad------------------
+    
+    
+    $("#<?php echo $this->campoSeguro('vigencia') ?>").change(function () {
+            if ($("#<?php echo $this->campoSeguro('vigencia') ?>").val() != '') {
+                NumeroSolicitud();
+            } else {
+                $("#<?php echo $this->campoSeguro('num_solicitud') ?>").attr('disabled', '');
+            }
+        });
+    
+    
+    
+    
     function NumeroSolicitud(elem, request, response) {
         $.ajax({
             url: "<?php echo $urlVigencia ?>",
@@ -72,7 +85,11 @@ $urlDatosPaso = $url . $cadena2;
 
         });
     }
-    ;</script>
+    ;
+//---------------------Fin Ajax Numero de Solicitud de Necesidad------------------        
+
+
+</script>
 
 <script>
 
