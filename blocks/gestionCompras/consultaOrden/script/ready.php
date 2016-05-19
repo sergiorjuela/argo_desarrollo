@@ -117,6 +117,11 @@ $("#<?php echo $this->campoSeguro('rubro')?>").select2({
 		$("#<?php echo $this->campoSeguro('vigencia_registro')?>").select2();
 		$('#<?php echo $this->campoSeguro('registro')?>').width(150);
 		$("#<?php echo $this->campoSeguro('registro')?>").select2(); 
+                
+                
+                
+		$('#<?php echo $this->campoSeguro('cargosExistentes')?>').width(160);
+		$("#<?php echo $this->campoSeguro('cargosExistentes')?>").select2(); 
 		
 		$("#<?php echo $this->campoSeguro('vigencia_contratista')?>").select2();
 		$('#<?php echo $this->campoSeguro('nombreContratista')?>').attr("style", "width: 60px '");

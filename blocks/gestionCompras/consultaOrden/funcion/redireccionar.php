@@ -23,6 +23,24 @@ class redireccion {
 				$variable .= "&id_elemento_acta=".$valor[3];
 				
 				break;
+			case "actualizoOrden" :
+                             
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=actualizoOrden";
+				$variable .= "&numero_contrao=".$valor['numero_contrato'];
+				$variable .= "&vigencia=".$valor['vigencia'];
+                              
+				break;
+			case "noActualizo" :
+                             
+                               	$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=noactualizoOrden";
+				$variable .= "&numero_contrao=".$valor['numero_contrato'];
+				$variable .= "&vigencia=".$valor['vigencia'];
+                            
+                                break;
 			
 			case "noActualizoElemento" :
 				$variable = "pagina=" . $miPaginaActual;

@@ -418,7 +418,7 @@ if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciasConsultadas', $_REQUEST ['valor'] );
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	$resultado = json_encode ( $resultado );
+       	$resultado = json_encode ( $resultado );
 	echo $resultado;
 }
 

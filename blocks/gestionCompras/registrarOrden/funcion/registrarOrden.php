@@ -28,17 +28,7 @@ class RegistradorOrden {
     }
 
     function procesarFormulario() {
-        
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        
+  
         $SQLs = [];
         $fechaActual = date('Y-m-d');
 
@@ -74,6 +64,7 @@ class RegistradorOrden {
             'tipo_persona' => $tipo_persona,
             'tipo_documento' => $tipo_documento,
             'registro_mercantil' => $_REQUEST ['registro_mercantil']);
+        
 
         $unidad_ejecutura = strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD');
         if ($unidad_ejecutura == false) {
@@ -107,6 +98,9 @@ class RegistradorOrden {
             'clausula_presupuesto' => $clausula_presupuesto,
             'ordenador_gasto' => $_REQUEST ['asignacionOrdenador'],
             'supervisor' => $_REQUEST ['nombre_supervisor'],
+            'sede_supervisor' => $_REQUEST ['sede_super'],
+            'dependencia_supervisor' => $_REQUEST ['dependencia_supervisor'],
+            'cargo_supervisor' => $_REQUEST ['cargo_supervisor'],
             'forma_pago' => $_REQUEST ['formaPago']);
        
         $datosOrden = array('tipo_orden' => $_REQUEST ['tipo_orden'],
@@ -125,30 +119,33 @@ class RegistradorOrden {
                 array_push($polizas, $i);
             }
         }
-
-        // Registro Contratista
-        $SQLs[0] = $this->miSql->getCadenaSql('insertarContratista', $datosContratista);
-        // Registro Contrato General
-        $SQLs[1] = $this->miSql->getCadenaSql('insertarContratoGeneral', $datosContratoGeneral);
-        // Registro Orden
-        $SQLs[2] = $this->miSql->getCadenaSql('insertarOrden', $datosOrden);
-        // Registro de Polizas
         
+        $sqlValidarContratista = $this->miSql->getCadenaSql('validarContratista', $datosContratista['nit']);
+        $contratista = $esteRecursoDB->ejecutarAcceso($sqlValidarContratista, "busqueda");
+        if($contratista == false){
+            // Registro Contratista
+            $SQLsContratista = $this->miSql->getCadenaSql('insertarContratista', $datosContratista);
+            array_push($SQLs, $SQLsContratista);
+        }
+        
+       // Registro Contrato General
+        $SQLsContratoGeneral = $this->miSql->getCadenaSql('insertarContratoGeneral', $datosContratoGeneral);
+        array_push($SQLs, $SQLsContratoGeneral);
+        // Registro Orden
+        $SQLsOrden = $this->miSql->getCadenaSql('insertarOrden', $datosOrden);
+        array_push($SQLs, $SQLsOrden);
+        // Registro de Polizas
         for ($i = 0; $i < count($polizas); $i++) {
             $datosPoliza = array('poliza' => $polizas[$i],
                 'orden' => "currval('id_orden_seq')");
             $sqlPoliza = $this->miSql->getCadenaSql('insertarPoliza', $datosPoliza);
             array_push($SQLs, $sqlPoliza);
         }
-        
        
-        
-
         $trans_Registro_Orden = $esteRecursoDB->transaccion($SQLs);
         $sqlNumeroContrato = $this->miSql->getCadenaSql('obtenerInfoOrden');
         $resultado = $esteRecursoDB->ejecutarAcceso($sqlNumeroContrato, "busqueda");
         $identificadorOrden = $resultado[0];
-
         if ($trans_Registro_Orden != false) {
             $datos = array('mensaje'=>"Contrato de Orden de Compra Almacenado Con Éxito, Numero: ".
                 $identificadorOrden['numero_contrato'] . ". VIGENCIA " . date('Y'),
@@ -157,6 +154,7 @@ class RegistradorOrden {
             redireccion::redireccionar('inserto',  $datos);
             exit();
         } else {
+            echo "entro";
             $datos = "No se pudo llevar a cabo el registro del contrato";
             redireccion::redireccionar('noInserto', $datos);
             exit();

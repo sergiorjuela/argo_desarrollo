@@ -36,11 +36,6 @@ class registrarForm {
 		$atributosGlobales ['campoSeguro'] = 'true';
 		
 		// -------------------------------------------------------------------------------------------------
-		$conexion = "inventarios";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		$cadenaSql = $this->miSql->getCadenaSql ( 'polizas' );
-		$resultado_polizas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		$resultado_polizas = $resultado_polizas [0];
 		
 		// Limpia Items Tabla temporal
 		
@@ -63,7 +58,7 @@ class registrarForm {
 		$atributos ['marco'] = true;
 		$tab = 1;
 		// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
-		
+
 		// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		echo $this->miFormulario->formulario ( $atributos );
@@ -150,6 +145,44 @@ class registrarForm {
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['tipo'] = 'success';
+					$atributos ['estilo'] = 'textoCentrar';
+					$atributos ['mensaje'] = $mensaje;
+					
+					$tab ++;
+					
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->cuadroMensaje ( $atributos );
+					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
+				}
+				if ($_REQUEST ['mensaje'] == 'actualizoOrden') {
+					
+					$mensaje = "SE ACTUALIZO LA ORDEN EXITOSAMENTE. "
+                                                . "ORDEN NUMERO: ".$_REQUEST['numero_contrao']." VIGENCIA: ".$_REQUEST['vigencia'];
+					
+					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+					$esteCampo = 'mensajeActualizo';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['tipo'] = 'success';
+					$atributos ['estilo'] = 'textoCentrar';
+					$atributos ['mensaje'] = $mensaje;
+					
+					$tab ++;
+					
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->cuadroMensaje ( $atributos );
+					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
+				}
+				if ($_REQUEST ['mensaje'] == 'noactualizoOrden') {
+					
+					$mensaje = "No SE PUDO ACTUALIZAR LA ORDEN EXITOSAMENTE. "
+                                                . "ORDEN NUMERO: ".$_REQUEST['numero_contrao']." VIGENCIA: ".$_REQUEST['vigencia'];
+					
+					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+					$esteCampo = 'mensajeActualizo';
 					$atributos ['id'] = $esteCampo;
 					$atributos ['tipo'] = 'success';
 					$atributos ['estilo'] = 'textoCentrar';

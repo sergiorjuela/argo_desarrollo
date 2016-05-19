@@ -521,7 +521,7 @@ $urlFinalProveedor = $url . $cadena;
                     $("#<?php echo $this->campoSeguro('tipo_documento') ?>").val(data[9]);
                     $("#<?php echo $this->campoSeguro('identifcacion_contratista') ?>").val(data[10]);
                     $("#<?php echo $this->campoSeguro('registro_mercantil') ?>").val(data[11]);
-                    
+                    $("#<?php echo $this->campoSeguro('cargo_contratista') ?>").val('');
 
 
                 } else {

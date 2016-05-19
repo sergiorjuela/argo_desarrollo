@@ -22,6 +22,19 @@ $this->idioma ["placaTitulo"] = "Ingrese Placa ";
 $this->idioma ["observaciones"] = "Observaciones :";
 $this->idioma ["observacionesTitulo"] = "Ingrese Observaciones";
 
+$this->idioma ["digito_verificacion"] = "Digito de Verificación:";
+$this->idioma ["digito_verificacionTitulo"] = "Ingrese el Digito de Verificación";
+
+$this->idioma ["tipo_persona"] = "Tipo de Pesona: ";
+$this->idioma ["tipo_personaTitulo"] = "Ingrese la Naturaleza";
+
+$this->idioma ["tipo_documento"] = "Tipo Documento :";
+$this->idioma ["tipo_documentoTitulo"] = "Ingrese el Tipo Documento del Representante";
+
+$this->idioma ["cargosExistentes"] = "Cargos Existentes :";
+$this->idioma ["cargosExistentesTitulo"] = "Seleccione un Cargo";
+
+$this->idioma ["botonCargo"] = "Otro Cargo";
 
 $this->idioma ["nombre_razon_proveedor"] = "Razón Social :";
 $this->idioma ["nombre_razon_proveedorTitulo"] = "Ingrese Razón Social";
@@ -308,7 +321,7 @@ $this->idioma ["formaPagoTitulo"] = "Seleccione la forma de pago.";
 $this->idioma ["plazo_ejecucion"] = "Ingrese el Plazo de Ejecución (N° dias): ";
 $this->idioma ["plazo_ejecucionTitulo"] = "Ingrese el Plazo de Ejecución (N° dias).";
 
-$this->idioma ["correo_proveedor"] = "Correo:  ";
+$this->idioma ["correo_proveedor"] = "Correo Electronico:  ";
 $this->idioma ["correo_proveedorTitulo"] = "Ingrese el correo del proveedor.";
 
 $this->idioma ["ordenadorGasto"] = "Ordenador Gasto";

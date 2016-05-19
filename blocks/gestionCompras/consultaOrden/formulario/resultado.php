@@ -94,7 +94,6 @@ class registrarForm {
         } else {
             $fecha_final = '';
         }
-
         
         $arreglo = array(
             'tipo_orden' => $tipo_orden,
@@ -108,8 +107,8 @@ class registrarForm {
         );
 
         $cadenaSql = $this->miSql->getCadenaSql('consultarOrden', $arreglo);
-
-
+        echo $cadenaSql;
+            
         $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
         $arreglo = base64_encode(serialize($arreglo));
@@ -163,7 +162,7 @@ class registrarForm {
         $atributos ['redirLugar'] = true;
         echo $this->miFormulario->enlace($atributos);
         unset($atributos);
-
+        
         if ($Orden) {
 
             echo "<table id='tablaTitulos'>";
@@ -171,6 +170,7 @@ class registrarForm {
                              <tr>
                                 <th>Tipo Orden</th>
                                 <th>Número Orden</th>
+                                <th>id_orden</th>
                     		<th>Vigencia</th>            
             			<th>Identificación<br>Nombre Contratista</th>
                                 <th>Sede</th>
@@ -186,7 +186,8 @@ class registrarForm {
             for ($i = 0; $i < count($Orden); $i ++) {
                 $variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
                 $variable .= "&opcion=modificarOrden";
-                $variable .= "&id_orden=" . $Orden [$i] ['numero_contrato'];
+                $variable .= "&numerocontrato=" . $Orden [$i] ['numero_contrato'];
+                $variable .= "&id_orden=" . $Orden [$i] ['id_orden'];
                 $variable .= "&vigencia=" . $Orden [$i] ['vigencia'];
                 $variable .= "&id_contratista=" . $Orden [$i] ['proveedor'];
                 $variable .= "&arreglo=" . $arreglo;
@@ -222,6 +223,7 @@ class registrarForm {
                 $mostrarHtml = "<tr>
                                 <td><center>" . $Orden [$i] ['descripcion'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['numero_contrato'] . "</center></td>		
+                                <td><center>" . $Orden [$i] ['id_orden'] . "</center></td>		
                                 <td><center>" . $Orden [$i] ['vigencia'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['proveedor'] . "</center></td>
                                 <td><center>" . 'Pendiente' . "</center></td>

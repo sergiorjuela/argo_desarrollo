@@ -28,9 +28,7 @@ class Funcion {
 	var $miInspectorHTML;
 	var $error;
 	var $miRecursoDB;
-	var 
-
-	$crypto;
+	var $crypto;
 	// function verificarCampos() {
 	// include_once ($this->ruta . "/funcion/verificarCampos.php");
 	// if ($this->error == true) {
@@ -39,6 +37,9 @@ class Funcion {
 	// return true;
 	// }
 	// }
+        
+      
+       
 	function redireccionar($opcion, $valor = "") {
 		include_once ($this->ruta . "/funcion/redireccionar.php");
 	}
@@ -49,6 +50,7 @@ class Funcion {
 		include_once ($this->ruta . "funcion/procesarAjax.php");
 	}
 	function regitrarOrden() {
+             
 		include_once ($this->ruta . "funcion/registrarOrden.php");
 	}
 	function documento() {
@@ -78,7 +80,28 @@ class Funcion {
 			) );
 			
 			exit ();
-		} 
+		} elseif (isset ( $_REQUEST ["opcion"] )) {
+                        echo "<br>";
+                        echo "<br>";
+                        echo "<br>";
+                        echo "<br>";
+                        echo "<br>";
+                        echo "<br>";
+                        echo "<br>";
+                        echo "<br>";
+                       
+			switch ($_REQUEST ['opcion']) {
+				case 'registrarOrden' :
+                                        $this->regitrarOrden ();
+					break;
+				
+				case 'documento' :
+					$this->documento ();
+					break;
+			}
+			// Realizar una validación específica para los campos de este formulario:
+			// $validacion = $this->verificarCampos ();
+		}
 //		
 		 elseif (isset ( $_REQUEST ["botonContinuar"] )) {
 			

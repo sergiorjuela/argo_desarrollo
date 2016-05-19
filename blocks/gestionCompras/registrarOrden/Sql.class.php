@@ -157,7 +157,8 @@ class Sql extends \Sql {
             case "insertarContratista" :
                 $cadenaSql = " INSERT INTO contratista(";
                 $cadenaSql .= " nombre_razon_social,direccion, telefono,digito_verificacion, ";
-                $cadenaSql .= " correo,identificacion,tipo_naturaleza,tipo_documento,fecha_registro,nacionalidad) ";
+                $cadenaSql .= " correo,identificacion,tipo_naturaleza,tipo_documento,fecha_registro,nacionalidad, ";
+                $cadenaSql .= " nombre_contratista,identificacion_contratista_representante,cargo_contratista_representante) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= "'".$variable ['razonSocial'] . "',";
                 $cadenaSql .= "'" . $variable ['direcccion'] . "',";
@@ -168,7 +169,10 @@ class Sql extends \Sql {
                 $cadenaSql .=  $variable ['tipo_persona'] . ",";
                 $cadenaSql .=  $variable ['tipo_documento'] . ",";
                 $cadenaSql .= "'" . $variable ['fecha'] . "',";
-                $cadenaSql .= "'" . $variable ['nacionalidad'] . "');";
+                $cadenaSql .= "'" . $variable ['nacionalidad'] . "',";
+                $cadenaSql .= "'" . $variable ['nombreRepresentante'] . "',";
+                $cadenaSql .= "'" . $variable ['identificacionRepresentante'] . "',";
+                $cadenaSql .= "'" . $variable ['cargo_contratista'] . "');";
              
                 break;
             
@@ -176,7 +180,8 @@ class Sql extends \Sql {
                 $cadenaSql = " INSERT INTO contrato_general(";
                 $cadenaSql .= " vigencia,id_orden_contrato, tipo_contrato,unidad_ejecutora, ";
                 $cadenaSql .= " objeto_contrato,fecha_inicio,fecha_final,plazo_ejecucion, ";
-                $cadenaSql .= " forma_pago,ordenador_gasto,supervisor,clausula_registro_presupuestal) ";
+                $cadenaSql .= " forma_pago,ordenador_gasto,supervisor,clausula_registro_presupuestal, ";
+                $cadenaSql .= " sede_supervisor,dependencia_supervisor,cargo_supervisor) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['vigencia'] . ",";
                 $cadenaSql .= $variable ['id_orden_contrato'] . ",";
@@ -189,7 +194,10 @@ class Sql extends \Sql {
                 $cadenaSql .= $variable ['forma_pago'] . ",";
                 $cadenaSql .= "'" . $variable ['ordenador_gasto'] . "',";
                 $cadenaSql .= "'" . $variable ['supervisor'] . "',";
-                $cadenaSql .= $variable ['clausula_presupuesto'] . ");";
+                $cadenaSql .= $variable ['clausula_presupuesto'] . ",";
+                $cadenaSql .= "'" . $variable ['sede_supervisor'] . "',";
+                $cadenaSql .= "'" . $variable ['dependencia_supervisor'] . "',";
+                $cadenaSql .= "'" . $variable ['cargo_supervisor'] . "');";
              
                 break;
             case "insertarOrden" :
@@ -218,8 +226,12 @@ class Sql extends \Sql {
                 $cadenaSql = " SELECT MAX(numero_contrato) as numero_contrato";
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= "contrato_general; ";
-              
-                
+                             
+                break;
+            
+            case "validarContratista" :
+                $cadenaSql =  "SELECT * From contratista WHERE identificacion=".$variable;;
+             
                 break;
 
 

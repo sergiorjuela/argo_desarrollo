@@ -401,17 +401,13 @@ $urlFinaliva = $url . $cadenaiva;
             dataType: "json",
             data: {valor: $("#<?php echo $this->campoSeguro('sedeConsulta') ?>").val()},
             success: function (data) {
-
-
-
-
-                if (data[0] != " ") {
-
+    
+            if (data[0] != " ") {
+                    
                     $("#<?php echo $this->campoSeguro('dependenciaConsulta') ?>").html('');
                     $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta') ?>");
                     $.each(data, function (indice, valor) {
-
-                        $("<option value='" + data[ indice ].ESF_CODIGO_DEP + "'>" + data[ indice ].ESF_DEP_ENCARGADA + "</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta') ?>");
+                       $("<option value='" + data[ indice ].ESF_CODIGO_DEP + "'>" + data[ indice ].ESF_DEP_ENCARGADA + "</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta') ?>");
 
                     });
 
@@ -476,6 +472,15 @@ $urlFinaliva = $url . $cadenaiva;
     ;
 //-------------------Fin JavaScript y Ajax numero de orden de acuerdo al tipo de orden ------------------------------------------------------------------
 
+    $("#<?php echo $this->campoSeguro('sede_super') ?>").change(function () {
+
+            if ($("#<?php echo $this->campoSeguro('sede_super') ?>").val() != '') {
+                consultarDependenciaSuper();
+            } else {
+                $("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>").attr('disabled', '');
+            }
+
+        });
 
 
     function consultarDependenciaSuper(elem, request, response) {
@@ -493,7 +498,7 @@ $urlFinaliva = $url . $cadenaiva;
                     $('<option value=" ">Seleccione  ....</option>').appendTo("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>");
                     $.each(data, function (indice, valor) {
 
-                        $("<option value='" + data[ indice ].ESF_ID_ESPACIO + "'>" + data[ indice ].ESF_NOMBRE_ESPACIO + "</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>");
+                       $("<option value='" + data[ indice ].ESF_CODIGO_DEP + "'>" + data[ indice ].ESF_DEP_ENCARGADA + "</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>");
 
                     });
 
@@ -515,29 +520,38 @@ $urlFinaliva = $url . $cadenaiva;
 
 
 
+//--------------Inicio JavaScript y Ajax Sede y Dependencia Solicitante ---------------------------------------------------------------------------------------------    
+
+    $("#<?php echo $this->campoSeguro('sede') ?>").change(function () {
+
+        if ($("#<?php echo $this->campoSeguro('sede') ?>").val() != '') {
+            consultarDependencia();
+        } else {
+            $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").attr('disabled', '');
+        }
+
+    });
 
     function consultarDependencia(elem, request, response) {
+    
         $.ajax({
             url: "<?php echo $urlFinalConsultaDependencia ?>",
             dataType: "json",
             data: {valor: $("#<?php echo $this->campoSeguro('sede') ?>").val()},
             success: function (data) {
-
-
-
-                if (data[0] != " ") {
+             if (data[0] != " ") {
 
                     $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").html('');
                     $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>");
                     $.each(data, function (indice, valor) {
 
-                        $("<option value='" + data[ indice ].valor + "'>" + data[ indice ].dep_enc + "</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>");
+                        $("<option value='" + data[ indice ].ESF_CODIGO_DEP + "'>" + data[ indice ].ESF_DEP_ENCARGADA + "</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>");
 
                     });
 
                     $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").removeAttr('disabled');
 
-                    $('#<?php echo $this->campoSeguro('dependencia_solicitante') ?>').width(400);
+                    $('#<?php echo $this->campoSeguro('dependencia_solicitante') ?>').width(350);
                     $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").select2();
 
 
@@ -551,6 +565,7 @@ $urlFinaliva = $url . $cadenaiva;
     }
     ;
 
+    //--------------Fin JavaScript y Ajax Sede y Dependencia Suepervisor --------------------------------------------------------------------------------------------------   
 
 
 
@@ -581,10 +596,21 @@ $urlFinaliva = $url . $cadenaiva;
 
                 if (data[0] != 'null') {
 
-                    $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data[0]);
-                    $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val(data[1]);
-                    $("#<?php echo $this->campoSeguro('direccion_proveedor') ?>").val(data[2]);
-                    $("#<?php echo $this->campoSeguro('telefono_proveedor') ?>").val(data[3]);
+                    $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val(data[0]);
+                    $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data[1]);
+                    $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data[2]);
+                    $("#<?php echo $this->campoSeguro('direccion_proveedor') ?>").val(data[3]);
+                    $("#<?php echo $this->campoSeguro('correo_proveedor') ?>").val(data[4]);
+                    $("#<?php echo $this->campoSeguro('telefono_proveedor') ?>").val(data[5]);
+                    $("#<?php echo $this->campoSeguro('pais') ?>").val(data[6]);
+                    var tipo_persona='';
+                    if(data[7]=='J'){tipo_persona='Jurídica'}else{tipo_persona='Natural'};
+                    $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(tipo_persona);
+                    $("#<?php echo $this->campoSeguro('nombre_contratista') ?>").val(data[8]);
+                    $("#<?php echo $this->campoSeguro('tipo_documento') ?>").val(data[9]);
+                    $("#<?php echo $this->campoSeguro('identifcacion_contratista') ?>").val(data[10]);
+                    $("#<?php echo $this->campoSeguro('registro_mercantil') ?>").val(data[11]);
+                    $("#<?php echo $this->campoSeguro('cargo_contratista') ?>").val("");
 
 
                 } else {
@@ -620,81 +646,7 @@ $urlFinaliva = $url . $cadenaiva;
 
 
 
-    function consultarDependenciaSuper(elem, request, response) {
-        $.ajax({
-            url: "<?php echo $urlFinalConsultaDependencia ?>",
-            dataType: "json",
-            data: {valor: $("#<?php echo $this->campoSeguro('sede_super') ?>").val()},
-            success: function (data) {
-
-
-
-                if (data[0] != " ") {
-
-                    $("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>").html('');
-                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>");
-                    $.each(data, function (indice, valor) {
-
-                        $("<option value='" + data[ indice ].valor + "'>" + data[ indice ].dep_enc + "</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>");
-
-                    });
-
-                    $("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>").removeAttr('disabled');
-
-                    $('#<?php echo $this->campoSeguro('dependencia_supervisor') ?>').width(400);
-                    $("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>").select2();
-
-
-
-                }
-
-
-            }
-
-        });
-    }
-    ;
-
-
-
-    function consultarDependencia(elem, request, response) {
-        $.ajax({
-            url: "<?php echo $urlFinalConsultaDependencia ?>",
-            dataType: "json",
-            data: {valor: $("#<?php echo $this->campoSeguro('sede') ?>").val()},
-            success: function (data) {
-
-
-
-                if (data[0] != " ") {
-
-                    $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").html('');
-                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>");
-                    $.each(data, function (indice, valor) {
-
-                        $("<option value='" + data[ indice ].valor + "'>" + data[ indice ].dep_enc + "</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>");
-
-                    });
-
-                    $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").removeAttr('disabled');
-
-                    $('#<?php echo $this->campoSeguro('dependencia_solicitante') ?>').width(400);
-                    $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").select2();
-
-
-
-                }
-
-
-            }
-
-        });
-    }
-    ;
-
-
-
-
+    
 
     function consultarDependenciaConsulta(elem, request, response) {
         $.ajax({
@@ -906,7 +858,7 @@ $urlFinaliva = $url . $cadenaiva;
         $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").keyup(function () {
 
 
-            $('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val($('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val().toUpperCase());
+            $('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val($('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val());
 
 
         });
@@ -1007,26 +959,9 @@ $urlFinaliva = $url . $cadenaiva;
 
 
 
-        $("#<?php echo $this->campoSeguro('sede_super') ?>").change(function () {
+        
 
-            if ($("#<?php echo $this->campoSeguro('sede_super') ?>").val() != '') {
-                consultarDependenciaSuper();
-            } else {
-                $("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>").attr('disabled', '');
-            }
-
-        });
-
-
-        $("#<?php echo $this->campoSeguro('sede') ?>").change(function () {
-
-            if ($("#<?php echo $this->campoSeguro('sede') ?>").val() != '') {
-                consultarDependencia();
-            } else {
-                $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").attr('disabled', '');
-            }
-
-        });
+        
 
 
 
@@ -1359,6 +1294,30 @@ $urlFinaliva = $url . $cadenaiva;
 
 
     });
+    
+    $("#<?php echo $this->campoSeguro('cargosExistentes') ?>").change(function () {
+
+        if ($("#<?php echo $this->campoSeguro('cargosExistentes') ?>").val() != '') {
+            $("#<?php echo $this->campoSeguro('cargo_supervisor') ?>").val($("#<?php echo $this->campoSeguro('cargosExistentes') ?>").val());
+            $("#<?php echo $this->campoSeguro('cargosExistentes') ?>").val("");
+
+        }
+
+
+    });
 
 </script>
 
+<script>
+
+    function registrarNuevoCargo() {
+        var cargo = prompt("Por favor digite el nuevo cargo:", "");
+
+        if (cargo != null) {
+            var Campo = document.getElementById("<?php echo $this->campoSeguro('cargo_supervisor') ?>");
+            Campo.value = cargo;
+        }
+    }
+
+
+</script> 

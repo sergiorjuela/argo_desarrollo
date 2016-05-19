@@ -28,164 +28,174 @@ class RegistradorOrden {
     }
 
     function procesarFormulario() {
-        $conexion = "inventarios";
-        $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
 
         $SQLs = [];
+        $Identificadores = array('numero_contrato' => $_REQUEST['numerocontrato'],
+            'vigencia' => $_REQUEST['vigencia'],
+            'id_orden' => $_REQUEST['id_orden']);
 
-        if ($_REQUEST ['objeto_contrato'] == '') {
+        $conexion = "contractual";
+        $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
-            redireccion::redireccionar('notextos');
-            exit();
-        }
-
-        if ($_REQUEST ['forma_pago'] == '') {
-
-            redireccion::redireccionar('notextos');
-            exit();
-        }
-
-        $datosSupervisor = array(
-            $_REQUEST ['nombre_supervisor'],
-            $_REQUEST ['cargo_supervisor'],
-            $_REQUEST ['dependencia_supervisor'],
-            $_REQUEST ['sede_super'],
-            $_REQUEST ['supervisor']
-        );
-
-        // Actualizar Supervisor
-        $SQLs[0] = $this->miSql->getCadenaSql('actualizarSupervisor', $datosSupervisor);
-        
-
-        $datosProveedor = array(
-            $_REQUEST ['nombre_razon_proveedor'],
-            $_REQUEST ['identifcacion_proveedor'],
-            $_REQUEST ['direccion_proveedor'],
-            $_REQUEST ['telefono_proveedor'],
-            $_REQUEST ['proveedor']
-        );
-
-        // Actualizar Contratista
-        $SQLs[1] = $this->miSql->getCadenaSql('actualizarProveedor', $datosProveedor);
-
-       
-
-        $datosContratista = array(
-            $_REQUEST ['nombre_contratista'],
-            $_REQUEST ['identifcacion_contratista'],
-            $_REQUEST ['cargo_contratista'],
-            $_REQUEST ['contratista']
-        );
-
-        // Actualizar Contratista
-        $SQLs[2] = $this->miSql->getCadenaSql('actualizarContratista', $datosContratista);
-
-
-        $cadenaSql = $this->miSql->getCadenaSql('consultarConsecutivo', $_REQUEST ['id_orden']);
-
-        $consecutivo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-        $consecutivo = $consecutivo [0];
-        if (strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD') === false) {
-            $_REQUEST ['unidad_ejecutora'] = 1;
+        if ($_REQUEST ['tipo_persona'] == 'Natural') {
+            $tipo_persona = 1;
         } else {
-            $_REQUEST ['unidad_ejecutora'] = 2;
+            $tipo_persona = 2;
+        }
+        if ($_REQUEST ['tipo_documento'] == 'CC') {
+            $tipo_documento = 184;
+        } else {
+            $tipo_documento = 186;
+        }
+        if ($_REQUEST ['pais'] == '') {
+            $nacionalidad = 'Colombia';
+        } else {
+            $nacionalidad = $_REQUEST ['pais'];
         }
 
-        if ($consecutivo ['unidad_ejecutora'] != $_REQUEST ['unidad_ejecutora']) {
-
-            $cadenaSql = $this->miSql->getCadenaSql('consultarConsecutivoUnidad', array(
-                "unidad_ejecutora" => $_REQUEST ['unidad_ejecutora'],
-                "vigencia" => $consecutivo ['vigencia'],
-                "tipo_orden" => $consecutivo ['tipo_orden']
-                    ));
-
-            $consecutivo_actual = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-            $consecutivo_suma = $consecutivo_actual [0] ['consecutivo'] + 1;
-
-            $arreglo = array(
-                "id_orden" => $_REQUEST ['id_orden'],
-                "consecutivo" => $consecutivo_suma,
-                "unidad_ejecutora" => $_REQUEST ['unidad_ejecutora']
-            );
-
-            if ($consecutivo ['tipo_orden'] == '1') {
-
-                $SQLs[3] = $this->miSql->getCadenaSql('actualizarConsecutivoCompras', $arreglo);
-                $nombreAccion = 'actualizarConsecutivoCompras';
-
-                $_REQUEST ['mensaje_titulo'] = "ORDEN COMPRA VIGENCIA Y/O NÚMERO ORDEN : " . $consecutivo ['vigencia'] . " - " . $consecutivo_suma . "  Unidad Ejecutora: " . $_REQUEST ['unidad_ejecutora'];
-            } else if ($consecutivo ['tipo_orden'] == '9') {
-
-                $SQLs[3]  = $this->miSql->getCadenaSql('actualizarConsecutivoServicios', $arreglo);
-                $nombreAccion = 'actualizarConsecutivoServicios';
+        $datosContratista = array('razonSocial' => $_REQUEST ['nombre_razon_proveedor'],
+            'direcccion' => $_REQUEST ['direccion_proveedor'],
+            'nombreRepresentante' => $_REQUEST ['nombre_contratista'],
+            'identificacionRepresentante' => $_REQUEST ['identifcacion_contratista'],
+            'cargo_contratista' => $_REQUEST ['cargo_contratista'],
+            'nit' => $_REQUEST ['identifcacion_proveedor'],
+            'telefono' => $_REQUEST ['telefono_proveedor'],
+            'correo' => $_REQUEST ['correo_proveedor'],
+            'digito_verificacion' => $_REQUEST ['digito_verificacion'],
+            'nacionalidad' => $nacionalidad,
+            'fecha' => date('Y-m-d'),
+            'tipo_persona' => $tipo_persona,
+            'tipo_documento' => $tipo_documento,
+            'registro_mercantil' => $_REQUEST ['registro_mercantil']);
 
 
-                $_REQUEST ['mensaje_titulo'] = "ORDEN SERVICIOS VIGENCIA Y/O NÚMERO ORDEN : " . $consecutivo ['vigencia'] . " - " . $consecutivo_suma . "  Unidad Ejecutora: " . $_REQUEST ['unidad_ejecutora'];
+
+        $unidad_ejecutura = strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD');
+        if ($unidad_ejecutura == false) {
+            $unidad_ejecutura = 209;
+        } else {
+            $unidad_ejecutura = 208;
+        }
+        if (isset($_POST['clausula_presupuesto'])) {
+            $clausula_presupuesto = $_POST['clausula_presupuesto'];
+            if($clausula_presupuesto='t'){
+                $clausula_presupuesto='true';
             }
-
-            
-        }
-
-
-
-
-
-        //Validacion campos nulos de fecha de inicio y finalizacion
-        if (isset($_REQUEST ['fecha_inicio_pago']) && $_REQUEST ['fecha_inicio_pago'] != "") {
-            $fecha_inicio_pago = "'" . $_REQUEST ['fecha_inicio_pago'] . "'";
         } else {
-            $fecha_inicio_pago = 'NULL';
+            $clausula_presupuesto = 'false';
         }
-        if (isset($_REQUEST ['fecha_final_pago']) && $_REQUEST ['fecha_final_pago'] != "") {
-            $fecha_final_pago = "'" . $_REQUEST ['fecha_final_pago'] . "'";
+        if (isset($_REQUEST ['fecha_inicio_pago']) && $_REQUEST ['fecha_inicio_pago'] != '') {
+            $fecha_inicio = "'" . $_REQUEST ['fecha_inicio_pago'] . "'";
         } else {
-            $fecha_final_pago = 'NULL';
+            $fecha_inicio = 'null';
         }
-        if (isset($_POST ['clausula_presupuesto']) && $_POST ['clausula_presupuesto'] != "") {
-            $clausula_presupuesto = $_POST ['clausula_presupuesto'];
+        if (isset($_REQUEST ['fecha_final_pago']) && $_REQUEST ['fecha_final_pago'] != '') {
+            $fecha_fin = "'" . $_REQUEST ['fecha_final_pago'] . "'";
         } else {
-            $clausula_presupuesto = 'FALSE';
+            $fecha_fin = 'null';
         }
-
-        // Actualizar Orden
-
-        $datosOrden = array(
-            $_REQUEST ['dependencia_solicitante'],
-            $_REQUEST ['sede'],
-            $_REQUEST ['objeto_contrato'],
-            isset($_REQUEST ['poliza1']),
-            isset($_REQUEST ['poliza2']),
-            isset($_REQUEST ['poliza3']),
-            isset($_REQUEST ['poliza4']),
-            $_REQUEST ['duracion'],
-            $fecha_inicio_pago,
-            $fecha_final_pago,
-            $_REQUEST ['forma_pago'],
-            $_REQUEST ['id_ordenador'],
-            $_REQUEST ['tipo_ordenador'],
-            $_REQUEST ['id_orden'],
-            $_REQUEST ['unidad_ejecutora'],
-            $clausula_presupuesto
-        );
-
-        $registroOrden = $this->miSql->getCadenaSql('actualizarOrden', $datosOrden);
-        array_push($SQLs, $registroOrden);
-        $datos = array(
-            $_REQUEST ['id_orden'],
-            $_REQUEST ['mensaje_titulo'],
-            $_REQUEST ['arreglo']
-        );
+      
         
-        $trans_Editar_Orden = $esteRecursoDB->transaccion($SQLs);
+        $datosContratoGeneral = array(
+            'id_orden_contrato' => 1,
+            'tipo_contrato' => 98,
+            'unidad_ejecutura' => $unidad_ejecutura,
+            'objeto_contrato' => $_REQUEST ['objeto_contrato'],
+            'fecha_inicio' => $fecha_inicio,
+            'fecha_fin' => $fecha_fin,
+            'plazo_ejecucion' => $_REQUEST ['plazo_ejecucion'],
+            'clausula_presupuesto' => $clausula_presupuesto,
+            'ordenador_gasto' => $_REQUEST ['asignacionOrdenador'],
+            'supervisor' => $_REQUEST ['nombre_supervisor'],
+            'sede_supervisor' => $_REQUEST ['sede_super'],
+            'dependencia_supervisor' => $_REQUEST ['dependencia_supervisor'],
+            'cargo_supervisor' => $_REQUEST ['cargo_supervisor'],
+            'numero_contrato' => $Identificadores['numero_contrato'],
+            'vigencia' => $Identificadores['vigencia'],
+            'forma_pago' => $_REQUEST ['formaPago']);
 
-        if ($trans_Editar_Orden != false) {
-            $this->miConfigurador->setVariableConfiguracion("cache", true);
-            redireccion::redireccionar('inserto', $datos);
+
+
+        $datosOrden = array('tipo_orden' => $_REQUEST ['tipo_orden'],
+            'id_orden' => $Identificadores['id_orden'],
+            'proveedor' => $_REQUEST ['identifcacion_proveedor']);
+
+
+
+        $PolizasOrden = array('numero_contrato' => "curval('id_orden_seq')",
+            'poliza' => "curval('numero_unico_contrato_seq')",
+            'numero_contrato' => "currval('numero_unico_contrato_seq')");
+
+        $polizas = [];
+        for ($i = 0; $i < count($_POST); $i++) {
+            if (isset($_POST["poliza" . "$i"])) {
+                array_push($polizas, $i);
+            }
+        }
+
+        $sqlValidarContratista = $this->miSql->getCadenaSql('validarContratista', $datosContratista['nit']);
+        $contratista = $esteRecursoDB->ejecutarAcceso($sqlValidarContratista, "busqueda");
+        if ($contratista == false) {
+            // Registro Contratista
+            $SQLsContratista = $this->miSql->getCadenaSql('insertarContratista', $datosContratista);
+            array_push($SQLs, $SQLsContratista);
+        } else {
+            if ($datosContratista['cargo_contratista'] != '') {
+
+                $datos = array('cargo' => $datosContratista['cargo_contratista'],
+                    'id' => $datosContratista['nit']);
+                $SQLsContratista = $this->miSql->getCadenaSql('modificarContratista', $datos);
+                array_push($SQLs, $SQLsContratista);
+            }
+        }
+
+        // Registro Contrato General
+        $SQLsContratoGeneral = $this->miSql->getCadenaSql('updateContratoGeneral', $datosContratoGeneral);
+        array_push($SQLs, $SQLsContratoGeneral);
+        // Registro Orden
+        $SQLsOrden = $this->miSql->getCadenaSql('updateOrden', $datosOrden);
+        array_push($SQLs, $SQLsOrden);
+        // Registro de Polizas
+
+        $sqlEliminarPolizas = $this->miSql->getCadenaSql('elimnarPolizas', $Identificadores['id_orden']);
+        $resultado = $esteRecursoDB->ejecutarAcceso($sqlEliminarPolizas, "acceso");
+
+        if ($resultado == false) {
+            redireccion::redireccionar('noInserto', $datos);
         } else {
 
-            redireccion::redireccionar('noInserto', $datos);
+            for ($i = 0; $i < count($polizas); $i++) {
+                $datosPoliza = array('poliza' => $polizas[$i],
+                    'orden' => $Identificadores['id_orden']);
+                $sqlPoliza = $this->miSql->getCadenaSql('insertarPoliza', $datosPoliza);
+                array_push($SQLs, $sqlPoliza);
+            }
+        }
+      
+
+        $trans_actualizacion_orden = $esteRecursoDB->transaccion($SQLs);
+
+        $datos = array('numero_contrato' => $Identificadores['numero_contrato'],
+            'vigencia' => $Identificadores['vigencia']);
+
+        if ($trans_actualizacion_orden != false) {
+            $this->miConfigurador->setVariableConfiguracion("cache", true);
+
+            redireccion::redireccionar('actualizoOrden', $datos);
+        } else {
+
+            redireccion::redireccionar('noActualizo', $datos);
         }
     }
 
