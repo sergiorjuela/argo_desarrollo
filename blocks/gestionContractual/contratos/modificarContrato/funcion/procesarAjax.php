@@ -40,7 +40,7 @@ if ($_REQUEST ['funcion'] == 'consultaContratista') {
     $cadenaSql = $this->sql->getCadenaSql('buscar_contratista', $_GET ['query']);
 
     $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
+  
     foreach ($resultadoItems as $key => $values) {
         $keys = array(
             'value',

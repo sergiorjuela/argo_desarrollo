@@ -104,8 +104,8 @@ class registrarForm {
 				$fecha_inicio = '';
 			}
 			
-			if (isset ( $_REQUEST ['id_contratista'] ) && $_REQUEST ['id_contratista'] != '') {
-				$fecha_final = $_REQUEST ['id_contratista'];
+			if (isset ( $_REQUEST ['fecha_final_sub'] ) && $_REQUEST ['fecha_final_sub'] != '') {
+				$fecha_final = $_REQUEST ['fecha_final_sub'];
 			} else {
 				$fecha_final = '';
 			}
@@ -118,10 +118,12 @@ class registrarForm {
 					'fecha_inicial' => $fecha_inicio,
 					'fecha_final' => $fecha_final 
 			);
+                        var_dump($arreglo);
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarContrato', $arreglo );
-			
+                        echo $cadenaSql;
 			$contratos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+                
                       
                        
 			
@@ -155,10 +157,11 @@ class registrarForm {
 			echo "<thead>
                              <tr>
                                 <th>Vigencia</th>
-                    			<th>Número Contrato</th>            
-            					<th>Identificacion<br>Contratista</th>
-                                <th>Nombre<br>Contratista</th>
-                                <th>Actualizar<br>Contratista</th>
+                                <th>Número Contrato</th>            
+            			<th>Identificacion<br>Contratista</th>
+                                <th>Orden de Contrato</th>            
+            			<th>Solicitud de Necesidad</th>
+                                <th>Actualizar<br>Contrato</th>
                              </tr>
             </thead>
             <tbody>";
@@ -166,27 +169,23 @@ class registrarForm {
 			foreach (  $contratos as $valor ) {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=modificarContratos";
-				$variable .= "&id_solicitud_necesidad=" . $valor ['id_sol_necesidad'];
-				$variable .= "&id_contrato=" . $valor ['id_contrato'];
+				$variable .= "&id_solicitud_necesidad=" . $valor ['solicitud_necesidad'];
+				$variable .= "&id_contrato=" . $valor ['numero_contrato'];
+				$variable .= "&id_contrato=" . $valor ['vigencia'];
 				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 				$variable .= "&bloqueNombre=" . $_REQUEST['bloque'];
 				$variable .= "&bloqueGrupo=" . $_REQUEST['bloqueGrupo'];
 				$variable .= "&tiempo=" . $_REQUEST['tiempo'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
-                                if($valor['razon_social']==""){
-                                    $nombre = $valor['nombre'];
-                                }
-                                else{
-                                    $nombre = $valor['razon_social'];
-                                }
-				
+                            			
 				
 				$mostrarHtml = "<tr>
                     <td><center>" . $valor ['vigencia'] . "</center></td>
                     <td><center>" . $valor ['numero_contrato'] . "</center></td>
-                   	<td><center>" . $valor ['identificacion'] . "</center></td>
-                    <td><center>" . $nombre . "</center></td>
+                    <td><center>" . $valor ['contratista'] . "</center></td>
+                    <td><center>" . $valor ['id_orden_contrato'] . "</center></td>
+                    <td><center>" . $valor ['solicitud_necesidad'] . "</center></td>
                     <td><center>
                     	<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/modificar.png' width='15px'>

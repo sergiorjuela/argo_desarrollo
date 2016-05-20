@@ -94,7 +94,7 @@ $_REQUEST ['tiempo'] = time ();
     	
 				if($("#<?php echo $this->campoSeguro('tipo_compromiso')?>").val()!=''){
 		
-						if($("#<?php echo $this->campoSeguro('tipo_compromiso')?>").val()==46){
+						if($("#<?php echo $this->campoSeguro('tipo_compromiso')?>").val()==34){
 		
 							$("#<?php echo $this->campoSeguro('divisionConvenio')?>").css('display','block');
 							
@@ -116,46 +116,46 @@ $_REQUEST ['tiempo'] = time ();
 		
 		 });
 		 
-		 $("#<?php echo $this->campoSeguro('tipo_persona')?>").change(function() {
+		 //$("#<?php echo $this->campoSeguro('tipo_persona')?>").change(function() {
     	
                                
     	
-				if($("#<?php echo $this->campoSeguro('tipo_persona')?>").val()!=''){
+				//if($("#<?php echo $this->campoSeguro('tipo_persona')?>").val()!=''){
 		
-						if($("#<?php echo $this->campoSeguro('tipo_persona')?>").val()!= 1){
+						//if($("#<?php echo $this->campoSeguro('tipo_persona')?>").val()!= 1){
                                                         
                                                       
-							$("#divisionPersonaJuridica").css('display','block');
-							$("#divisionPersonaNatural").css('display','none');
-                                                        $("#<?php echo $this->campoSeguro('primer_nombre')?>").val("");
-                                                        $("#<?php echo $this->campoSeguro('segundo_nombre')?>").val("");
-                                                        $("#<?php echo $this->campoSeguro('primer_apellido')?>").val("");
-                                                        $("#<?php echo $this->campoSeguro('segundo_apellido')?>").val("");
+							//$("#divisionPersonaJuridica").css('display','block');
+							//$("#divisionPersonaNatural").css('display','none');
+                                                        //$("#<?php echo $this->campoSeguro('primer_nombre')?>").val("");
+                                                        //$("#<?php echo $this->campoSeguro('segundo_nombre')?>").val("");
+                                                        //$("#<?php echo $this->campoSeguro('primer_apellido')?>").val("");
+                                                        //$("#<?php echo $this->campoSeguro('segundo_apellido')?>").val("");
                                                       							
-		                    }else{
+		                    //}else{
 		                    
-                                                       $("#divisionPersonaJuridica").css('display','none');
-                                                       $("#divisionPersonaNatural").css('display','block');
-                                                       $("#<?php echo $this->campoSeguro('nombre_Razon_Social')?>").val("");
-		                    }
+                                                       //$("#divisionPersonaJuridica").css('display','none');
+                                                       //$("#divisionPersonaNatural").css('display','block');
+                                                       //$("#<?php //echo $this->campoSeguro('nombre_Razon_Social')?>").val("");
+		                    //}
 		
-				}else{
+				//}else{
 				
-				$("#divisionPersonaJuridica").css('display','none');
-                                $("#divisionPersonaNatural").css('display','block');
+				//$("#divisionPersonaJuridica").css('display','none');
+                                //$("#divisionPersonaNatural").css('display','block');
 				
 				
 				
-				}
+				//}
 		
-		 });
+		// });
 		 
 		 
 	 	$("#<?php echo $this->campoSeguro('clase_contratista')?>").change(function() {
-    	
+                                
 				if($("#<?php echo $this->campoSeguro('clase_contratista')?>").val()!=''){
 		
-						if($("#<?php echo $this->campoSeguro('clase_contratista')?>").val()!=35){
+						if($("#<?php echo $this->campoSeguro('clase_contratista')?>").val()!=33){
 		
 							$("#<?php echo $this->campoSeguro('divisionClaseContratista')?>").css('display','block');
 							
@@ -402,6 +402,9 @@ $_REQUEST ['tiempo'] = time ();
 	
 	$("#<?php echo $this->campoSeguro('supervisor')?>").width(220);
 	$("#<?php echo $this->campoSeguro('supervisor')?>").select2();
+			 
+	$("#<?php echo $this->campoSeguro('formaPago')?>").width(180);
+	$("#<?php echo $this->campoSeguro('formaPago')?>").select2();
 			 
 			 
 			 	

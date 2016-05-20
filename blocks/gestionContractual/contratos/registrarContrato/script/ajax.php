@@ -97,9 +97,7 @@ $urlDatosPaso = $url . $cadena2;
             var InfoPaso0 = [];
             
 //------------------------------->Paso 1 --------------------------------------------------------------------------------------------            
-            if (document.getElementById("<?php echo $this->campoSeguro('numero_contrato') ?>").value != "") {
-                InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('numero_contrato') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('numero_contrato') ?>").getAttribute("id"));
-            }
+            
             if (document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").value != "") {
                 InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").getAttribute("id"));
             }

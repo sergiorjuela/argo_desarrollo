@@ -19,6 +19,15 @@ $this->idioma ["botonConsultar"] = "Consultar";
 $this->idioma ["numero_contrato"] = "Número de Contrato: ";
 $this->idioma ["numero_contratoTitulo"] = "Ingrese Número de Contrato";
 
+
+$this->idioma ["unidad_ejecutora"] = "Unidad Ejecutora: ";
+
+$this->idioma ["clausula_presupuesto"] = "Sujeto a registro presupuestal (Hasta Agotar Presupuesto): ";
+
+$this->idioma ["formaPago"] = "Forma de Pago: ";
+$this->idioma ["formapagoTitulo"] = "Seleccione la forma de pago  del Contrato";
+
+
 $this->idioma ["tipo_identificacion"] = "Tipo de Identificación: ";
 $this->idioma ["tipo_identificacionTitulo"] = "Seleccione Tipo de Identificación";
 
