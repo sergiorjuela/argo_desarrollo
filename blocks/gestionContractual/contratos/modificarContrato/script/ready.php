@@ -94,7 +94,7 @@ $_REQUEST ['tiempo'] = time ();
     	
 				if($("#<?php echo $this->campoSeguro('tipo_compromiso')?>").val()!=''){
 		
-						if($("#<?php echo $this->campoSeguro('tipo_compromiso')?>").val()==46){
+						if($("#<?php echo $this->campoSeguro('tipo_compromiso')?>").val()==34){
 		
 							$("#<?php echo $this->campoSeguro('divisionConvenio')?>").css('display','block');
 							
@@ -124,7 +124,7 @@ $_REQUEST ['tiempo'] = time ();
     	
 				if($("#<?php echo $this->campoSeguro('clase_contratista')?>").val()!=''){
 		
-						if($("#<?php echo $this->campoSeguro('clase_contratista')?>").val()!=35){
+						if($("#<?php echo $this->campoSeguro('clase_contratista')?>").val()!=33){
 		
 							$("#<?php echo $this->campoSeguro('divisionClaseContratista')?>").css('display','block');
 							
@@ -148,39 +148,39 @@ $_REQUEST ['tiempo'] = time ();
 		
 		 });
                  
-                 $("#<?php echo $this->campoSeguro('tipo_persona')?>").change(function() {
-    	
-                               
-    	
-				if($("#<?php echo $this->campoSeguro('tipo_persona')?>").val()!=''){
-		
-						if($("#<?php echo $this->campoSeguro('tipo_persona')?>").val()!= 1){
-                                                        
-                                                      
-							$("#divisionPersonaJuridica").css('display','block');
-							$("#divisionPersonaNatural").css('display','none');
-                                                        $("#<?php echo $this->campoSeguro('primer_nombre')?>").val("");
-                                                        $("#<?php echo $this->campoSeguro('segundo_nombre')?>").val("");
-                                                        $("#<?php echo $this->campoSeguro('primer_apellido')?>").val("");
-                                                        $("#<?php echo $this->campoSeguro('segundo_apellido')?>").val("");
-                                                      							
-		                    }else{
-		                    
-                                                       $("#divisionPersonaJuridica").css('display','none');
-                                                       $("#divisionPersonaNatural").css('display','block');
-                                                       $("#<?php echo $this->campoSeguro('nombre_Razon_Social')?>").val("");
-		                    }
-		
-				}else{
-				
-				$("#divisionPersonaJuridica").css('display','none');
-                                $("#divisionPersonaNatural").css('display','block');
-				
-				
-				
-				}
-		
-		 });
+                //$("#<?php echo $this->campoSeguro('tipo_persona')?>").change(function() {
+                //
+                //               
+                //
+                //			if($("#<?php echo $this->campoSeguro('tipo_persona')?>").val()!=''){
+		//
+		//				if($("#<?php echo $this->campoSeguro('tipo_persona')?>").val()!= 1){
+                //                                        
+                //                                      
+		//					$("#divisionPersonaJuridica").css('display','block');
+		//					$("#divisionPersonaNatural").css('display','none');
+                //                                      $("#<?php echo $this->campoSeguro('primer_nombre')?>").val("");
+                //                                        $("#<?php echo $this->campoSeguro('segundo_nombre')?>").val("");
+                //                                        $("#<?php echo $this->campoSeguro('primer_apellido')?>").val("");
+                //                                        $("#<?php echo $this->campoSeguro('segundo_apellido')?>").val("");
+                //                                       							
+		//                    }else{
+		//                    
+                //                                       $("#divisionPersonaJuridica").css('display','none');
+                //                                       $("#divisionPersonaNatural").css('display','block');
+                //                                       $("#<?php echo $this->campoSeguro('nombre_Razon_Social')?>").val("");
+		//                    }
+		//
+		//		}else{
+		//		
+		//		$("#divisionPersonaJuridica").css('display','none');
+                //                $("#divisionPersonaNatural").css('display','block');
+		//		
+		//		
+		//		
+		//		}
+		//
+		// });
 		 
 		 
 		 
@@ -351,24 +351,27 @@ $_REQUEST ['tiempo'] = time ();
 	
 			 
 	
-	$("#<?php echo $this->campoSeguro('clase_contrato')?>").width(250);
+	$("#<?php echo $this->campoSeguro('clase_contrato')?>").width(220);
 	$("#<?php echo $this->campoSeguro('clase_contrato')?>").select2();
+        
+	$("#<?php echo $this->campoSeguro('formaPago')?>").width(150);
+	$("#<?php echo $this->campoSeguro('formaPago')?>").select2();
 	
 	$("#<?php echo $this->campoSeguro('tipo_compromiso')?>").select2();
 	
-	$("#<?php echo $this->campoSeguro('dependencia')?>").width(305);
+	$("#<?php echo $this->campoSeguro('dependencia')?>").width(220);
 	$("#<?php echo $this->campoSeguro('dependencia')?>").select2();
 	
-	$("#<?php echo $this->campoSeguro('tipologia_especifica')?>").width(305);
+	$("#<?php echo $this->campoSeguro('tipologia_especifica')?>").width(220);
 	$("#<?php echo $this->campoSeguro('tipologia_especifica')?>").select2();
 	
-	$("#<?php echo $this->campoSeguro('modalidad_seleccion')?>").width(305);
+	$("#<?php echo $this->campoSeguro('modalidad_seleccion')?>").width(220);
 	$("#<?php echo $this->campoSeguro('modalidad_seleccion')?>").select2();
 	
-	$("#<?php echo $this->campoSeguro('procedimiento')?>").width(305);
+	$("#<?php echo $this->campoSeguro('procedimiento')?>").width(220);
 	$("#<?php echo $this->campoSeguro('procedimiento')?>").select2();
 	
-	$("#<?php echo $this->campoSeguro('regimen_contratación')?>").width(305);
+	$("#<?php echo $this->campoSeguro('regimen_contratación')?>").width(220);
 	$("#<?php echo $this->campoSeguro('regimen_contratación')?>").select2();
 	
 	$("#<?php echo $this->campoSeguro('unidad_ejecucion_tiempo')?>").select2();
@@ -376,23 +379,23 @@ $_REQUEST ['tiempo'] = time ();
 	$("#<?php echo $this->campoSeguro('tipo_moneda')?>").width(250);
 	$("#<?php echo $this->campoSeguro('tipo_moneda')?>").select2();
 	
-	$("#<?php echo $this->campoSeguro('ordenador_gasto')?>").width(500);
+	$("#<?php echo $this->campoSeguro('ordenador_gasto')?>").width(700);
 	$("#<?php echo $this->campoSeguro('ordenador_gasto')?>").select2();
 	
 	
-	$("#<?php echo $this->campoSeguro('tipo_gasto')?>").width(250);
+	$("#<?php echo $this->campoSeguro('tipo_gasto')?>").width(220);
 	$("#<?php echo $this->campoSeguro('tipo_gasto')?>").select2();
 	
-	$("#<?php echo $this->campoSeguro('origen_recursos')?>").width(250);
+	$("#<?php echo $this->campoSeguro('origen_recursos')?>").width(220);
 	$("#<?php echo $this->campoSeguro('origen_recursos')?>").select2();
 
 	$("#<?php echo $this->campoSeguro('origen_presupuesto')?>").select2();
 	
-	$("#<?php echo $this->campoSeguro('tema_gasto_inversion')?>").width(305);
+	$("#<?php echo $this->campoSeguro('tema_gasto_inversion')?>").width(220);
 	$("#<?php echo $this->campoSeguro('tema_gasto_inversion')?>").select2();
 
 	
-	$("#<?php echo $this->campoSeguro('tema_gasto_inversion')?>").width(305);
+	$("#<?php echo $this->campoSeguro('tema_gasto_inversion')?>").width(220);
 	$("#<?php echo $this->campoSeguro('tema_gasto_inversion')?>").select2();
 
 	$("#<?php echo $this->campoSeguro('supervisor')?>").width(335);
@@ -401,12 +404,12 @@ $_REQUEST ['tiempo'] = time ();
 			 	
 	$("#<?php echo $this->campoSeguro('tipo_control')?>").select2();
 		 
-	$("#<?php echo $this->campoSeguro('vigencia')?>").select2();
-	$("#<?php echo $this->campoSeguro('num_solicitud')?>").select2(); 
+	//$("#<?php echo $this->campoSeguro('vigencia')?>").select2();
+	//$("#<?php echo $this->campoSeguro('num_solicitud')?>").select2(); 
 	$("#<?php echo $this->campoSeguro('tipo_identificacion')?>").select2();
 	$("#<?php echo $this->campoSeguro('tipo_persona')?>").select2(); 
-	$("#<?php echo $this->campoSeguro('genero')?>").select2();
-	$("#<?php echo $this->campoSeguro('nacionalidad')?>").select2(); 
+	//$("#<?php echo $this->campoSeguro('genero')?>").select2();
+	//$("#<?php echo $this->campoSeguro('nacionalidad')?>").select2(); 
 	$("#<?php echo $this->campoSeguro('genero')?>").select2();
 	$("#<?php echo $this->campoSeguro('nacionalidad')?>").select2(); 
 	$("#<?php echo $this->campoSeguro('perfil')?>").select2();
@@ -414,7 +417,7 @@ $_REQUEST ['tiempo'] = time ();
 	$("#<?php echo $this->campoSeguro('tipo_configuracion')?>").select2();
 	$("#<?php echo $this->campoSeguro('clase_contratista')?>").select2();
 	
-	$("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").select2();
+	//$("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").select2();
 	
         setTimeout(function() {
             $('#mensajeEdicionPrevio').hide( "drop", { direction: "up" }, "slow" );

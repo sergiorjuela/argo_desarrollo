@@ -120,6 +120,11 @@ $this->idioma ["objeto_contratoTitulo"] = "Ingrese Objeto de Contrato";
 $this->idioma ["fecha_subcripcion"] = "Fecha Subcripción:";
 $this->idioma ["fecha_subcripcionTitulo"] = "Seleccione Fecha de Subcripción";
 
+$this->idioma ["clausula_presupuesto"] = "Sujeto a registro presupuestal (Hasta Agotar Presupuesto): ";
+
+$this->idioma ["formaPago"] = "Forma de Pago: ";
+$this->idioma ["formapagoTitulo"] = "Seleccione la forma de pago  del Contrato";
+
 
 $this->idioma ["plazo_ejecucion"] = "Plazo Ejecución:";
 $this->idioma ["plazo_ejecucionTitulo"] = "Ingrese Plazo de Ejecución de Números con relacion a la Unidad de Ejecución";
@@ -254,10 +259,10 @@ $this->idioma ["contratistaTitulo"] = "Selecciones Contratistas(Identificación 
 
 
 
-$this->idioma ["fecha_inicio_sub"] = "Fecha Inicial:<br>Subscripción ";
+$this->idioma ["fecha_inicio_sub"] = "Fecha Inicial:<br>Registro Contrato  ";
 $this->idioma ["fecha_inicio_subTitulo"] = "Seleccione Fecha Inicial";
 
-$this->idioma ["fecha_final_sub"] = "Fecha Final:<br>Subscripción ";
+$this->idioma ["fecha_final_sub"] = "Fecha Final:<br>Registro Contrato ";
 $this->idioma ["fecha_final_subTitulo"] = "Seleccione Fecha Final";
 
 

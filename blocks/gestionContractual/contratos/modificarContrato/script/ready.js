@@ -21,7 +21,8 @@
 			    transitionEffect: "slideLeft",
 			    onStepChanging: function (event, currentIndex, newIndex){
 	                $resultado = $("#modificarContrato").validationEngine("validate");
-                          almacenarInfoTemporal(currentIndex, newIndex);
+                        almacenarInfoTemporal(currentIndex, newIndex);
+                       
 	        		if ($resultado) {
 
 	        			return true;

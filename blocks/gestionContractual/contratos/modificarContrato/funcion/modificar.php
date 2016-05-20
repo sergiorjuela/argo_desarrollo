@@ -29,33 +29,17 @@ class RegistradorContrato {
 
     function procesarFormulario() {
 
-        $SQLs=[];
+        $SQLs = [];
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
         if (isset($_REQUEST ['id_contratista']) == true && $_REQUEST ['id_contratista'] != '') {
-            
-            
-            if (isset($_REQUEST ['tipo_persona']) && $_REQUEST ['tipo_persona'] == 1) {
-                $naturaleza = $_REQUEST ['tipo_persona'];
-                $_REQUEST ['nombre_Razon_Social'] = "";
-            } else {
-                $naturaleza = 2;
-                $_REQUEST ['primer_nombre'] = "";
-                $_REQUEST ['segundo_nombre'] = "";
-                $_REQUEST ['primer_apellido'] = "";
-                $_REQUEST ['segundo_apellido'] = "";
-            }
-            
+
             $arreglo_contratista = array(
                 "tipo_identificacion" => $_REQUEST ['tipo_identificacion'],
                 "numero_identificacion" => $_REQUEST ['numero_identificacion'],
                 "digito_verificacion" => $_REQUEST ['digito_verificacion'],
-                "tipo_persona" => $naturaleza,
-                "primer_nombre" => $_REQUEST ['primer_nombre'],
-                "segundo_nombre" => $_REQUEST ['segundo_nombre'],
-                "primer_apellido" => $_REQUEST ['primer_apellido'],
-                "segundo_apellido" => $_REQUEST ['segundo_apellido'],
+                "tipo_persona" => $_REQUEST ['tipo_persona'],
                 "genero" => $_REQUEST ['genero'],
                 "nacionalidad" => $_REQUEST ['nacionalidad'],
                 "direccion" => $_REQUEST ['direccion'],
@@ -69,9 +53,9 @@ class RegistradorContrato {
                 "fecha_registro" => date('Y-m-d')
             );
 
-            $SQLs[0] = $this->miSql->getCadenaSql('actualizar_contratista', $arreglo_contratista);
+            $SqlContratista = $this->miSql->getCadenaSql('actualizar_contratista', $arreglo_contratista);
+            array_push($SQLs, $SqlContratista);
 
-           
             if ($_REQUEST ['id_inf_bancaria'] != '') {
 
                 $arreglo_info_bancaria = array(
@@ -80,10 +64,10 @@ class RegistradorContrato {
                     "entidad_bancaria" => $_REQUEST ['entidad_bancaria'],
                     "id_info_bancaria" => $_REQUEST ['id_inf_bancaria']
                 );
-
-                $SQLs[1]  = $this->miSql->getCadenaSql('actualizar_informacion_bancaria', $arreglo_info_bancaria);
-
-                } else {
+                $SqlInfoBancaria = $this->miSql->getCadenaSql('actualizar_informacion_bancaria', $arreglo_info_bancaria);
+                array_push($SQLs, $SqlInfoBancaria);
+                
+            } else {
 
                 $arreglo_info_bancaria = array(
                     "tipo_cuenta" => $_REQUEST ['tipo_cuenta'],
@@ -93,32 +77,18 @@ class RegistradorContrato {
                     "fecha_registro" => date('Y-m-d')
                 );
 
-                $SQLs[1]  = $this->miSql->getCadenaSql('registrar_informacion_bancaria', $arreglo_info_bancaria);
-               }
-
-            $id_contratista = $_REQUEST ['id_contratista'];
-        } else {
-            
-             if (isset($_REQUEST ['tipo_persona']) && $_REQUEST ['tipo_persona'] == 1) {
-                $naturaleza = $_REQUEST ['tipo_persona'];
-                $_REQUEST ['nombre_Razon_Social'] = "";
-            } else {
-                $naturaleza = 2;
-                $_REQUEST ['primer_nombre'] = "";
-                $_REQUEST ['segundo_nombre'] = "";
-                $_REQUEST ['primer_apellido'] = "";
-                $_REQUEST ['segundo_apellido'] = "";
+               $SqlInfoBancaria = $this->miSql->getCadenaSql('registrar_informacion_bancaria', $arreglo_info_bancaria);
+                array_push($SQLs, $SqlInfoBancaria);
             }
 
+            
+        } else {
+           
             $arreglo_contratista = array(
                 "tipo_identificacion" => $_REQUEST ['tipo_identificacion'],
                 "numero_identificacion" => $_REQUEST ['numero_identificacion'],
                 "digito_verificacion" => $_REQUEST ['digito_verificacion'],
                 "tipo_persona" => $_REQUEST ['tipo_persona'],
-                "primer_nombre" => $_REQUEST ['primer_nombre'],
-                "segundo_nombre" => $_REQUEST ['segundo_nombre'],
-                "primer_apellido" => $_REQUEST ['primer_apellido'],
-                "segundo_apellido" => $_REQUEST ['segundo_apellido'],
                 "genero" => $_REQUEST ['genero'],
                 "nacionalidad" => $_REQUEST ['nacionalidad'],
                 "direccion" => $_REQUEST ['direccion'],
@@ -131,52 +101,32 @@ class RegistradorContrato {
                 "fecha_registro" => date('Y-m-d')
             );
 
-            $SQLs[0]  = $this->miSql->getCadenaSql('registrar_contratista', $arreglo_contratista);
-
+            $SqlContratista = $this->miSql->getCadenaSql('registrar_contratista', $arreglo_contratista);
+            array_push($SQLs, $SqlContratista);
+         
             $arreglo_info_bancaria = array(
                 "tipo_cuenta" => $_REQUEST ['tipo_cuenta'],
                 "numero_cuenta" => $_REQUEST ['numero_cuenta'],
                 "entidad_bancaria" => $_REQUEST ['entidad_bancaria'],
-                "id_contratista" => $contratista [0] [0],
+                "id_contratista" => "currval('contratista_id_contratista_seq')",
                 "fecha_registro" => date('Y-m-d')
             );
 
-            $SQLs[1]  = $this->miSql->getCadenaSql('registrar_informacion_bancaria', $arreglo_info_bancaria);
+            $SqlInfoBancaria = $this->miSql->getCadenaSql('registrar_informacion_bancaria', $arreglo_info_bancaria);
+            array_push($SQLs, $SqlInfoBancaria);
 
-            $cadenaIdContratista = $this->miSql->getCadenaSql('obtener_id_contratista');
-            $id_contratista=$esteRecursoDB->ejecutarAcceso($cadenaIdContratista, "busqueda");
-            $id_contratista = $id_contratista[0][0]+1;
-        }
+         }
 
-
-
-        $arreglo_Supervisor = array(
-            "digito_supervisor" => $_REQUEST ['digito_supervisor'],
-            "id_funcionario" => $_REQUEST ['supervisor']
-        );
-
-
-        $SQLs[2] = $this->miSql->getCadenaSql('Actualizar_Supervisor', $arreglo_Supervisor);
-       
-        $arreglo_SolicitudNecesidad = array(
-            "objeto_contrato" => $_REQUEST ['objeto_contrato'],
-            "valor_contrato" => $_REQUEST ['valor_contrato'],
-            "dependencia" => $_REQUEST ['dependencia'],
-            "id_solicitud" => $_REQUEST ['id_solicitud_necesidad'],
-        );
-
-
-        $SQLs[3] = $this->miSql->getCadenaSql('Actualizar_Solicitud_necesidad', $arreglo_SolicitudNecesidad);
-      
-        if ($_REQUEST ['tipo_compromiso'] != '46') {
-            $numero_convenio = -1;
-            $vigencia_convenio = -1;
+         //Validacion campos nulos de tipo compromiso y clase contratista
+        
+        if ($_REQUEST ['tipo_compromiso'] != '34') {
+            $numero_convenio = 0;
+            $vigencia_convenio = 0;
         } else {
             $numero_convenio = $_REQUEST ['numero_convenio'];
             $vigencia_convenio = $_REQUEST ['vigencia_convenio'];
         }
-
-        if ($_REQUEST ['clase_contratista'] == "35") {
+        if ($_REQUEST ['clase_contratista'] == "33") {
             $porcentaje_contratista = 0;
         } else {
             $porcentaje_contratista = $_REQUEST ['porcentaje_clase_contratista'];
@@ -184,12 +134,12 @@ class RegistradorContrato {
 
         //Validacion campos nulos de fecha de inicio y finalizacion
         if (isset($_REQUEST ['fecha_final_poliza']) && $_REQUEST ['fecha_final_poliza'] != "") {
-            $fecha_final_poliza = "'".$_REQUEST ['fecha_final_poliza']."'";
+            $fecha_final_poliza = "'" . $_REQUEST ['fecha_final_poliza'] . "'";
         } else {
             $fecha_final_poliza = 'NULL';
         }
         if (isset($_REQUEST ['fecha_inicio_poliza']) && $_REQUEST ['fecha_inicio_poliza'] != "") {
-            $fecha_inicio_poliza = "'".$_REQUEST ['fecha_inicio_poliza']."'";
+            $fecha_inicio_poliza = "'" . $_REQUEST ['fecha_inicio_poliza'] . "'";
         } else {
             $fecha_inicio_poliza = 'NULL';
         }
@@ -204,27 +154,55 @@ class RegistradorContrato {
         } else {
             $tasa_cambio = 0;
         }
+         // Determinar la Unidad Ejecutora
+        $unidad_ejecutura = strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD');
+        if ($unidad_ejecutura == false) {
+            $unidad_ejecutura = 209;
+        } else {
+            $unidad_ejecutura = 208;
+        }
+        //Obtener la Clausula de Presupuesto
+        if (isset($_POST['clausula_presupuesto'])) {
+            $clausula_presupuesto = $_POST['clausula_presupuesto'];
+        } else {
+            $clausula_presupuesto = 'false';
+        }
+
+        $SqlCargoSupervisor = $this->miSql->getCadenaSql('obtener_cargo_supervisro', 
+                $_REQUEST ['supervisor']);
+        $cargo = $esteRecursoDB->ejecutarAcceso($SqlCargoSupervisor, "busqueda");
 
 
+        $arreglo_contrato_general = array(
+            'tipo_contrato' => $_REQUEST['clase_contrato'],
+            'unidad_ejecutura' => $unidad_ejecutura,
+            'objeto_contrato' => $_REQUEST ['objeto_contrato'],
+            'fecha_inicio' =>$fecha_inicio_poliza,
+            'fecha_fin' => $fecha_final_poliza,
+            'plazo_ejecucion' => $_REQUEST ['plazo_ejecucion'],
+            'clausula_presupuesto' => $clausula_presupuesto,
+            'ordenador_gasto' => $_REQUEST ['ordenador_gasto'],
+            'supervisor' => $_REQUEST ['supervisor'],
+            'cargo_supervisor' => $cargo[0]['cargo'],
+            'forma_pago' => $_REQUEST ['formaPago'],
+            'numero_contrato' => $_REQUEST ['numero_contrato'],
+            'vigencia' => $_REQUEST ['vigencia']);
+       
+        
+        $SqlcontratoGeneral = $this->miSql->getCadenaSql('actualizarContratoGeneral', $arreglo_contrato_general);
+        array_push($SQLs, $SqlcontratoGeneral);
+     
         $arreglo_contrato = array(
-            "vigencia" => date('Y-m-d'),
-            "id_contrato" => $_REQUEST['id_contrato'],
-            "numero_contrato" => $_REQUEST ['numero_contrato'],
             "tipo_configuracion" => $_REQUEST ['tipo_configuracion'],
             "clase_contratista" => $_REQUEST ['clase_contratista'],
             "identificacion_clase_contratista" => $_REQUEST ['identificacion_clase_contratista'],
             "digito_verificacion_clase_contratista" => $_REQUEST ['digito_verificacion_clase_contratista'],
             "porcentaje_clase_contratista" => $porcentaje_contratista,
-            "clase_contrato" => $_REQUEST ['clase_contrato'],
             "tipo_compromiso" => $_REQUEST ['tipo_compromiso'],
             "numero_convenio" => $numero_convenio,
             "vigencia_convenio" => $vigencia_convenio,
-            "objeto_contrato" => $_REQUEST ['objeto_contrato'],
             "fecha_subcripcion" => $_REQUEST ['fecha_subcripcion'],
-            "plazo_ejecucion" => $_REQUEST ['plazo_ejecucion'],
             "unidad_ejecucion_tiempo" => $_REQUEST ['unidad_ejecucion_tiempo'],
-            "fecha_inicio_poliza" => $fecha_inicio_poliza,
-            "fecha_final_poliza" => $fecha_final_poliza,
             "dependencia" => $_REQUEST ['dependencia'],
             "tipologia_especifica" => $_REQUEST ['tipologia_especifica'],
             "numero_constancia" => $_REQUEST ['numero_constancia'],
@@ -233,7 +211,6 @@ class RegistradorContrato {
             "regimen_contratación" => $_REQUEST ['regimen_contratación'],
             "tipo_moneda" => $_REQUEST ['tipo_moneda'],
             "valor_contrato" => $_REQUEST ['valor_contrato'],
-            "ordenador_gasto" => $_REQUEST ['ordenador_gasto'],
             "tipo_gasto" => $_REQUEST ['tipo_gasto'],
             "origen_recursos" => $_REQUEST ['origen_recursos'],
             "origen_presupuesto" => $_REQUEST ['origen_presupuesto'],
@@ -242,31 +219,34 @@ class RegistradorContrato {
             "tasa_cambio" => $tasa_cambio,
             "observacionesContrato" => $_REQUEST ['observacionesContrato'],
             "tipo_control" => $_REQUEST ['tipo_control'],
-            "supervisor" => $_REQUEST ['supervisor'],
+            "digito_supervisor" => $_REQUEST ['digito_supervisor'],
             "fecha_suscrip_super" => $_REQUEST ['fecha_suscrip_super'],
             "fecha_limite" => $_REQUEST ['fecha_limite'],
             "observaciones_interventoria" => $_REQUEST ['observaciones_interventoria'],
             "fecha_registro" => date('Y-m-d'),
-            "contratista" => $id_contratista,
-            "solicitud_necesidad" => $_REQUEST ['id_solicitud_necesidad'],
-            "orden_contrato" => $_REQUEST ['id_orden_contrato']
+            'id_contrato_normal' => $_REQUEST ['id_contrato_normal']
         );
-
-        $SQLs[4] = $this->miSql->getCadenaSql('Actualizar_Contrato', $arreglo_contrato);
+        
+        $SqlContrato = $this->miSql->getCadenaSql('Actualizar_Contrato', $arreglo_contrato);
+        array_push($SQLs, $SqlContrato);
+       
         $trans_Editar_contrato = $esteRecursoDB->transaccion($SQLs);
         
+        $datos= array("numero_contrato"=> $_REQUEST['numero_contrato'],
+            "vigencia"=> $_REQUEST['vigencia']);
+
         if ($trans_Editar_contrato != false) {
-            $cadenaVerificarTemp = $this->miSql->getCadenaSql('obtenerInfoTemporal',  $_REQUEST["atributosContratoTempHidden"]);
+            $cadenaVerificarTemp = $this->miSql->getCadenaSql('obtenerInfoTemporal', $_REQUEST["atributosContratoTempHidden"]);
             $infoTemp = $esteRecursoDB->ejecutarAcceso($cadenaVerificarTemp, "busqueda");
             if ($infoTemp != false) {
                 $cadenaEliminarInfoTemporal = $this->miSql->getCadenaSql('eliminarInfoTemporal', $_REQUEST["atributosContratoTempHidden"]);
                 $esteRecursoDB->ejecutarAcceso($cadenaEliminarInfoTemporal, "acceso");
             }
-            redireccion::redireccionar("Inserto", $arreglo_contrato);
+            redireccion::redireccionar("Actualizo", $datos);
 
             exit();
         } else {
-            redireccion::redireccionar("ErrorRegistro");
+            redireccion::redireccionar("NoActualizo",$datos);
 
             exit();
         }

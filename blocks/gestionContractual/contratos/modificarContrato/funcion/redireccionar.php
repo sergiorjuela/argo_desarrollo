@@ -14,13 +14,25 @@ class redireccion {
 		
 		
 		switch ($opcion) {
-			case "Inserto" :
+			case "Actualizo" :
 				
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&bloque=" . $_REQUEST ['bloque'];
 				$variable .= "&bloqueGrupo=" . $_REQUEST ["bloqueGrupo"];
 				$variable .= "&opcion=mensaje";
-				$variable .= "&mensaje=Inserto";
+				$variable .= "&mensaje=Actualizo";
+				$variable .= "&numero_contrato=" . $valor ['numero_contrato'];
+				$variable .= "&vigencia=" . $valor ['vigencia'];
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
+				
+				break;
+			case "NoActualizo" :
+				
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&bloque=" . $_REQUEST ['bloque'];
+				$variable .= "&bloqueGrupo=" . $_REQUEST ["bloqueGrupo"];
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=NoActualizo";
 				$variable .= "&numero_contrato=" . $valor ['numero_contrato'];
 				$variable .= "&vigencia=" . $valor ['vigencia'];
 				$variable .= "&usuario=" . $_REQUEST ['usuario'];

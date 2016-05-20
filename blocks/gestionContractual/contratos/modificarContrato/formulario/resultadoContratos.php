@@ -118,11 +118,10 @@ class registrarForm {
 					'fecha_inicial' => $fecha_inicio,
 					'fecha_final' => $fecha_final 
 			);
-                        var_dump($arreglo);
+                      
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarContrato', $arreglo );
-                        echo $cadenaSql;
-			$contratos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+                        $contratos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
                 
                       
                        
@@ -170,8 +169,8 @@ class registrarForm {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=modificarContratos";
 				$variable .= "&id_solicitud_necesidad=" . $valor ['solicitud_necesidad'];
-				$variable .= "&id_contrato=" . $valor ['numero_contrato'];
-				$variable .= "&id_contrato=" . $valor ['vigencia'];
+				$variable .= "&numero_contrato=" . $valor ['numero_contrato'];
+				$variable .= "&vigencia=" . $valor ['vigencia'];
 				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 				$variable .= "&bloqueNombre=" . $_REQUEST['bloque'];
 				$variable .= "&bloqueGrupo=" . $_REQUEST['bloqueGrupo'];

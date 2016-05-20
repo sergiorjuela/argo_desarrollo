@@ -157,10 +157,7 @@ $urlDatosPaso = $url . $cadena2;
         var InfoPaso0 = [];
 
 //------------------------------->Paso 1 --------------------------------------------------------------------------------------------            
-        if (document.getElementById("<?php echo $this->campoSeguro('numero_contrato') ?>").value != "") {
-            InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('numero_contrato') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('numero_contrato') ?>").getAttribute("id"));
-        }
-        if (document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").value != "") {
+       if (document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").value != "") {
             InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").getAttribute("id"));
         }
         if (document.getElementById("<?php echo $this->campoSeguro('numero_identificacion') ?>").value != "") {
@@ -172,21 +169,21 @@ $urlDatosPaso = $url . $cadena2;
         if (document.getElementById("<?php echo $this->campoSeguro('tipo_persona') ?>").value != "") {
             InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('tipo_persona') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('tipo_persona') ?>").getAttribute("id"));
         }
-        if (document.getElementById("<?php echo $this->campoSeguro('primer_nombre') ?>").value != "") {
-            InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('primer_nombre') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('primer_nombre') ?>").getAttribute("id"));
-        }
+//        if (document.getElementById("<?php echo $this->campoSeguro('primer_nombre') ?>").value != "") {
+//            InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('primer_nombre') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('primer_nombre') ?>").getAttribute("id"));
+//        }
         if (document.getElementById("<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").value != "") {
             InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").getAttribute("id"));
         }
-        if (document.getElementById("<?php echo $this->campoSeguro('segundo_nombre') ?>").value != "") {
-            InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('segundo_nombre') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('segundo_nombre') ?>").getAttribute("id"));
-        }
-        if (document.getElementById("<?php echo $this->campoSeguro('primer_apellido') ?>").value != "") {
-            InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('primer_apellido') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('primer_apellido') ?>").getAttribute("id"));
-        }
-        if (document.getElementById("<?php echo $this->campoSeguro('segundo_apellido') ?>").value != "") {
-            InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('segundo_apellido') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('segundo_apellido') ?>").getAttribute("id"));
-        }
+//        if (document.getElementById("<?php echo $this->campoSeguro('segundo_nombre') ?>").value != "") {
+//            InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('segundo_nombre') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('segundo_nombre') ?>").getAttribute("id"));
+//        }
+//        if (document.getElementById("<?php echo $this->campoSeguro('primer_apellido') ?>").value != "") {
+//            InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('primer_apellido') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('primer_apellido') ?>").getAttribute("id"));
+//        }
+//        if (document.getElementById("<?php echo $this->campoSeguro('segundo_apellido') ?>").value != "") {
+//            InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('segundo_apellido') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('segundo_apellido') ?>").getAttribute("id"));
+//        }
         if (document.getElementById("<?php echo $this->campoSeguro('genero') ?>").value != "") {
             InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('genero') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('genero') ?>").getAttribute("id"));
         }

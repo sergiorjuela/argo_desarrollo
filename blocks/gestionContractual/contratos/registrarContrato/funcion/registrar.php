@@ -82,7 +82,7 @@ class RegistradorContrato {
                 array_push($SQLs, $SqlInfoBancaria);
             }
 
-            $id_contratista = $_REQUEST ['id_contratista'];
+           
         } else {
 
 
