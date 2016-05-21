@@ -110,21 +110,21 @@ $urlDatosPaso = $url . $cadena2;
             if (document.getElementById("<?php echo $this->campoSeguro('tipo_persona') ?>").value != "") {
                 InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('tipo_persona') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('tipo_persona') ?>").getAttribute("id"));
             }
-            if (document.getElementById("<?php echo $this->campoSeguro('primer_nombre') ?>").value != "") {
-                InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('primer_nombre') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('primer_nombre') ?>").getAttribute("id"));
-            }
-            if (document.getElementById("<?php echo $this->campoSeguro('segundo_nombre') ?>").value != "") {
-                InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('segundo_nombre') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('segundo_nombre') ?>").getAttribute("id"));
-            }
-            if (document.getElementById("<?php echo $this->campoSeguro('primer_apellido') ?>").value != "") {
-                InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('primer_apellido') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('primer_apellido') ?>").getAttribute("id"));
-            }
+//            if (document.getElementById("<?php echo $this->campoSeguro('primer_nombre') ?>").value != "") {
+//                InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('primer_nombre') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('primer_nombre') ?>").getAttribute("id"));
+//            }
+//            if (document.getElementById("<?php echo $this->campoSeguro('segundo_nombre') ?>").value != "") {
+//                InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('segundo_nombre') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('segundo_nombre') ?>").getAttribute("id"));
+//            }
+//            if (document.getElementById("<?php echo $this->campoSeguro('primer_apellido') ?>").value != "") {
+//                InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('primer_apellido') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('primer_apellido') ?>").getAttribute("id"));
+//            }
             if (document.getElementById("<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").value != "") {
                 InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").getAttribute("id"));
             }
-            if (document.getElementById("<?php echo $this->campoSeguro('segundo_apellido') ?>").value != "") {
-                InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('segundo_apellido') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('segundo_apellido') ?>").getAttribute("id"));
-            }
+//            if (document.getElementById("<?php echo $this->campoSeguro('segundo_apellido') ?>").value != "") {
+//                InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('segundo_apellido') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('segundo_apellido') ?>").getAttribute("id"));
+//            }
             if (document.getElementById("<?php echo $this->campoSeguro('genero') ?>").value != "") {
                 InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('genero') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('genero') ?>").getAttribute("id"));
             }
@@ -236,6 +236,11 @@ $urlDatosPaso = $url . $cadena2;
             if (document.getElementById("<?php echo $this->campoSeguro('ordenador_gasto') ?>").value != "") {
                 InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('ordenador_gasto') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('ordenador_gasto') ?>").getAttribute("id"));
             }
+            if (document.getElementById("<?php echo $this->campoSeguro('formaPago') ?>").value != "") {
+                InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('formaPago') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('formaPago') ?>").getAttribute("id"));
+            }
+            
+                       
             if (document.getElementById("<?php echo $this->campoSeguro('tipo_gasto') ?>").value != "") {
                 InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('tipo_gasto') ?>").value+";"+document.getElementById("<?php echo $this->campoSeguro('tipo_gasto') ?>").getAttribute("id"));
             }
@@ -289,6 +294,7 @@ $urlDatosPaso = $url . $cadena2;
     }
 
     function AlmacenarPaso(arreglo) {
+       
         $.ajax({
             url: "<?php echo $urlDatosPaso ?>",
             dataType: "json",

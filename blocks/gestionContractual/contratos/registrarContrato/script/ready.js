@@ -20,7 +20,7 @@ $("#ventanaA").steps({
     transitionEffect: "slideLeft",
     onStepChanging: function (event, currentIndex, newIndex) {
         $resultado = $("#registrarContrato").validationEngine("validate");
-        //almacenarInfoTemporal(currentIndex, newIndex);
+        almacenarInfoTemporal(currentIndex, newIndex);
         if ($resultado) {
             
             return true;

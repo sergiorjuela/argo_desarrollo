@@ -24,14 +24,16 @@ if ($_REQUEST ['funcion'] == 'AlmacenarDatos') {
     $arregloDatos = str_replace('"', "", $arregloDatos);
     $arregloDatos = explode(",", $arregloDatos);
     $idContratoTemp = str_replace(";", "", $arregloDatos[count($arregloDatos) - 1]);
+    echo $idContratoTemp;
     $cadenaVerificarTemp = $this->sql->getCadenaSql('obtenerInfoTemporal', $idContratoTemp);
     $infoTemp = $esteRecursoDB->ejecutarAcceso($cadenaVerificarTemp, "busqueda");
     if($infoTemp != false){
-     //echo "entro";
+    echo "entro";
      $cadenaEliminarInfoTemporal = $this->sql->getCadenaSql('eliminarInfoTemporal', $idContratoTemp);
      $infoTemp = $esteRecursoDB->ejecutarAcceso($cadenaEliminarInfoTemporal, "acceso");
      //var_dump($cadenaEliminarInfoTemporal);
     }
+   
     for ($i = 0; $i < count($arregloDatos); $i++) {
         $Datos = explode(";", $arregloDatos[$i]);
         $infoCadena = array('campo' => substr($this->miConfigurador->fabricaConexiones->crypto->decodificar($Datos[1], $enlace), 0, -10),
@@ -40,6 +42,7 @@ if ($_REQUEST ['funcion'] == 'AlmacenarDatos') {
             'usuario' => $id_usuario,
             'id' => $idContratoTemp);
         $cadenaSql = $this->sql->getCadenaSql('insertarInformacionContratoTemporal', $infoCadena);
+        var_dump($cadenaSql);
         $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
     }
 }

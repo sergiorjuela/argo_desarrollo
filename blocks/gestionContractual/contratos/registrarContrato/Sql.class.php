@@ -92,22 +92,20 @@ class Sql extends \Sql {
 
                 break;
 
-            case "Consultar_Registro_Presupuestales" :
-                $cadenaSql = "SELECT id_registro_pres, numero_registro, valor_registro,"
-                        . "disponibilidad_presupuestal, fecha_rgs_pr  ";
-                $cadenaSql .= "FROM \"SICapital\".registro_presupuestal rp  ";
-                $cadenaSql .= "JOIN \"SICapital\".disponibilidad_presupuestal dp ON dp.id_disponibilidad=rp.disponibilidad_presupuestal  ";
-                $cadenaSql .= "JOIN \"SICapital\".solicitud_necesidad sl ON sl.id_sol_necesidad=dp.solicitud_necesidad  ";
-                $cadenaSql .= "WHERE rp.estado_registro= TRUE ";
-                $cadenaSql .= " AND sl.id_sol_necesidad='" . $variable . "' ;";
+             case "Consultar_Registro_Presupuestales" :
+                $cadenaSql = " SELECT rp.id_registro_pres, rp.numero_registro, rp.valor_registro, rp.vigencia,rp.fecha_rgs_pr  ";
+                $cadenaSql .= " FROM \"SICapital\".registro_presupuestal rp ";
+                $cadenaSql .= " WHERE rp.estado_registro=true and rp.disponibilidad_presupuestal=$variable;";
                 break;
 
             case "Consultar_Disponibilidad" :
-                $cadenaSql = "SELECT DISTINCT ";
-                $cadenaSql .= " *  ";
-                $cadenaSql .= "FROM \"SICapital\".disponibilidad_presupuestal  ";
-                $cadenaSql .= "WHERE estado_registro=TRUE ";
-                $cadenaSql .= " AND solicitud_necesidad='" . $variable . "' ;";
+                $cadenaSql = "SELECT dp.id_disponibilidad, dp.numero_disp,dp.valor_disp, dp.vigencia,dp.fecha_disp  ";
+                $cadenaSql .= " FROM \"SICapital\".solicitud_necesidad sn, ";
+                $cadenaSql .= "\"SICapital\".disponibilidad_presupuestal dp,  ";
+                $cadenaSql .= "\"SICapital\".solicitud_diponibilidad sd   ";
+                $cadenaSql .= "WHERE sn.id_sol_necesidad = sd.solicitud_necesidad and ";
+                $cadenaSql .= "dp.id_disponibilidad = sd.disponibilidad_presupuestal and ";
+                $cadenaSql .= "dp.estado_registro=true and sn.id_sol_necesidad=" . $variable . ";";
                 break;
 
             case "funcionarios" :
@@ -622,7 +620,7 @@ class Sql extends \Sql {
             case 'insertarInformacionContratoTemporal' :
 
                 $cadenaSql = "INSERT INTO ";
-                $cadenaSql .= " contractual.temporal_contrato( ";
+                $cadenaSql .= " temporal_contrato( ";
                 $cadenaSql .= " id_contrato_temp,";
                 $cadenaSql .= " campo_formulario,";
                 $cadenaSql .= " informacion_campo,";

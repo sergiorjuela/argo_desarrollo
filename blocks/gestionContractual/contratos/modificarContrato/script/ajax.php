@@ -155,7 +155,7 @@ $urlDatosPaso = $url . $cadena2;
 
     function almacenarInfoTemporal(pasoActual, pasoNuevo) {
         var InfoPaso0 = [];
-
+        
 //------------------------------->Paso 1 --------------------------------------------------------------------------------------------            
        if (document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").value != "") {
             InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").getAttribute("id"));
