@@ -83,10 +83,11 @@ class registrarForm {
         $atributos ['tipoEtiqueta'] = 'inicio';
         $atributos ["leyenda"] = "Registrar Contrato";
         echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
+        $datosContrato=array('numero_contrato'=>$_REQUEST['numero_contrato'],
+            'vigencia'=>$_REQUEST['vigencia']);
         unset($atributos); {
-            $cadena_sql = $this->miSql->getCadenaSql('Consultar_Contrato_Particular', $_REQUEST ['id_contrato']);
+            $cadena_sql = $this->miSql->getCadenaSql('Consultar_Contrato_Particular', $datosContrato);
             $datosContratista = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-
             $etiquetas = array(
                 0 => 'Vigencia',
                 1 => 'Número Contrato',
@@ -94,8 +95,7 @@ class registrarForm {
                 3 => 'Fecha Suscripción',
                 4 => 'Fecha Final',
                 5 => 'Valor Contrato Inicial',
-                6 => 'Duración del Contrato',
-                7 => 'Plazo de Ejecución Días'
+                6 => 'Plazo de Ejecución Días'
             );
             // ------------------Division para los botones-------------------------
             $atributos ["id"] = "ventanaA";
@@ -232,7 +232,7 @@ class registrarForm {
                         if (isset($_REQUEST [$esteCampo])) {
                             $atributos ['valor'] = $_REQUEST [$esteCampo];
                         } else {
-                            $atributos ['valor'] = 0;
+                            $atributos ['valor'] = "";
                         }
                         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                         $atributos ['deshabilitado'] = false;
@@ -413,7 +413,8 @@ class registrarForm {
         $valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
         $valorCodificado .= "&opcion=registrarNovedad";
         $valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
-        $valorCodificado .= "&id_contrato=" . $_REQUEST ['id_contrato'];
+        $valorCodificado .= "&numero_contrato=" . $_REQUEST ['numero_contrato'];
+        $valorCodificado .= "&vigencia=" . $_REQUEST ['vigencia'];
 
         /**
          * SARA permite que los nombres de los campos sean dinámicos.

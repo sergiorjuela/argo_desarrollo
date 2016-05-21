@@ -37,7 +37,7 @@ if ($_REQUEST ['funcion'] == 'consultaContratista') {
 
 if ($_REQUEST ['funcion'] == 'consultaDisponibilidad') {
 
-    $cadenaSql = $this->sql->getCadenaSql('buscar_disponibilidad', $_GET);
+    $cadenaSql = $this->sql->getCadenaSql('buscar_disponibilidades', $_GET);
     $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
     
     $resultado = json_encode($resultadoItems);

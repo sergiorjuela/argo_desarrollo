@@ -22,13 +22,13 @@ $("#<?php echo $this->campoSeguro('tipo_modificacion') ?>").change(function() {
 
 if($("#<?php echo $this->campoSeguro('tipo_modificacion') ?>").val()!=''){
 
-if($("#<?php echo $this->campoSeguro('tipo_modificacion') ?>").val()==235){
+if($("#<?php echo $this->campoSeguro('tipo_modificacion') ?>").val()==219){
 $("#<?php echo $this->campoSeguro('divisionCesion') ?>").css('display','block');
 }else{
 $("#<?php echo $this->campoSeguro('divisionCesion') ?>").css('display','none');
 }
 
-if($("#<?php echo $this->campoSeguro('tipo_modificacion') ?>").val()==236 ||$("#<?php echo $this->campoSeguro('tipo_modificacion') ?>").val()==237 ||$("#<?php echo $this->campoSeguro('tipo_modificacion') ?>").val()==238 ){
+if($("#<?php echo $this->campoSeguro('tipo_modificacion') ?>").val()==220 ||$("#<?php echo $this->campoSeguro('tipo_modificacion') ?>").val()==237 ||$("#<?php echo $this->campoSeguro('tipo_modificacion') ?>").val()==238 ){
 $("#<?php echo $this->campoSeguro('divisionAdicion') ?>").css('display','block');
 }else{
 $("#<?php echo $this->campoSeguro('divisionAdicion') ?>").css('display','none');

@@ -21,7 +21,8 @@ class redireccion {
                 $variable .= "&bloqueGrupo=" . $_REQUEST ["bloqueGrupo"];
                 $variable .= "&opcion=mensaje";
                 $variable .= "&mensaje=Inserto";
-                $variable .= "&numero_contrato=" . $_REQUEST['id_contrato'];
+                $variable .= "&numero_contrato=" . $valor['numero_contrato'];
+                $variable .= "&vigencia=" . $valor['vigencia'];
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
 
                 break;
@@ -31,6 +32,8 @@ class redireccion {
                 $variable .= "&bloque=" . $_REQUEST ['bloque'];
                 $variable .= "&bloqueGrupo=" . $_REQUEST ["bloqueGrupo"];
                 $variable .= "&opcion=mensaje";
+                $variable .= "&numero_contrato=" . $valor['numero_contrato'];
+                $variable .= "&vigencia=" . $valor['vigencia'];
                 $variable .= "&mensaje=noInserto";
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
                 break;

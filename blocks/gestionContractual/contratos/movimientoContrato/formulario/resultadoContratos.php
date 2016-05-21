@@ -101,12 +101,7 @@ class registrarForm {
                 $contratista = '';
             }
 
-            if (isset($_REQUEST ['dependencia']) && $_REQUEST ['dependencia'] != '') {
-                $dependencia = $_REQUEST ['dependencia'];
-            } else {
-                $dependencia = '';
-            }
-
+         
             if (isset($_REQUEST ['vigencia']) && $_REQUEST ['vigencia'] != '') {
                 $vigencia = $_REQUEST ['vigencia'];
             } else {
@@ -119,7 +114,7 @@ class registrarForm {
                 'unidad_ejecutora' => $unidad_ejecutora,
                 'clase_contrato' => $clase_contrato,
                 'id_contratista' => $contratista,
-                'dependencia' => $dependencia
+                
             );
 
             $cadenaSql = $this->miSql->getCadenaSql('consultarContrato', $arreglo);
@@ -154,9 +149,9 @@ class registrarForm {
                                 <th>Vigencia</th>
                     		<th>Número Contrato</th>            
             			<th>Identificacion<br>Contratista</th>
-                                <th>Nombre<br>Contratista</th>
+                                <th>Solicitud Necesidad<br>Contratista</th>
                                 <th>Clase Contrato</th>
-                                <th>Modificar</th>
+                                <th>Novedad</th>
                              </tr>
                              </thead>
                              <tbody>";
@@ -164,7 +159,10 @@ class registrarForm {
             foreach ($contratos as $valor) {
                 $variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
                 $variable .= "&opcion=registrar";
-                $variable .= "&id_contrato=" . $valor ['id_contrato'];
+                $variable .= "&id_contrato=" . $valor ['id_contrato_normal'];
+                $variable .= "&id_contratista=" . $valor ['id_contratista'];
+                $variable .= "&vigencia=" . $valor ['vigencia'];
+                $variable .= "&numero_contrato=" . $valor ['numero_contrato'];
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
                 $variable .= "&bloqueNombre=" . $_REQUEST['bloque'];
                 $variable .= "&bloqueGrupo=" . $_REQUEST['bloqueGrupo'];
@@ -174,9 +172,9 @@ class registrarForm {
                 $mostrarHtml = "<tr>
                     <td><center>" . $valor ['vigencia'] . "</center></td>
                     <td><center>" . $valor ['numero_contrato'] . "</center></td>
-                    <td><center>" . $valor ['identificacion'] . "</center></td>
-                    <td><center>" . $valor ['nombre'] . "</center></td>
-                        <td><center>" . $valor ['clase_contrato'] . "</center></td>
+                    <td><center>" . $valor ['contratista'] . "</center></td>
+                    <td><center>" . $valor ['solicitud_necesidad'] . "</center></td>
+                    <td><center>" . $valor ['descripcion'] . "</center></td>
                     <td><center>
                     	<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/modificar.png' width='15px'>

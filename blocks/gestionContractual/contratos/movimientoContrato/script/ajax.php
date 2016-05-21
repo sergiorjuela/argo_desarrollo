@@ -105,7 +105,7 @@ $urlRegistro = $url . $cadenaRegistro;
         });
 
         $("#<?php echo $this->campoSeguro('vigencia_contrato') ?>").autocomplete({
-            minChars: 3,
+            minChars: 2,
             serviceUrl: '<?php echo $urlVigenciaContrato; ?>',
             onSelect: function (suggestion) {
 

@@ -77,12 +77,21 @@ class RegistradorContrato {
             }
 
             if ($estado != FALSE) {
+                
+                if (isset($_REQUEST ['diasSuspension']) && $_REQUEST ['diasSuspension'] != "") {
+                    $diaSuspencion = $_REQUEST ['diasSuspension'];
+                }
+                else {
+                    $diaSuspencion=0;
+                }
+                
                 $arreglo_novedad = array(
-                    'id_contrato' => $_REQUEST['id_contrato'],
+                    'numero_contrato' => $_REQUEST['numero_contrato'],
+                    'vigencia' => $_REQUEST['vigencia'],
                     'tipo_novedad' => $_REQUEST['tipo_novedad'],
                     'fecha_novedad' => $_REQUEST ['fecha_novedad'],
                     'numero_acto' => $_REQUEST ['numero_acto'],
-                    'diasSuspension' => $_REQUEST ['diasSuspension'],
+                    'diasSuspension' => $diaSuspencion,
                     'observaciones' => $_REQUEST ['observaciones'],
                     'ruta_documento' => $destino1,
                 );
@@ -92,12 +101,16 @@ class RegistradorContrato {
                 $registro = $novedad;
             }
         }
+        
+        
+         $datosContrato=array('numero_contrato'=>$_REQUEST['numero_contrato'],
+            'vigencia'=>$_REQUEST['vigencia']);
 
-        if (isset($registro) == TRUE) {
-            redireccion::redireccionar("Inserto", $_REQUEST['id_contrato']);
+        if (isset($registro) && $registro != false) {
+            redireccion::redireccionar("Inserto", $datosContrato);
             exit();
         } else {
-            redireccion::redireccionar("ErrorRegistro");
+            redireccion::redireccionar("ErrorRegistro",$datosContrato);
             exit();
         }
     }

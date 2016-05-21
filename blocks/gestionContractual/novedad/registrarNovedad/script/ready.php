@@ -32,7 +32,7 @@ $("#<?php echo $this->campoSeguro('tipo_novedad') ?>").change(function() {
 
     if($("#<?php echo $this->campoSeguro('tipo_novedad') ?>").val()!=''){
 
-        if($("#<?php echo $this->campoSeguro('tipo_novedad') ?>").val()==226){
+        if($("#<?php echo $this->campoSeguro('tipo_novedad') ?>").val()==216){
             $("#<?php echo $this->campoSeguro('divisionNovedad') ?>").css('display','block');
             }else{
             $("#<?php echo $this->campoSeguro('divisionNovedad') ?>").css('display','none');

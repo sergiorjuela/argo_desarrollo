@@ -116,7 +116,7 @@ class registrarForm {
             echo $this->miFormulario->campoCuadroLista($atributos);
             unset($atributos);
             
-             $esteCampo = 'unidad_ejecutora';
+            $esteCampo = 'unidad_ejecutora';
             $atributos ['columnas'] = 1;
             $atributos ['nombre'] = $esteCampo;
             $atributos ['id'] = $esteCampo;
@@ -175,7 +175,7 @@ class registrarForm {
             }
             $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
             $atributos ['deshabilitado'] = false;
-            $atributos ['tamanno'] = 35;
+            $atributos ['tamanno'] = 30;
             $atributos ['maximoTamanno'] = '';
             $atributos ['anchoEtiqueta'] = 213;
             $tab ++;
@@ -285,42 +285,7 @@ class registrarForm {
             echo $this->miFormulario->campoCuadroTexto($atributos);
             unset($atributos);
 
-            $esteCampo = 'dependencia';
-            $atributos ['columnas'] = 1;
-            $atributos ['nombre'] = $esteCampo;
-            $atributos ['id'] = $esteCampo;
-            $atributos ['evento'] = '';
-            $atributos ['deshabilitado'] = false;
-            $atributos ["etiquetaObligatorio"] =false;
-            $atributos ['tab'] = $tab;
-            $atributos ['tamanno'] = 1;
-            $atributos ['estilo'] = 'jqueryui';
-            $atributos ['validar'] = '';
-            $atributos ['limitar'] = false;
-            $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-            $atributos ['anchoEtiqueta'] = 213;
-            $atributos ['anchoCaja'] = 17;
-            if (isset($_REQUEST [$esteCampo])) {
-                $atributos ['seleccion'] = $_REQUEST [$esteCampo];
-            } else {
-                $atributos ['seleccion'] = - 1;
-            }
-
-            $matrizItems = array(
-                array(
-                    ' ',
-                    'Sin Solicitud de Necesidad'
-                )
-            );
-
-            // $atributos ['matrizItems'] = $matrizItems;
-            // Utilizar lo siguiente cuando no se pase un arreglo:
-            $atributos ['baseDatos'] = 'contractual';
-            $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("consulta_dependencia");
-            $tab ++;
-            $atributos = array_merge($atributos, $atributosGlobales);
-            echo $this->miFormulario->campoCuadroLista($atributos);
-            unset($atributos);
+           
         }
 
         // ------------------Division para los botones-------------------------
