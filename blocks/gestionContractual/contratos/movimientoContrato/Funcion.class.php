@@ -41,7 +41,8 @@ class Funcion {
 		include_once ($this->ruta . "funcion/procesarAjax.php");
 	}
 	function registrar() {
-		include_once ($this->ruta . "funcion/registrar.php");
+      
+                include_once ($this->ruta . "funcion/registrar.php");
 	}
 	function action() {
 		

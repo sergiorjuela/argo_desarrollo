@@ -161,6 +161,7 @@ $urlRegistro = $url . $cadenaRegistro;
                     $('#<?php echo $this->campoSeguro('numero_disponibilidad') ?>').width(250);
                     $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").select2();
                     $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").removeAttr('disabled');
+                  
                 }
             }
         });

@@ -149,7 +149,7 @@ class registrarForm {
                                 <th>Vigencia</th>
                     		<th>Número Contrato</th>            
             			<th>Identificacion<br>Contratista</th>
-                                <th>Solicitud Necesidad<br>Contratista</th>
+                                <th>Solicitud Necesidad</th>
                                 <th>Clase Contrato</th>
                                 <th>Novedad</th>
                              </tr>

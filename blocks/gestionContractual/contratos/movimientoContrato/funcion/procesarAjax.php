@@ -39,16 +39,14 @@ if ($_REQUEST ['funcion'] == 'consultaDisponibilidad') {
 
     $cadenaSql = $this->sql->getCadenaSql('buscar_disponibilidades', $_GET);
     $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-    
     $resultado = json_encode($resultadoItems);
     echo $resultado;
 }
 
 if ($_REQUEST ['funcion'] == 'consultaRegistro') {
     
-echo    $cadenaSql = $this->sql->getCadenaSql('buscar_registro', $_GET['valor']);
+    $cadenaSql = $this->sql->getCadenaSql('buscar_registro', $_GET['valor']);
     $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-    
     $resultado = json_encode($resultadoItems);
     echo $resultado;
 }

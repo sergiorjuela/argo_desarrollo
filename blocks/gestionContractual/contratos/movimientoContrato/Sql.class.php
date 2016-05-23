@@ -423,23 +423,21 @@ class Sql extends \Sql {
                 break;
             
             case 'buscar_disponibilidades' :
-                $cadenaSql = "SELECT id_disponibilidad as id, numero_disp as descripcion ";
-                $cadenaSql.= "FROM \"SICapital\".disponibilidad_presupuestal dp, \"SICapital\".solicitud_diponibilidad sd  ";
+                $cadenaSql = "SELECT DISTINCT id_disponibilidad as id, numero_disp as descripcion ";
+                $cadenaSql.= "FROM \"SICapital\".disponibilidad_presupuestal dp, \"SICapital\".solicitud_diponibilidad sd,  ";
                 $cadenaSql.= "\"SICapital\".solicitud_necesidad sn   ";
                 $cadenaSql.= "WHERE dp.vigencia=" . $variable['valor'] . " ";
                 $cadenaSql.= "AND sn.id_sol_necesidad= sd.solicitud_necesidad ";
                 $cadenaSql.= "AND sd.disponibilidad_presupuestal= dp.id_disponibilidad ";
-                $cadenaSql.= "AND dis.estado_registro=TRUE ";
+                $cadenaSql.= "AND dp.estado_registro=TRUE ";
                 $cadenaSql.= "AND unidad_ejecutora=" . $variable['valor2'] . " ";
                 break;
             
             
-
-
             case 'buscar_registro' :
                 $cadenaSql = " SELECT id_registro_pres as id, numero_registro as descripcion ";
-                $cadenaSql.= " FROM contractual.disponibilidad_presupuestal dis ";
-                $cadenaSql.= " JOIN contractual.registro_presupuestal reg ON reg.disponibilidad_presupuestal=dis.id_disponibilidad";
+                $cadenaSql.= " FROM \"SICapital\".disponibilidad_presupuestal dis ";
+                $cadenaSql.= " JOIN \"SICapital\".registro_presupuestal reg ON reg.disponibilidad_presupuestal=dis.id_disponibilidad";
                 $cadenaSql.= " WHERE dis.estado_registro=TRUE ";
                 $cadenaSql.= " AND id_disponibilidad=" . $variable . " ";
                 break;

@@ -693,6 +693,8 @@ class registrarForm {
         $valorCodificado .= "&opcion=registrarNovedad";
         $valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
         $valorCodificado .= "&id_contrato=" . $_REQUEST ['id_contrato'];
+        $valorCodificado .= "&numero_contrato=" . $_REQUEST ['numero_contrato'];
+        $valorCodificado .= "&vigencia=" . $_REQUEST ['vigencia'];
 
         /**
          * SARA permite que los nombres de los campos sean dinámicos.
