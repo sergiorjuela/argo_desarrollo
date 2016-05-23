@@ -170,7 +170,7 @@ class registrarForm {
                              <tr>
                                 <th>Tipo Orden</th>
                                 <th>Número Orden</th>
-                                <th>id_orden</th>
+                                <th>ID de la Orden</th>
                     		<th>Vigencia</th>            
             			<th>Identificación<br>Nombre Contratista</th>
                                 <th>Sede</th>
@@ -197,7 +197,10 @@ class registrarForm {
 
                 $variable_elementos = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
                 $variable_elementos .= "&opcion=consultaElementos";
+                $variable_elementos .= "&numerocontrato=" . $Orden [$i] ['numero_contrato'];
                 $variable_elementos .= "&id_orden=" . $Orden [$i] ['id_orden'];
+                $variable_elementos .= "&vigencia=" . $Orden [$i] ['vigencia'];
+                $variable_elementos .= "&id_contratista=" . $Orden [$i] ['proveedor'];
                 $variable_elementos .= "&arreglo=" . $arreglo;
                 $variable_elementos .= "&usuario=" . $_REQUEST ['usuario'];
                 $variable_elementos .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "  VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];

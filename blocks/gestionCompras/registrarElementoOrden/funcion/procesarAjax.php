@@ -1,12 +1,15 @@
 <?php
 
-$conexion = "inventarios";
+$conexion = "contractual";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+
+$conexionDBC = "inventarios";
+$esteRecursoDBC = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexionDBC );
 
 if ($_REQUEST ['funcion'] == 'SeleccionTipoBien') {
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'ConsultaTipoBien', $_REQUEST ['valor'] );
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems = $esteRecursoDBC->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	$resultadoItems = $resultadoItems [0];
 	
 	echo json_encode ( $resultadoItems );
@@ -26,9 +29,7 @@ if ($_REQUEST ['funcion'] == 'consultarIva') {
 if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciasConsultadas', $_REQUEST ['valor'] );
-	
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
 	$resultado = json_encode ( $resultado );
 	
 	echo $resultado;

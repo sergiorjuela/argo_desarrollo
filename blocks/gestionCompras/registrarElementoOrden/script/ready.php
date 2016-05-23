@@ -40,7 +40,7 @@
             $("#<?php echo $this->campoSeguro('total_iva_con')?>").val('');
             
             
-            resetIva();
+            //resetIva();
             
             
           });  
@@ -51,7 +51,7 @@
         	$("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val('');
             $("#<?php echo $this->campoSeguro('total_iva')?>").val('');
             $("#<?php echo $this->campoSeguro('total_iva_con')?>").val('');
-            resetIva(); 
+            //resetIva(); 
             cantidad=Number($("#<?php echo $this->campoSeguro('cantidad')?>").val());
             valor=Number($("#<?php echo $this->campoSeguro('valor')?>").val());
             
@@ -73,16 +73,10 @@
 	
               
 
-  $('#<?php echo $this->campoSeguro('sedeConsulta')?>').width(290);              	 
- $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2({
-             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
-              	 minimumInputLength: 3,
-              	 });  
+ $('#<?php echo $this->campoSeguro('sedeConsulta')?>').width(290);              	 
+ $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2();  
  
- $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2({
-             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
-              	 minimumInputLength: 3,
-              	 });              	            
+ $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2();              	            
               	 			
 			
 $("#<?php echo $this->campoSeguro('clase')?>").select2();
@@ -111,6 +105,7 @@ $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
  
  
  $("#<?php echo $this->campoSeguro('tipo_registro')?>").select2();
+
  $("#<?php echo $this->campoSeguro('numero_acta') ?>").select2();
  $("#<?php echo $this->campoSeguro('iva')?>").select2();
  $("#<?php echo $this->campoSeguro('bodega')?>").select2();
@@ -154,6 +149,8 @@ $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
         
 		  
      $( "#<?php echo $this->campoSeguro('tipo_poliza')?>" ).change(function() {
+     
+    
         
             switch($("#<?php echo $this->campoSeguro('tipo_poliza')?>").val())
             {

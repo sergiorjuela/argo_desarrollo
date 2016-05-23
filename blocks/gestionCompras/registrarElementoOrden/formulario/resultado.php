@@ -47,7 +47,7 @@ class registrarForm {
 		 */
 		$atributosGlobales ['campoSeguro'] = 'true';
 		
-		$conexion = "inventarios";
+		$conexion = "contractual";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 		
@@ -104,7 +104,7 @@ class registrarForm {
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrden', $arreglo );
-		
+	
 		$Orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$arreglo=serialize($arreglo);
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -166,9 +166,10 @@ class registrarForm {
 			echo "<thead>
                              <tr>
                                 <th>Tipo Orden</th>
-                    			<th>Vigencia y/o<br>Número Orden<br>Unidad Ejecutora</th>            
-            					<th>Identificación<br>Nombre Contratista</th>
-                                <th>Sede</th>
+                                <th>Vigencia y/o<br>Número Orden<br>Unidad Ejecutora</th>            
+            			<th>Identificación<br>Nombre Contratista</th>
+                                <th>Solicitud de Necesidad</th>
+                                <th>Orden de Contrato</th>
                                 <th>Dependencia</th>
                                 <th>Cargar Elementos</th>
                                 
@@ -181,15 +182,18 @@ class registrarForm {
 				$variable .= "&opcion=cargarElemento";
 				$variable .= "&id_orden=" . $Orden [$i] ['id_orden'];
 				$variable .= "&arreglo=" . $arreglo;
+				$variable .= "&numero_contrato=" . $Orden [$i] ['numero_contrato'];;
+				$variable .= "&vigencia=" . $Orden [$i] ['vigencia'];;
 				$variable .= "&usuario=" . $_REQUEST['usuario'];
-				$variable .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] ." <br>VIGENCIA Y/O NÚMERO ORDEN : ".$Orden [$i] ['identificador'];
+				$variable .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] ." <br>VIGENCIA Y/O NÚMERO ORDEN : ". $Orden [$i] ['numero_contrato']." -- ". $Orden [$i] ['vigencia'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$mostrarHtml = "<tr>
-                    <td><center>" . $Orden [$i] ['tipo_contrato'] . "</center></td>
-                    <td><center>" . $Orden [$i] ['identificador'] . "</center></td>		
+                    <td><center>" . $Orden [$i] ['descripcion'] . "</center></td>
+                    <td><center>" . $Orden [$i] ['numero_contrato']." -- ". $Orden [$i] ['vigencia']. "</center></td>		
                     <td><center>" . $Orden [$i] ['contratista'] . "</center></td>
-                    <td><center>" . $Orden [$i] ['sede'] . "</center></td>
+                    <td><center>" . $Orden [$i] ['id_sol_necesidad'] . "</center></td>
+                    <td><center>" . $Orden [$i] ['id_orden_contr'] . "</center></td>
                     <td><center>" . $Orden [$i] ['dependencia'] . "</center></td>
                     <td><center>
                     	<a href='" . $variable . "'>

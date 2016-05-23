@@ -155,7 +155,7 @@ function numero_orden(elem, request, response){
 	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_orden')?>");
 	            $.each(data , function(indice,valor){
 
-	            	$("<option value='"+data[ indice ].id_orden+"'>"+data[ indice ].valor+"</option>").appendTo("#<?php echo $this->campoSeguro('numero_orden')?>");
+	            	$("<option value='"+data[ indice ].id_orden+"'>"+data[ indice ].informacion+"</option>").appendTo("#<?php echo $this->campoSeguro('numero_orden')?>");
 	            	
 	            });
 	            
@@ -178,17 +178,13 @@ function consultarDependenciaConsultada(elem, request, response){
 	    dataType: "json",
 	    data: { valor:$("#<?php echo $this->campoSeguro('sedeConsulta')?>").val()},
 	    success: function(data){ 
-
-
-
-
-	        if(data[0]!=" "){
+             if(data[0]!=" "){
 
 	            $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").html('');
 	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta')?>");
 	            $.each(data , function(indice,valor){
 
-	            	$("<option value='"+data[ indice ].ESF_CODIGO_DEP+"'>"+data[ indice ].ESF_DEP_ENCARGADA+"</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta')?>");
+	            	$("<option value='"+data[ indice ].id_dependencia+"'>"+data[ indice ].ESF_DEP_ENCARGADA+"</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta')?>");
 	            	
 	            });
 	            
@@ -229,19 +225,18 @@ function tipo_bien(elem, request, response){
 
 	    	                    $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','none');
 	    	                    $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','block');   
-	    	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
-	    	                 $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
+                                    $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
+                                    $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
 
-	    	                 break;
+	    	                break;
 	    	                
 	    	                case '3':
 
 	    	                    $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','block');
 	    	                    $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','none');
 	    	                    $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
-	    	         
-	    	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
-	    	                 $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
+	    	                    $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
+                                    $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
 	    	                    
 	    	                break;
 	    	                                
@@ -291,7 +286,7 @@ $(function() {
     $( "#<?php echo $this->campoSeguro('nitproveedor')?>" ).keyup(function() {
 
     	
-	$('#<?php echo $this->campoSeguro('nitproveedor') ?>').val($('#<?php echo $this->campoSeguro('nitproveedor') ?>').val().toUpperCase());
+	$('#<?php echo $this->campoSeguro('nitproveedor') ?>').val($('#<?php echo $this->campoSeguro('nitproveedor') ?>').val());
 
 	
         });

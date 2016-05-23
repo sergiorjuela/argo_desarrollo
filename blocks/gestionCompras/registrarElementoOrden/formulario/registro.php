@@ -44,18 +44,15 @@ class registrarForm {
 		$tiempo = $_REQUEST ['tiempo'];
 		
 		// lineas para conectar base de d atos-------------------------------------------------------------------------------------------------
-		$conexion = "inventarios";
+		$conexion = "contractual";
 		
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$conexion = "catalogo";
-		$esteRecursoDBC = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$conexionDBC = "inventarios";
+		$esteRecursoDBC = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexionDBC );
 		
 		$seccion ['tiempo'] = $tiempo;
-		
-		$conexion = "inventarios";
-		
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -258,9 +255,8 @@ class registrarForm {
 						$atributos ['anchoEtiqueta'] = 213;
 						
 						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_nivel_inventario" );
-						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-						
-						$atributos ['matrizItems'] = $matrizItems;
+						$matrizItems = $esteRecursoDBC->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+                                                $atributos ['matrizItems'] = $matrizItems;
 						
 						// Utilizar lo siguiente cuando no se pase un arreglo:
 						// $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
@@ -542,7 +538,8 @@ class registrarForm {
 							$atributos ['anchoEtiqueta'] = 213;
 							// Valores a mostrar en el control
 							$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_tipo_poliza" );
-							$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+                                                        
+							$matrizItems = $esteRecursoDBC->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 							
 							$atributos ['matrizItems'] = $matrizItems;
 							
@@ -772,7 +769,7 @@ class registrarForm {
 						
 						// Valores a mostrar en el control
 						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_tipo_iva" );
-						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						$matrizItems = $esteRecursoDBC->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 						
 						$atributos ['matrizItems'] = $matrizItems;
 						

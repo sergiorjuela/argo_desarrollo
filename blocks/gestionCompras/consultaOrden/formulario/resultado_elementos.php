@@ -46,14 +46,23 @@ class registrarForm {
 		 */
 		$atributosGlobales ['campoSeguro'] = 'true';
 		
-		
-		
-		// -------------------------------------------------------------------------------------------------
-		
+	// -------------------------------------------------------------------------------------------------
+		echo "<br>";
+		echo "<br>";
+		echo "<br>";
+		echo "<br>";
+		echo "<br>";
+		echo "<br>";
+		echo "<br>";
+		echo "<br>";
+		echo "<br>";
+		echo "<br>";
+                echo "<br>";
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosOrden', $_REQUEST ['id_orden'] );
+                echo $cadenaSql;    
 		$ElementosOrden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -86,12 +95,10 @@ class registrarForm {
 		
 		$variable = "pagina=" . $miPaginaActual;
 		$variable .= "&opcion=ConsultarOrden";
-		$variable .= "&numero_orden=" .$arreglo['numero_orden'];
+		$variable .= "&numero_contrato=" .$arreglo['numero_contrato'];
 		$variable .= "&tipo_orden=" .$arreglo['tipo_orden'];
 		$variable .= "&id_proveedor=" .$arreglo['nit'];
-		$variable .= "&sedeConsulta=" .$arreglo['sede'];
-		$variable .= "&dependenciaConsulta=" .$arreglo['dependencia'];
-		$variable .= "&fecha_inicio=" .$arreglo['fecha_inicial'];
+                $variable .= "&fecha_inicio=" .$arreglo['fecha_inicial'];
 		$variable .= "&fecha_final=" .$arreglo['fecha_final'];
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
@@ -127,12 +134,12 @@ class registrarForm {
 			echo "<thead>
                              <tr>
                                 <th>Nivel<br>Inventarios</th>
-                    			<th>Tipo de Bien</th>            
-            					<th>Descripción</th>
+                    		<th>Tipo de Bien</th>            
+            			<th>Descripción</th>
                                 <th>Cantidad</th>
                                  <th>Valor($)</th>
                                 <th>Iva Aplicado</th>
-			        			<th>Modificar</th>
+			        <th>Modificar</th>
                                 <th>Eliminar</th>
                              </tr>
             </thead>

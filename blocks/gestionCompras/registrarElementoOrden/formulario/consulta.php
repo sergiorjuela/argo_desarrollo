@@ -125,14 +125,14 @@ class registrarForm {
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['anchoEtiqueta'] = 213;
 		
-		if (isset ( $Acta [0] [$esteCampo] )) {
-			$atributos ['valor'] = $Acta [0] [$esteCampo];
+		if (isset ( $_REQUEST [$esteCampo] )) {
+			$atributos ['valor'] = $_REQUEST [$esteCampo];
 		} else {
 			$atributos ['valor'] = '';
 		}
 		
-		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_id_acta" );
-		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+		//$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_id_acta" );
+		//$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 		
 		$arreglo = array (
 				array (
@@ -229,7 +229,9 @@ class registrarForm {
 		}
 		
 		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "sede" );
+           
 		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+             
 		$atributos ['matrizItems'] = $matrizItems;
 		
 		// Utilizar lo siguiente cuando no se pase un arreglo:
@@ -260,9 +262,15 @@ class registrarForm {
 		} else {
 			$atributos ['seleccion'] = - 1;
 		}
-		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "dependencias" );
+                 $arreglo = array (
+				array (
+						'',
+						'Sede  no seleccionada'
+				)
+		);
 		
-		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "dependencias" );
+		$matrizItems = $arreglo;
 		$atributos ['matrizItems'] = $matrizItems;
 		
 		// Utilizar lo siguiente cuando no se pase un arreglo:

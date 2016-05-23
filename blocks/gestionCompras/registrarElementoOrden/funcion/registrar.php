@@ -29,10 +29,9 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		$conexion = "inventarios";
+		$conexion = "contractual";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		
-		$fechaActual = date ( 'Y-m-d' );
+                $fechaActual = date ( 'Y-m-d' );
 		switch ($_REQUEST ['tipo_registro']) {
 			
 			case '1' :
@@ -163,6 +162,7 @@ class RegistradorOrden {
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_2', $arreglo );
 					
 					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, 'ingresar_elemento_tipo_2' );
+                                      
 				}
 				
 				$datos = array (
@@ -255,12 +255,13 @@ class RegistradorOrden {
 								if (copy ( $archivo ['tmp_name'], $ruta_absoluta )) {
 									$status = "Archivo subido: <b>" . $archivo1 . "</b>";
 								} else {
-									
+                                                                        
+									exit();
 									redireccion::redireccionar ( 'noArchivoCarga' );
 									exit ();
 								}
 							} else {
-								
+								exit();
 								redireccion::redireccionar ( 'noArchivoCarga' );
 								exit ();
 							}
@@ -523,7 +524,7 @@ class RegistradorOrden {
 									(! isset ( $_REQUEST ['registroOrden'] )) ? $_REQUEST ['arreglo'] : $_REQUEST ['registroOrden'],
 									$_REQUEST ['usuario'] 
 							);
-							
+						
 							if ($elemento_id && $_REQUEST ['id_orden']) {
 								$this->miConfigurador->setVariableConfiguracion ( "cache", true );
 								redireccion::redireccionar ( 'inserto_cargue_masivo', $datos );

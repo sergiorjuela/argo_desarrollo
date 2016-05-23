@@ -38,7 +38,7 @@ class registrarForm {
 		$_REQUEST ['tiempo'] = time ();
 		
 		// -------------------------------------------------------------------------------------------------
-		$conexion = "inventarios";
+		$conexion = "contractual";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		// Limpia Items Tabla temporal
@@ -229,7 +229,8 @@ class registrarForm {
 				
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "sede" );
 				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-				$atributos ['matrizItems'] = $matrizItems;
+                                var_dump($matrizItems);
+                              	$atributos ['matrizItems'] = $matrizItems;
 				
 				// Utilizar lo siguiente cuando no se pase un arreglo:
 				// $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';

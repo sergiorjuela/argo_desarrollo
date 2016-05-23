@@ -47,6 +47,15 @@ class Sql extends \Sql {
                 $cadenaSql .= " rel_parametro=30;  ";
 
                 break;
+            
+           
+            case "sede" :
+
+                $cadenaSql = "SELECT DISTINCT  \"ESF_ID_SEDE\", \"ESF_SEDE\" ";
+                $cadenaSql .= " FROM \"SICapital\".\"sedes_SIC\" ";
+                $cadenaSql .= " WHERE   \"ESF_ESTADO\"='A' ";
+                $cadenaSql .= " AND    \"ESF_COD_SEDE\" >  0 ;";
+                break;
 
 //-----------------------------------------------------------SQLs SIN DDEFINIR USO-----------------------------------------------------------------------------------
 
@@ -165,13 +174,14 @@ class Sql extends \Sql {
             /**
              * Clausulas Del Caso Uso.
              */
-            case "dependenciasConsultadas" :
-                $cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
-                $cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
-                $cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
-                $cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+             case "dependenciasConsultadas" :
+                $cadenaSql = "SELECT DISTINCT on (\"ESF_DEP_ENCARGADA\")  id_dependencia , \"ESF_DEP_ENCARGADA\" ";
+                $cadenaSql .= " FROM \"SICapital\".\"dependencia_SIC\" ad ";
+                $cadenaSql .= " JOIN  \"SICapital\".\"espaciosfisicos_SIC\" ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+                $cadenaSql .= " JOIN  \"SICapital\".\"sedes_SIC\" sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
                 $cadenaSql .= " WHERE sa.\"ESF_ID_SEDE\"='" . $variable . "' ";
                 $cadenaSql .= " AND  ad.\"ESF_ESTADO\"='A'";
+
                 break;
 
             case "dependencias" :
@@ -183,12 +193,7 @@ class Sql extends \Sql {
 
                 break;
 
-            case "sede" :
-                $cadenaSql = "SELECT DISTINCT  \"ESF_ID_SEDE\", \"ESF_SEDE\" ";
-                $cadenaSql .= " FROM arka_parametros.arka_sedes ";
-                $cadenaSql .= " WHERE   \"ESF_ESTADO\"='A' ";
-                $cadenaSql .= " AND    \"ESF_COD_SEDE\" >  0 ";
-                break;
+         
 
             // ---- conulta Acta
             case "consultar_id_acta" :
@@ -198,21 +203,17 @@ class Sql extends \Sql {
                 break;
 
             case "consultarOrden" :
-                $cadenaSql = "SELECT DISTINCT ";
-                $cadenaSql .= "ro.id_orden,se.\"ESF_SEDE\" as sede, dep.\"ESF_DEP_ENCARGADA\" as dependencia, ro.fecha_registro,
-								 cn.identificacion ||' - '|| cn.nombres as  contratista,
-						         tc.descripcion tipo_contrato,
-						         CASE ro.tipo_orden 
-										WHEN 1 THEN ro.vigencia || ' - ' ||ro.consecutivo_compras ||' - Unidad Ejecutora  '||unidad_ejecutora
-										WHEN 9 THEn ro.vigencia || ' - ' ||ro.consecutivo_servicio ||' - Unidad Ejecutora  '||unidad_ejecutora
-								 END identificador ";
-                $cadenaSql .= "FROM orden ro ";
-                $cadenaSql .= "JOIN contratistas_adquisiones cn ON cn.id_contratista_adq =  ro.id_contratista  ";
-                $cadenaSql .= "JOIN  tipo_contrato tc ON tc.id_tipo = ro.tipo_orden	 ";
-                $cadenaSql .= "JOIN  arka_parametros.arka_dependencia dep ON dep.\"ESF_CODIGO_DEP\" = ro.dependencia_solicitante	 ";
-                $cadenaSql .= "JOIN  arka_parametros.arka_sedes se ON se.\"ESF_ID_SEDE\" = ro.sede_solicitante	 ";
-                $cadenaSql .= "WHERE 1 = 1 ";
-                $cadenaSql .= "AND ro.estado = 't' ";
+                $cadenaSql = "SELECT ro.id_orden, dep.\"ESF_DEP_ENCARGADA\" as dependencia,  ";
+                $cadenaSql .= "ro.fecha_registro, cn.identificacion ||' - '|| cn.nombre_razon_social as contratista, tc.descripcion, ";
+                $cadenaSql .= "sn.unidad_ejecutora, cg.numero_contrato,cg.vigencia, oc.id_orden_contr,sn.id_sol_necesidad ";
+		$cadenaSql .= "FROM contractual.orden ro, contractual.contrato_general cg, \"SICapital\".orden_contrato oc,  ";
+                $cadenaSql .= "\"SICapital\".solicitud_necesidad sn, contractual.contratista cn,   ";
+                $cadenaSql .= "contractual.parametros tc, \"SICapital\".\"dependencia_SIC\" dep	 ";
+                $cadenaSql .= "WHERE ro.estado = 't' and ro.numero_contrato = cg.numero_contrato and  ";
+                $cadenaSql .= "ro.vigencia = cg.vigencia and cg.id_orden_contrato = oc.id_orden_contr and  ";
+                $cadenaSql .= "oc.solicitud_necesidad = sn.id_sol_necesidad and cn.identificacion = ro.proveedor and ";
+                $cadenaSql .= "cn.identificacion = ro.proveedor and dep.id_dependencia = sn.dependencia_solicitante ";
+                $cadenaSql .= "and tc.id_parametro = ro.tipo_orden ";
                 if ($variable ['tipoorden'] != '') {
                     $cadenaSql .= " AND ro.tipo_orden = '" . $variable ['tipoorden'] . "' ";
                 }
@@ -223,10 +224,6 @@ class Sql extends \Sql {
 
                 if ($variable ['nit'] != '') {
                     $cadenaSql .= " AND cn.identificacion = '" . $variable ['nit'] . "' ";
-                }
-
-                if ($variable ['sede'] != '') {
-                    $cadenaSql .= " AND ro.sede = '" . $variable ['sede'] . "' ";
                 }
 
                 if ($variable ['dependencia'] != '') {
@@ -572,22 +569,21 @@ class Sql extends \Sql {
                 break;
 
             case "buscar_Proveedores" :
-                $cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  value,\"PRO_NIT\"  AS data  ";
-                $cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
-                $cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
-                $cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
-
+                $cadenaSql = " SELECT nit||' - ('||nomempresa||')' AS  value, nit AS data  ";
+                $cadenaSql .= " FROM proveedor.prov_proveedor_info ";
+                $cadenaSql .= " WHERE cast(nit as text) LIKE '%$variable%' OR nomempresa LIKE '%$variable%' LIMIT 10; ";
+                break;
+            
+            case "consultar_tipos_bien" :
+                $cadenaSql = " SELECT id_tipo_bien, descripcion  ";
+                $cadenaSql .= " FROM tipo_bien; ";
                 break;
 
 
 
             case "buscar_numero_orden" :
 
-                $cadenaSql = " 	SELECT 	id_orden ,
-								 CASE tipo_orden 
-										WHEN 1 THEN vigencia || ' - ' || consecutivo_compras ||' - Unidad Ejecutora  '||unidad_ejecutora 
-										WHEN 9 THEn vigencia || ' - ' || consecutivo_servicio ||' - Unidad Ejecutora  '||unidad_ejecutora
-								 END  valor  ";
+                $cadenaSql = " 	SELECT 	id_orden , numero_contrato||'-'||vigencia as informacion ";
                 $cadenaSql .= " FROM orden ";
                 $cadenaSql .= " WHERE tipo_orden ='" . $variable . "';";
 
