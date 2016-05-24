@@ -47,10 +47,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " rel_parametro=30;  ";
 
                 break;
-            
-            
-            
-             case "sede" :
+          case "sede" :
 
                 $cadenaSql = "SELECT DISTINCT  \"ESF_ID_SEDE\", \"ESF_SEDE\" ";
                 $cadenaSql .= " FROM \"SICapital\".\"sedes_SIC\" ";

@@ -1,5 +1,5 @@
 <?php
-$conexion = "inventarios";
+$conexion = "contractual";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 class EnLetras {
 	var $Void = "";

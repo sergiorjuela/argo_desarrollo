@@ -278,17 +278,13 @@ function numero_orden(elem, request, response){
 	    dataType: "json",
 	    data: { valor:$("#<?php echo $this->campoSeguro('tipo_orden')?>").val()},
 	    success: function(data){ 
-
-
-
-
-	        if(data[0]!=" "){
+            if(data[0]!=" "){
 
 	            $("#<?php echo $this->campoSeguro('numero_orden')?>").html('');
 	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_orden')?>");
 	            $.each(data , function(indice,valor){
 
-	            	$("<option value='"+data[ indice ].id_orden+"'>"+data[ indice ].valor+"</option>").appendTo("#<?php echo $this->campoSeguro('numero_orden')?>");
+	            	$("<option value='"+data[ indice ].id_orden+"'>"+data[ indice ].informacion+"</option>").appendTo("#<?php echo $this->campoSeguro('numero_orden')?>");
 	            	
 	            });
 	            
@@ -321,7 +317,7 @@ function consultarDependenciaConsultada(elem, request, response){
 	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta')?>");
 	            $.each(data , function(indice,valor){
 
-	            	$("<option value='"+data[ indice ].ESF_CODIGO_DEP+"'>"+data[ indice ].ESF_DEP_ENCARGADA+"</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta')?>");
+	            	$("<option value='"+data[ indice ].id_dependencia+"'>"+data[ indice ].ESF_DEP_ENCARGADA+"</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta')?>");
 	            	
 	            });
 	            
@@ -358,7 +354,7 @@ $(function() {
     $( "#<?php echo $this->campoSeguro('nitproveedor')?>" ).keyup(function() {
 
     	
-	$('#<?php echo $this->campoSeguro('nitproveedor') ?>').val($('#<?php echo $this->campoSeguro('nitproveedor') ?>').val().toUpperCase());
+	$('#<?php echo $this->campoSeguro('nitproveedor') ?>').val($('#<?php echo $this->campoSeguro('nitproveedor') ?>').val());
 
 	
         });

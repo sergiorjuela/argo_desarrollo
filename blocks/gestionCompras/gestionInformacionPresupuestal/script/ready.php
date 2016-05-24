@@ -45,15 +45,9 @@ event.preventDefault();
         
 
   $('#<?php echo $this->campoSeguro('sedeConsulta')?>').width(290);              	 
- $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2({
-             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
-              	 minimumInputLength: 3,
-              	 });  
+ $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2();  
  
- $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2({
-             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
-              	 minimumInputLength: 3,
-              	 });              	            
+ $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2();              	            
               	 			
 $('#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>').width(100);				
 $("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").select2();

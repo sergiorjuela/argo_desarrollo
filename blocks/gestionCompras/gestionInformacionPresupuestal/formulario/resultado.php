@@ -44,7 +44,7 @@ class registrarForm {
 		 */
 		$atributosGlobales ['campoSeguro'] = 'true';
 		
-		$conexion = "inventarios";
+		$conexion = "contractual";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		if (isset ( $_REQUEST ['numero_orden'] ) && $_REQUEST ['numero_orden'] != '') {
@@ -87,7 +87,14 @@ class registrarForm {
 		} else {
 			$fecha_final = '';
 		}
-		
+		echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
 		$arreglo = array (
 				'tipo_orden' => $tipo_orden,
 				'numero_orden' => $numero_orden,
@@ -161,9 +168,10 @@ class registrarForm {
 			echo "<thead>
                              <tr>
                                 <th>Tipo Orden</th>
-                    			<th>Vigencia y/o<br>Número Orden</th>            
-            					<th>Identificación<br>Nombre Contratista</th>
-                                <th>Sede</th>
+                                <th>Vigencia y/o<br>Número Orden</th>            
+            			<th>Identificación<br>Nombre Contratista</th>
+                                <th>Solicitud de Necesidad</th>
+                                <th>Orden de Contrato</th>
                                 <th>Dependencia</th>
                                 <th>Registrar<br>Disponibilidades Presupuestales</th>
                                 
@@ -176,17 +184,19 @@ class registrarForm {
 				$variable .= "&opcion=cargarDisponibilidad";
 				$variable .= "&id_orden=" . $Orden [$i] ['id_orden'];
 				$variable .= "&arreglo=" . $arreglo;
+				$variable .= "&numero_contrato=" . $Orden [$i] ['numero_contrato'];
+				$variable .= "&vigencia=" . $Orden [$i] ['vigencia'];
 				$variable .= "&usuario=" . $_REQUEST ['usuario'];
-				$variable .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['identificador'];
+				$variable .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] ." <br>VIGENCIA Y/O NÚMERO ORDEN : ". $Orden [$i] ['numero_contrato']." -- ". $Orden [$i] ['vigencia'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$mostrarHtml = "<tr>
-                    <td><center>" . $Orden [$i] ['tipo_contrato'] . "</center></td>
-                    <td><center>" . $Orden [$i] ['identificador'] . "</center></td>		
+                    <td><center>" . $Orden [$i] ['descripcion'] . "</center></td>
+                    <td><center>" . $Orden [$i] ['numero_contrato']." -- ". $Orden [$i] ['vigencia']. "</center></td>		
                     <td><center>" . $Orden [$i] ['contratista'] . "</center></td>
-                    <td><center>" . $Orden [$i] ['sede'] . "</center></td>
-                    <td><center>" . $Orden [$i] ['dependencia'] . "</center></td>
-                    <td><center>
+                    <td><center>" . $Orden [$i] ['id_sol_necesidad'] . "</center></td>
+                    <td><center>" . $Orden [$i] ['id_orden_contr'] . "</center></td>
+                    <td><center>" . $Orden [$i] ['dependencia'] . "</center></td><td><center>
                     	<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/item.png' width='15px'>
                         </a>

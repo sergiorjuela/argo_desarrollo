@@ -363,6 +363,7 @@ class registrarForm {
 		echo $this->miFormulario->division ( "fin" );
 		
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+                
 		
 		// ------------------- SECCION: Paso de variables ------------------------------------------------
 		
