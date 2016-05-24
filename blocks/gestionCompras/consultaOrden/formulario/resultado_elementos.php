@@ -58,12 +58,12 @@ class registrarForm {
 		echo "<br>";
 		echo "<br>";
                 echo "<br>";
-		$conexion = "inventarios";
+		$conexion = "contractual";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosOrden', $_REQUEST ['id_orden'] );
-                echo $cadenaSql;    
-		$ElementosOrden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+                $ElementosOrden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+                
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -142,8 +142,8 @@ class registrarForm {
 			        <th>Modificar</th>
                                 <th>Eliminar</th>
                              </tr>
-            </thead>
-            <tbody>";
+                             </thead>
+                                <tbody>";
 			
 			for($i = 0; $i < count ( $ElementosOrden ); $i ++) {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro

@@ -3,13 +3,10 @@
 $conexion = "contractual";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
-$conexionDBC = "inventarios";
-$esteRecursoDBC = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexionDBC );
-
 if ($_REQUEST ['funcion'] == 'SeleccionTipoBien') {
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'ConsultaTipoBien', $_REQUEST ['valor'] );
-	$resultadoItems = $esteRecursoDBC->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	$resultadoItems = $resultadoItems [0];
 	
 	echo json_encode ( $resultadoItems );

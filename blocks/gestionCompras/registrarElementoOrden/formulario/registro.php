@@ -48,8 +48,7 @@ class registrarForm {
 		
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$conexionDBC = "inventarios";
-		$esteRecursoDBC = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexionDBC );
+
 		
 		$seccion ['tiempo'] = $tiempo;
 
@@ -255,7 +254,9 @@ class registrarForm {
 						$atributos ['anchoEtiqueta'] = 213;
 						
 						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_nivel_inventario" );
-						$matrizItems = $esteRecursoDBC->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+//                                                var_dump($esteRecursoDB);
+//                                                var_dump($matrizItems);
                                                 $atributos ['matrizItems'] = $matrizItems;
 						
 						// Utilizar lo siguiente cuando no se pase un arreglo:
@@ -539,7 +540,7 @@ class registrarForm {
 							// Valores a mostrar en el control
 							$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_tipo_poliza" );
                                                         
-							$matrizItems = $esteRecursoDBC->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+							$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 							
 							$atributos ['matrizItems'] = $matrizItems;
 							
@@ -769,7 +770,7 @@ class registrarForm {
 						
 						// Valores a mostrar en el control
 						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_tipo_iva" );
-						$matrizItems = $esteRecursoDBC->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 						
 						$atributos ['matrizItems'] = $matrizItems;
 						

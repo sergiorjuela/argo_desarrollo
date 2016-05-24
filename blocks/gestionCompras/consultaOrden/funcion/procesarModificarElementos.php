@@ -22,7 +22,7 @@ class RegistradorOrden {
 	}
 	function procesarFormulario() {
 		
-		$conexion = "inventarios";
+		$conexion = "contractual";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		// ------- Registro de Imagen
 		foreach ( $_FILES as $key => $values ) {

@@ -20,7 +20,7 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		$conexion = "inventarios";
+		$conexion = "contractual";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'eliminarElementoActa', $_REQUEST ['id_elemento_acta'] );
