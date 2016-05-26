@@ -105,8 +105,18 @@ class registrarForm {
 			);
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarSolicitud', $arreglo );
-		
+//                        echo "<br>";
+//                        echo "<br>";
+//                        echo "<br>";
+//                        echo "<br>";
+//                        echo "<br>";
+//                        echo "<br>";
+//                        echo "<br>";
+//                        echo "<br>";
+//                        echo "<br>";
+//                        echo $cadenaSql;
 			$solicitudes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+//                        var_dump($solicitudes);
                        
 			
 		}
