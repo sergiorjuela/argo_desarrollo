@@ -25,7 +25,7 @@ class registrarForm {
     }
 
     function miForm() {
-        
+
         // Rescatar los datos de este bloque
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
         $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
@@ -49,15 +49,17 @@ class registrarForm {
          */
         $atributosGlobales ['campoSeguro'] = 'true';
 
+     
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        $conexionFrameWork = "estructura";
+        $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
 
 
         if (isset($_REQUEST ['numero_orden']) && $_REQUEST ['numero_orden'] != '') {
             $numero_orden = explode("-", $_REQUEST ['numero_orden']);
         } else {
-            $numero_orden = array('','');
-           
+            $numero_orden = array('', '');
         }
         if (isset($_REQUEST ['tipo_orden']) && $_REQUEST ['tipo_orden'] != '') {
             $tipo_orden = $_REQUEST ['tipo_orden'];
@@ -71,17 +73,17 @@ class registrarForm {
             $nit = '';
         }
 
-//		if (isset ( $_REQUEST ['sedeConsulta'] ) && $_REQUEST ['sedeConsulta'] != '') {
-//			$sede = $_REQUEST ['sedeConsulta'];
-//		} else {
-//			$sede = '';
-//		}
-//		
-//		if (isset ( $_REQUEST ['dependenciaConsulta'] ) && $_REQUEST ['dependenciaConsulta'] != '') {
-//			$dependencia = $_REQUEST ['dependenciaConsulta'];
-//		} else {
-//			$dependencia = '';
-//		}
+        if (isset ( $_REQUEST ['sedeConsulta'] ) && $_REQUEST ['sedeConsulta'] != '') {
+                $sede = $_REQUEST ['sedeConsulta'];
+        } else {
+                $sede = '';
+        }
+
+        if (isset ( $_REQUEST ['dependenciaConsulta'] ) && $_REQUEST ['dependenciaConsulta'] != '') {
+                $dependencia = $_REQUEST ['dependenciaConsulta'];
+        } else {
+                $dependencia = '';
+		}
 
         if (isset($_REQUEST ['fecha_inicio']) && $_REQUEST ['fecha_inicio'] != '') {
             $fecha_inicio = $_REQUEST ['fecha_inicio'];
@@ -95,22 +97,58 @@ class registrarForm {
             $fecha_final = '';
         }
         
-        $arreglo = array(
-            'tipo_orden' => $tipo_orden,
-            'numero_contrato' => $numero_orden[0],
-            'vigencia' => $numero_orden[1],
-            'nit' => $nit,
-            'fecha_inicial' => $fecha_inicio,
-            'fecha_final' => $fecha_final
-                //'sede' => $sede,
-                //'dependencia' => $dependencia,
-        );
+        if (isset($_REQUEST ['convenio_solicitante']) && $_REQUEST ['convenio_solicitante'] != '') {
+            $convenio = $_REQUEST ['convenio_solicitante'];
+        } else {
+            $convenio = '';
+        }
 
-        $cadenaSql = $this->miSql->getCadenaSql('consultarOrden', $arreglo);
-     
+
+
+
+        $miSesion = Sesion::singleton();
+        $id_usuario = $miSesion->idUsuario();
+        $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
+        $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
+        $unidadEjecutora = strpos($unidadEjecutora[0][0], 'IDEXUD');
+        if (!is_int($unidadEjecutora)) {
+            $unidadEjecutora = 209;
+            $arreglo = array(
+                'tipo_orden' => $tipo_orden,
+                'numero_contrato' => $numero_orden[0],
+                'vigencia' => $numero_orden[1],
+                'nit' => $nit,
+                'fecha_inicial' => $fecha_inicio,
+                'fecha_final' => $fecha_final,
+                'unidad_ejecutora' => $unidadEjecutora,
+                'sede' => $sede,
+                'dependencia' => $dependencia,
+            );
+            $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenGeneral', $arreglo);
+            $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
             
-        $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        } else {
+            
+            $unidadEjecutora = 208;
+            $arreglo = array(
+                'tipo_orden' => $tipo_orden,
+                'numero_contrato' => $numero_orden[0],
+                'vigencia' => $numero_orden[1],
+                'nit' => $nit,
+                'fecha_inicial' => $fecha_inicio,
+                'fecha_final' => $fecha_final,
+                'unidad_ejecutora' => $unidadEjecutora,
+                'dependencia' => $convenio,
+            );
+            
+            
+           $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenIdexud', $arreglo);
+           $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+           
+        }
 
+    
+     
         $arreglo = base64_encode(serialize($arreglo));
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
         $esteCampo = $esteBloque ['nombre'];
@@ -162,7 +200,6 @@ class registrarForm {
         $atributos ['redirLugar'] = true;
         echo $this->miFormulario->enlace($atributos);
         unset($atributos);
-        
         if ($Orden) {
 
             echo "<table id='tablaTitulos'>";
@@ -173,8 +210,7 @@ class registrarForm {
                                 <th>ID de la Orden</th>
                     		<th>Vigencia</th>            
             			<th>Identificación<br>Nombre Contratista</th>
-                                <th>Sede</th>
-                                <th>Dependencia</th>
+                                <th>Sede-Dependencia</th>
                                 <th>Fecha de Registro</th>
                                 <th>Modificar Orden</th>
                         	<th>Modificar Elementos</th>
@@ -222,15 +258,15 @@ class registrarForm {
 //				
                 $elemento = "<a href='" . $variable_elementos . "'><img src='" . $rutaBloque . "/css/images/update.png' width='15px'></a>";
                 $documento = "<a href='" . $variable_documento . "'><img src='" . $rutaBloque . "/css/images/documento.png' width='15px'></a>";
-
+                
+                
                 $mostrarHtml = "<tr>
                                 <td><center>" . $Orden [$i] ['descripcion'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['numero_contrato'] . "</center></td>		
                                 <td><center>" . $Orden [$i] ['id_orden'] . "</center></td>		
                                 <td><center>" . $Orden [$i] ['vigencia'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['proveedor'] . "</center></td>
-                                <td><center>" . 'Pendiente' . "</center></td>
-                                <td><center>" . 'Pendiente' . "</center></td>
+                                <td><center>" . $Orden [$i] ['sededependencia'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['fecha_registro'] . "</center></td>
                                 <td><center>
                                     <a href='" . $variable . "'>

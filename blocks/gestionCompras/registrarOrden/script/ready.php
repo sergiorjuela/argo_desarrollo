@@ -238,6 +238,11 @@ $("#<?php echo $this->campoSeguro('dependencia_solicitante')?>").select2();
 
 
 
+$('#<?php echo $this->campoSeguro('convenio_solicitante')?>').width(200);
+$("#<?php echo $this->campoSeguro('convenio_solicitante')?>").select2();
+
+
+
 $('#<?php echo $this->campoSeguro('dependencia_supervisor')?>').width(350);
 $("#<?php echo $this->campoSeguro('dependencia_supervisor')?>").select2(); 
 

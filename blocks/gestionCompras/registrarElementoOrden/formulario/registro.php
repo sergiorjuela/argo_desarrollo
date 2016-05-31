@@ -33,6 +33,18 @@ class registrarForm {
 		 * Si se utiliza esta técnica es necesario realizar un mezcla entre este arreglo y el específico en cada control:
 		 * $atributos= array_merge($atributos,$atributosGlobales);
 		 */
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+                echo "<br>";
+         
 		
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/inventarios/gestionActa/";
 		$rutaBloque .= $esteBloque ['nombre'];
@@ -90,9 +102,8 @@ class registrarForm {
 				$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 			} else {
 				
-				
-				$arreglo = unserialize ( $_REQUEST ['arreglo'] );
-				
+                                $arreglo = unserialize ( $_REQUEST ['arreglo'] );
+                             			
 				$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=ConsultarActa";

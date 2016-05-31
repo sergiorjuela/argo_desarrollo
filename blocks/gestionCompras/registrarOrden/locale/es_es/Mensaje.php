@@ -12,6 +12,13 @@ $this->idioma ["tipo_ordenTitulo"] = "Seleccione Tipo de Orden ";
 $this->idioma ["sede"] = "Sede : ";
 $this->idioma ["sedeTitulo"] = "Seleccione Sede";
 
+
+$this->idioma ["sede_idexud"] = "Sede : ";
+$this->idioma ["sede_idexud"] = "Sede: Idexud";
+
+$this->idioma ["convenio_solicitante"] = "Convenio : ";
+$this->idioma ["sedeTitulo"] = "Seleccione el convenio";
+
 $this->idioma ["sede_super"] = "Sede : ";
 $this->idioma ["sede_superTitulo"] = "Seleccione Sede";
 

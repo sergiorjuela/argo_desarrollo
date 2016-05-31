@@ -48,6 +48,14 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " poliza; ";
                 break;
+            
+            case "convenios" :
+                $cadenaSql = " SELECT ";
+                $cadenaSql .= " id_convenio,";
+                $cadenaSql .= " nombre_convenio ";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " convenio; ";
+                break;
 
             case "textos" :
                 $cadenaSql = " SELECT ";
@@ -181,7 +189,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " vigencia,id_orden_contrato, tipo_contrato,unidad_ejecutora, ";
                 $cadenaSql .= " objeto_contrato,fecha_inicio,fecha_final,plazo_ejecucion, ";
                 $cadenaSql .= " forma_pago,ordenador_gasto,supervisor,clausula_registro_presupuestal, ";
-                $cadenaSql .= " sede_supervisor,dependencia_supervisor,cargo_supervisor) ";
+                $cadenaSql .= " sede_supervisor,dependencia_supervisor,sede_solicitante,dependencia_solicitante,cargo_supervisor) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['vigencia'] . ",";
                 $cadenaSql .= $variable ['id_orden_contrato'] . ",";
@@ -197,6 +205,8 @@ class Sql extends \Sql {
                 $cadenaSql .= $variable ['clausula_presupuesto'] . ",";
                 $cadenaSql .= "'" . $variable ['sede_supervisor'] . "',";
                 $cadenaSql .= "'" . $variable ['dependencia_supervisor'] . "',";
+                $cadenaSql .= "'" . $variable ['sede_solicitante'] . "',";
+                $cadenaSql .= "'" . $variable ['dependencia_solicitante'] . "',";
                 $cadenaSql .= "'" . $variable ['cargo_supervisor'] . "');";
              
                 break;

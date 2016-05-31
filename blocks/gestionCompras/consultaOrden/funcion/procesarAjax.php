@@ -386,8 +386,8 @@ if ($_REQUEST ['funcion'] == 'consultarCargoSuper') {
 
 //------------------------obtener Numero de Ordenes a partit de la calsificacion tipo de orden -------------------------
 if ($_REQUEST ['funcion'] == 'consultarNumeroOrden') {
-	
-	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_numero_orden', $_REQUEST ['valor'] );
+	$datos = array ('tipo_orden'=>$_REQUEST ['valor1'], 'unidad' => $_REQUEST ['valor2']);
+     	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_numero_orden', $datos );
 	
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	

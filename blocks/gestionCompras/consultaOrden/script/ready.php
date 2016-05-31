@@ -35,6 +35,9 @@ $("#<?php echo $this->campoSeguro('sede')?>").select2();
 $('#<?php echo $this->campoSeguro('formaPago')?>').width(150);
 $("#<?php echo $this->campoSeguro('formaPago')?>").select2();                 
 
+$('#<?php echo $this->campoSeguro('convenio_solicitante')?>').width(150);
+$("#<?php echo $this->campoSeguro('convenio_solicitante')?>").select2();                 
+
 $('#<?php echo $this->campoSeguro('sede_super')?>').width(300);
 $("#<?php echo $this->campoSeguro('sede_super')?>").select2();
 

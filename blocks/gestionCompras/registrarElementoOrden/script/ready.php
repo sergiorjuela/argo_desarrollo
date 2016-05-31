@@ -76,6 +76,9 @@
  $('#<?php echo $this->campoSeguro('sedeConsulta')?>').width(290);              	 
  $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2();  
  
+ $('#<?php echo $this->campoSeguro('convenio_solicitante')?>').width(290);              	 
+ $("#<?php echo $this->campoSeguro('convenio_solicitante')?>").select2();  
+ 
  $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2();              	            
               	 			
 			

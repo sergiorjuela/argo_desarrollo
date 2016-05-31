@@ -48,6 +48,21 @@ class Sql extends \Sql {
 
                 break;
             
+            
+            case "obtenerInfoUsuario" :
+                $cadenaSql = "SELECT u.dependencia_especifica ||' - '|| u.dependencia as nombre ";
+                $cadenaSql .= "FROM frame_work.argo_usuario u  ";
+                $cadenaSql .= "WHERE u.id_usuario='" . $variable . "' ";
+                break;  
+            
+            
+             case "convenios" :
+                $cadenaSql = " SELECT ";
+                $cadenaSql .= " id_convenio,";
+                $cadenaSql .= " nombre_convenio ";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " convenio; ";
+                break;
            
             case "sede" :
 
@@ -112,6 +127,88 @@ class Sql extends \Sql {
              * se espera que estén en todos los formularios
              * que utilicen esta plantilla
              */
+            
+            case "consultarOrdenGeneral" :
+
+                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, c.identificacion ||'-'|| c.nombre_razon_social as proveedor,"
+                        . " se.\"ESF_SEDE\" ||'-'|| dep.\"ESF_DEP_ENCARGADA\" as SedeDependencia ";
+                $cadenaSql .= "FROM orden o, parametros p, contratista c, contrato_general cg, \"SICapital\".\"sedes_SIC\" se, \"SICapital\".\"dependencia_SIC\" dep ";
+                $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
+                $cadenaSql .= "AND se.\"ESF_ID_SEDE\" = cg.sede_solicitante ";
+                $cadenaSql .= "AND dep.\"ESF_CODIGO_DEP\" = cg.dependencia_solicitante ";
+                $cadenaSql .= "AND o.proveedor = c.identificacion ";
+                $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
+                $cadenaSql .= "AND o.vigencia = cg.vigencia ";
+                $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
+                $cadenaSql .= "AND o.estado = 'true' ";
+                if ($variable ['tipo_orden'] != '') {
+                    $cadenaSql .= " AND o.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
+                }
+                if ($variable ['numero_contrato'] != '') {
+                    $cadenaSql .= " AND o.numero_contrato = '" . $variable ['numero_contrato'] . "' ";
+                }
+                if ($variable ['vigencia'] != '') {
+                    $cadenaSql .= " AND o.vigencia = '" . $variable ['vigencia'] . "' ";
+                }
+
+                if ($variable ['nit'] != '') {
+                    $cadenaSql .= " AND c.identificacion = '" . $variable ['nit'] . "' ";
+                }
+
+                if ($variable ['sede'] != '') {
+                    $cadenaSql .= " AND se.\"ESF_ID_SEDE\" = '" . $variable ['sede'] . "' ";
+                }
+
+                if ($variable ['dependencia'] != '') {
+                    $cadenaSql .= " AND dep.\"ESF_CODIGO_DEP\" = '" . $variable ['dependencia'] . "' ";
+                }
+                if ($variable ['fecha_inicial'] != '' && $variable ['fecha_final'] != '') {
+                    $cadenaSql .= " AND o.fecha_registro BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
+                    $cadenaSql .= " AND  CAST ( '" . $variable ['fecha_final'] . "' AS DATE)  ";
+                }
+
+                $cadenaSql .= " ; ";
+
+                break;
+                
+            case "consultarOrdenIdexud" :
+
+                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, c.identificacion ||'-'|| c.nombre_razon_social as proveedor,"
+                        . " 'IDEXUD'||'-'||conv.nombre_convenio as SedeDependencia ";
+                $cadenaSql .= "FROM orden o, parametros p, contratista c, contrato_general cg, convenio conv ";
+                $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
+                $cadenaSql .= "AND CAST (conv.id_convenio as text) = cg.dependencia_solicitante ";
+                $cadenaSql .= "AND o.proveedor = c.identificacion ";
+                $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
+                $cadenaSql .= "AND o.vigencia = cg.vigencia ";
+                $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
+                $cadenaSql .= "AND o.estado = 'true' ";
+                if ($variable ['tipo_orden'] != '') {
+                    $cadenaSql .= " AND o.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
+                }
+                if ($variable ['numero_contrato'] != '') {
+                    $cadenaSql .= " AND o.numero_contrato = '" . $variable ['numero_contrato'] . "' ";
+                }
+                if ($variable ['vigencia'] != '') {
+                    $cadenaSql .= " AND o.vigencia = '" . $variable ['vigencia'] . "' ";
+                }
+
+                if ($variable ['nit'] != '') {
+                    $cadenaSql .= " AND c.identificacion = '" . $variable ['nit'] . "' ";
+                }
+
+                if ($variable ['dependencia'] != '') {
+                    $cadenaSql .= " AND conv.id_convenio = '" . $variable ['dependencia'] . "' ";
+                }
+                if ($variable ['fecha_inicial'] != '' && $variable ['fecha_final'] != '') {
+                    $cadenaSql .= " AND o.fecha_registro BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
+                    $cadenaSql .= " AND  CAST ( '" . $variable ['fecha_final'] . "' AS DATE)  ";
+                }
+
+                $cadenaSql .= " ; ";
+
+                break;
+            
             case "iniciarTransaccion" :
                 $cadenaSql = "START TRANSACTION";
                 break;
@@ -581,11 +678,12 @@ class Sql extends \Sql {
 
 
 
-            case "buscar_numero_orden" :
+           case "buscar_numero_orden" :
 
-                $cadenaSql = " 	SELECT 	id_orden , numero_contrato||'-'||vigencia as informacion ";
-                $cadenaSql .= " FROM orden ";
-                $cadenaSql .= " WHERE tipo_orden ='" . $variable . "';";
+                $cadenaSql = " 	SELECT 	o.numero_contrato ||'-'|| o.vigencia as value, o.numero_contrato ||'-'||o.vigencia as orden ";
+                $cadenaSql .= " FROM orden o, contrato_general cg ";
+                $cadenaSql .= " WHERE o.numero_contrato = cg.numero_contrato and o.vigencia = cg.vigencia and cg.unidad_ejecutora ='".$variable['unidad']."' ";
+                $cadenaSql .= " and tipo_orden ='" . $variable['tipo_orden'] . "';";
 
                 break;
             case "cargos_existentes" :

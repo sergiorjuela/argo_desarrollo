@@ -29,17 +29,7 @@ class RegistradorOrden {
 
     function procesarFormulario() {
 
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-
+      
         $SQLs = [];
         $Identificadores = array('numero_contrato' => $_REQUEST['numerocontrato'],
             'vigencia' => $_REQUEST['vigencia'],
@@ -82,15 +72,19 @@ class RegistradorOrden {
 
 
         $unidad_ejecutura = strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD');
-        if ($unidad_ejecutura == false) {
+        if (!is_int($unidad_ejecutura)) {
             $unidad_ejecutura = 209;
+            $sede_solicitante = $_REQUEST ['sede'];
+            $dependencia_solicitante = $_REQUEST ['dependencia_solicitante'];
         } else {
             $unidad_ejecutura = 208;
+            $sede_solicitante = $_REQUEST ['sede_idexud'];
+            $dependencia_solicitante = $_REQUEST ['convenio_solicitante'];
         }
         if (isset($_POST['clausula_presupuesto'])) {
             $clausula_presupuesto = $_POST['clausula_presupuesto'];
-            if($clausula_presupuesto='t'){
-                $clausula_presupuesto='true';
+            if ($clausula_presupuesto = 't') {
+                $clausula_presupuesto = 'true';
             }
         } else {
             $clausula_presupuesto = 'false';
@@ -105,8 +99,8 @@ class RegistradorOrden {
         } else {
             $fecha_fin = 'null';
         }
-      
-        
+
+
         $datosContratoGeneral = array(
             'id_orden_contrato' => 1,
             'tipo_contrato' => 98,
@@ -123,6 +117,8 @@ class RegistradorOrden {
             'cargo_supervisor' => $_REQUEST ['cargo_supervisor'],
             'numero_contrato' => $Identificadores['numero_contrato'],
             'vigencia' => $Identificadores['vigencia'],
+            'sede_solicitante' => $sede_solicitante,
+            'dependencia_solicitante' => $dependencia_solicitante,
             'forma_pago' => $_REQUEST ['formaPago']);
 
 
@@ -182,7 +178,7 @@ class RegistradorOrden {
                 array_push($SQLs, $sqlPoliza);
             }
         }
-      
+
 
         $trans_actualizacion_orden = $esteRecursoDB->transaccion($SQLs);
 

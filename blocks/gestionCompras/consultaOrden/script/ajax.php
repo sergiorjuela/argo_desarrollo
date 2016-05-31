@@ -448,7 +448,7 @@ $urlFinaliva = $url . $cadenaiva;
         $.ajax({
             url: "<?php echo $urlFinalNumeroOrden ?>",
             dataType: "json",
-            data: {valor: $("#<?php echo $this->campoSeguro('tipo_orden') ?>").val()},
+            data: {valor1: $("#<?php echo $this->campoSeguro('tipo_orden') ?>").val(),valor2: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val()},
             success: function (data) {
                 if (data[0] != " ") {
 

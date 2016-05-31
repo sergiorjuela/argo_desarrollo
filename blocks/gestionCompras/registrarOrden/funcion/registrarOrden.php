@@ -29,6 +29,7 @@ class RegistradorOrden {
 
     function procesarFormulario() {
   
+      
         $SQLs = [];
         $fechaActual = date('Y-m-d');
 
@@ -66,11 +67,16 @@ class RegistradorOrden {
             'registro_mercantil' => $_REQUEST ['registro_mercantil']);
         
 
-        $unidad_ejecutura = strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD');
-        if ($unidad_ejecutura == false) {
+        $unidad_ejecutura = strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD - IDEXUD');
+       
+        if (!is_int($unidad_ejecutura)) {
             $unidad_ejecutura = 209;
+            $sede_solicitante = $_REQUEST ['sede'];
+            $dependencia_solicitante = $_REQUEST ['dependencia_solicitante'];
         } else {
             $unidad_ejecutura = 208;
+            $sede_solicitante = $_REQUEST ['sede_idexud'];
+            $dependencia_solicitante = $_REQUEST ['convenio_solicitante'];
         }
         if (isset($_POST['clausula_presupuesto'])) {
             $clausula_presupuesto = $_POST['clausula_presupuesto'];
@@ -87,6 +93,8 @@ class RegistradorOrden {
         } else {
             $fecha_fin = 'null';
         }
+        
+        
         $datosContratoGeneral = array('vigencia' => (int) date('Y'),
             'id_orden_contrato' => 1,
             'tipo_contrato' => 98,
@@ -101,6 +109,8 @@ class RegistradorOrden {
             'sede_supervisor' => $_REQUEST ['sede_super'],
             'dependencia_supervisor' => $_REQUEST ['dependencia_supervisor'],
             'cargo_supervisor' => $_REQUEST ['cargo_supervisor'],
+            'sede_solicitante' => $sede_solicitante,
+            'dependencia_solicitante' => $dependencia_solicitante,
             'forma_pago' => $_REQUEST ['formaPago']);
        
         $datosOrden = array('tipo_orden' => $_REQUEST ['tipo_orden'],
@@ -131,6 +141,7 @@ class RegistradorOrden {
        // Registro Contrato General
         $SQLsContratoGeneral = $this->miSql->getCadenaSql('insertarContratoGeneral', $datosContratoGeneral);
         array_push($SQLs, $SQLsContratoGeneral);
+      
         // Registro Orden
         $SQLsOrden = $this->miSql->getCadenaSql('insertarOrden', $datosOrden);
         array_push($SQLs, $SQLsOrden);

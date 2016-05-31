@@ -19,6 +19,12 @@ $this->idioma ["referenciaTitulo"] = "Ingrese Referencia";
 $this->idioma ["placa"] = "Placa :";
 $this->idioma ["placaTitulo"] = "Ingrese Placa ";
 
+$this->idioma ["sede_idexud"] = "Sede : ";
+$this->idioma ["sede_idexud"] = "Sede: Idexud";
+
+$this->idioma ["convenio_solicitante"] = "Convenio : ";
+$this->idioma ["sedeTitulo"] = "Seleccione el convenio";
+
 $this->idioma ["observaciones"] = "Observaciones :";
 $this->idioma ["observacionesTitulo"] = "Ingrese Observaciones";
 

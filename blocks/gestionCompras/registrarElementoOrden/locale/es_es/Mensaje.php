@@ -29,7 +29,11 @@ $this->idioma ["sedeConsultaTitulo"] = "Seleccione Sede";
 $this->idioma ["numero_orden"] = "Vigencia y/o Número Orden : ";
 $this->idioma ["numero_ordenTitulo"] = "Seleccion Tipo Orden" ;
 
+$this->idioma ["sede_idexud"] = "Sede : ";
+$this->idioma ["sede_idexud"] = "Sede: Idexud";
 
+$this->idioma ["convenio_solicitante"] = "Convenio : ";
+$this->idioma ["sedeTitulo"] = "Seleccione el convenio";
 
 $this->idioma ["tipo_orden"] = "Tipo Orden : ";
 $this->idioma ["tipo_ordenTitulo"] = "Seleccion Tipo Orden" ;

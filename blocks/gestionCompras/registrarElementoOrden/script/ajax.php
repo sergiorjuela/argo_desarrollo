@@ -143,7 +143,7 @@ function numero_orden(elem, request, response){
 	  $.ajax({
 	    url: "<?php echo $urlFinalNumeroOrden?>",
 	    dataType: "json",
-	    data: { valor:$("#<?php echo $this->campoSeguro('tipo_orden')?>").val()},
+	    data: { valor1:$("#<?php echo $this->campoSeguro('tipo_orden')?>").val(),valor2: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val()},
 	    success: function(data){ 
 
 
@@ -155,7 +155,7 @@ function numero_orden(elem, request, response){
 	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_orden')?>");
 	            $.each(data , function(indice,valor){
 
-	            	$("<option value='"+data[ indice ].id_orden+"'>"+data[ indice ].informacion+"</option>").appendTo("#<?php echo $this->campoSeguro('numero_orden')?>");
+	            	$("<option value='"+data[ indice ].value+"'>"+data[ indice ].orden+"</option>").appendTo("#<?php echo $this->campoSeguro('numero_orden')?>");
 	            	
 	            });
 	            
