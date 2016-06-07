@@ -281,7 +281,7 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function tipo_orden() {
-		$conexion = "inventarios";
+		$conexion = "contractual";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrdenDocumento', $_REQUEST ['id_orden'] );
@@ -296,7 +296,8 @@ class RegistradorOrden {
 		return $tipo_orden;
 	}
 	function documento() {
-		$conexion = "inventarios";
+		
+                $conexion = "contractual";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( 'rutaUrlBloque' );
@@ -322,7 +323,7 @@ class RegistradorOrden {
 		// var_dump ( $rubro );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarInformaciónDisponibilidad', $_REQUEST ['id_orden'] );
-		
+		echo $cadenaSql;
 		$infDisponibilidad = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarInformaciónRegistro', $_REQUEST ['id_orden'] );

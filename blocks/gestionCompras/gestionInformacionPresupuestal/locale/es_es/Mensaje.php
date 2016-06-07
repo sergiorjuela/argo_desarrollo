@@ -7,6 +7,11 @@ $this->idioma ["tabContratoConsultarModificar"] = "Consultar y Modificar Disponi
 $this->idioma ["sedeConsulta"] = "Sede : ";
 $this->idioma ["sedeConsultaTitulo"] = "Seleccione Sede";
 
+$this->idioma ["sede_idexud"] = "Sede : ";
+$this->idioma ["sede_idexud"] = "Sede: Idexud";
+
+$this->idioma ["convenio_solicitante"] = "Convenio : ";
+$this->idioma ["sedeTitulo"] = "Seleccione el convenio";
 
 
 

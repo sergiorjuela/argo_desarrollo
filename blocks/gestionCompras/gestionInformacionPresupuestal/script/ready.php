@@ -45,6 +45,7 @@ event.preventDefault();
         
 
   $('#<?php echo $this->campoSeguro('sedeConsulta')?>').width(290);              	 
+  $('#<?php echo $this->campoSeguro('sede_idexud')?>').width(200);              	 
  $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2();  
  
  $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2();              	            
@@ -69,6 +70,7 @@ $("#<?php echo $this->campoSeguro('rubro')?>").select2();
  
  
  $("#<?php echo $this->campoSeguro('numero_orden')?>").select2();
+ $("#<?php echo $this->campoSeguro('convenio_solicitante')?>").select2();
  $("#<?php echo $this->campoSeguro('tipo_orden')?>").select2();
  $("#<?php echo $this->campoSeguro('nivel')?>").select2();
  $("#<?php echo $this->campoSeguro('numero_entrada')?>").select2();
