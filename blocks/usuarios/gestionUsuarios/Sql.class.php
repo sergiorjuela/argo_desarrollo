@@ -287,11 +287,12 @@ class Sql extends \Sql {
 
             case "sede" :
 
-                $cadenaSql = "SELECT DISTINCT  \"ESF_COD_SEDE\", \"ESF_SEDE\" as nombre ";
-                $cadenaSql .= " FROM arka_parametros.arka_sedes ";
+                $cadenaSql = "SELECT DISTINCT  \"ESF_ID_SEDE\", \"ESF_SEDE\" as nombre ";
+                $cadenaSql .= " FROM \"SICapital\".\"sedes_SIC\" ";
                 $cadenaSql .= " WHERE   \"ESF_ESTADO\"='A' ";
                 $cadenaSql .= " AND    \"ESF_COD_SEDE\" >  0 ;";
                 break;
+
             case "dependencias" :
                 $cadenaSql = " SELECT DISTINCT \"ESF_DEP_ENCARGADA\" as nombre  ";
                 $cadenaSql .= " FROM arka.arka_parametros.arka_dependencia d, "

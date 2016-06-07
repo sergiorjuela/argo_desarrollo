@@ -59,7 +59,7 @@ class consultarForm {
         $conexion = "estructura";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         
-        $conexionArka = "inventarios";
+        $conexionArka = "contractual";
         $recursoArka =  $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionArka);
         
 
@@ -116,7 +116,7 @@ class consultarForm {
         // $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
         // Si no se coloca, entonces toma el valor predeterminado.
         $atributos ['estilo'] = '';
-        $atributos ['marco'] = true;
+        $atributos ['marco'] = false;
         $tab = 1;
 
         $atributos ['tipoEtiqueta'] = 'inicio';
@@ -615,7 +615,7 @@ class consultarForm {
             echo $this->miFormulario->division("fin");
 
 
-            $atributos ['marco'] = true;
+            $atributos ['marco'] = false;
             $atributos ['tipoEtiqueta'] = 'fin';
             echo $this->miFormulario->formulario($atributos);
 

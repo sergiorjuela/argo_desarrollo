@@ -49,7 +49,7 @@ class registrarForm {
         $conexion = "estructura";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         
-        $conexionArka = "inventarios";
+        $conexionArka = "contractual";
         $recursoArka =  $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionArka);
 
         $seccion ['tiempo'] = $tiempo;
