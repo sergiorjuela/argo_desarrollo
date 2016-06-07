@@ -343,7 +343,7 @@ class RegistradorOrden {
         $cadenaSql = $this->miSql->getCadenaSql('polizas', $_REQUEST ['id_orden']);
         $polizas = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
-        $cadenaSql = $this->miSql->getCadenaSql('tipoComprador', $orden ['ordenador_gasto']);
+        $cadenaSql = $this->miSql->getCadenaSql('ordenadorDocumento', $orden ['ordenador_gasto']);
         $ordenador = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         $ordenador = $ordenador [0];
 

@@ -25,6 +25,7 @@ class registrarForm {
     }
 
     function miForm() {
+       
 
         // Rescatar los datos de este bloque
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
@@ -125,6 +126,7 @@ class registrarForm {
                 'dependencia' => $dependencia,
             );
             $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenGeneral', $arreglo);
+           
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
             
         } else {
@@ -143,11 +145,12 @@ class registrarForm {
             
             
            $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenIdexud', $arreglo);
+          
            $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
            
         }
 
-    
+       
      
         $arreglo = base64_encode(serialize($arreglo));
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------

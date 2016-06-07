@@ -184,7 +184,7 @@ class Sql extends \Sql {
 
                 break;
             
-             case "tipoComprador" :
+             case "ordenadorDocumento" :
 
                 $cadenaSql = " 	SELECT f.\"identificacion\",p.descripcion ";
                 $cadenaSql .= " FROM \"SICapital\".\"funcionario\" f ,\"SICapital\".\"funcionario_tipo_ordenador\"  o, parametros p ";

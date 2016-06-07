@@ -1334,7 +1334,7 @@ class registrarForm {
                     $atributos ['matrizItems'] = $matrizItems;
 
                     // $atributos['miniRegistro']=;
-                    $atributos ['baseDatos'] = "inventarios";
+                    $atributos ['baseDatos'] = "contractual";
                     // $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
                     // Aplica atributos globales al control
                     $atributos = array_merge($atributos, $atributosGlobales);
