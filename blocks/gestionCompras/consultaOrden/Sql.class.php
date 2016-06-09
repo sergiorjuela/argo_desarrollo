@@ -217,11 +217,21 @@ class Sql extends \Sql {
                 $cadenaSql .= " WHERE rel_parametro=28;";
 
                 break;
-            case "tipoComprador" :
+           case "tipoComprador" :
 
                 $cadenaSql = " 	SELECT f.\"identificacion\",p.descripcion ";
                 $cadenaSql .= " FROM \"SICapital\".\"funcionario\" f ,\"SICapital\".\"funcionario_tipo_ordenador\"  o, parametros p ";
-                $cadenaSql .= " WHERE o.\"estado\"=True and f.\"identificacion\"= o.\"funcionario\" and p.id_parametro= o.\"tipo_ordenador\";";
+                $cadenaSql .= " WHERE o.\"estado\"=True and f.\"identificacion\"= o.\"funcionario\" and p.id_parametro= o.\"tipo_ordenador\" ";
+                $cadenaSql .= " and p.id_parametro <> 202 ;";
+                
+                break;
+            
+            case "tipoComprador_idexud" :
+
+                $cadenaSql = " 	SELECT f.\"identificacion\",p.descripcion ";
+                $cadenaSql .= " FROM \"SICapital\".\"funcionario\" f ,\"SICapital\".\"funcionario_tipo_ordenador\"  o, parametros p ";
+                $cadenaSql .= " WHERE o.\"estado\"=True and f.\"identificacion\"= o.\"funcionario\" and p.id_parametro= o.\"tipo_ordenador\" ";
+                $cadenaSql .= " and p.id_parametro = 202 ;";
 
                 break;
             case "funcionarios" :
@@ -1056,10 +1066,10 @@ class Sql extends \Sql {
                 $cadenaSql .= "total_iva='" . $variable [8] . "', ";
                 $cadenaSql .= "total_iva_con='" . $variable [9] . "', ";
                 $cadenaSql .= (is_null($variable [10]) == true) ? "marca=NULL, " : "marca='" . $variable [10] . "', ";
-                $cadenaSql .= (is_null($variable [11]) == true) ? "serie=NULL  " : "serie='" . $variable [11] . "',  ";
+                $cadenaSql .= (is_null($variable [11]) == true) ? "serie=NULL,  " : "serie='" . $variable [11] . "',  ";
                 $cadenaSql .= (is_null($variable [13]) == true) ? "referencia=NULL, " : "referencia='" . $variable [13] . "', ";
                 $cadenaSql .= (is_null($variable [14]) == true) ? "placa=NULL,  " : "placa='" . $variable [14] . "',  ";
-                $cadenaSql .= (is_null($variable [15]) == true) ? "observacion=NULL, " : "observacion='" . $variable [15] . "'  ";
+                $cadenaSql .= (is_null($variable [15]) == true) ? "observacion=NULL " : "observacion='" . $variable [15] . "'  ";
                 $cadenaSql .= "WHERE id_elemento_ac ='" . $variable [12] . "'  ";
 
                 break;

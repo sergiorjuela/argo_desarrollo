@@ -43,8 +43,8 @@ class registrarForm {
 
         $_REQUEST ['tiempo'] = time();
         $tiempo = $_REQUEST ['tiempo'];
-      
-        
+
+
         // -------------------------------------------------------------------------------------------------
         $conexionContractual = "contractual";
         $DBContractual = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionContractual);
@@ -54,7 +54,7 @@ class registrarForm {
         $cadenaSql = $this->miSql->getCadenaSql('ConsultarInformacionOrden', $datosOrden);
         $Orden = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
         $Orden = $Orden [0];
- 
+
         $arreglo = array(
             'tipo_orden' => $Orden ['tipo_orden'],
             'sede_solicitante' => $Orden ['sede_solicitante'],
@@ -84,7 +84,7 @@ class registrarForm {
             'asignacionOrdenador' => $Orden ['ordenador_gasto'],
             'clausula_presupuesto' => $Orden ['clausula_registro_presupuestal']
         );
-        
+
         $cadenaSql = $this->miSql->getCadenaSql('textos');
         $resultado_textos = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
         $texto = array(
@@ -113,7 +113,8 @@ class registrarForm {
         // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
         // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
         $atributos ['tipoEtiqueta'] = 'inicio';
-        echo $this->miFormulario->formulario($atributos); {
+        echo $this->miFormulario->formulario($atributos);
+        {
             // ---------------- SECCION: Controles del Formulario -----------------------------------------------
 
             $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
@@ -142,7 +143,8 @@ class registrarForm {
             $atributos ['tipoEtiqueta'] = 'inicio';
             $atributos ["leyenda"] = "MODIFICAR  " . $_REQUEST ['mensaje_titulo'];
             echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
-            unset($atributos); {
+            unset($atributos);
+            {
 
                 // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                 $esteCampo = 'botonRegresar';
@@ -229,9 +231,10 @@ class registrarForm {
                 $esteCampo = "AgrupacionSolicitante";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = "Información del Solicitante";
-                echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                echo $this->miFormulario->agrupacion('inicio', $atributos);
+                {
 
-                  if ($Orden ['unidad_ejecutora'] == 208) {
+                    if ($Orden ['unidad_ejecutora'] == 208) {
                         $esteCampo = 'sede_idexud';
                         $atributos ['id'] = $esteCampo;
                         $atributos ['nombre'] = $esteCampo;
@@ -282,8 +285,8 @@ class registrarForm {
                         } else {
                             $atributos ['seleccion'] = - 1;
                         }
-                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "convenios" );
-                        $matrizItems = $DBContractual->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("convenios");
+                        $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
                         $atributos ['matrizItems'] = $matrizItems;
                         $atributos ['validar'] = 'required';
                         // Utilizar lo siguiente cuando no se pase un arreglo:
@@ -344,8 +347,8 @@ class registrarForm {
                         $atributos ['limitar'] = true;
                         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                         $atributos ['anchoEtiqueta'] = 115;
-                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "dependenciasConsultadas", $Orden['sede_solicitante']);
-                        $matrizItems = $DBContractual->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("dependenciasConsultadas", $Orden['sede_solicitante']);
+                        $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
                         $atributos ['matrizItems'] = $matrizItems;
                         if (isset($Orden['dependencia_solicitante'])) {
                             $atributos ['seleccion'] = $Orden['dependencia_solicitante'];
@@ -353,7 +356,7 @@ class registrarForm {
                             $atributos ['seleccion'] = - 1;
                         }
 
-                       
+
 
                         // Utilizar lo siguiente cuando no se pase un arreglo:
                         // $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
@@ -363,14 +366,14 @@ class registrarForm {
                         echo $this->miFormulario->campoCuadroLista($atributos);
                         unset($atributos);
                     }
-                  
                 }
                 echo $this->miFormulario->agrupacion('fin');
 
                 $esteCampo = "AgrupacionSupervisor";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = "Datos del Supervisor";
-                echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                echo $this->miFormulario->agrupacion('inicio', $atributos);
+                {
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'sede_super';
@@ -425,7 +428,7 @@ class registrarForm {
                     } else {
                         $atributos ['seleccion'] = - 1;
                     }
-                    $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("dependenciasConsultadas",$_REQUEST['sede_super']);
+                    $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("dependenciasConsultadas", $_REQUEST['sede_super']);
                     $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
 
                     $atributos ['matrizItems'] = $matrizItems;
@@ -481,7 +484,7 @@ class registrarForm {
                     echo $this->miFormulario->campoCuadroLista($atributos);
                     unset($atributos);
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-                    
+
                     $esteCampo = 'cargo_supervisor';
                     $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
@@ -514,7 +517,7 @@ class registrarForm {
                     unset($atributos);
 
                     // ---------------- CONTROL: Cuadro Lista --------------------------------------------------------
-                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+                    // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'cargosExistentes';
                     $atributos ['nombre'] = $esteCampo;
                     $atributos ['id'] = $esteCampo;
@@ -580,7 +583,8 @@ class registrarForm {
                 $esteCampo = "AgrupacionContratista";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = "Información del Contratista";
-                echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                echo $this->miFormulario->agrupacion('inicio', $atributos);
+                {
 
                     $esteCampo = "selec_proveedor";
                     $atributos ['id'] = $esteCampo;
@@ -689,7 +693,7 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
+
                     //-----Campo digito de verificacion
                     $esteCampo = 'digito_verificacion';
                     $atributos ['id'] = $esteCampo;
@@ -734,9 +738,8 @@ class registrarForm {
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
                     //-----Hidden tipo persona
-                   
                     //-----Campo digito de tipo persona
-                    
+
                     $cadenaSql = $this->miSql->getCadenaSql('ConsultarDescripcionParametro', $_REQUEST['tipo_persona']);
                     $tipo_persona = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
                     $esteCampo = 'tipo_persona';
@@ -753,7 +756,7 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required, maxSize[15],minSize[1]';
 
-                    if ($tipo_persona!=false) {
+                    if ($tipo_persona != false) {
                         $atributos ['valor'] = $tipo_persona[0]['descripcion'];
                     } else {
                         $atributos ['valor'] = '';
@@ -769,7 +772,7 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-               
+
 
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -899,12 +902,12 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
-                     //-----Campo  tipo dcoumento Representante persona
-                    
+
+                    //-----Campo  tipo dcoumento Representante persona
+
                     $cadenaSql = $this->miSql->getCadenaSql('ConsultarDescripcionParametro', $_REQUEST['tipo_documento']);
                     $tipo_documento = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
-                    
+
                     $esteCampo = 'tipo_documento';
                     $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
@@ -919,7 +922,7 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required, maxSize[30],minSize[1]';
 
-                    if ($tipo_documento!=false) {
+                    if ($tipo_documento != false) {
                         $atributos ['valor'] = $tipo_documento[0]['descripcion'];
                     } else {
                         $atributos ['valor'] = '';
@@ -997,7 +1000,7 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
+
                     //-----Hidden registro mercantil
                     $esteCampo = 'registro_mercantil';
                     $atributos ["id"] = $esteCampo; // No cambiar este nombre
@@ -1010,14 +1013,14 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
                 }
                 echo $this->miFormulario->agrupacion('fin');
 
                 $esteCampo = "AgrupacionObjetoContrato";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = "Información del Contrato";
-                echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                echo $this->miFormulario->agrupacion('inicio', $atributos);
+                {
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'objeto_contrato';
@@ -1056,7 +1059,8 @@ class registrarForm {
                     $esteCampo = "AgrupacionPoliza";
                     $atributos ['id'] = $esteCampo;
                     $atributos ['leyenda'] = "Requerimiento de Póliza";
-                    echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                    echo $this->miFormulario->agrupacion('inicio', $atributos);
+                    {
                         $cadenaSql = $this->miSql->getCadenaSql('polizas');
                         $resultado_polizas = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
                         for ($i = 1; $i < count($resultado_polizas); $i ++) {
@@ -1076,15 +1080,14 @@ class registrarForm {
                             $atributos ['etiqueta'] = $resultado_polizas [$i]['descripcion_poliza'];
                             $atributos ['validar'] = '';
                             for ($j = 0; $j < count($polizasActivas); $j++) {
-                                if($i == $polizasActivas[$j]['poliza']){
+                                if ($i == $polizasActivas[$j]['poliza']) {
                                     $atributos ['valor'] = 'TRUE';
                                     $atributos ['seleccionado'] = 'checked';
-                                }
-                                else{
-                                     $atributos ['valor'] = 'TRUE';
+                                } else {
+                                    $atributos ['valor'] = 'TRUE';
                                 }
                             }
-                            
+
                             $atributos ['deshabilitado'] = false;
                             $tab ++;
 
@@ -1101,7 +1104,8 @@ class registrarForm {
                 $esteCampo = "AgrupacionReferentePago";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = "Información Referente al Pago";
-                echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                echo $this->miFormulario->agrupacion('inicio', $atributos);
+                {
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'fecha_inicio_pago';
@@ -1238,7 +1242,7 @@ class registrarForm {
                     unset($atributos);
                     // ---------------- FIN CONTROL: Select Forma de Pago --------------------------------------------------------
                     //---------Campo de Seleccion Clausula Presupuestal-------------------------------
-                    
+
                     $esteCampo = 'clausula_presupuesto';
                     $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
@@ -1297,7 +1301,8 @@ class registrarForm {
                 $esteCampo = "ordenadorGasto";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = $this->lenguaje->getCadena($esteCampo);
-                echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                echo $this->miFormulario->agrupacion('inicio', $atributos);
+                {
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'asignacionOrdenador';
@@ -1323,7 +1328,12 @@ class registrarForm {
                     $atributos ['limitar'] = 1;
                     $atributos ['anchoCaja'] = 40;
                     $atributos ['miEvento'] = '';
-                    $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipoComprador");
+
+                    if ($Orden ['unidad_ejecutora'] == 209) {
+                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipoComprador");
+                    } else {
+                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipoComprador_idexud");
+                    }
                     $matrizItems = array(
                         array(
                             0,
@@ -1333,10 +1343,7 @@ class registrarForm {
                     $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
                     $atributos ['matrizItems'] = $matrizItems;
 
-                    // $atributos['miniRegistro']=;
-                    $atributos ['baseDatos'] = "contractual";
-                    // $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
-                    // Aplica atributos globales al control
+
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroLista($atributos);
                     unset($atributos);
@@ -1477,7 +1484,7 @@ class registrarForm {
             $valorCodificado .= "&id_orden=" . $_REQUEST ['id_orden'];
             $valorCodificado .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
             $valorCodificado .= "&numerocontrato=" . $_REQUEST ['numerocontrato'];
-            $valorCodificado .= "&vigencia=" . $_REQUEST  ['vigencia'];
+            $valorCodificado .= "&vigencia=" . $_REQUEST ['vigencia'];
             $valorCodificado .= "&arreglo=" . $_REQUEST ['arreglo'];
             $valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
             $valorCodificado .= "&seccion=" . $tiempo;

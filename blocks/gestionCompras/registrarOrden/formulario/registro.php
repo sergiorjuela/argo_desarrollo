@@ -143,6 +143,8 @@ class registrarForm {
                 $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
                 $unidadEjecutora = $unidadEjecutora[0]['nombre'];
 
+
+
                 $esteCampo = 'unidad_ejecutora';
                 $atributos ['id'] = $esteCampo;
                 $atributos ['nombre'] = $esteCampo;
@@ -234,8 +236,8 @@ class registrarForm {
                         } else {
                             $atributos ['seleccion'] = - 1;
                         }
-                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "convenios" );
-                        $matrizItems = $DBContractual->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("convenios");
+                        $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
                         $atributos ['matrizItems'] = $matrizItems;
                         $atributos ['validar'] = 'required';
                         // Utilizar lo siguiente cuando no se pase un arreglo:
@@ -1278,7 +1280,13 @@ class registrarForm {
                     $atributos ['limitar'] = 1;
                     $atributos ['anchoCaja'] = 40;
                     $atributos ['miEvento'] = '';
-                    $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipoComprador");
+                    if (!is_int($unidad)) {
+                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipoComprador");
+                    } else {
+                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipoComprador_idexud");
+                    }
+                    
+
                     $matrizItems = array(
                         array(
                             0,
@@ -1287,10 +1295,7 @@ class registrarForm {
                     );
                     $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
                     $atributos ['matrizItems'] = $matrizItems;
-                    // $atributos['miniRegistro']=;
-                    $atributos ['baseDatos'] = "inventarios";
-                    // $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
-                    // Aplica atributos globales al control
+
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroLista($atributos);
                     unset($atributos);

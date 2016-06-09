@@ -95,8 +95,8 @@ class RegistradorOrden {
 					($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : null,
 					($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
 					$_REQUEST ['id_elemento_acta'],
-					($_REQUEST ['referencia'] != '') ? $_REQUEST ['referencia'] : null,
-					($_REQUEST ['placa'] != '') ? $_REQUEST ['placa'] : null,
+					(isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
+                                        (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
 					($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null
 			);
 			
@@ -119,8 +119,8 @@ class RegistradorOrden {
 					($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : null,
 					($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
 					$_REQUEST ['id_elemento_acta'],
-					($_REQUEST ['referencia'] != '') ? $_REQUEST ['referencia'] : null,
-					($_REQUEST ['placa'] != '') ? $_REQUEST ['placa'] : null,
+					(isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
+                                        (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
 					($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null
 			);
 			
@@ -148,8 +148,8 @@ class RegistradorOrden {
 						($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
 						($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : NULL,
 						$_REQUEST ['id_elemento_acta'],
-						($_REQUEST ['referencia'] != '') ? $_REQUEST ['referencia'] : null,
-						($_REQUEST ['placa'] != '') ? $_REQUEST ['placa'] : null,
+						(isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
+                                                (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
 						($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null
 				);
 			} else if ($_REQUEST ['tipo_poliza'] == 1) {
@@ -170,8 +170,8 @@ class RegistradorOrden {
 						($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
 						($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : NULL,
 						$_REQUEST ['id_elemento_acta'],
-						($_REQUEST ['referencia'] != '') ? $_REQUEST ['referencia'] : null,
-						($_REQUEST ['placa'] != '') ? $_REQUEST ['placa'] : null,
+						(isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
+                                                (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
 						($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null
 				);
 			}
@@ -188,6 +188,7 @@ class RegistradorOrden {
 				$_REQUEST ['id_elemento_acta'] 
 		);
 		
+               
 		if ($elemento) {
 			$this->miConfigurador->setVariableConfiguracion ( "cache", true );
 			redireccion::redireccionar ( 'ActualizoElemento', $arreglo );

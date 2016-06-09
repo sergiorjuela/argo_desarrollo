@@ -121,7 +121,17 @@ class Sql extends \Sql {
 
                 $cadenaSql = " 	SELECT f.\"identificacion\",p.descripcion ";
                 $cadenaSql .= " FROM \"SICapital\".\"funcionario\" f ,\"SICapital\".\"funcionario_tipo_ordenador\"  o, parametros p ";
-                $cadenaSql .= " WHERE o.\"estado\"=True and f.\"identificacion\"= o.\"funcionario\" and p.id_parametro= o.\"tipo_ordenador\";";
+                $cadenaSql .= " WHERE o.\"estado\"=True and f.\"identificacion\"= o.\"funcionario\" and p.id_parametro= o.\"tipo_ordenador\" ";
+                $cadenaSql .= " and p.id_parametro <> 202 ;";
+                
+                break;
+            
+            case "tipoComprador_idexud" :
+
+                $cadenaSql = " 	SELECT f.\"identificacion\",p.descripcion ";
+                $cadenaSql .= " FROM \"SICapital\".\"funcionario\" f ,\"SICapital\".\"funcionario_tipo_ordenador\"  o, parametros p ";
+                $cadenaSql .= " WHERE o.\"estado\"=True and f.\"identificacion\"= o.\"funcionario\" and p.id_parametro= o.\"tipo_ordenador\" ";
+                $cadenaSql .= " and p.id_parametro = 202 ;";
 
                 break;
             

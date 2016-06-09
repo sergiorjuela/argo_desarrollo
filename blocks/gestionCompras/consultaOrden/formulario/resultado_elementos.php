@@ -47,17 +47,7 @@ class registrarForm {
 		$atributosGlobales ['campoSeguro'] = 'true';
 		
 	// -------------------------------------------------------------------------------------------------
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-                echo "<br>";
+		
 		$conexion = "contractual";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
