@@ -294,6 +294,16 @@ if ($_REQUEST ['funcion'] == 'disponibilidades') {
 	
 	echo $resultado;
 }
+if ($_REQUEST ['funcion'] == 'consultarConveniosxvigencia') {
+	
+	$cadenaSql = $this->sql->getCadenaSql ( 'conveniosxvigencia',$_REQUEST ['valor']);
+	
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	$resultado = json_encode ( $resultado );
+	
+	echo $resultado;
+}
 
 if ($_REQUEST ['funcion'] == 'Infodisponibilidades') {
 	
@@ -355,6 +365,16 @@ if ($_REQUEST ['funcion'] == 'consultarContratistas') {
 	
 	$resultado = json_encode ( $resultadoItems );
 	
+	echo $resultado;
+}
+
+if ($_REQUEST ['funcion'] == 'consultarConvenio') {
+	
+	$conexion = "contractual";
+	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_nombre_convenio', $_REQUEST ['valor'] );
+	$resultado = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultado = json_encode ( $resultado[0] );
 	echo $resultado;
 }
 

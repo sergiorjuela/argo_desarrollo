@@ -11,10 +11,16 @@ $this->idioma ["unidad_ejecutoraTitulo"] ="Seleccione Unidad Ejecutoria ";
 
 // -- Modificar Elementos
 
+$this->idioma ["nombre_convenio_solicitante"] = "Nombre Convenio : ";
+$this->idioma ["nombre_convenio_solicitanteTitulo"] = "Nombre del Convenio Seleccionado";
 
 $this->idioma ["clausula_presupuesto"] = "Sujeto a disponibilidad presupuestal(Hasta Agotar Presupuesto): ";
 $this->idioma ["referencia"] = "Referencia : ";
 $this->idioma ["referenciaTitulo"] = "Ingrese Referencia";
+
+
+$this->idioma ["vigencia_convenio"] = "Vigencia del Convenio : ";
+$this->idioma ["vigencia_convenioTitulo"] = "Seleccione la vigencia";
 
 $this->idioma ["placa"] = "Placa :";
 $this->idioma ["placaTitulo"] = "Ingrese Placa ";

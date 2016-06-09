@@ -19,6 +19,13 @@ $this->idioma ["sede_idexud"] = "Sede: Idexud";
 $this->idioma ["convenio_solicitante"] = "Convenio : ";
 $this->idioma ["sedeTitulo"] = "Seleccione el convenio";
 
+
+$this->idioma ["nombre_convenio_solicitante"] = "Nombre Convenio : ";
+$this->idioma ["nombre_convenio_solicitanteTitulo"] = "Nombre del Convenio Seleccionado";
+
+$this->idioma ["vigencia_convenio"] = "Vigencia del Convenio : ";
+$this->idioma ["vigencia_convenioTitulo"] = "Seleccione la vigencia";
+
 $this->idioma ["sede_super"] = "Sede : ";
 $this->idioma ["sede_superTitulo"] = "Seleccione Sede";
 

@@ -51,10 +51,36 @@ class Sql extends \Sql {
             
             case "convenios" :
                 $cadenaSql = " SELECT ";
-                $cadenaSql .= " id_convenio,";
-                $cadenaSql .= " nombre_convenio ";
+                $cadenaSql .= " \"NUMERO_PRO\" as value,";
+                $cadenaSql .= " \"NUMERO_PRO\" as data";
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " convenio; ";
+                break;
+            
+            case "conveniosxvigencia" :
+                $cadenaSql = " SELECT ";
+                $cadenaSql .= " \"NUMERO_PRO\" as value,";
+                $cadenaSql .= " \"NUMERO_PRO\" as data";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " convenio ";
+                $cadenaSql .= " WHERE \"ANIO_PRO\" = '$variable' ; ";
+                break;
+            
+            case "vigencia_convenios" :
+                $cadenaSql = " SELECT DISTINCT ";
+                $cadenaSql .= " \"ANIO_PRO\" as value,";
+                $cadenaSql .= " \"ANIO_PRO\" as data";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " convenio; ";
+                break;
+            
+            case "buscar_nombre_convenio" :
+                $cadenaSql = " SELECT ";
+                $cadenaSql .= " \"NOMBRE\"";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " convenio";
+                $cadenaSql .= " WHERE ";
+                $cadenaSql .= " \"NUMERO_PRO\" = '$variable' ";
                 break;
 
             case "textos" :

@@ -89,12 +89,38 @@ class Sql extends \Sql {
                 break;
 
 
-            case "convenios" :
+              case "convenios" :
                 $cadenaSql = " SELECT ";
-                $cadenaSql .= " id_convenio,";
-                $cadenaSql .= " nombre_convenio ";
+                $cadenaSql .= " \"NUMERO_PRO\" as value,";
+                $cadenaSql .= " \"NUMERO_PRO\" as data";
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " convenio; ";
+                break;
+            
+              case "conveniosxvigencia" :
+                $cadenaSql = " SELECT ";
+                $cadenaSql .= " \"NUMERO_PRO\" as value,";
+                $cadenaSql .= " \"NUMERO_PRO\" as data";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " convenio ";
+                $cadenaSql .= " WHERE \"ANIO_PRO\" = '$variable' ; ";
+                break;
+            
+            case "vigencia_convenios" :
+                $cadenaSql = " SELECT DISTINCT ";
+                $cadenaSql .= " \"ANIO_PRO\" as value,";
+                $cadenaSql .= " \"ANIO_PRO\" as data";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " convenio; ";
+                break;
+            
+            case "buscar_nombre_convenio" :
+                $cadenaSql = " SELECT ";
+                $cadenaSql .= " \"NOMBRE\"";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " convenio";
+                $cadenaSql .= " WHERE ";
+                $cadenaSql .= " \"NUMERO_PRO\" = '$variable' ";
                 break;
 
             case "consultarOrdenGeneral" :
@@ -143,10 +169,10 @@ class Sql extends \Sql {
             case "consultarOrdenIdexud" :
 
                 $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, c.identificacion ||'-'|| c.nombre_razon_social as proveedor,"
-                        . " 'IDEXUD'||'-'||conv.nombre_convenio as SedeDependencia ";
+                        . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia ";
                 $cadenaSql .= "FROM orden o, parametros p, contratista c, contrato_general cg, convenio conv ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
-                $cadenaSql .= "AND CAST (conv.id_convenio as text) = cg.dependencia_solicitante ";
+                $cadenaSql .= "AND conv.\"NUMERO_PRO\"  = cg.dependencia_solicitante ";
                 $cadenaSql .= "AND o.proveedor = c.identificacion ";
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
@@ -167,7 +193,7 @@ class Sql extends \Sql {
                 }
 
                 if ($variable ['dependencia'] != '') {
-                    $cadenaSql .= " AND conv.id_convenio = '" . $variable ['dependencia'] . "' ";
+                    $cadenaSql .= " AND conv.\"NUMERO_PRO\" = '" . $variable ['dependencia'] . "' ";
                 }
                 if ($variable ['fecha_inicial'] != '' && $variable ['fecha_final'] != '') {
                     $cadenaSql .= " AND o.fecha_registro BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";

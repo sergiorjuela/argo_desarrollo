@@ -265,6 +265,35 @@ class registrarForm {
                         $atributos = array_merge($atributos, $atributosGlobales);
                         echo $this->miFormulario->campoCuadroTexto($atributos);
                         unset($atributos);
+                        
+                         $esteCampo = 'vigencia_convenio';
+                        $atributos ['columnas'] = 2;
+                        $atributos ['nombre'] = $esteCampo;
+                        $atributos ['id'] = $esteCampo;
+                        $atributos ['evento'] = '';
+                        $atributos ['deshabilitado'] = false;
+                        $atributos ["etiquetaObligatorio"] = true;
+                        $atributos ['tab'] = $tab;
+                        $atributos ['tamanno'] = 1;
+                        $atributos ['estilo'] = 'jqueryui';
+                        $atributos ['validar'] = 'required';
+                        $atributos ['limitar'] = true;
+                        $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+                        $atributos ['anchoEtiqueta'] = 170;
+
+                        if (isset($_REQUEST [$esteCampo])) {
+                            $atributos ['seleccion'] = $_REQUEST [$esteCampo];
+                        } else {
+                            $atributos ['seleccion'] = - 1;
+                        }
+
+                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("vigencia_convenios");
+                        $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+                        $atributos ['matrizItems'] = $matrizItems;
+                        $tab ++;
+                        $atributos = array_merge($atributos, $atributosGlobales);
+                        echo $this->miFormulario->campoCuadroLista($atributos);
+                        unset($atributos);
 
                         $esteCampo = "convenio_solicitante";
                         $atributos ['columnas'] = 2;
@@ -295,6 +324,36 @@ class registrarForm {
                         $tab ++;
                         $atributos = array_merge($atributos, $atributosGlobales);
                         echo $this->miFormulario->campoCuadroLista($atributos);
+                        unset($atributos);
+                        
+                        $sqlNombreConvenio = $this->miSql->getCadenaSql("buscar_nombre_convenio",$Orden['dependencia_solicitante']);
+                        $nombreConvenio = $DBContractual->ejecutarAcceso($sqlNombreConvenio, "busqueda");
+                        $esteCampo = 'nombre_convenio_solicitante';
+                        $atributos ['id'] = $esteCampo;
+                        $atributos ['nombre'] = $esteCampo;
+                        $atributos ['tipo'] = 'text';
+                        $atributos ['estilo'] = 'jqueryui';
+                        $atributos ['marco'] = true;
+                        $atributos ['estiloMarco'] = '';
+                        $atributos ["etiquetaObligatorio"] = true;
+                        $atributos ['columnas'] = 160;
+                        $atributos ['filas'] = 2;
+                        $atributos ['dobleLinea'] = 0;
+                        $atributos ['tabIndex'] = $tab;
+                        $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+                        $atributos ['validar'] = 'minSize[1]';
+                        $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+                        $atributos ['deshabilitado'] = true;
+                        $atributos ['tamanno'] = 20;
+                        $atributos ['maximoTamanno'] = '';
+                        $atributos ['anchoEtiqueta'] = 220;
+                        $atributos ['valor'] = $nombreConvenio[0][0];
+                       
+                        $tab ++;
+
+                        // Aplica atributos globales al control
+                        $atributos = array_merge($atributos, $atributosGlobales);
+                        echo $this->miFormulario->campoTextArea($atributos);
                         unset($atributos);
                     } else {
 

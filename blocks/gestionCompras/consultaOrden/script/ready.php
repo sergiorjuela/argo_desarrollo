@@ -27,7 +27,11 @@
                  } );
 
 $('#<?php echo $this->campoSeguro('dependencia_solicitante')?>').width(350);
-$("#<?php echo $this->campoSeguro('dependencia_solicitante')?>").select2();                 
+$("#<?php echo $this->campoSeguro('dependencia_solicitante')?>").select2(); 
+
+$('#<?php echo $this->campoSeguro('vigencia_convenio')?>').width(150);
+$("#<?php echo $this->campoSeguro('vigencia_convenio')?>").select2();
+$('#<?php echo $this->campoSeguro('convenio_solicitante')?>').attr('disabled',''); 
 
 $('#<?php echo $this->campoSeguro('sede')?>').width(350);
 $("#<?php echo $this->campoSeguro('sede')?>").select2();                 

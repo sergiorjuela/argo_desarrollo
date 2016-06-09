@@ -222,6 +222,9 @@ $("#<?php echo $this->campoSeguro('sede')?>").select2();
 $('#<?php echo $this->campoSeguro('formaPago')?>').width(150);
 $("#<?php echo $this->campoSeguro('formaPago')?>").select2();
 
+$('#<?php echo $this->campoSeguro('vigencia_convenio')?>').width(150);
+$("#<?php echo $this->campoSeguro('vigencia_convenio')?>").select2();
+$('#<?php echo $this->campoSeguro('convenio_solicitante')?>').attr('disabled',''); 
 $('#<?php echo $this->campoSeguro('cargosExistentes')?>').width(300);
 $("#<?php echo $this->campoSeguro('cargosExistentes')?>").select2();
 

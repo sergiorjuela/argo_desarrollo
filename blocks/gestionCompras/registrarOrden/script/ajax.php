@@ -251,6 +251,42 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($caden
 
 // URL definitiva
 $urlFinalProveedor = $url . $cadena;
+
+
+// Variables
+$cadenaACodificarConvenio = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarConvenio .= "&procesarAjax=true";
+$cadenaACodificarConvenio .= "&action=index.php";
+$cadenaACodificarConvenio .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarConvenio .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarConvenio .= $cadenaACodificarConvenio . "&funcion=consultarConvenio";
+$cadenaACodificarConvenio .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadenaACodificarConvenio = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarConvenio, $enlace);
+
+// URL definitiva
+$urlFinalConvenio = $url . $cadenaACodificarConvenio;
+
+// Variables
+
+$cadenaACodificarConvenioxVigencia = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarConvenioxVigencia .= "&procesarAjax=true";
+$cadenaACodificarConvenioxVigencia .= "&action=index.php";
+$cadenaACodificarConvenioxVigencia .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarConvenioxVigencia .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarConvenioxVigencia .= $cadenaACodificarConvenioxVigencia . "&funcion=consultarConveniosxvigencia";
+$cadenaACodificarConvenioxVigencia .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadenaACodificarConvenioxVigencia = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarConvenioxVigencia, $enlace);
+
+// URL definitiva
+$urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
+
+
 ?>
 <script type='text/javascript'>
 
@@ -349,6 +385,48 @@ $urlFinalProveedor = $url . $cadena;
     }
     ;
 //--------------Fin JavaScript y Ajax Sede y Dependencia Suepervisor --------------------------------------------------------------------------------------------------   
+    //--------------Inicio JavaScript y Ajax Convenios x Vigenca ---------------------------------------------------------------------------------------------    
+    $("#<?php echo $this->campoSeguro('vigencia_convenio') ?>").change(function () {
+
+        if ($("#<?php echo $this->campoSeguro('vigencia_convenio') ?>").val() != '') {
+             consultaConveniosxVigencia();
+        } else {
+            $("#<?php echo $this->campoSeguro('convenio_solicitante') ?>").attr('disabled', '');
+        }
+
+    });
+
+
+    function consultaConveniosxVigencia(elem, request, response) {
+        $.ajax({
+            url: "<?php echo $urlFinalConveniosxvigencia ?>",
+            dataType: "json",
+            data: {valor: $("#<?php echo $this->campoSeguro('vigencia_convenio') ?>").val()},
+            success: function (data) {
+                if (data[0] != " ") {
+
+                    $("#<?php echo $this->campoSeguro('convenio_solicitante') ?>").html('');
+                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('convenio_solicitante') ?>");
+                    $.each(data, function (indice, valor) {
+
+                        $("<option value='" + data[ indice ].value + "'>" + data[ indice ].data + "</option>").appendTo("#<?php echo $this->campoSeguro('convenio_solicitante') ?>");
+
+                    });
+
+                    $("#<?php echo $this->campoSeguro('convenio_solicitante') ?>").removeAttr('disabled');
+
+                    $('#<?php echo $this->campoSeguro('convenio_solicitante') ?>').width(350);
+                    $("#<?php echo $this->campoSeguro('convenio_solicitante') ?>").select2();
+
+                }
+
+
+            }
+
+        });
+    }
+    ;
+//--------------Fin JavaScript y Convenios x Vigenca --------------------------------------------------------------------------------------------------   
 
 //--------------Inicio JavaScript y Ajax Cargo Suepervisor ---------------------------------------------------------------------------------------------    
 
@@ -406,6 +484,45 @@ $urlFinalProveedor = $url . $cadena;
                     $("#<?php echo $this->campoSeguro('id_ordenador') ?>").val(data[1]);
                     $("#<?php echo $this->campoSeguro('tipo_ordenador') ?>").val(data[2]);
 
+                } else {
+
+
+
+
+
+                }
+
+            }
+
+        });
+    }
+    ;
+//--------------Fin JavaScript y Ajax Nombre Ordenador ---------------------------------------------------------------------------------------------    
+//--------------Inicio JavaScript y Ajax Nombre Ordenador ---------------------------------------------------------------------------------------------    
+
+    $("#<?php echo $this->campoSeguro('convenio_solicitante') ?>").change(function () {
+
+        if ($("#<?php echo $this->campoSeguro('convenio_solicitante') ?>").val() != '') {
+            datosConvenio();
+        } else {
+            $("#<?php echo $this->campoSeguro('convenio_solicitante') ?>").val('');
+        }
+
+
+
+    });
+    function datosConvenio(elem, request, response) {
+    
+        $.ajax({
+            url: "<?php echo $urlFinalConvenio?>",
+            dataType: "json",
+            data: {valor: $("#<?php echo $this->campoSeguro('convenio_solicitante') ?>").val()},
+            success: function (data) {
+
+                if (data[0] != 'null') {
+
+                    $("#<?php echo $this->campoSeguro('nombre_convenio_solicitante') ?>").val(data[0]);
+     
                 } else {
 
 

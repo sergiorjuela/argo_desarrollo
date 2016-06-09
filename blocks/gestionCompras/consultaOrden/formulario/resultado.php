@@ -149,7 +149,7 @@ class registrarForm {
            $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
            
         }
-
+      
        
      
         $arreglo = base64_encode(serialize($arreglo));
