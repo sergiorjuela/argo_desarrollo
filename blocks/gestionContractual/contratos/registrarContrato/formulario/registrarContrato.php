@@ -97,20 +97,17 @@ class registrarForm {
                     $temp = array($infoTemporal[$j][0] => $infoTemporal[$j][1]);
                     $informacioAlmacenada = array_merge($informacioAlmacenada, $temp);
                 }
+
                 $cadena_sql = $this->miSql->getCadenaSql('Consultar_Disponibilidad', $_REQUEST ['id_solicitud_necesidad']);
                 $disponibilidad = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-
-                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Registro_Presupuestales', $_REQUEST ['id_solicitud_necesidad']);
-                $registrosP = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-
-                if ($registrosP) {
-
-                    $arregloRegistro = array(
-                        "fecha_inicio_poliza" => $registrosP [0] ['fecha_rgs_pr']
-                    );
-                    $_REQUEST = array_merge($_REQUEST, $arregloRegistro);
+                $registrosPresupuestales = array();
+                for ($i = 0; $i < count($disponibilidad); $i++) {
+                    $cadena_sql = $this->miSql->getCadenaSql('Consultar_Registro_Presupuestales', $disponibilidad[$i]['id_disponibilidad']);
+                    $registrosP = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                    if ($registrosP != false) {
+                        $registrosPresupuestales = array_merge($registrosPresupuestales, $registrosP);
+                    }
                 }
-
                 $cadena_sql = $this->miSql->getCadenaSql('Consultar_Contratista', $_REQUEST ['id_solicitud_necesidad']);
                 $contratista = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
                 $contratista = $contratista [0];
@@ -136,13 +133,14 @@ class registrarForm {
 
                 $cadena_sql = $this->miSql->getCadenaSql('Consultar_Disponibilidad', $_REQUEST ['id_solicitud_necesidad']);
                 $disponibilidad = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-             
-                $registrosPresupuestales= array();
+
+                $registrosPresupuestales = array();
                 for ($i = 0; $i < count($disponibilidad); $i++) {
-                   $cadena_sql = $this->miSql->getCadenaSql('Consultar_Registro_Presupuestales', $disponibilidad[$i]['id_disponibilidad']);
-                   $registrosP = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-                   $registrosPresupuestales = array_merge($registrosPresupuestales,$registrosP);
-                   
+                    $cadena_sql = $this->miSql->getCadenaSql('Consultar_Registro_Presupuestales', $disponibilidad[$i]['id_disponibilidad']);
+                    $registrosP = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                    if ($registrosP != false) {
+                        $registrosPresupuestales = array_merge($registrosPresupuestales, $registrosP);
+                    }
                 }
 
                 $cadena_sql = $this->miSql->getCadenaSql('Consultar_Contratista', $_REQUEST ['id_solicitud_necesidad']);
@@ -223,11 +221,7 @@ class registrarForm {
             echo $this->miFormulario->division("inicio", $atributos);
             unset($atributos); {
 
-                if ($mensaje != "") {
-                    echo "<div name='mensajeRegistroPrevio' id='mensajeRegistroPrevio' class='information shadow textoCentrar' >" . $mensaje . "</div>";
-                }
-
-                echo "<h3>Datos Personales</h3>
+                echo "<h4>Datos Personales</h4>
 							<section>"; {
 
 
@@ -375,6 +369,7 @@ class registrarForm {
                         // Utilizar lo siguiente cuando no se pase un arreglo:
                         $atributos ['baseDatos'] = 'contractual';
                         $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipo_persona");
+                        
                         $tab ++;
                         $atributos = array_merge($atributos, $atributosGlobales);
                         echo $this->miFormulario->campoCuadroLista($atributos);
@@ -1196,7 +1191,7 @@ class registrarForm {
                 }
 
                 echo "</section>
-							<h3>Datos Contrato</h3>
+							<h4>Datos Contrato</h4>
 							<section>"; {
 
                     $atributos ["id"] = "division";
@@ -1400,12 +1395,7 @@ class registrarForm {
                         $atributos ['tabIndex'] = $tab;
                         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                         $atributos ['validar'] = 'required';
-
-                        if (isset($_REQUEST [$esteCampo])) {
-                            $atributos ['valor'] = $_REQUEST [$esteCampo];
-                        } else {
-                            $atributos ['valor'] = '';
-                        }
+                        $atributos ['valor'] = date("Y-m-d");
                         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                         $atributos ['deshabilitado'] = true;
                         $atributos ['tamanno'] = 10;
@@ -1875,7 +1865,7 @@ class registrarForm {
                 }
 
                 echo "</section>
-							<h3>Información Presupuestal</h3>
+							<h4>Información Presupuestal</h4>
 							<section>"; {
 
                     $atributos ["id"] = "division";
@@ -1979,7 +1969,7 @@ class registrarForm {
 							                    <td><center>" . $valor ['fecha_disp'] . "</center></td>
 							                    <td><center>" . $valor ['vigencia'] . "</center></td>
 							                    <td><center>$" . number_format($valor ['valor_disp'], 2, ",", ".") . "</center></td>
-							                   	<td><center>" ." rubro" . "</center></td>
+							                   	<td><center>" . " rubro" . "</center></td>
 							                    </tr>";
                                 echo $mostrarHtml;
                                 unset($mostrarHtml);
@@ -2018,7 +2008,7 @@ class registrarForm {
 							                    <td><center>" . $valor ['fecha_rgs_pr'] . "</center></td>
                                                                             <td><center>" . $valor ['vigencia'] . "</center></td>
 							                    <td><center>$" . number_format($valor ['valor_registro'], 2, ",", ".") . "</center></td>
-							                   <td><center>" . "rubro". "</center></td>
+							                   <td><center>" . "rubro" . "</center></td>
 							                    </tr>";
                                 echo $mostrarHtml;
                                 unset($mostrarHtml);
@@ -2342,7 +2332,7 @@ class registrarForm {
                 }
 
                 echo "</section>
-							<h3>Supervisión del Contrato</h3>
+							<h4>Supervisión del Contrato</h4>
 							<section>"; {
 
                     $esteCampo = 'tipo_control';

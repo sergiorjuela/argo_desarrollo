@@ -13,7 +13,7 @@ $('#tablaRegistros').dataTable({
 });
 
 $("#ventanaA").steps({
-    headerTag: "h3",
+    headerTag: "h4",
     bodyTag: "section",
     enableAllSteps: true,
     enablePagination: true,

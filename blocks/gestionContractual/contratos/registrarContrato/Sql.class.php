@@ -384,6 +384,15 @@ class Sql extends \Sql {
                 $cadenaSql .= "WHERE rl.descripcion ='tipo_persona'; ";
 
                 break;
+            
+            case "tipo_persona_ajax" :
+
+                $cadenaSql = "SELECT id_parametro  id,pr.codigo_contraloria|| ' - ' ||pr.descripcion valor   ";
+                $cadenaSql .= " FROM relacion_parametro rl ";
+                $cadenaSql .= "JOIN parametros pr ON pr.rel_parametro=rl.id_rel_parametro ";
+                $cadenaSql .= "WHERE rl.descripcion ='tipo_persona' and id_parametro=$variable; ";
+
+                break;
 
             case "tipo_genero" :
 

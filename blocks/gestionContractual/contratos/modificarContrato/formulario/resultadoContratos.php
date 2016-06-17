@@ -79,8 +79,8 @@ class registrarForm {
 				$contrato = '';
 			}
 			
-			if (isset ( $_REQUEST ['unidad_ejecutora'] ) && $_REQUEST ['unidad_ejecutora'] != '') {
-				$unidad_ejecutora = $_REQUEST ['unidad_ejecutora'];
+			if (isset ( $_REQUEST ['unidad_ejecutora_consulta'] ) && $_REQUEST ['unidad_ejecutora_consulta'] != '') {
+				$unidad_ejecutora = $_REQUEST ['unidad_ejecutora_consulta'];
 			} else {
 				$unidad_ejecutora = '';
 			}

@@ -247,6 +247,9 @@ $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaj
 $this->idioma ["unidad_ejecutora"] = "Unidad Ejecutora: ";
 $this->idioma ["unidad_ejecutoraTitulo"] = "Selecciones Unidad Ejecutora";
 
+$this->idioma ["unidad_ejecutora_consulta"] = "Unidad Ejecutora: ";
+$this->idioma ["unidad_ejecutora_consultaTitulo"] = "Selecciones Unidad Ejecutora";
+
 
 
 $this->idioma ["vigencia_contrato"] = "N°Contrato - Vigencia: ";

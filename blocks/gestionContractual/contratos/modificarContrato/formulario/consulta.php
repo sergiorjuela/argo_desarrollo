@@ -128,7 +128,7 @@
 				unset ( $atributos );
 				
 				
-				$esteCampo = 'unidad_ejecutora';
+				$esteCampo = 'unidad_ejecutora_consulta';
 				$atributos ['columnas'] = 2;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['id'] = $esteCampo;

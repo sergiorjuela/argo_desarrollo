@@ -102,20 +102,16 @@ class registrarForm {
                     $temp = array($infoTemporal[$j][0] => $infoTemporal[$j][1]);
                     $informacioAlmacenada = array_merge($informacioAlmacenada, $temp);
                 }
-                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Disponibilidad', $_REQUEST ['id_solicitud_necesidad']);
+                 $cadena_sql = $this->miSql->getCadenaSql('Consultar_Disponibilidad', $_REQUEST ['id_solicitud_necesidad']);
                 $disponibilidad = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-
-                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Registro_Presupuestales', $_REQUEST ['id_solicitud_necesidad']);
-                $registrosP = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-               
-                if ($registrosP) {
-
-                    $arregloRegistro = array(
-                        "fecha_inicio_poliza" => $registrosP [0] ['fecha_rgs_pr']
-                    );
-                    $_REQUEST = array_merge($_REQUEST, $arregloRegistro);
+                $registrosPresupuestales = array();
+                for ($i = 0; $i < count($disponibilidad); $i++) {
+                    $cadena_sql = $this->miSql->getCadenaSql('Consultar_Registro_Presupuestales', $disponibilidad[$i]['id_disponibilidad']);
+                    $registrosP = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                    if ($registrosP != false) {
+                        $registrosPresupuestales = array_merge($registrosPresupuestales, $registrosP);
+                    }
                 }
-
                 $cadena_sql = $this->miSql->getCadenaSql('Consultar_Contratista', $_REQUEST ['id_solicitud_necesidad']);
                 $contratista = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
                 $contratista = $contratista [0];
@@ -218,7 +214,9 @@ class registrarForm {
                 for ($i = 0; $i < count($disponibilidad); $i++) {
                    $cadena_sql = $this->miSql->getCadenaSql('Consultar_Registro_Presupuestales', $disponibilidad[$i]['id_disponibilidad']);
                    $registrosP = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                   if($registrosP != false){
                    $registrosPresupuestales = array_merge($registrosPresupuestales,$registrosP);
+                   }
                   
                 }
                
