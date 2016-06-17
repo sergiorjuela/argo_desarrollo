@@ -75,8 +75,55 @@ $cadenaACodificar2 .= "&usuario=" . $_REQUEST['usuario'];
 $cadenaACodificar2 .="&tiempo=" . $_REQUEST['tiempo'];
 $cadena2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificar2, $enlace);
 $urlDatosPaso = $url . $cadena2;
+
+
+$cadenaACodificar3 = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificar3 .= "&procesarAjax=true";
+$cadenaACodificar3 .= "&action=index.php";
+$cadenaACodificar3 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar3 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar3 .= "&funcion=obtenerGeneros";
+$cadenaACodificar3 .= "&usuario=" . $_REQUEST['usuario'];
+$cadenaACodificar3 .="&tiempo=" . $_REQUEST['tiempo'];
+$cadena3 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificar3, $enlace);
+$urlPersonaGenero = $url . $cadena3;
 ?>
 <script type='text/javascript'>
+//----------------------------Configuracion Paso a Paso--------------------------------------
+    $("#ventanaA").steps({
+        headerTag: "h3",
+        bodyTag: "section",
+        enableAllSteps: true,
+        enablePagination: true,
+        transitionEffect: "slideLeft",
+        onStepChanging: function (event, currentIndex, newIndex) {
+            $resultado = $("#registrarContrato").validationEngine("validate");
+            almacenarInfoTemporal(currentIndex, newIndex);
+            if ($resultado) {
+
+                return true;
+            }
+            return false;
+
+        },
+        onFinished: function (event, currentIndex) {
+
+            $("#registrarContrato").submit();
+
+        },
+        labels: {
+            cancel: "Cancelar",
+            current: "Paso Siguiente :",
+            pagination: "Paginación",
+            finish: "Guardar Información",
+            next: "Siquiente",
+            previous: "Atras",
+            loading: "Cargando ..."
+        }
+
+    });
+
+//----------------------------Fin Configuracion Paso a Paso--------------------------------------
 
 
 
@@ -148,6 +195,51 @@ $urlDatosPaso = $url . $cadena2;
 
 
     });
+    
+    
+    
+    //---------------------Inicio Ajax Tipo Persona y Genero ------------------
+
+
+    $("#<?php echo $this->campoSeguro('tipo_persona') ?>").change(function () {
+
+       if ($("#<?php echo $this->campoSeguro('tipo_persona') ?>").val() != '') {
+            cargarGeneros();
+        } else {
+            $("#<?php echo $this->campoSeguro('genero') ?>").attr('disabled', '');
+        }
+    });
+
+
+
+
+    function cargarGeneros(elem, request, response) {
+        $.ajax({
+            url: "<?php echo $urlPersonaGenero ?>",
+            dataType: "json",
+            data: {valor: $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val()},
+            success: function (data) {
+
+                if (data[0] != " ") {
+
+                    $("#<?php echo $this->campoSeguro('genero') ?>").html('');
+                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('genero') ?>");
+                    $.each(data, function (indice, valor) {
+
+                        $("<option value='" + data[ indice ].id + "'>" + data[ indice ].valor + "</option>").appendTo("#<?php echo $this->campoSeguro('genero') ?>");
+                    });
+                    $('#<?php echo $this->campoSeguro('genero') ?>').width(150);
+                    $("#<?php echo $this->campoSeguro('genero') ?>").select2();
+                    $("#<?php echo $this->campoSeguro('genero') ?>").removeAttr('disabled');
+                }
+
+
+            }
+
+        });
+    }
+    ;
+//---------------------Fin Ajax Tipo Persona y Genero------------------       
 
 </script>
 

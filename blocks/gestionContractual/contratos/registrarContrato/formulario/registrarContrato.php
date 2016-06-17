@@ -221,7 +221,11 @@ class registrarForm {
             echo $this->miFormulario->division("inicio", $atributos);
             unset($atributos); {
 
-                echo "<h4>Datos Personales</h4>
+                if ($mensaje != "") {
+                    echo "<div name='mensajeRegistroPrevio' id='mensajeRegistroPrevio' class='information shadow textoCentrar' >" . $mensaje . "</div>";
+                }
+
+                echo "<h3>Datos Personales</h3>
 							<section>"; {
 
 
@@ -1191,7 +1195,7 @@ class registrarForm {
                 }
 
                 echo "</section>
-							<h4>Datos Contrato</h4>
+							<h3>Datos Contrato</h3>
 							<section>"; {
 
                     $atributos ["id"] = "division";
@@ -1865,7 +1869,7 @@ class registrarForm {
                 }
 
                 echo "</section>
-							<h4>Información Presupuestal</h4>
+							<h3>Información Presupuestal</h3>
 							<section>"; {
 
                     $atributos ["id"] = "division";
@@ -2332,7 +2336,7 @@ class registrarForm {
                 }
 
                 echo "</section>
-							<h4>Supervisión del Contrato</h4>
+							<h3>Supervisión del Contrato</h3>
 							<section>"; {
 
                     $esteCampo = 'tipo_control';

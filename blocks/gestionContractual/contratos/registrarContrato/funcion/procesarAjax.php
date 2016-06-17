@@ -15,7 +15,7 @@ if ($_REQUEST ['funcion'] == 'NumeroSolicitud') {
 
 if ($_REQUEST ['funcion'] == 'obtenerGeneros') {
 
-    $cadenaSql = $this->sql->getCadenaSql('tipo_persona_ajax', $_REQUEST ['valor']);
+    $cadenaSql = $this->sql->getCadenaSql('tipo_genero_ajax', $_REQUEST ['valor']);
     $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
     echo json_encode($resultadoItems);
 }

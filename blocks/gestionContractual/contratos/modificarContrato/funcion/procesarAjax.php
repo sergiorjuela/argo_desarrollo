@@ -5,6 +5,13 @@ use contratos\modificarContrato\Sql;
 $conexion = "contractual";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
+if ($_REQUEST ['funcion'] == 'obtenerGeneros') {
+
+    $cadenaSql = $this->sql->getCadenaSql('tipo_genero_ajax', $_REQUEST ['valor']);
+    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+    echo json_encode($resultadoItems);
+}
+
 if ($_REQUEST ['funcion'] == 'NumeroSolicitud') {
 
     $cadenaSql = $this->sql->getCadenaSql('ConsultarNumeroNecesidades', $_REQUEST ['valor']);

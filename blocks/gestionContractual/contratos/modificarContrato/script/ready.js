@@ -13,40 +13,7 @@
 	  } );
  
 			
-			$("#ventanaA").steps({
-			    headerTag: "h3",
-			    bodyTag: "section",
-			    enableAllSteps: true,
-			    enablePagination: true,
-			    transitionEffect: "slideLeft",
-			    onStepChanging: function (event, currentIndex, newIndex){
-	                $resultado = $("#modificarContrato").validationEngine("validate");
-                        //almacenarInfoTemporal(currentIndex, newIndex);
-                       
-	        		if ($resultado) {
-
-	        			return true;
-	        		}
-	        		return false;
-	        		;
-			    },
-			    onFinished: function (event, currentIndex)
-			    {
-			    	
-			    	 $("#modificarContrato").submit();
-			        
-			    },
-			    labels: {
-			        cancel: "Cancelar",
-			        current: "Paso Siguiente :",
-			        pagination: "Paginación",
-			        finish: "Actualizar Información",
-			        next: "Siquiente",
-			        previous: "Atras",
-			        loading: "Cargando ..."
-			    }
-			     
-			});
+			
 
 
 

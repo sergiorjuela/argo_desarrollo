@@ -3,7 +3,7 @@ $_REQUEST ['tiempo'] = time ();
 ?>
 
 	
-    
+        
 
 
 
@@ -393,7 +393,7 @@ $_REQUEST ['tiempo'] = time ();
 		 
 	$("#<?php echo $this->campoSeguro('vigencia')?>").select2();
 	$("#<?php echo $this->campoSeguro('num_solicitud')?>").select2(); 
-	//$("#<?php echo $this->campoSeguro('tipo_identificacion')?>").select2();
+	$("#<?php echo $this->campoSeguro('tipo_identificacion')?>").select2();
 	$("#<?php echo $this->campoSeguro('tipo_persona')?>").select2(); 
 	$("#<?php echo $this->campoSeguro('genero')?>").select2();
 	$("#<?php echo $this->campoSeguro('nacionalidad')?>").select2(); 

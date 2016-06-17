@@ -230,6 +230,22 @@ class Sql extends \Sql {
                 $cadenaSql .= "WHERE rl.descripcion ='genero'; ";
 
                 break;
+            
+              case "tipo_genero_ajax" :
+
+                $cadenaSql = "SELECT id_parametro  id, pr.descripcion valor   ";
+                $cadenaSql .= " FROM relacion_parametro rl ";
+                $cadenaSql .= "JOIN parametros pr ON pr.rel_parametro=rl.id_rel_parametro ";
+                $cadenaSql .= "WHERE rl.descripcion ='genero' and ";
+                if($variable == 1){
+                $condicion = " id_parametro <> 247; ";    
+                } else {
+                $condicion = " id_parametro = 247; ";     
+                }
+                
+                $cadenaSql .= $condicion;
+
+                break;
 
             case "tipo_perfil" :
 

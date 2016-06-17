@@ -53,7 +53,41 @@ $cadena3 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cade
 $urlPersonaGenero = $url . $cadena3;
 ?>
 <script type='text/javascript'>
+//----------------------------Configuracion Paso a Paso--------------------------------------
+    $("#ventanaA").steps({
+        headerTag: "h3",
+        bodyTag: "section",
+        enableAllSteps: true,
+        enablePagination: true,
+        transitionEffect: "slideLeft",
+        onStepChanging: function (event, currentIndex, newIndex) {
+            $resultado = $("#registrarContrato").validationEngine("validate");
+            almacenarInfoTemporal(currentIndex, newIndex);
+            if ($resultado) {
 
+                return true;
+            }
+            return false;
+
+        },
+        onFinished: function (event, currentIndex) {
+
+            $("#registrarContrato").submit();
+
+        },
+        labels: {
+            cancel: "Cancelar",
+            current: "Paso Siguiente :",
+            pagination: "Paginación",
+            finish: "Guardar Información",
+            next: "Siquiente",
+            previous: "Atras",
+            loading: "Cargando ..."
+        }
+
+    });
+
+//----------------------------Fin Configuracion Paso a Paso--------------------------------------
 
 //---------------------Inicio Ajax Numero de Solicitud de Necesidad------------------
 
@@ -102,10 +136,8 @@ $urlPersonaGenero = $url . $cadena3;
 //---------------------Inicio Ajax Tipo Persona y Genero ------------------
 
 
-    $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").change(function () {
-    alert("entro");
-        if ($("#<?php echo $this->campoSeguro('tipo_persona') ?>").val() != '') {
-            
+    $("#<?php echo $this->campoSeguro('tipo_persona') ?>").change(function () {
+       if ($("#<?php echo $this->campoSeguro('tipo_persona') ?>").val() != '') {
             cargarGeneros();
         } else {
             $("#<?php echo $this->campoSeguro('genero') ?>").attr('disabled', '');
