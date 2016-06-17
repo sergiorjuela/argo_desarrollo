@@ -285,13 +285,11 @@ $cadenaACodificarConvenioxVigencia = $this->miConfigurador->fabricaConexiones->c
 
 // URL definitiva
 $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
-
-
 ?>
 <script type='text/javascript'>
 
 
-    
+
 
     //--------------Inicio JavaScript y Ajax Sede y Dependencia Solicitante ---------------------------------------------------------------------------------------------    
 
@@ -347,7 +345,7 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
     $("#<?php echo $this->campoSeguro('sede_super') ?>").change(function () {
 
         if ($("#<?php echo $this->campoSeguro('sede_super') ?>").val() != '') {
-             consultarDependenciaSuper();
+            consultarDependenciaSuper();
         } else {
             $("#<?php echo $this->campoSeguro('dependencia_supervisor') ?>").attr('disabled', '');
         }
@@ -389,7 +387,7 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
     $("#<?php echo $this->campoSeguro('vigencia_convenio') ?>").change(function () {
 
         if ($("#<?php echo $this->campoSeguro('vigencia_convenio') ?>").val() != '') {
-             consultaConveniosxVigencia();
+            consultaConveniosxVigencia();
         } else {
             $("#<?php echo $this->campoSeguro('convenio_solicitante') ?>").attr('disabled', '');
         }
@@ -512,9 +510,9 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
 
     });
     function datosConvenio(elem, request, response) {
-    
+
         $.ajax({
-            url: "<?php echo $urlFinalConvenio?>",
+            url: "<?php echo $urlFinalConvenio ?>",
             dataType: "json",
             data: {valor: $("#<?php echo $this->campoSeguro('convenio_solicitante') ?>").val()},
             success: function (data) {
@@ -522,7 +520,7 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
                 if (data[0] != 'null') {
 
                     $("#<?php echo $this->campoSeguro('nombre_convenio_solicitante') ?>").val(data[0]);
-     
+
                 } else {
 
 
@@ -586,7 +584,6 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
             data: {valor: $("#<?php echo $this->campoSeguro('valor_registro') ?>").val()},
             success: function (data) {
 
-
                 $("#<?php echo $this->campoSeguro('valorL_registro') ?>").val(data);
 
             }
@@ -598,22 +595,46 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
 //---------------Fin JavaScript y Ajax Letras --------------selec_proveedor-------------------------------------------------------------------------------------
 
 //---------------Inicio JavaScript y Ajax Proveedor ---------------------------------------------------------------------------------------------------
-    $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").keyup(function () {
-        $('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val($('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val());
-    });
 
 
-    $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").autocomplete({
-        minChars: 3,
-        serviceUrl: '<?php echo $urlFinalProveedor; ?>',
-        onSelect: function (suggestion) {
 
-            $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val(suggestion.data);
 
-            datosInfo();
-        }
+    function consultarContratistas(elem, request, response) {
+        $.ajax({
+            url: "<?php echo $urlFinalProveedor ?>",
+            dataType: "json",
+            data: {proveedor: $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").val()},
+            success: function (data) {
+           
+                if (data[0] != 'null') {
+                   
+                    $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data[0]);
 
-    });
+
+                } else {
+                }
+
+            }
+
+        });
+    }
+    ;
+//-------------------------------------------------------------------------------------------------------------------------
+//    $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").keyup(function () {
+//        $('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val($('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val());
+//    });
+
+//
+//    $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").autocomplete({
+//        minChars: 8,
+//        serviceUrl: '<?php echo $urlFinalProveedor; ?>',
+//        onSelect: function (data) {
+//
+//           alert(data.data[0]);
+//        }
+//
+//    });
+//------------------------------------------------------------------------------------------------------------------------
 
     function datosInfo(elem, request, response) {
         $.ajax({
@@ -623,7 +644,7 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
             success: function (data) {
 
                 if (data[0] != 'null') {
-                    
+
                     $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val(data[0]);
                     $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data[1]);
                     $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data[2]);
@@ -631,8 +652,13 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
                     $("#<?php echo $this->campoSeguro('correo_proveedor') ?>").val(data[4]);
                     $("#<?php echo $this->campoSeguro('telefono_proveedor') ?>").val(data[5]);
                     $("#<?php echo $this->campoSeguro('pais') ?>").val(data[6]);
-                    var tipo_persona='';
-                    if(data[7]=='J'){tipo_persona='Jurídica'}else{tipo_persona='Natural'};
+                    var tipo_persona = '';
+                    if (data[7] == 'J') {
+                        tipo_persona = 'Jurídica'
+                    } else {
+                        tipo_persona = 'Natural'
+                    }
+                    ;
                     $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(tipo_persona);
                     $("#<?php echo $this->campoSeguro('nombre_contratista') ?>").val(data[8]);
                     $("#<?php echo $this->campoSeguro('tipo_documento') ?>").val(data[9]);

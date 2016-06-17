@@ -47,11 +47,7 @@ class registrarForm {
         $DBContractual = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionContractual);
         $conexionFrameWork = "estructura";
         $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
-
-        //--------------------------------------------------------------------------------------------------
-
-
-
+        
 
         $cadenaSql = $this->miSql->getCadenaSql('textos');
         $resultado_textos = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
@@ -630,10 +626,31 @@ class registrarForm {
                     $atributos ['maximoTamanno'] = '';
                     $atributos ['anchoEtiqueta'] = 220;
                     $tab ++;
+                    
+                    
 
                     // Aplica atributos globales al control
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
+                    unset($atributos);
+                    
+                    $esteCampo = 'botonContratista';
+                    $atributos ["id"] = $esteCampo;
+                    $atributos ["tabIndex"] = $tab;
+                    $atributos ["tipo"] = 'boton';
+                    // submit: no se coloca si se desea un tipo button genérico
+                    $atributos ['onClick'] = 'consultarContratistas()';
+                    $atributos ["estiloMarco"] = '';
+                    $atributos ["estiloBoton"] = '';
+                    // verificar: true para verificar el formulario antes de pasarlo al servidor.
+                    $atributos ["verificar"] = '';
+                    $atributos ["tipoSubmit"] = ''; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+                    $atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
+                    $tab ++;
+
+                    // Aplica atributos globales al control
+                    $atributos = array_merge($atributos, $atributosGlobales);
+                    echo $this->miFormulario->campoBoton($atributos);
                     unset($atributos);
 
                     $esteCampo = 'id_proveedor';
