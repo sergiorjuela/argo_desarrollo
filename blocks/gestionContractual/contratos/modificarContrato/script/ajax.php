@@ -97,19 +97,18 @@ $urlPersonaGenero = $url . $cadena3;
         enablePagination: true,
         transitionEffect: "slideLeft",
         onStepChanging: function (event, currentIndex, newIndex) {
-            $resultado = $("#registrarContrato").validationEngine("validate");
-            almacenarInfoTemporal(currentIndex, newIndex);
-            if ($resultado) {
 
+            $resultado = $("#modificarContrato").validationEngine("validate");
+            //almacenarInfoTemporal(currentIndex, newIndex);
+            if ($resultado) {
                 return true;
             }
             return false;
 
         },
         onFinished: function (event, currentIndex) {
-
-            $("#registrarContrato").submit();
-
+           
+            $("#modificarContrato").submit();
         },
         labels: {
             cancel: "Cancelar",
@@ -195,15 +194,15 @@ $urlPersonaGenero = $url . $cadena3;
 
 
     });
-    
-    
-    
+
+
+
     //---------------------Inicio Ajax Tipo Persona y Genero ------------------
 
 
     $("#<?php echo $this->campoSeguro('tipo_persona') ?>").change(function () {
 
-       if ($("#<?php echo $this->campoSeguro('tipo_persona') ?>").val() != '') {
+        if ($("#<?php echo $this->campoSeguro('tipo_persona') ?>").val() != '') {
             cargarGeneros();
         } else {
             $("#<?php echo $this->campoSeguro('genero') ?>").attr('disabled', '');
@@ -247,9 +246,9 @@ $urlPersonaGenero = $url . $cadena3;
 
     function almacenarInfoTemporal(pasoActual, pasoNuevo) {
         var InfoPaso0 = [];
-        
+
 //------------------------------->Paso 1 --------------------------------------------------------------------------------------------            
-       if (document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").value != "") {
+        if (document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").value != "") {
             InfoPaso0.push(document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").value + ";" + document.getElementById("<?php echo $this->campoSeguro('tipo_identificacion') ?>").getAttribute("id"));
         }
         if (document.getElementById("<?php echo $this->campoSeguro('numero_identificacion') ?>").value != "") {
