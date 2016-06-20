@@ -16,7 +16,7 @@ $this->idioma ["sedeTitulo"] = "Seleccione Sede";
 $this->idioma ["sede_idexud"] = "Sede : ";
 $this->idioma ["sede_idexud"] = "Sede: Idexud";
 
-$this->idioma ["botonContratista"] = "Buscar Contratista: ";
+$this->idioma ["botonContratista"] = "Buscar Proveedor ";
 
 
 $this->idioma ["convenio_solicitante"] = "Convenio : ";
@@ -98,6 +98,21 @@ $this->idioma ["identifcacion_proveedorTitulo"] = "Ingrese Nit De Acuerdo con  l
 
 $this->idioma ["direccion_proveedor"] = "Dirección :";
 $this->idioma ["direccion_proveedorTitulo"] = "Ingrese Dirección del Proveedor";
+
+$this->idioma ["sitio_web"] = "Sitio Web :";
+$this->idioma ["sitio_webTitulo"] = "Sitio Web del proveedor";
+
+$this->idioma ["ubicacion_proveedor"] = "Ubicación local: ";
+$this->idioma ["ubicacion_proveedorTitulo"] = "Ubicación del proveddor a nivel nacional(Colombia)";
+
+$this->idioma ["nombre_acesor"] = "Nombre del Acesor: ";
+$this->idioma ["nombre_acesorTitulo"] = "Nombre del acesor";
+
+$this->idioma ["procedencia"] = "Procedencia: ";
+$this->idioma ["procedenciaTitulo"] = "Procedencia representante";
+
+$this->idioma ["pais"] = "Pais de Procedencia: ";
+$this->idioma ["paisTitulo"] = "Pais de Origen";
 
 $this->idioma ["telefono_proveedor"] = "Teléfono Fijo :";
 $this->idioma ["telefono_proveedorTitulo"] = "Ingrese Teléfono Fijo del Proveedor";

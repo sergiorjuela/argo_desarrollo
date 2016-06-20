@@ -283,7 +283,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "p.telefono,p.digito_verificacion, ";
                 $cadenaSql .= "p.correo,p.tipo_naturaleza,p.tipo_documento, ";
                 $cadenaSql .= "p.nombre_contratista,p.identificacion_contratista_representante, ";
-                $cadenaSql .= "p.cargo_contratista_representante ";
+                $cadenaSql .= "p.cargo_contratista_representante, p.nombre_acesor,p.sitio_web,p.procedencia_contratista,p.ubicacion,p.nacionalidad ";
                 $cadenaSql .= "FROM ";
                 $cadenaSql .= "contractual.contrato_general cg, contractual.orden o, ";
                 $cadenaSql .= "contractual.contratista p,\"SICapital\".\"funcionario\" f ";
@@ -323,26 +323,31 @@ class Sql extends \Sql {
                 $cadenaSql .= " WHERE id_parametro=" . $variable;
 
                 break;
-            case "insertarContratista" :
+           case "insertarContratista" :
                 $cadenaSql = " INSERT INTO contratista(";
                 $cadenaSql .= " nombre_razon_social,direccion, telefono,digito_verificacion, ";
                 $cadenaSql .= " correo,identificacion,tipo_naturaleza,tipo_documento,fecha_registro,nacionalidad, ";
-                $cadenaSql .= " nombre_contratista,identificacion_contratista_representante,cargo_contratista_representante) ";
+                $cadenaSql .= " nombre_contratista,identificacion_contratista_representante,sitio_web,nombre_acesor, ";
+                $cadenaSql .= " ubicacion,procedencia_contratista,cargo_contratista_representante) ";
                 $cadenaSql .= " VALUES (";
-                $cadenaSql .= "'" . $variable ['razonSocial'] . "',";
+                $cadenaSql .= "'".$variable ['razonSocial'] . "',";
                 $cadenaSql .= "'" . $variable ['direcccion'] . "',";
                 $cadenaSql .= $variable ['telefono'] . ",";
                 $cadenaSql .= $variable ['digito_verificacion'] . ",";
                 $cadenaSql .= "'" . $variable ['correo'] . "',";
                 $cadenaSql .= "'" . $variable ['nit'] . "',";
-                $cadenaSql .= $variable ['tipo_persona'] . ",";
-                $cadenaSql .= $variable ['tipo_documento'] . ",";
+                $cadenaSql .=  $variable ['tipo_persona'] . ",";
+                $cadenaSql .=  $variable ['tipo_documento'] . ",";
                 $cadenaSql .= "'" . $variable ['fecha'] . "',";
                 $cadenaSql .= "'" . $variable ['nacionalidad'] . "',";
                 $cadenaSql .= "'" . $variable ['nombreRepresentante'] . "',";
                 $cadenaSql .= "'" . $variable ['identificacionRepresentante'] . "',";
+                $cadenaSql .= "'" . $variable ['sitio_web'] . "',";
+                $cadenaSql .= "'" . $variable ['nombre_acesor'] . "',";
+                $cadenaSql .= "'" . $variable ['ubicacion_proveedor'] . "',";
+                $cadenaSql .= "'" . $variable ['procedencia'] . "',";
                 $cadenaSql .= "'" . $variable ['cargo_contratista'] . "');";
-
+             
                 break;
             case "validarContratista" :
                 $cadenaSql = "SELECT * From contratista WHERE identificacion=" . $variable;

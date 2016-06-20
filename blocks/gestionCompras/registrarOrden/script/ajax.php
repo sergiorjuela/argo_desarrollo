@@ -600,25 +600,65 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
 
 
     function consultarContratistas(elem, request, response) {
-        $.ajax({
-            url: "<?php echo $urlFinalProveedor ?>",
-            dataType: "json",
-            data: {proveedor: $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").val()},
-            success: function (data) {
-           
-                if (data[0] != 'null') {
-                   
-                    $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data[0]);
+
+        if ($("#<?php echo $this->campoSeguro('selec_proveedor') ?>").val() != "") {
 
 
-                } else {
+            $.ajax({
+                url: "<?php echo $urlFinalProveedor ?>",
+                dataType: "json",
+                data: {proveedor: $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").val()},
+                success: function (data) {
+
+                    if (data != 'null') {
+
+                        if (data.status == 200) {
+                            $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val(data.datos.nit);
+                            $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data.datos.nomempresa);
+                            $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data.datos.digitoverificacion);
+                            $("#<?php echo $this->campoSeguro('direccion_proveedor') ?>").val(data.datos.direccion);
+                            $("#<?php echo $this->campoSeguro('correo_proveedor') ?>").val(data.datos.correo);
+                            $("#<?php echo $this->campoSeguro('telefono_proveedor') ?>").val(data.datos.telefono);
+                            if (data.datos.pais == null) {
+                                $("#<?php echo $this->campoSeguro('pais') ?>").val('Colombia');
+                            } else {
+                                $("#<?php echo $this->campoSeguro('pais') ?>").val(data.datos.pais);
+                            }
+                            $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(data.datos.tipopersona);
+                            $("#<?php echo $this->campoSeguro('nombre_contratista') ?>").val(data.datos.primernombre + ' ' + data.datos.segundonombre + ' '
+                                    + data.datos.primerapellido + ' ' + data.datos.segundoapellido);
+                            $("#<?php echo $this->campoSeguro('tipo_documento') ?>").val(data.datos.tipodocumento);
+                            if (data.datos.numdocumento != null) {
+                                $("#<?php echo $this->campoSeguro('identifcacion_contratista') ?>").val(data.datos.numdocumento);
+                            } else {
+                                $("#<?php echo $this->campoSeguro('identifcacion_contratista') ?>").val(data.datos.cedula_extranjeria);
+                            }
+                            $("#<?php echo $this->campoSeguro('sitio_web') ?>").val(data.datos.web);
+                            if (data.datos.tipo_doc_extranjero != null) {
+                                $("#<?php echo $this->campoSeguro('procedencia') ?>").val(data.datos.tipo_procedencia + '(' + data.datos.tipo_doc_extranjero + ')');
+                            } else {
+                                $("#<?php echo $this->campoSeguro('procedencia') ?>").val(data.datos.tipo_procedencia);
+                            }
+                            $("#<?php echo $this->campoSeguro('ubicacion_proveedor') ?>").val(data.datos.municipio);
+                            $("#<?php echo $this->campoSeguro('nombre_acesor') ?>").val(data.datos.nomasesor);
+
+                        } else {
+                            alert("Sin Cocincidencias en la Busqueda.");
+                        }
+                    } else {
+                        alert("Servidor de Proveedores No Disponible.");
+
+                    }
+
                 }
 
-            }
-
-        });
+            });
+        } else {
+            alert("Ingrese la Identificacion o el nombre del proveedor");
+        }
     }
     ;
+
 //-------------------------------------------------------------------------------------------------------------------------
 //    $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").keyup(function () {
 //        $('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val($('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val());

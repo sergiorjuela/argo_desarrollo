@@ -43,7 +43,7 @@ class RegistradorOrden {
         } else {
             $tipo_persona = 2;
         }
-        if ($_REQUEST ['tipo_documento'] == 'CC') {
+        if ($_REQUEST ['tipo_documento'] == 1) {
             $tipo_documento = 184;
         } else {
             $tipo_documento = 186;
@@ -63,13 +63,17 @@ class RegistradorOrden {
             'telefono' => $_REQUEST ['telefono_proveedor'],
             'correo' => $_REQUEST ['correo_proveedor'],
             'digito_verificacion' => $_REQUEST ['digito_verificacion'],
-            'nacionalidad' => $nacionalidad,
+            'nacionalidad' => $_REQUEST ['pais'],
+            'sitio_web' => $_REQUEST ['sitio_web'],
+            'nombre_acesor' => $_REQUEST ['nombre_acesor'],
+            'procedencia' => $_REQUEST ['procedencia'],
+            'ubicacion_proveedor' => $_REQUEST ['ubicacion_proveedor'],
             'fecha' => date('Y-m-d'),
             'tipo_persona' => $tipo_persona,
             'tipo_documento' => $tipo_documento,
             'registro_mercantil' => $_REQUEST ['registro_mercantil']);
 
-
+       
 
         $unidad_ejecutura = strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD');
         if (!is_int($unidad_ejecutura)) {

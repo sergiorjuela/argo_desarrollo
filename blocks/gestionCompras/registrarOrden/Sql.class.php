@@ -202,7 +202,8 @@ class Sql extends \Sql {
                 $cadenaSql = " INSERT INTO contratista(";
                 $cadenaSql .= " nombre_razon_social,direccion, telefono,digito_verificacion, ";
                 $cadenaSql .= " correo,identificacion,tipo_naturaleza,tipo_documento,fecha_registro,nacionalidad, ";
-                $cadenaSql .= " nombre_contratista,identificacion_contratista_representante,cargo_contratista_representante) ";
+                $cadenaSql .= " nombre_contratista,identificacion_contratista_representante,sitio_web,nombre_acesor, ";
+                $cadenaSql .= " ubicacion,procedencia_contratista,cargo_contratista_representante) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= "'".$variable ['razonSocial'] . "',";
                 $cadenaSql .= "'" . $variable ['direcccion'] . "',";
@@ -216,6 +217,10 @@ class Sql extends \Sql {
                 $cadenaSql .= "'" . $variable ['nacionalidad'] . "',";
                 $cadenaSql .= "'" . $variable ['nombreRepresentante'] . "',";
                 $cadenaSql .= "'" . $variable ['identificacionRepresentante'] . "',";
+                $cadenaSql .= "'" . $variable ['sitio_web'] . "',";
+                $cadenaSql .= "'" . $variable ['nombre_acesor'] . "',";
+                $cadenaSql .= "'" . $variable ['ubicacion_proveedor'] . "',";
+                $cadenaSql .= "'" . $variable ['procedencia'] . "',";
                 $cadenaSql .= "'" . $variable ['cargo_contratista'] . "');";
              
                 break;

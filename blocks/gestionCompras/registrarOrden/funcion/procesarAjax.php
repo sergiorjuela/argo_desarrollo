@@ -435,6 +435,7 @@ if ($_REQUEST ['funcion'] == 'consultaProveedor') {
     curl_setopt($cliente, CURLOPT_URL, $url_servicio);
     $repuestaWeb = curl_exec($cliente);
     curl_close($cliente);
-    echo $repuestaWeb;
+    $repuestaWeb = explode("<json>", $repuestaWeb);
+    echo $repuestaWeb[1];
 }
 ?>

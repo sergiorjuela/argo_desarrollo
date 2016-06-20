@@ -71,8 +71,23 @@ $this->idioma ["identifcacion_contratistaTitulo"] = "Ingrese Identificación del
 $this->idioma ["cargo_contratista"] = "Cargo :";
 $this->idioma ["cargo_contratistaTitulo"] = "Ingrese Cargo del Contratista";
 
-//--------------------
 
+$this->idioma ["sitio_web"] = "Sitio Web :";
+$this->idioma ["sitio_webTitulo"] = "Sitio Web del proveedor";
+
+$this->idioma ["ubicacion_proveedor"] = "Ubicación local: ";
+$this->idioma ["ubicacion_proveedorTitulo"] = "Ubicación del proveddor a nivel nacional(Colombia)";
+
+$this->idioma ["nombre_acesor"] = "Nombre del Acesor: ";
+$this->idioma ["nombre_acesorTitulo"] = "Nombre del acesor";
+
+$this->idioma ["procedencia"] = "Procedencia: ";
+$this->idioma ["procedenciaTitulo"] = "Procedencia representante";
+
+$this->idioma ["pais"] = "Pais de Procedencia: ";
+$this->idioma ["paisTitulo"] = "Pais de Origen";
+//--------------------
+$this->idioma ["botonContratista"] = "Buscar Proveedor ";
 
 $this->idioma ["botonAceptarElemento"] = "Actualizar Elemento ";
 

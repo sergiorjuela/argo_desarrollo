@@ -36,21 +36,17 @@ class RegistradorOrden {
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
-        if ($_REQUEST ['tipo_persona'] == 'N') {
-            $tipo_persona = 1;
-        } else {
+        if ($_REQUEST ['tipo_persona'] == 'Juridica') {
             $tipo_persona = 2;
+        } else {
+            $tipo_persona = 1;
         }
         if ($_REQUEST ['tipo_documento'] == 'CC') {
             $tipo_documento = 184;
         } else {
             $tipo_documento = 186;
         }
-        if ($_REQUEST ['pais'] == '') {
-            $nacionalidad = 'Colombia';
-        } else {
-            $nacionalidad = $_REQUEST ['pais'];
-        }
+        
         $datosContratista = array('razonSocial' => $_REQUEST ['nombre_razon_proveedor'],
             'direcccion' => $_REQUEST ['direccion_proveedor'],
             'nombreRepresentante' => $_REQUEST ['nombre_contratista'],
@@ -60,7 +56,11 @@ class RegistradorOrden {
             'telefono' => $_REQUEST ['telefono_proveedor'],
             'correo' => $_REQUEST ['correo_proveedor'],
             'digito_verificacion' => $_REQUEST ['digito_verificacion'],
-            'nacionalidad' => $nacionalidad,
+            'nacionalidad' => $_REQUEST ['pais'],
+            'sitio_web' => $_REQUEST ['sitio_web'],
+            'nombre_acesor' => $_REQUEST ['nombre_acesor'],
+            'procedencia' => $_REQUEST ['procedencia'],
+            'ubicacion_proveedor' => $_REQUEST ['ubicacion_proveedor'],
             'fecha' => date('Y-m-d'),
             'tipo_persona' => $tipo_persona,
             'tipo_documento' => $tipo_documento,

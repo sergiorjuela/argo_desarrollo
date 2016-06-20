@@ -21,7 +21,7 @@
         });
 
         
-        
+       
 
          $('#<?php echo $this->campoSeguro('fecha_inicio_pago')?>').datepicker({
 		dateFormat: 'yy-mm-dd',
@@ -214,7 +214,7 @@ $("#<?php echo $this->campoSeguro('rubro')?>").select2({
               	 });
       
       
-
+$("#mensajeWebService").css('display','none');
 			       
 $('#<?php echo $this->campoSeguro('sede')?>').width(300);
 $("#<?php echo $this->campoSeguro('sede')?>").select2();
