@@ -613,7 +613,7 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = ' ';
-                    $atributos ['textoFondo'] = 'Ingrese Mínimo 3 Caracteres de Búsqueda';
+                    $atributos ['textoFondo'] = 'Ingrese el documento y de clic en el boton que aparece a continuación.';
 
                     if (isset($_REQUEST [$esteCampo])) {
                         $atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -622,7 +622,7 @@ class registrarForm {
                     }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = false;
-                    $atributos ['tamanno'] = 40;
+                    $atributos ['tamanno'] = 50;
                     $atributos ['maximoTamanno'] = '';
                     $atributos ['anchoEtiqueta'] = 220;
                     $tab ++;

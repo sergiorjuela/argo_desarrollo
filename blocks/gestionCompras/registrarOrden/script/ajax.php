@@ -610,8 +610,8 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
                 data: {proveedor: $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").val()},
                 success: function (data) {
 
-                    if (data != 'null') {
-
+                    if (data.datos != 'null') {
+                        console.log(data.status);
                         if (data.status == 200) {
                             $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val(data.datos.nit);
                             $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data.datos.nomempresa);
