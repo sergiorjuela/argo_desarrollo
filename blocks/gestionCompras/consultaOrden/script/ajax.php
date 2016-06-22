@@ -692,11 +692,16 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
             success: function (data) {
 
 
-                $("#<?php echo $this->campoSeguro('cargo_supervisor') ?>").val(data[0]);
+               $("#<?php echo $this->campoSeguro('cargo_supervisor') ?>").val(data[0]);
+               $("#<?php echo $this->campoSeguro('cargo_inicial') ?>").val(data[0]);
 
             }
 
         });
+    }
+    ;
+    function restCargoSuper(elem, request, response) {
+         $("#<?php echo $this->campoSeguro('cargo_supervisor') ?>").val($("#<?php echo $this->campoSeguro('cargo_inicial') ?>").val());
     }
     ;
 
@@ -748,21 +753,7 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
     ;
 
 
-    function cargoSuper(elem, request, response) {
-        $.ajax({
-            url: "<?php echo $urlFinal17 ?>",
-            dataType: "json",
-            data: {valor: $("#<?php echo $this->campoSeguro('nombre_supervisor') ?>").val()},
-            success: function (data) {
-
-
-                $("#<?php echo $this->campoSeguro('cargo_supervisor') ?>").val(data[0]);
-
-            }
-
-        });
-    }
-    ;
+    
 
 
 

@@ -405,10 +405,11 @@ if ($_REQUEST ['funcion'] == 'SeleccionProveedor') {
 if ($_REQUEST ['funcion'] == 'consultarCargoSuper') {
 
     $cadenaSql = $this->sql->getCadenaSql('cargoSuper', $_REQUEST ['valor']);
-
+   
     $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
     $resultado = json_encode($resultado [0]);
+  
 
     echo $resultado;
 }
@@ -428,7 +429,7 @@ if ($_REQUEST ['funcion'] == 'consultarNumeroOrden') {
 if ($_REQUEST ['funcion'] == 'consultaProveedor') {
     $parametro = $_REQUEST ['proveedor'];
     $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
-    $url = "http://10.20.0.38/agora/index.php?data=";
+    $url = "http://10.20.2.38/agora/index.php?data=";
     $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&Parametro1=$parametro";
     $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar($data, $enlace);
     $cliente = curl_init();

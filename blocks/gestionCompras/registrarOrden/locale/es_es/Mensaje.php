@@ -231,6 +231,7 @@ $this->idioma ["botonAceptar"] = "Guardar";
 $this->idioma ["botonCancelar"] = "Cancelar";
 $this->idioma ["botonContinuar"] = "Salir";
 $this->idioma ["botonCargo"] = "Otro Cargo";
+$this->idioma ["restablecerCargo"] = "Reestablecer Cargo";
 
 $this->idioma ["botonRegresar"] = "< < Regresar";
 

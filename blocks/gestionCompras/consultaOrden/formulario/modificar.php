@@ -53,6 +53,7 @@ class registrarForm {
         $cadenaSql = $this->miSql->getCadenaSql('ConsultarInformacionOrden', $datosOrden);
         $Orden = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
         $Orden = $Orden [0];
+       
         $arreglo = array(
             'tipo_orden' => $Orden ['tipo_orden'],
             'sede_solicitante' => $Orden ['sede_solicitante'],
@@ -518,7 +519,7 @@ class registrarForm {
                         $atributos ['seleccion'] = - 1;
                     }
                     $atributos ['deshabilitado'] = false;
-                    $atributos ['columnas'] = 2;
+                    $atributos ['columnas'] = 3;
                     $atributos ['tamanno'] = 1;
                     $atributos ['ajax_function'] = "";
                     $atributos ['ajax_control'] = $esteCampo;
@@ -555,7 +556,7 @@ class registrarForm {
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
                     $atributos ["etiquetaObligatorio"] = false;
-                    $atributos ['columnas'] = 2;
+                    $atributos ['columnas'] = 3;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
@@ -621,6 +622,7 @@ class registrarForm {
                     unset($atributos);
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     // -----------------CONTROL: Botón ----------------------------------------------------------------
+                    echo "<center>";
                     $esteCampo = 'botonCargo';
                     $atributos ["id"] = $esteCampo;
                     $atributos ["tabIndex"] = $tab;
@@ -639,6 +641,28 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoBoton($atributos);
                     unset($atributos);
+                    
+                    $esteCampo = 'restablecerCargo';
+                    $atributos ["id"] = $esteCampo;
+                    $atributos ["tabIndex"] = $tab;
+                    $atributos ["tipo"] = 'boton';
+                    // submit: no se coloca si se desea un tipo button genérico
+                    $atributos ['onClick'] = 'restCargoSuper()';
+                    $atributos ["estiloMarco"] = '';
+                    $atributos ["estiloBoton"] = '';
+                    // verificar: true para verificar el formulario antes de pasarlo al servidor.
+                    $atributos ["verificar"] = '';
+                    $atributos ["tipoSubmit"] = ''; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+                    $atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
+                    $tab ++;
+
+                    // Aplica atributos globales al control
+                    $atributos = array_merge($atributos, $atributosGlobales);
+                    echo $this->miFormulario->campoBoton($atributos);
+                    unset($atributos);
+                     echo "</center>";
+                   
+                    
                 }
                 echo $this->miFormulario->agrupacion('fin');
 
@@ -693,6 +717,18 @@ class registrarForm {
                     // Aplica atributos globales al control
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoBoton($atributos);
+                    unset($atributos);
+                    
+                     $esteCampo = 'cargo_inicial';
+                    $atributos ["id"] = $esteCampo; // No cambiar este nombre
+                    $atributos ["tipo"] = "hidden";
+                    $atributos ['estilo'] = '';
+                    $atributos ["obligatorio"] = false;
+                    $atributos ['marco'] = true;
+                    $atributos ["etiqueta"] = "";
+                    $atributos ['valor'] = $_REQUEST ['cargo_supervisor'];
+                    $atributos = array_merge($atributos, $atributosGlobales);
+                    echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
                     
                     $esteCampo = 'id_proveedor';

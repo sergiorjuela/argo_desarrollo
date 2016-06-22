@@ -213,9 +213,8 @@ $("#<?php echo $this->campoSeguro('rubro')?>").select2({
               	 minimumInputLength: 3,
               	 });
       
-      
-$("#mensajeWebService").css('display','none');
-			       
+
+                 
 $('#<?php echo $this->campoSeguro('sede')?>').width(300);
 $("#<?php echo $this->campoSeguro('sede')?>").select2();
 

@@ -446,12 +446,18 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
 
 
                 $("#<?php echo $this->campoSeguro('cargo_supervisor') ?>").val(data[0]);
-
+                $("#<?php echo $this->campoSeguro('cargo_inicial') ?>").val(data[0]);
+                
             }
 
         });
     }
     ;
+    function restCargoSuper(elem, request, response) {
+         $("#<?php echo $this->campoSeguro('cargo_supervisor') ?>").val($("#<?php echo $this->campoSeguro('cargo_inicial') ?>").val());
+    }
+    ;
+    
 
 //--------------Fin JavaScript y Ajax Cargo Suepervisor ---------------------------------------------------------------------------------------------    
 

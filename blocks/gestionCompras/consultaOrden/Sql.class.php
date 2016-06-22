@@ -542,13 +542,12 @@ class Sql extends \Sql {
                 break;
 
 
-            case "cargoSuper" :
+           case "cargoSuper" :
 
-                $cadenaSql = "SELECT \"FUN_CARGO\" ";
-                $cadenaSql .= "FROM arka_parametros.arka_funcionarios  ";
-                $cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
-                $cadenaSql .= "AND \"FUN_IDENTIFICACION\"='" . $variable . "' ";
-
+                $cadenaSql = "SELECT f.\"cargo\" ";
+                $cadenaSql .= "FROM \"SICapital\".\"funcionario\" f  ";
+                $cadenaSql .= "WHERE f.\"identificacion\"='$variable' ";
+           
                 break;
 
             case "sedeConsulta" :

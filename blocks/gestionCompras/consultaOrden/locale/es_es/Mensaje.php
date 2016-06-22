@@ -358,6 +358,8 @@ $this->idioma ["botonCancelar"] = "Cancelar";
 $this->idioma ["botonContinuar"] = "Continuar";
 $this->idioma ["botonConsultar"] = "Consultar";
 $this->idioma ["botonRegresar"] = "< < Regresar";
+$this->idioma ["restablecerCargo"] = "Reestablecer Cargo";
+
 
 $this->idioma ["division1Titulo"] = "Seleccione Fecha Disponibilidad Presupuestal";
 

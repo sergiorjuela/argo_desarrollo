@@ -592,6 +592,24 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoBoton($atributos);
                     unset($atributos);
+                    $esteCampo = 'restablecerCargo';
+                    $atributos ["id"] = $esteCampo;
+                    $atributos ["tabIndex"] = $tab;
+                    $atributos ["tipo"] = 'boton';
+                    // submit: no se coloca si se desea un tipo button genérico
+                    $atributos ['onClick'] = 'restCargoSuper()';
+                    $atributos ["estiloMarco"] = '';
+                    $atributos ["estiloBoton"] = '';
+                    // verificar: true para verificar el formulario antes de pasarlo al servidor.
+                    $atributos ["verificar"] = '';
+                    $atributos ["tipoSubmit"] = ''; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+                    $atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
+                    $tab ++;
+
+                    // Aplica atributos globales al control
+                    $atributos = array_merge($atributos, $atributosGlobales);
+                    echo $this->miFormulario->campoBoton($atributos);
+                    unset($atributos);
                 }
                 echo $this->miFormulario->agrupacion('fin');
 
@@ -653,8 +671,7 @@ class registrarForm {
                     echo $this->miFormulario->campoBoton($atributos);
                     unset($atributos);
                     
-                    echo "<div name='mensajeWebService' id='mensajeWebService' class='information shadow textoCentrar' >prueba</div>";
-
+                   
                     $esteCampo = 'id_proveedor';
                     $atributos ["id"] = $esteCampo; // No cambiar este nombre
                     $atributos ["tipo"] = "hidden";
@@ -666,6 +683,20 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
+                    
+                    $esteCampo = 'cargo_inicial';
+                    $atributos ["id"] = $esteCampo; // No cambiar este nombre
+                    $atributos ["tipo"] = "hidden";
+                    $atributos ['estilo'] = '';
+                    $atributos ["obligatorio"] = false;
+                    $atributos ['marco'] = true;
+                    $atributos ["etiqueta"] = "";
+                    $atributos ['valor'] = '';
+                    $atributos = array_merge($atributos, $atributosGlobales);
+                    echo $this->miFormulario->campoCuadroTexto($atributos);
+                    unset($atributos);
+                    
+                    
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'nombre_razon_proveedor';
