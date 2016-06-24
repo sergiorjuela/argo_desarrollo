@@ -67,6 +67,16 @@ $this->idioma ["valor_disponibilidadTitulo"] = "Valor Disponibilidad Presupuesta
 $this->idioma ["fecha_diponibilidad"] = "Fecha Disponibilidad : ";
 $this->idioma ["fecha_diponibilidadTitulo"] = "Ingrese Fecha Disponibilidad Presupuestal (YYYY-MM-DD)";
 
+$this->idioma ["vigencia"] = "Vigencia: ";
+$this->idioma ["vigenciaTitulo"] = "seleccione la vigencia del cdp";
+$this->idioma ["numero_cdp"] = "Numero del CDP : ";
+$this->idioma ["numero_cdpTitulo"] = "Seleccione el Numero del CDP";
+$this->idioma ["dependencia"] = "Dependencia Solicitante : ";
+$this->idioma ["dependenciaTitulo"] = "Seleccione la Dependencia Solicitante ";
+$this->idioma ["fecha_inicial"] = "Fecha Inicial : ";
+$this->idioma ["fecha_inicialTitulo"] = "Seleccione la Fecha Inicial(YYYY-MM-DD)";
+$this->idioma ["fecha_final"] = "Fecha Final: ";
+$this->idioma ["fecha_finalTitulo"] = "Ingrese Fecha Disponibilidad Presupuestal (YYYY-MM-DD)";
 // --
 
 $this->idioma ["vigencia_contratista"] = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspVigencia Contratista: ";

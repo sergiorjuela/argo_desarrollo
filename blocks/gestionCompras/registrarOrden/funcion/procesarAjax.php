@@ -426,7 +426,7 @@ if ($_REQUEST ['funcion'] == 'consultaProveedor') {
 
     $parametro = $_REQUEST ['proveedor'];
     $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
-    $url = "http://10.20.2.38/agora/index.php?";
+    $url = "http://10.20.0.9/agora/index.php?";
     $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&Parametro1=$parametro";
     $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar_url($data, $enlace);
     $cliente = curl_init();

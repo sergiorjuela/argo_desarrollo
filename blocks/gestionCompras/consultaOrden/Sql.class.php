@@ -1253,6 +1253,21 @@ class Sql extends \Sql {
                 $cadenaSql .= "  WHERE id_orden='" . $variable ['id_orden'] . "';";
 
                 break;
+            
+            
+            //--------------------------------------------------------------------------------------------------
+            
+            
+            case "vigencias_sica_disponibilidades" :
+                $cadenaSql = " UPDATE ";
+                $cadenaSql .= " orden ";
+             
+
+                break;
+            
+            
+            
+            
         }
         return $cadenaSql;
     }

@@ -41,15 +41,19 @@ class registrarForm {
 
         $_REQUEST ['tiempo'] = time();
         $tiempo = $_REQUEST ['tiempo'];
-
+       
         // ------------------------Declaracion Recursos de Conexion-------------------------------------------------------------------------
         $conexionContractual = "contractual";
         $DBContractual = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionContractual);
+        $conexionSICA = "sicapital";
+        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
         $conexionFrameWork = "estructura";
         $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
         
-
-        $cadenaSql = $this->miSql->getCadenaSql('textos');
+//        $cadenaPrueba=" select * from CO.CO_SOLICITUD_ADQ where VIGENCIA=2016 ";
+//        $resultado = $DBSICA->ejecutarAcceso($cadenaPrueba, "busqueda");
+//      
+              $cadenaSql = $this->miSql->getCadenaSql('textos');
         $resultado_textos = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
 
         $texto = array(
