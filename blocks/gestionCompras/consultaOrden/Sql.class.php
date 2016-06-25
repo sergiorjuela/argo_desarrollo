@@ -1254,18 +1254,7 @@ class Sql extends \Sql {
 
                 break;
             
-            
-            //--------------------------------------------------------------------------------------------------
-            
-            
-            case "vigencias_sica_disponibilidades" :
-                $cadenaSql = " UPDATE ";
-                $cadenaSql .= " orden ";
              
-
-                break;
-            
-            
             
             
         }

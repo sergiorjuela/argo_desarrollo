@@ -4,6 +4,8 @@ use inventarios\gestionCompras\registrarOrdenServicios\Sql;
 
 $conexion = "contractual";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+$conexionSICA = "sicapital";
+$DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
 
 class EnLetras {
 
@@ -418,6 +420,14 @@ if ($_REQUEST ['funcion'] == 'SeleccionProveedor') {
     $cadenaSql = $this->sql->getCadenaSql('informacion_proveedor', $_REQUEST ['proveedor']);
     $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
     $resultado = json_encode($resultadoItems [0]);
+    echo $resultado;
+}
+//-------------------------Obtener Solicitud y CDPs por Vigencia ----------------------------------------------------------
+if ($_REQUEST ['funcion'] == 'ObtenerSolicitudesCdp') {
+    
+    $cadenaSql = $this->sql->getCadenaSql('solicitud_cdp', $_REQUEST ['vigencia']);
+    $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
+    $resultado = json_encode($resultadoItems);
     echo $resultado;
 }
 

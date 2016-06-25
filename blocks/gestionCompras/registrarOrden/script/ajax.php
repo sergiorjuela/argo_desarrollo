@@ -285,6 +285,21 @@ $cadenaACodificarConvenioxVigencia = $this->miConfigurador->fabricaConexiones->c
 
 // URL definitiva
 $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
+
+$cadenaACodificarSolCdp = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarSolCdp .= "&procesarAjax=true";
+$cadenaACodificarSolCdp .= "&action=index.php";
+$cadenaACodificarSolCdp .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarSolCdp .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarSolCdp .= $cadenaACodificarSolCdp . "&funcion=ObtenerSolicitudesCdp";
+$cadenaACodificarSolCdp .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadenaACodificarSolCdp = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarSolCdp, $enlace);
+
+// URL definitiva
+$urlFinalSolCdp = $url . $cadenaACodificarSolCdp;
 ?>
 <script type='text/javascript'>
 
@@ -1118,6 +1133,59 @@ $urlFinalConveniosxvigencia = $url . $cadenaACodificarConvenioxVigencia;
 
 
     });
+    
+    
+    
+    //--------------Inicio JavaScript y Ajax Vigencia y Numero CDP ---------------------------------------------------------------------------------------------    
+
+    $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").change(function () {
+
+        if ($("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val() != '') {
+           
+            consultarSoliditudyCdp();
+        } else {
+            $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").attr('disabled', '');
+        }
+
+    });
+
+    function consultarSoliditudyCdp(elem, request, response) {
+     
+        $.ajax({
+            url: "<?php echo $urlFinalSolCdp ?>",
+            dataType: "json",
+            data: {vigencia: $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val()},
+            success: function (data) {
+
+
+                if (data[0] != " ") {
+
+                    $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").html('');
+                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_solicitud') ?>");
+                    $.each(data, function (indice, valor) {
+
+                        $("<option value='" + data[ indice ].VALOR + "'>" + data[ indice ].INFORMACION + "</option>").appendTo("#<?php echo $this->campoSeguro('numero_solicitud') ?>");
+
+                    });
+
+                    $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").removeAttr('disabled');
+
+                    $('#<?php echo $this->campoSeguro('numero_solicitud') ?>').width(200);
+                    $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").select2();
+
+
+
+                }
+
+
+            }
+
+        });
+    }
+    ;
+
+    //--------------Fin JavaScript y Ajax Sede y Dependencia Suepervisor --------------------------------------------------------------------------------------------------   
+
 
 
 

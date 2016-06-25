@@ -67,12 +67,12 @@ $this->idioma ["valor_disponibilidadTitulo"] = "Valor Disponibilidad Presupuesta
 $this->idioma ["fecha_diponibilidad"] = "Fecha Disponibilidad : ";
 $this->idioma ["fecha_diponibilidadTitulo"] = "Ingrese Fecha Disponibilidad Presupuestal (YYYY-MM-DD)";
 
-$this->idioma ["vigencia"] = "Vigencia: ";
-$this->idioma ["vigenciaTitulo"] = "seleccione la vigencia del cdp";
-$this->idioma ["numero_cdp"] = "Numero del CDP : ";
-$this->idioma ["numero_cdpTitulo"] = "Seleccione el Numero del CDP";
-$this->idioma ["dependencia"] = "Dependencia Solicitante : ";
-$this->idioma ["dependenciaTitulo"] = "Seleccione la Dependencia Solicitante ";
+$this->idioma ["vigencia_solicitud_consulta"] = "Vigencia: ";
+$this->idioma ["vigencia_solicitud_consultaTitulo"] = "seleccione la vigencia del cdp";
+$this->idioma ["numero_solicitud"] = "Numero del CDP : ";
+$this->idioma ["numero_solicitudTitulo"] = "Seleccione el Numero del CDP";
+$this->idioma ["dependencia_solicitud"] = "Dependencia Solicitante : ";
+$this->idioma ["dependencia_solicitudTitulo"] = "Seleccione la Dependencia Solicitante ";
 $this->idioma ["fecha_inicial"] = "Fecha Inicial : ";
 $this->idioma ["fecha_inicialTitulo"] = "Seleccione la Fecha Inicial(YYYY-MM-DD)";
 $this->idioma ["fecha_final"] = "Fecha Final: ";
@@ -238,6 +238,7 @@ $this->idioma ["ordenadorGasto"] = "Ordenador Gasto";
 $this->idioma ["botonElemento"] = "Cargar Elementos";
 // ________________________________________________
 $this->idioma ["botonAceptar"] = "Guardar";
+$this->idioma ["botonConsultar"] = "Consultar";
 $this->idioma ["botonCancelar"] = "Cancelar";
 $this->idioma ["botonContinuar"] = "Salir";
 $this->idioma ["botonCargo"] = "Otro Cargo";

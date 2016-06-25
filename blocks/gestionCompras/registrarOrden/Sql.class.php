@@ -48,7 +48,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " poliza; ";
                 break;
-            
+
             case "convenios" :
                 $cadenaSql = " SELECT ";
                 $cadenaSql .= " \"NUMERO_PRO\" as value,";
@@ -56,7 +56,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " convenio; ";
                 break;
-            
+
             case "conveniosxvigencia" :
                 $cadenaSql = " SELECT ";
                 $cadenaSql .= " \"NUMERO_PRO\" as value,";
@@ -65,7 +65,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " convenio ";
                 $cadenaSql .= " WHERE \"ANIO_PRO\" = '$variable' ; ";
                 break;
-            
+
             case "vigencia_convenios" :
                 $cadenaSql = " SELECT DISTINCT ";
                 $cadenaSql .= " \"ANIO_PRO\" as value,";
@@ -73,7 +73,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " convenio; ";
                 break;
-            
+
             case "buscar_nombre_convenio" :
                 $cadenaSql = " SELECT ";
                 $cadenaSql .= " \"NOMBRE\"";
@@ -149,9 +149,9 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM \"SICapital\".\"funcionario\" f ,\"SICapital\".\"funcionario_tipo_ordenador\"  o, parametros p ";
                 $cadenaSql .= " WHERE o.\"estado\"=True and f.\"identificacion\"= o.\"funcionario\" and p.id_parametro= o.\"tipo_ordenador\" ";
                 $cadenaSql .= " and p.id_parametro <> 202 ;";
-                
+
                 break;
-            
+
             case "tipoComprador_idexud" :
 
                 $cadenaSql = " 	SELECT f.\"identificacion\",p.descripcion ";
@@ -160,44 +160,44 @@ class Sql extends \Sql {
                 $cadenaSql .= " and p.id_parametro = 202 ;";
 
                 break;
-            
-             case "cargoSuper" :
+
+            case "cargoSuper" :
 
                 $cadenaSql = "SELECT f.\"cargo\" ";
                 $cadenaSql .= "FROM \"SICapital\".\"funcionario\" f  ";
                 $cadenaSql .= "WHERE f.\"identificacion\"='$variable' ";
-           
+
                 break;
-            
-             case "informacion_ordenador" :
+
+            case "informacion_ordenador" :
                 $cadenaSql = " 	SELECT f.\"nombre_cp\" ";
                 $cadenaSql .= " FROM \"SICapital\".\"funcionario\" f ,\"SICapital\".\"funcionario_tipo_ordenador\"  o, parametros p ";
                 $cadenaSql .= " WHERE f.\"identificacion\"='$variable' and f.\"identificacion\"= o.\"funcionario\" and p.id_parametro= o.\"tipo_ordenador\";";
 
                 break;
-             
+
             case "forma_pago" :
                 $cadenaSql = " 	SELECT id_parametro, descripcion ";
                 $cadenaSql .= " FROM  parametros ";
                 $cadenaSql .= " WHERE rel_parametro=28;";
 
                 break;
-            
+
             case "buscar_Proveedores" :
                 $cadenaSql = " SELECT nit||' - ('||nomempresa||')' AS  value, nit AS data  ";
                 $cadenaSql .= " FROM proveedor.prov_proveedor_info ";
                 $cadenaSql .= " WHERE cast(nit as text) LIKE '%$variable%' OR nomempresa LIKE '%$variable%' LIMIT 10; ";
                 break;
-            
+
             case "informacion_proveedor" :
-                $cadenaSql  = " SELECT nit, nomempresa, digitoverificacion,direccion,correo,telefono,pais,  ";
+                $cadenaSql = " SELECT nit, nomempresa, digitoverificacion,direccion,correo,telefono,pais,  ";
                 $cadenaSql .= " tipopersona,primerapellido||' '||segundoapellido||' '||primernombre||' '||segundonombre as nombrerepresentate,"
-                           . "tipodocumento,numdocumento,registromercantil  ";
+                        . "tipodocumento,numdocumento,registromercantil  ";
                 $cadenaSql .= " FROM proveedor.prov_proveedor_info  ";
                 $cadenaSql .= " WHERE nit= $variable ";
 
                 break;
-            
+
             case "insertarContratista" :
                 $cadenaSql = " INSERT INTO contratista(";
                 $cadenaSql .= " nombre_razon_social,direccion, telefono,digito_verificacion, ";
@@ -205,14 +205,14 @@ class Sql extends \Sql {
                 $cadenaSql .= " nombre_contratista,identificacion_contratista_representante,sitio_web,nombre_acesor, ";
                 $cadenaSql .= " ubicacion,procedencia_contratista,cargo_contratista_representante) ";
                 $cadenaSql .= " VALUES (";
-                $cadenaSql .= "'".$variable ['razonSocial'] . "',";
+                $cadenaSql .= "'" . $variable ['razonSocial'] . "',";
                 $cadenaSql .= "'" . $variable ['direcccion'] . "',";
                 $cadenaSql .= $variable ['telefono'] . ",";
                 $cadenaSql .= $variable ['digito_verificacion'] . ",";
                 $cadenaSql .= "'" . $variable ['correo'] . "',";
                 $cadenaSql .= "'" . $variable ['nit'] . "',";
-                $cadenaSql .=  $variable ['tipo_persona'] . ",";
-                $cadenaSql .=  $variable ['tipo_documento'] . ",";
+                $cadenaSql .= $variable ['tipo_persona'] . ",";
+                $cadenaSql .= $variable ['tipo_documento'] . ",";
                 $cadenaSql .= "'" . $variable ['fecha'] . "',";
                 $cadenaSql .= "'" . $variable ['nacionalidad'] . "',";
                 $cadenaSql .= "'" . $variable ['nombreRepresentante'] . "',";
@@ -222,9 +222,9 @@ class Sql extends \Sql {
                 $cadenaSql .= "'" . $variable ['ubicacion_proveedor'] . "',";
                 $cadenaSql .= "'" . $variable ['procedencia'] . "',";
                 $cadenaSql .= "'" . $variable ['cargo_contratista'] . "');";
-             
+
                 break;
-            
+
             case "insertarContratoGeneral" :
                 $cadenaSql = " INSERT INTO contrato_general(";
                 $cadenaSql .= " vigencia,id_orden_contrato, tipo_contrato,unidad_ejecutora, ";
@@ -249,7 +249,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "'" . $variable ['sede_solicitante'] . "',";
                 $cadenaSql .= "'" . $variable ['dependencia_solicitante'] . "',";
                 $cadenaSql .= "'" . $variable ['cargo_supervisor'] . "');";
-             
+
                 break;
             case "insertarOrden" :
                 $cadenaSql = " INSERT INTO orden(";
@@ -259,30 +259,31 @@ class Sql extends \Sql {
                 $cadenaSql .= $variable ['tipo_orden'] . ",";
                 $cadenaSql .= $variable ['numero_contrato'] . ",";
                 $cadenaSql .= $variable ['vigencia'] . ",";
-                $cadenaSql .= "'".$variable ['fecha'] . "',";
-                $cadenaSql .= "'" . $variable ['proveedor'] ."');";
-             
+                $cadenaSql .= "'" . $variable ['fecha'] . "',";
+                $cadenaSql .= "'" . $variable ['proveedor'] . "');";
+
                 break;
-            
+
             case "insertarPoliza" :
                 $cadenaSql = " INSERT INTO orden_poliza(";
                 $cadenaSql .= " orden, poliza) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['orden'] . ",";
                 $cadenaSql .= $variable ['poliza'] . ");";
-                
+
                 break;
 
             case "obtenerInfoOrden" :
                 $cadenaSql = " SELECT MAX(numero_contrato) as numero_contrato";
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= "contrato_general; ";
-                             
+
                 break;
-            
+
             case "validarContratista" :
-                $cadenaSql =  "SELECT * From contratista WHERE identificacion=".$variable;;
-             
+                $cadenaSql = "SELECT * From contratista WHERE identificacion=" . $variable;
+                ;
+
                 break;
 
 
@@ -411,16 +412,16 @@ class Sql extends \Sql {
 
                 break;
 
-         
 
-          
+
+
             case "proveedores" :
                 $cadenaSql = " SELECT \"PRO_NIT\",\"PRO_NIT\"||' - '||\"PRO_RAZON_SOCIAL\" AS proveedor ";
                 $cadenaSql .= " FROM arka_parametros.arka_proveedor ";
 
                 break;
 
-           
+
 
             case "dependencias" :
                 $cadenaSql = "SELECT DISTINCT  ESF_ID_ESPACIO, ESF_NOMBRE_ESPACIO ";
@@ -503,7 +504,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " WHERE  JEF_IDENTIFICADOR='" . $variable . "' ";
 
                 break;
-           
+
             case "ordenador_gasto" :
                 $cadenaSql = " 	SELECT ORG_IDENTIFICACION, ORG_ORDENADOR_GASTO ";
                 $cadenaSql .= " FROM ORDENADORES_GASTO ";
@@ -574,7 +575,7 @@ class Sql extends \Sql {
 
                 break;
 
-          
+
 
             case "insertarEncargado" :
                 $cadenaSql = " INSERT INTO arka_inventarios.encargado(";
@@ -799,6 +800,31 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM contratistas_adquisiones; ";
 
 
+                break;
+
+
+            //---------------------SICapital--------------------------------------------------
+
+
+            case "vigencias_sica_disponibilidades" :
+                $cadenaSql = " SELECT DISTINCT SN.VIGENCIA AS valor, SN.VIGENCIA AS informacion  FROM CO.CO_SOLICITUD_ADQ SN ";
+                $cadenaSql .= " where SN.CODIGO_UNIDAD_EJECUTORA = 01 ORDER BY SN.VIGENCIA ASC ";
+
+                break;
+            case "solicitud_cdp" :
+                $cadenaSql = " SELECT SN.NUM_SOL_ADQ as valor , SN.NUM_SOL_ADQ as informacion  ";
+                $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
+                $cadenaSql .= " CO.CO_DEPENDENCIAS DP where SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ ";
+                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= $variable  ";
+                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = 01   ";
+                $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
+                $cadenaSql .= " ORDER BY SN.NUM_SOL_ADQ ASC ";
+
+                break;
+
+            case "dependencia_solicitud_consulta" :
+                $cadenaSql = " SELECT  DP.COD_DEPENDENCIA as VALOR, DP.NOMBRE_DEPENDENCIA as INFORMACION   ";
+                $cadenaSql .= " FROM CO.CO_DEPENDENCIAS DP ";
                 break;
         }
         return $cadenaSql;
