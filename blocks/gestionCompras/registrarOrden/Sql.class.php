@@ -230,7 +230,8 @@ class Sql extends \Sql {
                 $cadenaSql .= " vigencia,id_orden_contrato, tipo_contrato,unidad_ejecutora, ";
                 $cadenaSql .= " objeto_contrato,fecha_inicio,fecha_final,plazo_ejecucion, ";
                 $cadenaSql .= " forma_pago,ordenador_gasto,supervisor,clausula_registro_presupuestal, ";
-                $cadenaSql .= " sede_supervisor,dependencia_supervisor,sede_solicitante,dependencia_solicitante,cargo_supervisor) ";
+                $cadenaSql .= " sede_supervisor,dependencia_supervisor,sede_solicitante,dependencia_solicitante,cargo_supervisor, ";
+                $cadenaSql .= " numero_solicitud_necesidad,numero_cdp) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['vigencia'] . ",";
                 $cadenaSql .= $variable ['id_orden_contrato'] . ",";
@@ -248,7 +249,9 @@ class Sql extends \Sql {
                 $cadenaSql .= "'" . $variable ['dependencia_supervisor'] . "',";
                 $cadenaSql .= "'" . $variable ['sede_solicitante'] . "',";
                 $cadenaSql .= "'" . $variable ['dependencia_solicitante'] . "',";
-                $cadenaSql .= "'" . $variable ['cargo_supervisor'] . "');";
+                $cadenaSql .= "'" . $variable ['cargo_supervisor'] . "',";
+                $cadenaSql .=  $variable ['numero_solicitud'] . ", ";
+                $cadenaSql .=  $variable ['numero_cdp'] . ");";
 
                 break;
             case "insertarOrden" :
@@ -802,6 +805,14 @@ class Sql extends \Sql {
 
                 break;
 
+            case "obtenerUnidadUsuario" :
+
+                $cadenaSql = " select unidad_ejecutora from frame_work.argo_usuario   ";
+                $cadenaSql .= " where id_usuario = '$variable'; ";
+
+
+                break;
+
 
             //---------------------SICapital--------------------------------------------------
 
@@ -811,8 +822,8 @@ class Sql extends \Sql {
                 $cadenaSql .= " where SN.CODIGO_UNIDAD_EJECUTORA = 01 ORDER BY SN.VIGENCIA ASC ";
 
                 break;
-            case "solicitud_cdp" :
-                $cadenaSql = " SELECT SN.NUM_SOL_ADQ as valor , SN.NUM_SOL_ADQ as informacion  ";
+            case "obtener_solicitudes_vigencia" :
+                $cadenaSql = " SELECT DISTINCT SN.NUM_SOL_ADQ as valor , SN.NUM_SOL_ADQ as informacion  ";
                 $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
                 $cadenaSql .= " CO.CO_DEPENDENCIAS DP where SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ ";
                 $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= $variable  ";
@@ -821,10 +832,56 @@ class Sql extends \Sql {
                 $cadenaSql .= " ORDER BY SN.NUM_SOL_ADQ ASC ";
 
                 break;
+            
+            case "obtener_solicitudes_vigencia" :
+                $cadenaSql = " SELECT DISTINCT SN.NUM_SOL_ADQ as valor , SN.NUM_SOL_ADQ as informacion  ";
+                $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
+                $cadenaSql .= " CO.CO_DEPENDENCIAS DP where SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ ";
+                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= $variable  ";
+                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = 01   ";
+                $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
+                $cadenaSql .= " ORDER BY SN.NUM_SOL_ADQ ASC ";
+
+                break;
+            
+            case "obtener_cdp_numerosol" :
+                $cadenaSql = " SELECT DISTINCT CDP.NUMERO_DISPONIBILIDAD as valor , CDP.NUMERO_DISPONIBILIDAD as informacion  ";
+                $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
+                $cadenaSql .= " CO.CO_DEPENDENCIAS DP where SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ ";
+                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= ".$variable ['vigencia']." ";
+                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = 01  and SN.NUM_SOL_ADQ = ".$variable ['numsol']." ";
+                $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
+                $cadenaSql .= " ORDER BY CDP.NUMERO_DISPONIBILIDAD ";
+
+                break;
 
             case "dependencia_solicitud_consulta" :
                 $cadenaSql = " SELECT  DP.COD_DEPENDENCIA as VALOR, DP.NOMBRE_DEPENDENCIA as INFORMACION   ";
                 $cadenaSql .= " FROM CO.CO_DEPENDENCIAS DP ";
+                break;
+
+
+            case "obtenerSolicitudesCdp" :
+                $cadenaSql = "  SELECT SN.NUM_SOL_ADQ, SN.VIGENCIA ,DP.NOMBRE_DEPENDENCIA, SN.ESTADO, CDP.OBJETO,   ";
+                $cadenaSql .= " CDP.NUMERO_DISPONIBILIDAD, SN.VALOR_CONTRATACION,CDP.ESTADO as ESTADOCDP , CDP.FECHA_REGISTRO ";
+                $cadenaSql .= " FROM CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, CO.CO_DEPENDENCIAS DP  ";
+                $cadenaSql .= " WHERE SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ and SN.DEPENDENCIA = DP.COD_DEPENDENCIA ";
+                $cadenaSql .= " and SN.VIGENCIA= " . $variable['vigencia_solicitud_consulta'] . " and SN.CODIGO_UNIDAD_EJECUTORA =" . $variable['unidad_ejecutora'] . " ";
+                $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
+                if ($variable['numero_solicitud'] != '') {
+                    $cadenaSql .= " and SN.NUM_SOL_ADQ = ". $variable['numero_solicitud']." " ;
+                }
+                if ($variable['dependencia_solicitud'] != '') {
+                    $cadenaSql .= " and SN.DEPENDENCIA = ". $variable['dependencia_solicitud'] ." ";
+                }
+                if ($variable['numero_cdp'] != '') {
+                    $cadenaSql .= " and CDP.NUMERO_DISPONIBILIDAD = ". $variable['numero_cdp'] ." ";
+                }
+                if ($variable['fecha_inicial'] != '') {
+                     $cadenaSql .= " and CDP.FECHA_REGISTRO BETWEEN TO_DATE ('".$variable['fecha_inicial']."', 'yyyy/mm/dd') ";
+                     $cadenaSql .= " AND TO_DATE ('".$variable['fecha_final']."', 'yyyy/mm/dd') ";
+                     
+                }
                 break;
         }
         return $cadenaSql;

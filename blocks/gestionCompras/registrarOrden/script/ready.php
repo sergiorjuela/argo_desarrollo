@@ -20,7 +20,7 @@
             });
         });
 
-        
+       //$('#tablaTitulos').DataTable();
        
 
          $('#<?php echo $this->campoSeguro('fecha_inicio_pago')?>').datepicker({
@@ -129,34 +129,22 @@
 		    dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
 		    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
 		    onSelect: function(dateText, inst) {
-			var lockDate = new Date($('#<?php echo $this->campoSeguro('fecha_inicio_pago')?>').datepicker('getDate'));
-			$('input#<?php echo $this->campoSeguro('fecha_final_pago')?>').datepicker('option', 'minDate', lockDate);
+			var lockDate = new Date($('#<?php echo $this->campoSeguro('fecha_inicial')?>').datepicker('getDate'));
+			$('input#<?php echo $this->campoSeguro('fecha_final')?>').datepicker('option', 'minDate', lockDate);
 			},
 			onClose: function() { 
-		 	    if ($('input#<?php echo $this->campoSeguro('fecha_inicio_pago')?>').val()!='')
+		 	    if ($('input#<?php echo $this->campoSeguro('fecha_inicial')?>').val()!='')
                     {
-                        $('#<?php echo $this->campoSeguro('fecha_final_pago')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all  ");
+                        $('#<?php echo $this->campoSeguro('fecha_final')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all  ");
                 }else {
-                        $('#<?php echo $this->campoSeguro('fecha_final_pago')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all ");
+                        $('#<?php echo $this->campoSeguro('fecha_final')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all ");
                     }
                     
-                    var fechaIn = new Date($('#<?php echo $this->campoSeguro('fecha_inicio_pago')?>').datepicker('getDate'));
+                    var fechaIn = new Date($('#<?php echo $this->campoSeguro('fecha_inicial')?>').datepicker('getDate'));
                     
-                    var fechaFin = new Date($('#<?php echo $this->campoSeguro('fecha_final_pago')?>').datepicker('getDate'));
+                    var fechaFin = new Date($('#<?php echo $this->campoSeguro('fecha_final')?>').datepicker('getDate'));
                     
-                    
-                    var tiempo = fechaFin.getTime() - fechaIn.getTime();
-                    
-                    var dias = Math.floor(tiempo / (1000*60*60*24));
-                    
-                    if($('#<?php echo $this->campoSeguro('fecha_final_pago')?>').val()!=''){
-                    
-                    $('#<?php echo $this->campoSeguro('duracion')?>').val(dias);
-                    
-                    $('#<?php echo $this->campoSeguro('numero_dias')?>').val(dias);
-                    
-                    }
-                    
+                   
                     
                     
                     
@@ -177,34 +165,24 @@
 		    dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
 		    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
 		    onSelect: function(dateText, inst) {
-			var lockDate = new Date($('#<?php echo $this->campoSeguro('fecha_inicio_pago')?>').datepicker('getDate'));
-			$('input#<?php echo $this->campoSeguro('fecha_final_pago')?>').datepicker('option', 'minDate', lockDate);
+			var lockDate = new Date($('#<?php echo $this->campoSeguro('fecha_inicial')?>').datepicker('getDate'));
+			$('input#<?php echo $this->campoSeguro('fecha_final')?>').datepicker('option', 'minDate', lockDate);
 			},
 			onClose: function() { 
-		 	    if ($('input#<?php echo $this->campoSeguro('fecha_inicio_pago')?>').val()!='')
+		 	    if ($('input#<?php echo $this->campoSeguro('fecha_inicial')?>').val()!='')
                     {
-                        $('#<?php echo $this->campoSeguro('fecha_final_pago')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all  ");
+                        $('#<?php echo $this->campoSeguro('fecha_final')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all  ");
                 }else {
-                        $('#<?php echo $this->campoSeguro('fecha_final_pago')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all ");
+                        $('#<?php echo $this->campoSeguro('fecha_final')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all ");
                     }
                     
-                    var fechaIn = new Date($('#<?php echo $this->campoSeguro('fecha_inicio_pago')?>').datepicker('getDate'));
+                    var fechaIn = new Date($('#<?php echo $this->campoSeguro('fecha_inicial')?>').datepicker('getDate'));
                     
-                    var fechaFin = new Date($('#<?php echo $this->campoSeguro('fecha_final_pago')?>').datepicker('getDate'));
+                    var fechaFin = new Date($('#<?php echo $this->campoSeguro('fecha_final')?>').datepicker('getDate'));
                     
+                  
                     
-                    var tiempo = fechaFin.getTime() - fechaIn.getTime();
-                    
-                    var dias = Math.floor(tiempo / (1000*60*60*24));
-                    
-                    if($('#<?php echo $this->campoSeguro('fecha_final_pago')?>').val()!=''){
-                    
-                    $('#<?php echo $this->campoSeguro('duracion')?>').val(dias);
-                    
-                    $('#<?php echo $this->campoSeguro('numero_dias')?>').val(dias);
-                    
-                    }
-                    
+                   
                     
                     
                     
@@ -350,6 +328,9 @@ $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta')?>").select2();
 
 $('#<?php echo $this->campoSeguro('numero_solicitud')?>').width(200);
 $("#<?php echo $this->campoSeguro('numero_solicitud')?>").select2();
+
+$('#<?php echo $this->campoSeguro('numero_cdp')?>').width(200);
+$("#<?php echo $this->campoSeguro('numero_cdp')?>").select2();
 
 $('#<?php echo $this->campoSeguro('dependencia_solicitud')?>').width(200);
 $("#<?php echo $this->campoSeguro('dependencia_solicitud')?>").select2();

@@ -29,7 +29,22 @@ class RegistradorOrden {
 
     function procesarFormulario() {
   
-      
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
         $SQLs = [];
         $fechaActual = date('Y-m-d');
 
@@ -111,8 +126,11 @@ class RegistradorOrden {
             'cargo_supervisor' => $_REQUEST ['cargo_supervisor'],
             'sede_solicitante' => $sede_solicitante,
             'dependencia_solicitante' => $dependencia_solicitante,
-            'forma_pago' => $_REQUEST ['formaPago']);
-       
+            'forma_pago' => $_REQUEST ['formaPago'],
+            'numero_solicitud' => $_REQUEST ['numero_solicitud'],
+            'numero_cdp' => $_REQUEST ['numero_cdp'],
+            );
+               
         $datosOrden = array('tipo_orden' => $_REQUEST ['tipo_orden'],
             'numero_contrato' => "currval('numero_unico_contrato_seq')",
             'vigencia' => (int) date('Y'),
@@ -157,6 +175,7 @@ class RegistradorOrden {
         $sqlNumeroContrato = $this->miSql->getCadenaSql('obtenerInfoOrden');
         $resultado = $esteRecursoDB->ejecutarAcceso($sqlNumeroContrato, "busqueda");
         $identificadorOrden = $resultado[0];
+
         if ($trans_Registro_Orden != false) {
             $datos = array('mensaje'=>"Contrato de Orden de Compra Almacenado Con Éxito, Numero: ".
                 $identificadorOrden['numero_contrato'] . ". VIGENCIA " . date('Y'),

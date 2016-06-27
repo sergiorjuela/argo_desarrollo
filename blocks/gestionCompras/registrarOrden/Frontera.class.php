@@ -52,6 +52,12 @@ class Frontera {
 				case "mensaje" :
 					include_once ($this->ruta . "/formulario/mensaje.php");
 					break;
+				case "ConsultarSolicitudCdp" :
+					include_once ($this->ruta . "/formulario/resultado.php");
+					break;
+				case "registroOrden" :
+					include_once ($this->ruta . "/formulario/registro.php");
+					break;
 			}
 		} else {
 			$_REQUEST ['opcion'] = "mostrar";

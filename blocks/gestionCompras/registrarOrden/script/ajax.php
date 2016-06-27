@@ -300,6 +300,22 @@ $cadenaACodificarSolCdp = $this->miConfigurador->fabricaConexiones->crypto->codi
 
 // URL definitiva
 $urlFinalSolCdp = $url . $cadenaACodificarSolCdp;
+
+
+$cadenaACodificarCdps = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarCdps .= "&procesarAjax=true";
+$cadenaACodificarCdps .= "&action=index.php";
+$cadenaACodificarCdps .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarCdps .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarCdps .= $cadenaACodificarCdps . "&funcion=ObtenerCdps";
+$cadenaACodificarCdps .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadenaACodificarCdps = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarCdps, $enlace);
+
+// URL definitiva
+$urlFinalCdps = $url . $cadenaACodificarCdps;
 ?>
 <script type='text/javascript'>
 
@@ -462,17 +478,17 @@ $urlFinalSolCdp = $url . $cadenaACodificarSolCdp;
 
                 $("#<?php echo $this->campoSeguro('cargo_supervisor') ?>").val(data[0]);
                 $("#<?php echo $this->campoSeguro('cargo_inicial') ?>").val(data[0]);
-                
+
             }
 
         });
     }
     ;
     function restCargoSuper(elem, request, response) {
-         $("#<?php echo $this->campoSeguro('cargo_supervisor') ?>").val($("#<?php echo $this->campoSeguro('cargo_inicial') ?>").val());
+        $("#<?php echo $this->campoSeguro('cargo_supervisor') ?>").val($("#<?php echo $this->campoSeguro('cargo_inicial') ?>").val());
     }
     ;
-    
+
 
 //--------------Fin JavaScript y Ajax Cargo Suepervisor ---------------------------------------------------------------------------------------------    
 
@@ -1133,15 +1149,15 @@ $urlFinalSolCdp = $url . $cadenaACodificarSolCdp;
 
 
     });
-    
-    
-    
-    //--------------Inicio JavaScript y Ajax Vigencia y Numero CDP ---------------------------------------------------------------------------------------------    
+
+
+
+    //--------------Inicio JavaScript y Ajax Vigencia y Numero solicitud ---------------------------------------------------------------------------------------------    
 
     $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").change(function () {
 
         if ($("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val() != '') {
-           
+            $("#<?php echo $this->campoSeguro('numero_cdp') ?>").attr('disabled', '');
             consultarSoliditudyCdp();
         } else {
             $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").attr('disabled', '');
@@ -1150,7 +1166,7 @@ $urlFinalSolCdp = $url . $cadenaACodificarSolCdp;
     });
 
     function consultarSoliditudyCdp(elem, request, response) {
-     
+
         $.ajax({
             url: "<?php echo $urlFinalSolCdp ?>",
             dataType: "json",
@@ -1184,9 +1200,62 @@ $urlFinalSolCdp = $url . $cadenaACodificarSolCdp;
     }
     ;
 
-    //--------------Fin JavaScript y Ajax Sede y Dependencia Suepervisor --------------------------------------------------------------------------------------------------   
+    //--------------Fin JavaScript y Ajax SVigencia y Numero solicitud --------------------------------------------------------------------------------------------------   
 
 
+    //--------------Inicio JavaScript y Ajax CDP x Solicitud ---------------------------------------------------------------------------------------------    
+
+    $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").change(function () {
+
+        if ($("#<?php echo $this->campoSeguro('numero_solicitud') ?>").val() != '') {
+
+
+            consultarCDPs();
+        } else {
+            $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").attr('disabled', '');
+        }
+
+    });
+
+    function consultarCDPs(elem, request, response) {
+
+        $.ajax({
+            url: "<?php echo $urlFinalCdps ?>",
+            dataType: "json",
+            data: {numsol: $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").val(), vigencia: $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val()},
+            success: function (data) {
+
+
+                if (data[0] != " ") {
+
+                    $("#<?php echo $this->campoSeguro('numero_cdp') ?>").html('');
+                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_cdp') ?>");
+                    $.each(data, function (indice, valor) {
+
+                        $("<option value='" + data[ indice ].VALOR + "'>" + data[ indice ].INFORMACION + "</option>").appendTo("#<?php echo $this->campoSeguro('numero_cdp') ?>");
+
+                    });
+
+                    $("#<?php echo $this->campoSeguro('numero_cdp') ?>").removeAttr('disabled');
+
+                    $('#<?php echo $this->campoSeguro('numero_cdp') ?>').width(200);
+                    $("#<?php echo $this->campoSeguro('numero_cdp') ?>").select2();
+
+
+
+                }
+
+
+            }
+
+        });
+    }
+    ;
+
+    //--------------Fin JavaScript y Ajax CDP x Solicitud --------------------------------------------------------------------------------------------------   
+
+
+  
 
 
 

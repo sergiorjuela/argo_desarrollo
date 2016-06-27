@@ -425,7 +425,16 @@ if ($_REQUEST ['funcion'] == 'SeleccionProveedor') {
 //-------------------------Obtener Solicitud y CDPs por Vigencia ----------------------------------------------------------
 if ($_REQUEST ['funcion'] == 'ObtenerSolicitudesCdp') {
     
-    $cadenaSql = $this->sql->getCadenaSql('solicitud_cdp', $_REQUEST ['vigencia']);
+    $cadenaSql = $this->sql->getCadenaSql('obtener_solicitudes_vigencia', $_REQUEST ['vigencia']);
+    $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
+    $resultado = json_encode($resultadoItems);
+    echo $resultado;
+}
+
+if ($_REQUEST ['funcion'] == 'ObtenerCdps') {
+    
+    $datos = array ('numsol' => $_REQUEST ['numsol'], 'vigencia'=> $_REQUEST ['vigencia']);
+    $cadenaSql = $this->sql->getCadenaSql('obtener_cdp_numerosol', $datos);
     $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
     $resultado = json_encode($resultadoItems);
     echo $resultado;

@@ -25,7 +25,7 @@ class registrarForm {
     }
 
     function miForm() {
-       
+
 
         // Rescatar los datos de este bloque
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
@@ -50,46 +50,43 @@ class registrarForm {
          */
         $atributosGlobales ['campoSeguro'] = 'true';
 
-     
+
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         $conexionFrameWork = "estructura";
         $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
+        $conexionSICA = "sicapital";
+        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
 
 
-        if (isset($_REQUEST ['numero_orden']) && $_REQUEST ['numero_orden'] != '') {
-            $numero_orden = explode("-", $_REQUEST ['numero_orden']);
+
+        if (isset($_REQUEST ['vigencia_solicitud_consulta']) && $_REQUEST ['vigencia_solicitud_consulta'] != '') {
+            $vigencia_solicitud = $_REQUEST ['vigencia_solicitud_consulta'];
         } else {
-            $numero_orden = array('', '');
-        }
-        if (isset($_REQUEST ['tipo_orden']) && $_REQUEST ['tipo_orden'] != '') {
-            $tipo_orden = $_REQUEST ['tipo_orden'];
-        } else {
-            $tipo_orden = '';
+            $vigencia_solicitud = '';
         }
 
-        if (isset($_REQUEST ['id_proveedor']) && $_REQUEST ['id_proveedor'] != '') {
-            $nit = $_REQUEST ['id_proveedor'];
+        if (isset($_REQUEST ['numero_solicitud']) && $_REQUEST ['numero_solicitud'] != '') {
+            $numero_solicitud = $_REQUEST ['numero_solicitud'];
         } else {
-            $nit = '';
+            $numero_solicitud = '';
+        }
+        if (isset($_REQUEST ['numero_cdp']) && $_REQUEST ['numero_cdp'] != '') {
+            $numero_cdp = $_REQUEST ['numero_cdp'];
+        } else {
+            $numero_cdp = '';
         }
 
-        if (isset ( $_REQUEST ['sedeConsulta'] ) && $_REQUEST ['sedeConsulta'] != '') {
-                $sede = $_REQUEST ['sedeConsulta'];
+        if (isset($_REQUEST ['dependencia_solicitud']) && $_REQUEST ['dependencia_solicitud'] != '') {
+            $dependencia_solicitante = $_REQUEST ['dependencia_solicitud'];
         } else {
-                $sede = '';
+            $dependencia_solicitante = '';
         }
 
-        if (isset ( $_REQUEST ['dependenciaConsulta'] ) && $_REQUEST ['dependenciaConsulta'] != '') {
-                $dependencia = $_REQUEST ['dependenciaConsulta'];
+        if (isset($_REQUEST ['fecha_inicial']) && $_REQUEST ['fecha_inicial'] != '') {
+            $fecha_inicial = $_REQUEST ['fecha_inicial'];
         } else {
-                $dependencia = '';
-		}
-
-        if (isset($_REQUEST ['fecha_inicio']) && $_REQUEST ['fecha_inicio'] != '') {
-            $fecha_inicio = $_REQUEST ['fecha_inicio'];
-        } else {
-            $fecha_inicio = '';
+            $fecha_inicial = '';
         }
 
         if (isset($_REQUEST ['fecha_final']) && $_REQUEST ['fecha_final'] != '') {
@@ -97,62 +94,32 @@ class registrarForm {
         } else {
             $fecha_final = '';
         }
-        
-        if (isset($_REQUEST ['convenio_solicitante']) && $_REQUEST ['convenio_solicitante'] != '') {
-            $convenio = $_REQUEST ['convenio_solicitante'];
-        } else {
-            $convenio = '';
-        }
 
 
-
-
+    
         $miSesion = Sesion::singleton();
         $id_usuario = $miSesion->idUsuario();
-        $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
+        $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerUnidadUsuario", $id_usuario);
         $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
-        $unidadEjecutora = strpos($unidadEjecutora[0][0], 'IDEXUD');
-        if (!is_int($unidadEjecutora)) {
-            $unidadEjecutora = 209;
-            $arreglo = array(
-                'tipo_orden' => $tipo_orden,
-                'numero_contrato' => $numero_orden[0],
-                'vigencia' => $numero_orden[1],
-                'nit' => $nit,
-                'fecha_inicial' => $fecha_inicio,
-                'fecha_final' => $fecha_final,
-                'unidad_ejecutora' => $unidadEjecutora,
-                'sede' => $sede,
-                'dependencia' => $dependencia,
-            );
-            $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenGeneral', $arreglo);
-           
-            $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-            
-        } else {
-            
-            $unidadEjecutora = 208;
-            $arreglo = array(
-                'tipo_orden' => $tipo_orden,
-                'numero_contrato' => $numero_orden[0],
-                'vigencia' => $numero_orden[1],
-                'nit' => $nit,
-                'fecha_inicial' => $fecha_inicio,
-                'fecha_final' => $fecha_final,
-                'unidad_ejecutora' => $unidadEjecutora,
-                'dependencia' => $convenio,
-            );
-            
-            
-           $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenIdexud', $arreglo);
-          
-           $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-           
-        }
+
       
+        $arreglo_consulta = array(
+            'vigencia_solicitud_consulta' => $vigencia_solicitud,
+            'numero_solicitud' => $numero_solicitud,
+            'dependencia_solicitud' => $dependencia_solicitante,
+            'fecha_inicial' => $fecha_inicial,
+            'fecha_final' => $fecha_final,
+            'numero_cdp' => $numero_cdp,
+            'unidad_ejecutora' => $unidadEjecutora[0]['unidad_ejecutora']
+        );
+      
+
+        
+        $cadenaSql = $this->miSql->getCadenaSql('obtenerSolicitudesCdp', $arreglo_consulta);
+        $solicitudesCDPs = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
+        
        
-     
-        $arreglo = base64_encode(serialize($arreglo));
+        $arreglo_consulta = base64_encode(serialize($arreglo_consulta));
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
         $esteCampo = $esteBloque ['nombre'];
         $atributos ['id'] = $esteCampo;
@@ -172,7 +139,7 @@ class registrarForm {
         // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
         $atributos ['tipoEtiqueta'] = 'inicio';
         echo $this->miFormulario->formulario($atributos);
-
+        unset($atributos);
         $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
 
         $directorio = $this->miConfigurador->getVariableConfiguracion("host");
@@ -188,9 +155,9 @@ class registrarForm {
         $atributos ['id'] = $esteCampo;
         $atributos ["estilo"] = "jqueryui";
         $atributos ['tipoEtiqueta'] = 'inicio';
-        $atributos ["leyenda"] = "Consulta de Ordenes";
+        $atributos ["leyenda"] = "Consulta de Solicitudes y CDPS";
         echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
-
+        unset($atributos);
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
         $esteCampo = 'botonRegresar';
         $atributos ['id'] = $esteCampo;
@@ -203,81 +170,51 @@ class registrarForm {
         $atributos ['redirLugar'] = true;
         echo $this->miFormulario->enlace($atributos);
         unset($atributos);
-        if ($Orden) {
+        if ($solicitudesCDPs) {
 
-            echo "<table id='tablaTitulos'>";
+            echo "<table id='tablaCDPs'>";
             echo "<thead>
                              <tr>
-                                <th>Tipo Orden</th>
-                                <th>Número Orden</th>
-                                <th>ID de la Orden</th>
-                    		<th>Vigencia</th>            
-            			<th>Identificación<br>Nombre Contratista</th>
-                                <th>Sede-Dependencia</th>
-                                <th>Fecha de Registro</th>
-                                <th>Modificar Orden</th>
-                        	<th>Modificar Elementos</th>
-				<th>Documento Orden</th>
+                                <th>Num. de Sol. de Necesidad</th>
+                                <th>Vigencia</th>
+                                <th>Dependencia Solicitante</th>
+                    		<th>Estado Solicitud</th>            
+            			<th>Numero de Disponibilidad (CDP)</th>
+                                <th>Valor Contratacion</th>
+                                <th>Estado CDP</th>
+                                <th>Fecha de Registro del CDP</th>
+                        	<th>Registrar Orden</th>
                              </tr>
                           </thead>
                           <tbody>";
 
-            for ($i = 0; $i < count($Orden); $i ++) {
+            for ($i = 0; $i < count($solicitudesCDPs); $i ++) {
                 $variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-                $variable .= "&opcion=modificarOrden";
-                $variable .= "&numerocontrato=" . $Orden [$i] ['numero_contrato'];
-                $variable .= "&id_orden=" . $Orden [$i] ['id_orden'];
-                $variable .= "&vigencia=" . $Orden [$i] ['vigencia'];
-                $variable .= "&id_contratista=" . $Orden [$i] ['proveedor'];
-                $variable .= "&arreglo=" . $arreglo;
+                $variable .= "&opcion=registroOrden";
+                $variable .= "&numeroSolicitud=" . $solicitudesCDPs [$i] ['NUM_SOL_ADQ'];
+                $variable .= "&numeroCdp=" . $solicitudesCDPs [$i] ['NUMERO_DISPONIBILIDAD'];
+                $variable .= "&vigencia=" . $solicitudesCDPs [$i] ['VIGENCIA'];
+                $variable .= "&objetoCDP=" . $solicitudesCDPs [$i] ['OBJETO'];
+                $variable .= "&arreglo=" . $arreglo_consulta;
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
-                $variable .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "  VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
+                $variable .= "&mensaje_titulo= Numero Solicitud: ".$solicitudesCDPs [$i] ['NUM_SOL_ADQ']." | Numero CDP: ".$solicitudesCDPs [$i] ['NUMERO_DISPONIBILIDAD']." | VIGENCIA: " . $solicitudesCDPs [$i] ['VIGENCIA'];
                 $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
 
-                $variable_elementos = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-                $variable_elementos .= "&opcion=consultaElementos";
-                $variable_elementos .= "&numerocontrato=" . $Orden [$i] ['numero_contrato'];
-                $variable_elementos .= "&id_orden=" . $Orden [$i] ['id_orden'];
-                $variable_elementos .= "&vigencia=" . $Orden [$i] ['vigencia'];
-                $variable_elementos .= "&id_contratista=" . $Orden [$i] ['proveedor'];
-                $variable_elementos .= "&arreglo=" . $arreglo;
-                $variable_elementos .= "&usuario=" . $_REQUEST ['usuario'];
-                $variable_elementos .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "  VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
-                $variable_elementos = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable_elementos, $directorio);
-
-
-                $variable_documento = "action=" . $esteBloque ["nombre"];
-                $variable_documento .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion('pagina');
-                $variable_documento .= "&bloque=" . $esteBloque ['nombre'];
-                $variable_documento .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-                $variable_documento .= "&opcion=generarDocumento";
-                $variable_documento .= "&id_orden=" . $Orden [$i] ['id_orden'];
-                $variable_documento .= "&usuario=" . $_REQUEST ['usuario'];
-                $variable_documento .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
-                $variable_documento = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable_documento, $directorio);
-
-//				$elemento = (is_null ( $Orden [$i] ['validacion'] ) == true) ? '' : (($Orden [$i] ['estado_elementos'] == 't') ? "<a href='" . $variable_elementos . "'><img src='" . $rutaBloque . "/css/images/update.png' width='15px'></a>" : '');
-//				$documento = (is_null ( $Orden [$i] ['validacion'] ) == true) ? '' : (($Orden [$i] ['estado_elementos'] == 't') ? "<a href='" . $variable_documento . "'><img src='" . $rutaBloque . "/css/images/documento.png' width='15px'></a>" : '');
-//				
-                $elemento = "<a href='" . $variable_elementos . "'><img src='" . $rutaBloque . "/css/images/update.png' width='15px'></a>";
-                $documento = "<a href='" . $variable_documento . "'><img src='" . $rutaBloque . "/css/images/documento.png' width='15px'></a>";
-                
-                
                 $mostrarHtml = "<tr>
-                                <td><center>" . $Orden [$i] ['descripcion'] . "</center></td>
-                                <td><center>" . $Orden [$i] ['numero_contrato'] . "</center></td>		
-                                <td><center>" . $Orden [$i] ['id_orden'] . "</center></td>		
-                                <td><center>" . $Orden [$i] ['vigencia'] . "</center></td>
-                                <td><center>" . $Orden [$i] ['proveedor'] . "</center></td>
-                                <td><center>" . $Orden [$i] ['sededependencia'] . "</center></td>
-                                <td><center>" . $Orden [$i] ['fecha_registro'] . "</center></td>
+                                <td><center>" . $solicitudesCDPs [$i] ['NUM_SOL_ADQ'] . "</center></td>
+                                <td><center>" . $solicitudesCDPs [$i] ['VIGENCIA'] . "</center></td>		
+                                <td><center>" . $solicitudesCDPs [$i] ['NOMBRE_DEPENDENCIA'] . "</center></td>		
+                                <td><center>" . $solicitudesCDPs [$i] ['ESTADO'] . "</center></td>
+                                <td><center>" . $solicitudesCDPs [$i] ['NUMERO_DISPONIBILIDAD'] . "</center></td>
+                                <td><center>" . $solicitudesCDPs [$i] ['VALOR_CONTRATACION'] . "</center></td>
+                                <td><center>" . $solicitudesCDPs [$i] ['ESTADOCDP'] . "</center></td>
+                                <td><center>" . $solicitudesCDPs [$i] ['FECHA_REGISTRO'] . "</center></td>
                                 <td><center>
-                                    <a href='" . $variable . "'>
-                                        <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>
+                                    <a href='".$variable."'>
+                                        <img src='" . $rutaBloque . "/css/images/contrato.png' width='20px'>
                                     </a>
                                 </center> </td>
-                		<td><center>" . $elemento . "</center> </td>        		
-                                <td><center>" . $documento . "</center> </td>         		
+                	      		
                                 </tr>";
                 echo $mostrarHtml;
                 unset($mostrarHtml);
@@ -292,7 +229,7 @@ class registrarForm {
             // echo $this->miFormulario->marcoAgrupacion("fin");
         } else {
 
-            $mensaje = "No Se Encontraron<br>Ordenes.";
+            $mensaje = "No Se Encontraron<br>Solicitude con CDP aprobado.";
 
             // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
             $esteCampo = 'mensajeRegistro';

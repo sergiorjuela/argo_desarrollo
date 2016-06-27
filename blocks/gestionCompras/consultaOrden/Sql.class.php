@@ -126,7 +126,7 @@ class Sql extends \Sql {
             case "consultarOrdenGeneral" :
 
                 $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, c.identificacion ||'-'|| c.nombre_razon_social as proveedor,"
-                        . " se.\"ESF_SEDE\" ||'-'|| dep.\"ESF_DEP_ENCARGADA\" as SedeDependencia ";
+                        . " se.\"ESF_SEDE\" ||'-'|| dep.\"ESF_DEP_ENCARGADA\" as SedeDependencia, cg.numero_solicitud_necesidad,cg.numero_cdp ";
                 $cadenaSql .= "FROM orden o, parametros p, contratista c, contrato_general cg, \"SICapital\".\"sedes_SIC\" se, \"SICapital\".\"dependencia_SIC\" dep ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
                 $cadenaSql .= "AND se.\"ESF_ID_SEDE\" = cg.sede_solicitante ";
@@ -169,7 +169,7 @@ class Sql extends \Sql {
             case "consultarOrdenIdexud" :
 
                 $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, c.identificacion ||'-'|| c.nombre_razon_social as proveedor,"
-                        . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia ";
+                        . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia , cg.numero_solicitud_necesidad,cg.numero_cdp  ";
                 $cadenaSql .= "FROM orden o, parametros p, contratista c, contrato_general cg, convenio conv ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
                 $cadenaSql .= "AND conv.\"NUMERO_PRO\"  = cg.dependencia_solicitante ";

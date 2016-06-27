@@ -210,7 +210,8 @@ class registrarForm {
                              <tr>
                                 <th>Tipo Orden</th>
                                 <th>Número Orden</th>
-                                <th>ID de la Orden</th>
+                                <th>Solicitud de Necedidad</th>
+                                <th>Numero CDP</th>
                     		<th>Vigencia</th>            
             			<th>Identificación<br>Nombre Contratista</th>
                                 <th>Sede-Dependencia</th>
@@ -266,7 +267,8 @@ class registrarForm {
                 $mostrarHtml = "<tr>
                                 <td><center>" . $Orden [$i] ['descripcion'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['numero_contrato'] . "</center></td>		
-                                <td><center>" . $Orden [$i] ['id_orden'] . "</center></td>		
+                                <td><center>" . $Orden [$i] ['numero_solicitud_necesidad'] . "</center></td>		
+                                <td><center>" . $Orden [$i] ['numero_cdp'] . "</center></td>		
                                 <td><center>" . $Orden [$i] ['vigencia'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['proveedor'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['sededependencia'] . "</center></td>

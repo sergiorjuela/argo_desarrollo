@@ -69,8 +69,11 @@ $this->idioma ["fecha_diponibilidadTitulo"] = "Ingrese Fecha Disponibilidad Pres
 
 $this->idioma ["vigencia_solicitud_consulta"] = "Vigencia: ";
 $this->idioma ["vigencia_solicitud_consultaTitulo"] = "seleccione la vigencia del cdp";
-$this->idioma ["numero_solicitud"] = "Numero del CDP : ";
-$this->idioma ["numero_solicitudTitulo"] = "Seleccione el Numero del CDP";
+$this->idioma ["numero_solicitud"] = "Numero de la Solicitud : ";
+$this->idioma ["numero_solicitudTitulo"] = "Seleccione el Numero de la Solicitud ";
+$this->idioma ["objeto_cdp"] = "Objeto Certificado de Disponibilidad Presupuestal : ";
+$this->idioma ["numero_cdp"] = "Numero de la Disponbilidad (CDP) : ";
+$this->idioma ["numero_cdpTitulo"] = "Seleccione el Numero Numero de la Disponbilidad (CDP) ";
 $this->idioma ["dependencia_solicitud"] = "Dependencia Solicitante : ";
 $this->idioma ["dependencia_solicitudTitulo"] = "Seleccione la Dependencia Solicitante ";
 $this->idioma ["fecha_inicial"] = "Fecha Inicial : ";

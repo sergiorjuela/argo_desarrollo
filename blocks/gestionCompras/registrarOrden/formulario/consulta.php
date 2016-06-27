@@ -104,7 +104,7 @@ class registrarForm {
         $atributos ['tab'] = $tab;
         $atributos ['tamanno'] = 1;
         $atributos ['estilo'] = 'jqueryui';
-        $atributos ['validar'] = '';
+        $atributos ['validar'] = 'required';
         $atributos ['limitar'] = true;
         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
         $atributos ['anchoEtiqueta'] = 200;
@@ -143,6 +143,48 @@ class registrarForm {
         $atributos ['limitar'] = false;
         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
         $atributos ['anchoEtiqueta'] = 213;
+
+        if (isset($Acta [0] [$esteCampo])) {
+            $atributos ['valor'] = $Acta [0] [$esteCampo];
+        } else {
+            $atributos ['valor'] = '';
+        }
+
+        $atributos ['cadena_sql'] = '';
+// 		
+
+        $arreglo = array(
+            array(
+                '',
+                'Sin Orden  Registradas'
+            )
+        );
+
+        $matrizItems = $arreglo;
+        $atributos ['matrizItems'] = $matrizItems;
+        // Utilizar lo siguiente cuando no se pase un arreglo:
+        // $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
+        // $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
+        $tab ++;
+        $atributos = array_merge($atributos, $atributosGlobales);
+        echo $this->miFormulario->campoCuadroLista($atributos);
+        unset($atributos);
+         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+        $esteCampo = 'numero_cdp';
+        $atributos ['columnas'] = 2;
+        $atributos ['nombre'] = $esteCampo;
+        $atributos ['id'] = $esteCampo;
+        $atributos ['seleccion'] = - 1;
+        $atributos ['evento'] = '';
+        $atributos ['deshabilitado'] = true;
+        $atributos ["etiquetaObligatorio"] = false;
+        $atributos ['tab'] = $tab;
+        $atributos ['tamanno'] = 1;
+        $atributos ['estilo'] = 'jqueryui';
+        $atributos ['validar'] = '';
+        $atributos ['limitar'] = false;
+        $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+        $atributos ['anchoEtiqueta'] = 250;
 
         if (isset($Acta [0] [$esteCampo])) {
             $atributos ['valor'] = $Acta [0] [$esteCampo];
@@ -268,18 +310,6 @@ class registrarForm {
         echo $this->miFormulario->campoCuadroTexto($atributos);
       
 
-        $esteCampo = 'unidad_ejecutora_hidden';
-        $atributos ["id"] = $esteCampo; // No cambiar este nombre
-        $atributos ["tipo"] = "hidden";
-        $atributos ['estilo'] = '';
-        $atributos ["obligatorio"] = false;
-        $atributos ['marco'] = true;
-        $atributos ["etiqueta"] = "";
-        $atributos ['valor'] = $unidadEjecutora;
-        $atributos = array_merge($atributos, $atributosGlobales);
-        echo $this->miFormulario->campoCuadroTexto($atributos);
-        unset($atributos);
-
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 
         
@@ -334,7 +364,7 @@ class registrarForm {
         $valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion('pagina');
         $valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
         $valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-        $valorCodificado .= "&opcion=ConsultarOrden";
+        $valorCodificado .= "&opcion=ConsultarSolicitudCdp";
         $valorCodificado .= "&usuario=" . $_REQUEST['usuario'];
         /**
          * SARA permite que los nombres de los campos sean dinámicos.
