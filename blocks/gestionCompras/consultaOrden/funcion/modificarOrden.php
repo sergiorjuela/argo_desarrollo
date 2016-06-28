@@ -129,6 +129,7 @@ class RegistradorOrden {
 
         $datosOrden = array('tipo_orden' => $_REQUEST ['tipo_orden'],
             'id_orden' => $Identificadores['id_orden'],
+            'unidad_ejecucion' => $_REQUEST ['unidad_ejecucion'],
             'proveedor' => $_REQUEST ['identifcacion_proveedor']);
 
 

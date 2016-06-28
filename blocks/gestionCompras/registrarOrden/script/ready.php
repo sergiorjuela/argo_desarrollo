@@ -322,6 +322,9 @@ $("#<?php echo $this->campoSeguro('dependencia_solicitante')?>").select2();
 $('#<?php echo $this->campoSeguro('convenio_solicitante')?>').width(200);
 $("#<?php echo $this->campoSeguro('convenio_solicitante')?>").select2();
 
+$('#<?php echo $this->campoSeguro('unidad_ejecucion')?>').width(200);
+$("#<?php echo $this->campoSeguro('unidad_ejecucion')?>").select2();
+
 $('#<?php echo $this->campoSeguro('vigencia_solicitud_consulta')?>').width(200);
 $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta')?>").select2();
 

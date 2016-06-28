@@ -142,6 +142,12 @@ class Sql extends \Sql {
 
                 break;
 
+            case "tipo_unidad_ejecucion" :
+                $cadenaSql = " SELECT id_parametro, descripcion  ";
+                $cadenaSql .= " FROM parametros WHERE rel_parametro=21; ";
+            
+                break;
+
 
             case "tipoComprador" :
 
@@ -257,13 +263,14 @@ class Sql extends \Sql {
             case "insertarOrden" :
                 $cadenaSql = " INSERT INTO orden(";
                 $cadenaSql .= " tipo_orden,numero_contrato, vigencia,fecha_registro, ";
-                $cadenaSql .= " proveedor) ";
+                $cadenaSql .= " proveedor, unidad_ejecucion) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['tipo_orden'] . ",";
                 $cadenaSql .= $variable ['numero_contrato'] . ",";
                 $cadenaSql .= $variable ['vigencia'] . ",";
                 $cadenaSql .= "'" . $variable ['fecha'] . "',";
-                $cadenaSql .= "'" . $variable ['proveedor'] . "');";
+                $cadenaSql .= "'" . $variable ['proveedor'] . "',";
+                $cadenaSql .= $variable ['unidad_ejecucion'] . ");";
 
                 break;
 

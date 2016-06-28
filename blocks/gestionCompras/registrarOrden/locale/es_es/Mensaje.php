@@ -33,7 +33,7 @@ $this->idioma ["sede_super"] = "Sede : ";
 $this->idioma ["sede_superTitulo"] = "Seleccione Sede";
 
 $this->idioma ["botonDocumento"] = "Generar Documento PDF";
-$this->idioma ["clausula_presupuesto"] = "Sujeto a registro presupuestal (Hasta Agotar Presupuesto): ";
+$this->idioma ["clausula_presupuesto"] = "Sujeto a registro presupuestal <br>(Hasta Agotar Presupuesto): ";
 // --
 $this->idioma ["vigencia_registro"] = "Vigencia Registro : ";
 $this->idioma ["vigencia_registroTitulo"] = "Seleccione Vigencia Registro";
@@ -96,6 +96,9 @@ $this->idioma ["rubroTitulo"] = "Ingrese Rubro";
 
 $this->idioma ["nombre_supervisor"] = "&nbspIdentificación:<br>y/o Nombre";
 $this->idioma ["nombre_supervisorTitulo"] = "Ingrese Nombre del Supervisor";
+
+$this->idioma ["unidad_ejecucion"] = "Unidad de Ejecución: ";
+$this->idioma ["unidad_ejecucionTitulo"] = "Ingrese la unidad de ejecucion";
 
 $this->idioma ["cargo_supervisor"] = "&nbspCargo :";
 $this->idioma ["cargo_supervisorTitulo"] = "Ingrese Cargo del Supervisor";

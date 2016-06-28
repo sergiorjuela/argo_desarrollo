@@ -45,6 +45,9 @@ $("#<?php echo $this->campoSeguro('convenio_solicitante')?>").select2();
 $('#<?php echo $this->campoSeguro('sede_super')?>').width(300);
 $("#<?php echo $this->campoSeguro('sede_super')?>").select2();
 
+$('#<?php echo $this->campoSeguro('unidad_ejecucion')?>').width(200);
+$("#<?php echo $this->campoSeguro('unidad_ejecucion')?>").select2();
+
 $('#<?php echo $this->campoSeguro('dependencia_supervisor')?>').width(350);
 $("#<?php echo $this->campoSeguro('dependencia_supervisor')?>").select2(); 
 

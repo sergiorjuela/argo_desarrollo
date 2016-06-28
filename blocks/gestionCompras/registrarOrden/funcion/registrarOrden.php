@@ -29,22 +29,7 @@ class RegistradorOrden {
 
     function procesarFormulario() {
   
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
+    
         $SQLs = [];
         $fechaActual = date('Y-m-d');
 
@@ -135,6 +120,7 @@ class RegistradorOrden {
             'numero_contrato' => "currval('numero_unico_contrato_seq')",
             'vigencia' => (int) date('Y'),
             'fecha' => date('Y-m-d'),
+            'unidad_ejecucion' => $_REQUEST['unidad_ejecucion'],
             'proveedor' => $_REQUEST ['identifcacion_proveedor']);
 
         $PolizasOrden = array('numero_contrato' => "curval('id_orden_seq')",

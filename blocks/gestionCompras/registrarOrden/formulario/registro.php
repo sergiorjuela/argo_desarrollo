@@ -1398,8 +1398,43 @@ class registrarForm {
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
 
+                       
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-//                    
+                    $esteCampo = 'unidad_ejecucion';
+                     $atributos ['nombre'] = $esteCampo;
+                    $atributos ['id'] = $esteCampo;
+                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+                    $atributos ["etiquetaObligatorio"] = false;
+                    $atributos ['tab'] = $tab ++;
+                    $atributos ['anchoEtiqueta'] = 150;
+                    $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+                    $atributos ['evento'] = '';
+                    if (isset($_REQUEST [$esteCampo])) {
+                        $atributos ['seleccion'] = $_REQUEST [$esteCampo];
+                    } else {
+                        $atributos ['seleccion'] = - 1;
+                    }
+                    $atributos ['deshabilitado'] = false;
+                    $atributos ['columnas'] = 3;
+                    $atributos ['tamanno'] = 1;
+                    $atributos ['estilo'] = "jqueryui";
+                    $atributos ['validar'] = 'required';
+                    $atributos ['limitar'] = true;
+                    $atributos ['anchoCaja'] = 40;
+                    $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipo_unidad_ejecucion");
+                    $matrizItems = array(
+                        array(
+                            0,
+                            ' '
+                        )
+                    );
+                    $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+                    $atributos ['matrizItems'] = $matrizItems;
+                    $atributos = array_merge($atributos, $atributosGlobales);
+                    echo $this->miFormulario->campoCuadroLista($atributos);
+                    unset($atributos);
+
+            
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'plazo_ejecucion';
                     $atributos ['id'] = $esteCampo;
@@ -1431,8 +1466,7 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-
-
+                
                     // ---------------- CONTROL: Select Forma de Pago --------------------------------------------------------
                     $esteCampo = 'formaPago';
                     $atributos ['nombre'] = $esteCampo;
@@ -1440,7 +1474,7 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['tab'] = $tab ++;
-                    $atributos ['anchoEtiqueta'] = 170;
+                    $atributos ['anchoEtiqueta'] = 130;
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['evento'] = '';
                     if (isset($_REQUEST [$esteCampo])) {

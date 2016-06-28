@@ -86,7 +86,8 @@ class registrarForm {
             'plazo_ejecucion' => $Orden ['plazo_ejecucion'],
             'formaPago' => $Orden ['forma_pago'],
             'asignacionOrdenador' => $Orden ['ordenador_gasto'],
-            'clausula_presupuesto' => $Orden ['clausula_registro_presupuestal']
+            'clausula_presupuesto' => $Orden ['clausula_registro_presupuestal'],
+            'unidad_ejecucion' => $Orden ['unidad_ejecucion']
         );
 
         $cadenaSql = $this->miSql->getCadenaSql('textos');
@@ -1431,6 +1432,41 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
 
                     echo $this->miFormulario->campoCuadroTexto($atributos);
+                    unset($atributos);
+                    
+                    // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+                    $esteCampo = 'unidad_ejecucion';
+                    $atributos ['nombre'] = $esteCampo;
+                    $atributos ['id'] = $esteCampo;
+                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+                    $atributos ["etiquetaObligatorio"] = false;
+                    $atributos ['tab'] = $tab ++;
+                    $atributos ['anchoEtiqueta'] = 150;
+                    $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+                    $atributos ['evento'] = '';
+                    if (isset($_REQUEST [$esteCampo])) {
+                        $atributos ['seleccion'] = $_REQUEST [$esteCampo];
+                    } else {
+                        $atributos ['seleccion'] = - 1;
+                    }
+                    $atributos ['deshabilitado'] = false;
+                    $atributos ['columnas'] = 3;
+                    $atributos ['tamanno'] = 1;
+                    $atributos ['estilo'] = "jqueryui";
+                    $atributos ['validar'] = 'required';
+                    $atributos ['limitar'] = true;
+                    $atributos ['anchoCaja'] = 40;
+                    $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipo_unidad_ejecucion");
+                    $matrizItems = array(
+                        array(
+                            0,
+                            ' '
+                        )
+                    );
+                    $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+                    $atributos ['matrizItems'] = $matrizItems;
+                    $atributos = array_merge($atributos, $atributosGlobales);
+                    echo $this->miFormulario->campoCuadroLista($atributos);
                     unset($atributos);
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
