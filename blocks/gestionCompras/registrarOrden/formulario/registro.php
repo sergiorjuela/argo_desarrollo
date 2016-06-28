@@ -200,9 +200,9 @@ class registrarForm {
                         $atributos ['validar'] = 'required';
 
                         if (isset($_REQUEST [$esteCampo])) {
-                            $atributos ['valor'] = $unidadEjecutora;
+                        $atributos ['valor'] = $unidadEjecutora[0]['nombre'];
                         } else {
-                            $atributos ['valor'] = $unidadEjecutora;
+                            $atributos ['valor'] = $unidadEjecutora[0]['nombre'];
                         }
                         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                         $atributos ['deshabilitado'] = true;

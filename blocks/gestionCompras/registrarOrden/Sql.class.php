@@ -71,7 +71,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " \"ANIO_PRO\" as value,";
                 $cadenaSql .= " \"ANIO_PRO\" as data";
                 $cadenaSql .= " FROM ";
-                $cadenaSql .= " convenio; ";
+                $cadenaSql .= " convenio ORDER BY \"ANIO_PRO\" DESC; ";
                 break;
 
             case "buscar_nombre_convenio" :
@@ -842,7 +842,7 @@ class Sql extends \Sql {
 
             case "vigencias_sica_disponibilidades" :
                 $cadenaSql = " SELECT DISTINCT SN.VIGENCIA AS valor, SN.VIGENCIA AS informacion  FROM CO.CO_SOLICITUD_ADQ SN ";
-                $cadenaSql .= " where SN.CODIGO_UNIDAD_EJECUTORA = 01 ORDER BY SN.VIGENCIA ASC ";
+                $cadenaSql .= " where SN.CODIGO_UNIDAD_EJECUTORA = 01 ORDER BY SN.VIGENCIA DESC ";
 
                 break;
             case "obtener_solicitudes_vigencia" :
@@ -890,7 +890,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, CO.CO_DEPENDENCIAS DP  ";
                 $cadenaSql .= " WHERE SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ and SN.DEPENDENCIA = DP.COD_DEPENDENCIA ";
                 $cadenaSql .= " and SN.VIGENCIA= " . $variable['vigencia_solicitud_consulta'] . " and SN.CODIGO_UNIDAD_EJECUTORA =" . $variable['unidad_ejecutora'] . " ";
-                $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
+                $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE'  ";
                 if ($variable['numero_solicitud'] != '') {
                     $cadenaSql .= " and SN.NUM_SOL_ADQ = ". $variable['numero_solicitud']." " ;
                 }

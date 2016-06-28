@@ -75,8 +75,8 @@ class RegistradorOrden {
 
        
 
-        $unidad_ejecutura = strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD');
-        if (!is_int($unidad_ejecutura)) {
+       
+        if ($_REQUEST ['identificador_unidad']==1) {
             $unidad_ejecutura = 209;
             $sede_solicitante = $_REQUEST ['sede'];
             $dependencia_solicitante = $_REQUEST ['dependencia_solicitante'];
@@ -85,6 +85,7 @@ class RegistradorOrden {
             $sede_solicitante = $_REQUEST ['sede_idexud'];
             $dependencia_solicitante = $_REQUEST ['convenio_solicitante'];
         }
+       
         if (isset($_POST['clausula_presupuesto'])) {
             $clausula_presupuesto = $_POST['clausula_presupuesto'];
             if ($clausula_presupuesto = 't') {
@@ -190,9 +191,10 @@ class RegistradorOrden {
         $datos = array('numero_contrato' => $Identificadores['numero_contrato'],
             'vigencia' => $Identificadores['vigencia']);
 
+       
         if ($trans_actualizacion_orden != false) {
             $this->miConfigurador->setVariableConfiguracion("cache", true);
-
+            
             redireccion::redireccionar('actualizoOrden', $datos);
         } else {
 

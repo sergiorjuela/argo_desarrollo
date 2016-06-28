@@ -201,7 +201,6 @@ class registrarForm {
                 $id_usuario = $miSesion->idUsuario();
                 $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
                 $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
-                
                 $esteCampo = 'unidad_ejecutora';
                 $atributos ['id'] = $esteCampo;
                 $atributos ['nombre'] = $esteCampo;
@@ -272,7 +271,7 @@ class registrarForm {
                         echo $this->miFormulario->campoCuadroTexto($atributos);
                         unset($atributos);
                         
-                         $esteCampo = 'vigencia_convenio';
+                        $esteCampo = 'vigencia_convenio';
                         $atributos ['columnas'] = 2;
                         $atributos ['nombre'] = $esteCampo;
                         $atributos ['id'] = $esteCampo;
@@ -282,7 +281,7 @@ class registrarForm {
                         $atributos ['tab'] = $tab;
                         $atributos ['tamanno'] = 1;
                         $atributos ['estilo'] = 'jqueryui';
-                        $atributos ['validar'] = 'required';
+                        $atributos ['validar'] = '';
                         $atributos ['limitar'] = true;
                         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                         $atributos ['anchoEtiqueta'] = 170;
@@ -300,7 +299,7 @@ class registrarForm {
                         $atributos = array_merge($atributos, $atributosGlobales);
                         echo $this->miFormulario->campoCuadroLista($atributos);
                         unset($atributos);
-
+                     
                         $esteCampo = "convenio_solicitante";
                         $atributos ['columnas'] = 2;
                         $atributos ['nombre'] = $esteCampo;
@@ -729,6 +728,20 @@ class registrarForm {
                     $atributos ['marco'] = true;
                     $atributos ["etiqueta"] = "";
                     $atributos ['valor'] = $_REQUEST ['cargo_supervisor'];
+                    $atributos = array_merge($atributos, $atributosGlobales);
+                    echo $this->miFormulario->campoCuadroTexto($atributos);
+                    unset($atributos);
+                    
+                 
+                    
+                    $esteCampo = 'identificador_unidad';
+                    $atributos ["id"] = $esteCampo; // No cambiar este nombre
+                    $atributos ["tipo"] = "hidden";
+                    $atributos ['estilo'] = '';
+                    $atributos ["obligatorio"] = false;
+                    $atributos ['marco'] = true;
+                    $atributos ["etiqueta"] = "";
+                    $atributos ['valor'] = $unidadEjecutora[0]['unidad_ejecutora'];
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);

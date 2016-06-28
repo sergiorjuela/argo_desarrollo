@@ -111,7 +111,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " \"ANIO_PRO\" as value,";
                 $cadenaSql .= " \"ANIO_PRO\" as data";
                 $cadenaSql .= " FROM ";
-                $cadenaSql .= " convenio; ";
+                $cadenaSql .= " convenio ORDER BY \"ANIO_PRO\" DESC; ";
                 break;
 
             case "buscar_nombre_convenio" :

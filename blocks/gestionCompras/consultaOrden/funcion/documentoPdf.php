@@ -320,7 +320,7 @@ class RegistradorOrden {
         $orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         // var_dump ( $orden );
         $orden = $orden [0];
-        
+
 
         $cadenaSql = $this->miSql->getCadenaSql('consultarInformaciónDisponibilidad', $_REQUEST ['id_orden']);
 
@@ -354,20 +354,19 @@ class RegistradorOrden {
         $cadenaSql = $this->miSql->getCadenaSql('consultarFormadePago', $orden ['forma_pago']);
         $formaPago = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         $formaPago = $formaPago[0][0];
-        
-        if ($orden['unidad_ejecutora']=='208') {
-           $cadenaSql = $this->miSql->getCadenaSql('consultarConvenio', $orden ['dependencia_solicitante']);
-           $dependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-           $dependencia = $dependencia[0][0];
-           $sede = $orden['sede_solicitante'];
-        }
-        else{
-           $cadenaSql = $this->miSql->getCadenaSql('consultarSede', 'FICC');
-           $sede = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-           $sede = $sede[0][0];
-           $cadenaSql = $this->miSql->getCadenaSql('consultarDependencia', 'OTR35');
-           $dependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-           $dependencia = $dependencia[0][0];
+
+        if ($orden['unidad_ejecutora'] == '208') {
+            $cadenaSql = $this->miSql->getCadenaSql('consultarConvenio', $orden ['dependencia_solicitante']);
+            $dependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+            $dependencia = $dependencia[0][0];
+            $sede = $orden['sede_solicitante'];
+        } else {
+            $cadenaSql = $this->miSql->getCadenaSql('consultarSede', 'FICC');
+            $sede = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+            $sede = $sede[0][0];
+            $cadenaSql = $this->miSql->getCadenaSql('consultarDependencia', 'OTR35');
+            $dependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+            $dependencia = $dependencia[0][0];
         }
 
         $contenidoPagina = "
@@ -433,20 +432,33 @@ class RegistradorOrden {
 			<td style='width:50%;text-aling=right;'>FECHA DE ORDEN :  " . $orden ['fecha_registro_orden'] . "</td> 			
  		 	</tr>
 		    </table>
-						
+				  <table style='width:100%;'>
+			<tr> 
+			<td style='width:100%;'><b>Información Precontractual</b></td>
+			</tr>
+         	    </table>
+
+
+		    <table style='width:100%;'>
+			<tr> 
+			<td style='width:50%;'>Numero de Solicitud de Necesidad : " . $orden['numero_solicitud_necesidad'] . " </td>
+			<td style='width:50%;'>Numero de Disponibilidad Presupuestal : " . $orden['numero_cdp'] . " </td>
+			</tr>
+	           </table>			
 		    <table style='width:100%;'>
 			<tr> 
 			<td style='width:100%;'><b>Información Solicitante</b></td>
 			</tr>
-         	</table>
+         	    </table>
 
 
 		    <table style='width:100%;'>
 			<tr> 
 			<td style='width:50%;'>Dependencia : " . $dependencia . " </td>
-			<td style='width:50%;'>Sede : " . $sede. " </td>
+			<td style='width:50%;'>Sede : " . $sede . " </td>
 			</tr>
-			</table>	
+	           </table>	
+		  
 
 			<table style='width:100%;'>
 			<tr> 

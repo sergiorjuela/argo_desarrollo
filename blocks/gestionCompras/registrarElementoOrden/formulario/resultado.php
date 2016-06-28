@@ -207,10 +207,10 @@ class registrarForm {
             echo "<thead>
                              <tr>
                                 <th>Tipo Orden</th>
-                                <th>Vigencia y/o<br>Número Orden<br>Unidad Ejecutora</th>            
+                                <th>Vigencia y Número Orden</th>            
             			<th>Identificación<br>Nombre Contratista</th>
                                 <th>Vigencia</th>
-                                <th>Sede-Dependencia</th>
+                                <th>Sede-Dependencia o Convenio</th>
                                 <th>Cargar Elementos</th>
                                 
                              </tr>
