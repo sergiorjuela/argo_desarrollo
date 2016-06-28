@@ -115,6 +115,7 @@ class RegistradorOrden {
             'numero_solicitud' => $_REQUEST ['numero_solicitud'],
             'numero_cdp' => $_REQUEST ['numero_cdp'],
             );
+            
                
         $datosOrden = array('tipo_orden' => $_REQUEST ['tipo_orden'],
             'numero_contrato' => "currval('numero_unico_contrato_seq')",

@@ -166,6 +166,15 @@ class Sql extends \Sql {
                 $cadenaSql .= " and p.id_parametro = 202 ;";
 
                 break;
+                
+            case "ordenadores_orden" :
+
+                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from arka_parametros.argo_ordenadores where \"ORG_ESTADO\" = 'A'; ";
+
+                break;
+            
+            
+            
 
             case "cargoSuper" :
 
@@ -176,9 +185,9 @@ class Sql extends \Sql {
                 break;
 
             case "informacion_ordenador" :
-                $cadenaSql = " 	SELECT f.\"nombre_cp\" ";
-                $cadenaSql .= " FROM \"SICapital\".\"funcionario\" f ,\"SICapital\".\"funcionario_tipo_ordenador\"  o, parametros p ";
-                $cadenaSql .= " WHERE f.\"identificacion\"='$variable' and f.\"identificacion\"= o.\"funcionario\" and p.id_parametro= o.\"tipo_ordenador\";";
+                $cadenaSql = " 	SELECT  \"ORG_NOMBRE\",  \"ORG_IDENTIFICACION\",  \"ORG_IDENTIFICADOR\"  ";
+                $cadenaSql .= " FROM arka_parametros.argo_ordenadores ";
+                $cadenaSql .= " WHERE \"ORG_ESTADO\" = 'A' and  \"ORG_IDENTIFICACION\" = $variable;";
 
                 break;
 

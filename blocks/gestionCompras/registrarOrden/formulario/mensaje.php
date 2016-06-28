@@ -201,7 +201,7 @@ class registrarForm {
 					echo $this->miFormulario->division ( "inicio", $atributos );
 					
 					$this->botonCargarElemento ( $tab, 2 );
-					$this->botonRegresar ( $tab, 2 );
+					//$this->botonRegresar ( $tab, 2 );
                                        
 					
 					echo $this->miFormulario->division ( 'fin' );
