@@ -29,7 +29,26 @@ class RegistradorOrden {
 
     function procesarFormulario() {
   
-    
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
         $SQLs = [];
         $fechaActual = date('Y-m-d');
 
@@ -145,7 +164,7 @@ class RegistradorOrden {
         
        // Registro Contrato General
         $SQLsContratoGeneral = $this->miSql->getCadenaSql('insertarContratoGeneral', $datosContratoGeneral);
-        array_push($SQLs, $SQLsContratoGeneral);
+         array_push($SQLs, $SQLsContratoGeneral);
       
         // Registro Orden
         $SQLsOrden = $this->miSql->getCadenaSql('insertarOrden', $datosOrden);
@@ -164,6 +183,7 @@ class RegistradorOrden {
         $identificadorOrden = $resultado[0];
 
         if ($trans_Registro_Orden != false) {
+            
             $datos = array('mensaje'=>"Contrato de Orden de Compra Almacenado Con Éxito, Numero: ".
                 $identificadorOrden['numero_contrato'] . ". VIGENCIA " . date('Y'),
                 'id_orden'=> $identificadorOrden['numero_contrato'] );
@@ -171,6 +191,7 @@ class RegistradorOrden {
             redireccion::redireccionar('inserto',  $datos);
             exit();
         } else {
+             
             echo "entro";
             $datos = "No se pudo llevar a cabo el registro del contrato";
             redireccion::redireccionar('noInserto', $datos);

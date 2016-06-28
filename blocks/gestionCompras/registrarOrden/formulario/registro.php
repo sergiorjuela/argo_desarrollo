@@ -141,8 +141,8 @@ class registrarForm {
                 $id_usuario = $miSesion->idUsuario();
                 $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
                 $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
-                $unidadEjecutora = $unidadEjecutora[0]['nombre'];
-
+              
+                
 
 
                 $esteCampo = 'unidad_ejecutora';
@@ -160,7 +160,7 @@ class registrarForm {
                 $atributos ['validar'] = '';
 
                 if (isset($unidadEjecutora)) {
-                    $atributos ['valor'] = $unidadEjecutora;
+                    $atributos ['valor'] =  $unidadEjecutora[0]['nombre'];
                 } else {
                     $atributos ['valor'] = 'Usuario sin Dependencia Registrada';
                 }
@@ -184,8 +184,7 @@ class registrarForm {
                 $atributos ['leyenda'] = "Información del Solicitante";
                 echo $this->miFormulario->agrupacion('inicio', $atributos);
                 {
-                    $unidad = strpos($unidadEjecutora, "IDEXUD");
-                    if ($unidad === 0) {
+                   if ($unidadEjecutora[0]['unidad_ejecutora'] ==2) {
                         $esteCampo = 'sede_idexud';
                         $atributos ['id'] = $esteCampo;
                         $atributos ['nombre'] = $esteCampo;
@@ -1579,12 +1578,12 @@ class registrarForm {
                     $atributos ['estilo'] = "jqueryui";
                     $atributos ['validar'] = "required";
                     $atributos ['limitar'] = 1;
-                    $atributos ['anchoCaja'] = 40;
+                    $atributos ['anchoCaja'] = 60;
                     $atributos ['miEvento'] = '';
-                    if (!is_int($unidad)) {
-                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipoComprador");
+                    if ($unidadEjecutora[0]['unidad_ejecutora']== 1) {
+                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("ordenadores_orden");
                     } else {
-                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipoComprador_idexud");
+                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("ordenadores_orden_idexud");
                     }
 
 
@@ -1623,7 +1622,7 @@ class registrarForm {
                     }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = false;
-                    $atributos ['tamanno'] = 30;
+                    $atributos ['tamanno'] = 40;
                     $atributos ['maximoTamanno'] = '';
                     $atributos ['anchoEtiqueta'] = 120;
                     $tab ++;

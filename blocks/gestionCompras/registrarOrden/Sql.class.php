@@ -35,7 +35,7 @@ class Sql extends \Sql {
              * Clausulas específicas
              */
             case "obtenerInfoUsuario" :
-                $cadenaSql = "SELECT u.dependencia_especifica ||' - '|| u.dependencia as nombre ";
+                $cadenaSql = "SELECT u.dependencia_especifica ||' - '|| u.dependencia as nombre, unidad_ejecutora  ";
                 $cadenaSql .= "FROM frame_work.argo_usuario u  ";
                 $cadenaSql .= "WHERE u.id_usuario='" . $variable . "' ";
                 break;
@@ -169,7 +169,14 @@ class Sql extends \Sql {
                 
             case "ordenadores_orden" :
 
-                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from arka_parametros.argo_ordenadores where \"ORG_ESTADO\" = 'A'; ";
+                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from arka_parametros.argo_ordenadores ";
+                $cadenaSql .= " where \"ORG_ESTADO\" = 'A' and \"ORG_ORDENADOR_GASTO\" <> 'DIRECTOR IDEXUD'; ";
+
+                break;
+            case "ordenadores_orden_idexud" :
+
+                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from arka_parametros.argo_ordenadores ";
+                $cadenaSql .= " where \"ORG_ESTADO\" = 'A' and \"ORG_ORDENADOR_GASTO\" = 'DIRECTOR IDEXUD'; ";
 
                 break;
             

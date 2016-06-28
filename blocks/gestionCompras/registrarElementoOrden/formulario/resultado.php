@@ -110,8 +110,8 @@ class registrarForm {
         $id_usuario = $miSesion->idUsuario();
         $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
-        $unidadEjecutora = strpos($unidadEjecutora[0][0], 'IDEXUD');
-        if (!is_int($unidadEjecutora)) {
+     
+        if ($unidadEjecutora[0]['unidad_ejecutora']==1) {
             $unidadEjecutora = 209;
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,

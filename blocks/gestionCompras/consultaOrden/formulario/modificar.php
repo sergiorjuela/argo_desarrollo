@@ -201,6 +201,7 @@ class registrarForm {
                 $id_usuario = $miSesion->idUsuario();
                 $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
                 $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
+                
                 $esteCampo = 'unidad_ejecutora';
                 $atributos ['id'] = $esteCampo;
                 $atributos ['nombre'] = $esteCampo;
@@ -1626,9 +1627,9 @@ class registrarForm {
                     $atributos ['miEvento'] = '';
 
                     if ($Orden ['unidad_ejecutora'] == 209) {
-                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipoComprador");
+                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("ordenadores_orden");
                     } else {
-                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipoComprador_idexud");
+                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("ordenadores_orden_idexud");
                     }
                     $matrizItems = array(
                         array(
@@ -1648,6 +1649,7 @@ class registrarForm {
 
                     $sqlNombreOrdenador = $this->miSql->getCadenaSql("informacion_ordenador", $_REQUEST['asignacionOrdenador']);
                     $nombreOrdenador = $DBContractual->ejecutarAcceso($sqlNombreOrdenador, "busqueda");
+               
 
                     $esteCampo = 'nombreOrdenador';
                     $atributos ['id'] = $esteCampo;
@@ -1664,7 +1666,7 @@ class registrarForm {
                     $atributos ['validar'] = 'required, minSize[1],maxSize[2000]';
 
                     if ($nombreOrdenador != false) {
-                        $atributos ['valor'] = $nombreOrdenador[0]['nombre_cp'];
+                        $atributos ['valor'] = $nombreOrdenador[0]['ORG_NOMBRE'];
                     } else {
                         $atributos ['valor'] = '';
                     }

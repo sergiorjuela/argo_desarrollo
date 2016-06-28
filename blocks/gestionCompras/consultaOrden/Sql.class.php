@@ -232,7 +232,7 @@ class Sql extends \Sql {
                 break;
 
             case "obtenerInfoUsuario" :
-                $cadenaSql = "SELECT u.dependencia_especifica ||' - '|| u.dependencia as nombre ";
+                $cadenaSql = "SELECT u.dependencia_especifica ||' - '|| u.dependencia as nombre, unidad_ejecutora ";
                 $cadenaSql .= "FROM frame_work.argo_usuario u  ";
                 $cadenaSql .= "WHERE u.id_usuario='" . $variable . "' ";
                 break;
@@ -251,6 +251,20 @@ class Sql extends \Sql {
                 $cadenaSql .= " and p.id_parametro <> 202 ;";
 
                 break;
+            case "ordenadores_orden" :
+
+                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from arka_parametros.argo_ordenadores ";
+                $cadenaSql .= " where \"ORG_ESTADO\" = 'A' and \"ORG_ORDENADOR_GASTO\" <> 'DIRECTOR IDEXUD'; ";
+
+                break;
+            case "ordenadores_orden_idexud" :
+
+                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from arka_parametros.argo_ordenadores ";
+                $cadenaSql .= " where \"ORG_ESTADO\" = 'A' and \"ORG_ORDENADOR_GASTO\" = 'DIRECTOR IDEXUD'; ";
+
+                break;
+
+
 
             case "tipoComprador_idexud" :
 
@@ -311,11 +325,12 @@ class Sql extends \Sql {
                 break;
 
             case "informacion_ordenador" :
-                $cadenaSql = " 	SELECT f.\"nombre_cp\" ";
-                $cadenaSql .= " FROM \"SICapital\".\"funcionario\" f ,\"SICapital\".\"funcionario_tipo_ordenador\"  o, parametros p ";
-                $cadenaSql .= " WHERE f.\"identificacion\"='$variable' and f.\"identificacion\"= o.\"funcionario\" and p.id_parametro= o.\"tipo_ordenador\";";
+                $cadenaSql = " 	SELECT  \"ORG_NOMBRE\",  \"ORG_IDENTIFICACION\",  \"ORG_IDENTIFICADOR\"  ";
+                $cadenaSql .= " FROM arka_parametros.argo_ordenadores ";
+                $cadenaSql .= " WHERE \"ORG_ESTADO\" = 'A' and  \"ORG_IDENTIFICACION\" = $variable;";
 
                 break;
+
 
             case "obtenerPolizarOrden" :
                 $cadenaSql = " 	SELECT poliza ";

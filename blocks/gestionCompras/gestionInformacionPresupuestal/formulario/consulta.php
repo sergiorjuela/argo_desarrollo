@@ -69,9 +69,7 @@ class registrarForm {
         $id_usuario = $miSesion->idUsuario();
         $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidad = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
-        var_dump($unidad);
-        $unidad = strpos($unidad[0][0], 'IDEXUD');
-        if (!is_int($unidad)) {
+        if ($unidad[0]['unidad_ejecutora']==1) {
             $unidadEjecutora = 209;
         } else {
             $unidadEjecutora = 208;
@@ -222,7 +220,7 @@ class registrarForm {
         unset($atributos);
 
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-        if (!is_int($unidad)) {
+        if ($unidad[0]['unidad_ejecutora']==1) {
             $esteCampo = 'sedeConsulta';
             $atributos ['columnas'] = 2;
             $atributos ['nombre'] = $esteCampo;

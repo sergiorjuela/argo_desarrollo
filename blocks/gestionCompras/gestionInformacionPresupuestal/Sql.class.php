@@ -45,7 +45,7 @@ class Sql extends \Sql {
                 break;
 
             case "obtenerInfoUsuario" :
-                $cadenaSql = "SELECT u.dependencia_especifica ||' - '|| u.dependencia as nombre ";
+                $cadenaSql = "SELECT u.dependencia_especifica ||' - '|| u.dependencia as nombre, unidad_ejecutora ";
                 $cadenaSql .= "FROM frame_work.argo_usuario u  ";
                 $cadenaSql .= "WHERE u.id_usuario='" . $variable . "' ";
                 break;
