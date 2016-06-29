@@ -114,24 +114,9 @@ class registrarForm {
         );
       
 
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
         
         $cadenaSql = $this->miSql->getCadenaSql('obtenerSolicitudesCdp', $arreglo_consulta);
-        echo $cadenaSql;
+ 
         $solicitudesCDPs = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
         
        

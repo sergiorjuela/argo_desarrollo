@@ -29,62 +29,13 @@ class RegistradorOrden {
 
     function procesarFormulario() {
   
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
+    
         $SQLs = [];
         $fechaActual = date('Y-m-d');
 
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
-        if ($_REQUEST ['tipo_persona'] == 'Juridica') {
-            $tipo_persona = 2;
-        } else {
-            $tipo_persona = 1;
-        }
-        if ($_REQUEST ['tipo_documento'] == 'CC') {
-            $tipo_documento = 184;
-        } else {
-            $tipo_documento = 186;
-        }
-        
-        $datosContratista = array('razonSocial' => $_REQUEST ['nombre_razon_proveedor'],
-            'direcccion' => $_REQUEST ['direccion_proveedor'],
-            'nombreRepresentante' => $_REQUEST ['nombre_contratista'],
-            'identificacionRepresentante' => $_REQUEST ['identifcacion_contratista'],
-            'cargo_contratista' => $_REQUEST ['cargo_contratista'],
-            'nit' => $_REQUEST ['identifcacion_proveedor'],
-            'telefono' => $_REQUEST ['telefono_proveedor'],
-            'correo' => $_REQUEST ['correo_proveedor'],
-            'digito_verificacion' => $_REQUEST ['digito_verificacion'],
-            'nacionalidad' => $_REQUEST ['pais'],
-            'sitio_web' => $_REQUEST ['sitio_web'],
-            'nombre_acesor' => $_REQUEST ['nombre_acesor'],
-            'procedencia' => $_REQUEST ['procedencia'],
-            'ubicacion_proveedor' => $_REQUEST ['ubicacion_proveedor'],
-            'fecha' => date('Y-m-d'),
-            'tipo_persona' => $tipo_persona,
-            'tipo_documento' => $tipo_documento,
-            'registro_mercantil' => $_REQUEST ['registro_mercantil']);
-        
 
         $unidad_ejecutura = strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD - IDEXUD');
        
@@ -141,6 +92,7 @@ class RegistradorOrden {
             'vigencia' => (int) date('Y'),
             'fecha' => date('Y-m-d'),
             'unidad_ejecucion' => $_REQUEST['unidad_ejecucion'],
+            'nombre_proveedor' => $_REQUEST['nombre_razon_proveedor'],
             'proveedor' => $_REQUEST ['identifcacion_proveedor']);
 
         $PolizasOrden = array('numero_contrato' => "curval('id_orden_seq')",
@@ -152,14 +104,6 @@ class RegistradorOrden {
             if (isset($_POST["poliza" . "$i"])) {
                 array_push($polizas, $i);
             }
-        }
-        
-        $sqlValidarContratista = $this->miSql->getCadenaSql('validarContratista', $datosContratista['nit']);
-        $contratista = $esteRecursoDB->ejecutarAcceso($sqlValidarContratista, "busqueda");
-        if($contratista == false){
-            // Registro Contratista
-            $SQLsContratista = $this->miSql->getCadenaSql('insertarContratista', $datosContratista);
-            array_push($SQLs, $SQLsContratista);
         }
         
        // Registro Contrato General

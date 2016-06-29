@@ -279,13 +279,14 @@ class Sql extends \Sql {
             case "insertarOrden" :
                 $cadenaSql = " INSERT INTO orden(";
                 $cadenaSql .= " tipo_orden,numero_contrato, vigencia,fecha_registro, ";
-                $cadenaSql .= " proveedor, unidad_ejecucion) ";
+                $cadenaSql .= " proveedor,nombre_proveedor, unidad_ejecucion) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['tipo_orden'] . ",";
                 $cadenaSql .= $variable ['numero_contrato'] . ",";
                 $cadenaSql .= $variable ['vigencia'] . ",";
                 $cadenaSql .= "'" . $variable ['fecha'] . "',";
                 $cadenaSql .= "'" . $variable ['proveedor'] . "',";
+                $cadenaSql .= "'" . $variable ['nombre_proveedor'] . "',";
                 $cadenaSql .= $variable ['unidad_ejecucion'] . ");";
 
                 break;

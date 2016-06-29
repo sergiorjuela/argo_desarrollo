@@ -39,6 +39,9 @@ class registrarForm {
          * Si se utiliza esta técnica es necesario realizar un mezcla entre este arreglo y el específico en cada control:
          * $atributos= array_merge($atributos,$atributosGlobales);
          */
+        
+        
+        
         $atributosGlobales ['campoSeguro'] = 'true';
 
         $_REQUEST ['tiempo'] = time();
@@ -54,6 +57,7 @@ class registrarForm {
         $Orden = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
         $Orden = $Orden [0];
        
+
         $arreglo = array(
             'tipo_orden' => $Orden ['tipo_orden'],
             'sede_solicitante' => $Orden ['sede_solicitante'],
@@ -62,24 +66,6 @@ class registrarForm {
             'dependencia_supervisor' => $Orden ['dependencia_supervisor'],
             'nombre_supervisor' => $Orden ['supervisor'],
             'cargo_supervisor' => $Orden ['cargo_supervisor'],
-            'digito_verificacion' => $Orden ['digito_verificacion'],
-            'tipo_persona' => $Orden ['tipo_naturaleza'],
-            'tipo_documento' => $Orden ['tipo_documento'],
-            'selec_proveedor' => $Orden ['proveedor'] . " - " . $Orden ['nombre_razon_social'],
-            'id_proveedor' => $Orden ['proveedor'],
-            'nombre_razon_proveedor' => $Orden ['nombre_razon_social'],
-            'identifcacion_proveedor' => $Orden ['proveedor'],
-            'direccion_proveedor' => $Orden ['direccion'],
-            'correo_proveedor' => $Orden ['correo'],
-            'telefono_proveedor' => $Orden ['telefono'],
-            'nombre_acesor' => $Orden ['nombre_acesor'],
-            'sitio_web' => $Orden ['sitio_web'],
-            'procedencia' => $Orden ['procedencia_contratista'],
-            'ubicacion_proveedor' => $Orden ['ubicacion'],
-            'pais' => $Orden ['nacionalidad'],
-            'nombre_contratista' => $Orden ['nombre_contratista'],
-            'identifcacion_contratista' => $Orden ['identificacion_contratista_representante'],
-            'cargo_contratista' => $Orden ['cargo_contratista_representante'],
             'objeto_contrato' => $Orden ['objeto_contrato'],
             'fecha_inicio_pago' => $Orden ['fecha_inicio'],
             'fecha_final_pago' => $Orden ['fecha_final'],
@@ -87,7 +73,8 @@ class registrarForm {
             'formaPago' => $Orden ['forma_pago'],
             'asignacionOrdenador' => $Orden ['ordenador_gasto'],
             'clausula_presupuesto' => $Orden ['clausula_registro_presupuestal'],
-            'unidad_ejecucion' => $Orden ['unidad_ejecucion']
+            'unidad_ejecucion' => $Orden ['unidad_ejecucion'],
+            'proveedor' => $Orden ['proveedor']
         );
 
         $cadenaSql = $this->miSql->getCadenaSql('textos');
@@ -130,17 +117,6 @@ class registrarForm {
 
             $arreglo = unserialize(base64_decode($_REQUEST ['arreglo']));
 
-//            $variable = "pagina=" . $miPaginaActual;
-//            $variable .= "&opcion=ConsultarOrden";
-//            $variable .= "&numero_orden=" . $arreglo ['numero_orden'];
-//            $variable .= "&tipo_orden=" . $arreglo ['tipo_orden'];
-//            $variable .= "&id_proveedor=" . $arreglo ['nit'];
-//            $variable .= "&sedeConsulta=" . $arreglo ['sede'];
-//            $variable .= "&dependenciaConsulta=" . $arreglo ['dependencia'];
-//            $variable .= "&fecha_inicio=" . $arreglo ['fecha_inicial'];
-//            $variable .= "&fecha_final=" . $arreglo ['fecha_final'];
-//
-//            $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
 
             $esteCampo = "marcoDatosBasicos";
             $atributos ['id'] = $esteCampo;
@@ -270,7 +246,7 @@ class registrarForm {
                         $atributos = array_merge($atributos, $atributosGlobales);
                         echo $this->miFormulario->campoCuadroTexto($atributos);
                         unset($atributos);
-                        
+
                         $esteCampo = 'vigencia_convenio';
                         $atributos ['columnas'] = 2;
                         $atributos ['nombre'] = $esteCampo;
@@ -299,7 +275,7 @@ class registrarForm {
                         $atributos = array_merge($atributos, $atributosGlobales);
                         echo $this->miFormulario->campoCuadroLista($atributos);
                         unset($atributos);
-                     
+
                         $esteCampo = "convenio_solicitante";
                         $atributos ['columnas'] = 2;
                         $atributos ['nombre'] = $esteCampo;
@@ -330,8 +306,8 @@ class registrarForm {
                         $atributos = array_merge($atributos, $atributosGlobales);
                         echo $this->miFormulario->campoCuadroLista($atributos);
                         unset($atributos);
-                        
-                        $sqlNombreConvenio = $this->miSql->getCadenaSql("buscar_nombre_convenio",$Orden['dependencia_solicitante']);
+
+                        $sqlNombreConvenio = $this->miSql->getCadenaSql("buscar_nombre_convenio", $Orden['dependencia_solicitante']);
                         $nombreConvenio = $DBContractual->ejecutarAcceso($sqlNombreConvenio, "busqueda");
                         $esteCampo = 'nombre_convenio_solicitante';
                         $atributos ['id'] = $esteCampo;
@@ -353,7 +329,7 @@ class registrarForm {
                         $atributos ['maximoTamanno'] = '';
                         $atributos ['anchoEtiqueta'] = 220;
                         $atributos ['valor'] = $nombreConvenio[0][0];
-                       
+
                         $tab ++;
 
                         // Aplica atributos globales al control
@@ -642,7 +618,7 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoBoton($atributos);
                     unset($atributos);
-                    
+
                     $esteCampo = 'restablecerCargo';
                     $atributos ["id"] = $esteCampo;
                     $atributos ["tabIndex"] = $tab;
@@ -661,11 +637,29 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoBoton($atributos);
                     unset($atributos);
-                     echo "</center>";
-                   
-                    
+                    echo "</center>";
                 }
                 echo $this->miFormulario->agrupacion('fin');
+
+//-------------- Se accede al Servicio de Agora para Consultar el Proveedor de la Orden de Compra -------------------------------------------------------------------
+
+                $parametro = $_REQUEST ['proveedor'];
+                $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+                $url = "http://10.20.0.38/agora/index.php?data=";
+                $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&Parametro1=$parametro";
+                $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar($data, $enlace);
+                $cliente = curl_init();
+                curl_setopt($cliente, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($cliente, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($cliente, CURLOPT_URL, $url_servicio);
+                $repuestaWeb = curl_exec($cliente);
+                curl_close($cliente);
+                $repuestaWeb = explode("<json>", $repuestaWeb);
+                $proveedor = json_decode($repuestaWeb[1]);
+                $proveedor = (array) $proveedor;
+                $proveedor = (array) $proveedor['datos'];
+                
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------               
 
                 $esteCampo = "AgrupacionContratista";
                 $atributos ['id'] = $esteCampo;
@@ -699,8 +693,8 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
-                    
+
+
                     $esteCampo = 'botonContratista';
                     $atributos ["id"] = $esteCampo;
                     $atributos ["tabIndex"] = $tab;
@@ -719,8 +713,8 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoBoton($atributos);
                     unset($atributos);
-                    
-                     $esteCampo = 'cargo_inicial';
+
+                    $esteCampo = 'cargo_inicial';
                     $atributos ["id"] = $esteCampo; // No cambiar este nombre
                     $atributos ["tipo"] = "hidden";
                     $atributos ['estilo'] = '';
@@ -731,9 +725,9 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
-                 
-                    
+
+
+
                     $esteCampo = 'identificador_unidad';
                     $atributos ["id"] = $esteCampo; // No cambiar este nombre
                     $atributos ["tipo"] = "hidden";
@@ -745,7 +739,7 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
+
                     $esteCampo = 'id_proveedor';
                     $atributos ["id"] = $esteCampo; // No cambiar este nombre
                     $atributos ["tipo"] = "hidden";
@@ -773,8 +767,8 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if (isset($proveedor['nomempresa'])) {
+                        $atributos ['valor'] = $proveedor['nomempresa'];
                     } else {
                         $atributos ['valor'] = '';
                     }
@@ -805,8 +799,8 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required,custom[onlyNumberSp]';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if (isset($proveedor['nit'])) {
+                        $atributos ['valor'] = $proveedor['nit'];
                     } else {
                         $atributos ['valor'] = '';
                     }
@@ -837,8 +831,8 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required, maxSize[15],minSize[1],custom[onlyNumberSp]';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if (isset($proveedor['digitoverificacion'])) {
+                        $atributos ['valor'] = $proveedor['digitoverificacion'];
                     } else {
                         $atributos ['valor'] = '';
                     }
@@ -853,11 +847,10 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                   
+
                     //-----Campo digito de tipo persona
 
-                    $cadenaSql = $this->miSql->getCadenaSql('ConsultarDescripcionParametro', $_REQUEST['tipo_persona']);
-                    $tipo_persona = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
+
                     $esteCampo = 'tipo_persona';
                     $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
@@ -872,8 +865,8 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required, maxSize[15],minSize[1]';
 
-                    if ($tipo_persona != false) {
-                        $atributos ['valor'] = $tipo_persona[0]['descripcion'];
+                    if (isset($proveedor['tipopersona'])) {
+                        $atributos ['valor'] = $proveedor['tipopersona'];
                     } else {
                         $atributos ['valor'] = '';
                     }
@@ -906,8 +899,8 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if (isset($proveedor['direccion'])) {
+                        $atributos ['valor'] = $proveedor['direccion'];
                     } else {
                         $atributos ['valor'] = '';
                     }
@@ -938,8 +931,8 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if (isset($proveedor['telefono'])) {
+                        $atributos ['valor'] = $proveedor['telefono'];
                     } else {
                         $atributos ['valor'] = '';
                     }
@@ -954,8 +947,8 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
-                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+
+                    // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'sitio_web';
                     $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
@@ -970,8 +963,8 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if (isset($proveedor['web'])) {
+                        $atributos ['valor'] = $proveedor['web'];
                     } else {
                         $atributos ['valor'] = '';
                     }
@@ -986,8 +979,8 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
-                    
+
+
                     $esteCampo = 'pais';
                     $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
@@ -1002,10 +995,10 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if ($proveedor['pais'] == null) {
+                        $atributos ['valor'] = "Colombia";
                     } else {
-                        $atributos ['valor'] = '';
+                        $atributos ['valor'] = $proveedor['pais'];
                     }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
@@ -1018,8 +1011,8 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
-                     $esteCampo = 'ubicacion_proveedor';
+
+                    $esteCampo = 'ubicacion_proveedor';
                     $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
                     $atributos ['tipo'] = 'text';
@@ -1033,8 +1026,8 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if (isset($proveedor['municipio'])) {
+                        $atributos ['valor'] = $proveedor['municipio'];
                     } else {
                         $atributos ['valor'] = '';
                     }
@@ -1049,7 +1042,7 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
+
                     $esteCampo = 'nombre_acesor';
                     $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
@@ -1064,8 +1057,8 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required, minSize[1]';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if (isset($proveedor['nomasesor'])) {
+                        $atributos ['valor'] = $proveedor['nomasesor'];
                     } else {
                         $atributos ['valor'] = '';
                     }
@@ -1096,8 +1089,10 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required, minSize[1]';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if (isset($proveedor['primernombre'])) {
+                        $nombreContratista = $proveedor['primernombre'] . " " . $proveedor['segundonombre'];
+                        $apellidosConstratista = $proveedor['primerapellido'] . " " . $proveedor['segundoapellido'];
+                        $atributos ['valor'] = $nombreContratista . " " . $apellidosConstratista;
                     } else {
                         $atributos ['valor'] = '';
                     }
@@ -1112,11 +1107,8 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
-                      //-----Campo  tipo dcoumento Representante persona
 
-                    $cadenaSql = $this->miSql->getCadenaSql('ConsultarDescripcionParametro', $_REQUEST['tipo_documento']);
-                    $tipo_documento = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
+                    //-----Campo  tipo dcoumento Representante persona
 
                     $esteCampo = 'tipo_documento';
                     $atributos ['id'] = $esteCampo;
@@ -1132,8 +1124,8 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required, maxSize[30],minSize[1]';
 
-                    if ($tipo_documento != false) {
-                        $atributos ['valor'] = $tipo_documento[0]['descripcion'];
+                    if ($proveedor['tipodocumento']) {
+                        $atributos ['valor'] = $proveedor['tipodocumento'];
                     } else {
                         $atributos ['valor'] = '';
                     }
@@ -1164,10 +1156,10 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required,maxSize[10],custom[onlyNumberSp]';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if ($proveedor['numdocumento']== null) {
+                        $atributos ['valor'] = $proveedor['cedula_extranjeria'];
                     } else {
-                        $atributos ['valor'] = '';
+                        $atributos ['valor'] = $proveedor['numdocumento'];
                     }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
@@ -1180,7 +1172,7 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
+
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'procedencia';
                     $atributos ['id'] = $esteCampo;
@@ -1196,10 +1188,10 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required, minSize[1]';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if ($proveedor['tipo_doc_extranjero'] != null) {
+                        $atributos ['valor'] = $proveedor['tipo_procedencia']." (".$proveedor['tipo_doc_extranjero'].")";
                     } else {
-                        $atributos ['valor'] = '';
+                        $atributos ['valor'] = $proveedor['tipo_procedencia'];
                     }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
@@ -1212,7 +1204,7 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                  
+
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'cargo_contratista';
                     $atributos ['id'] = $esteCampo;
@@ -1228,10 +1220,10 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required, minSize[1]';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if (isset($proveedor['cargo'])) {
+                        $atributos ['valor'] = "Cargo";
                     } else {
-                        $atributos ['valor'] = '';
+                        $atributos ['valor'] = "Cargo";
                     }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = false;
@@ -1259,8 +1251,8 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required, maxSize[70],minSize[5],custom[email]';
 
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
+                    if (isset($proveedor['correo'])) {
+                        $atributos ['valor'] = $proveedor['correo'];
                     } else {
                         $atributos ['valor'] = '';
                     }
@@ -1447,7 +1439,7 @@ class registrarForm {
 
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
+
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'unidad_ejecucion';
                     $atributos ['nombre'] = $esteCampo;
@@ -1662,7 +1654,7 @@ class registrarForm {
 
                     $sqlNombreOrdenador = $this->miSql->getCadenaSql("informacion_ordenador", $_REQUEST['asignacionOrdenador']);
                     $nombreOrdenador = $DBContractual->ejecutarAcceso($sqlNombreOrdenador, "busqueda");
-               
+
 
                     $esteCampo = 'nombreOrdenador';
                     $atributos ['id'] = $esteCampo;

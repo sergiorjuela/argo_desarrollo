@@ -320,11 +320,11 @@ class RegistradorOrden {
         $orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         // var_dump ( $orden );
         $orden = $orden [0];
-
-
+        
         $cadenaSql = $this->miSql->getCadenaSql('consultarInformaciónDisponibilidad', $_REQUEST ['id_orden']);
 
         $infDisponibilidad = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        
 
         $cadenaSql = $this->miSql->getCadenaSql('consultarInformaciónRegistro', $_REQUEST ['id_orden']);
         $inRegistro = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
@@ -333,15 +333,31 @@ class RegistradorOrden {
 
         $supervisor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         $supervisor = $supervisor [0];
+        
+        
+        //-------------- Se accede al Servicio de Agora para Consultar el Proveedor de la Orden de Compra -------------------------------------------------------------------
 
+                $parametro = $orden ['proveedor'];
+                $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+                $url = "http://10.20.0.38/agora/index.php?data=";
+                $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&Parametro1=$parametro";
+                $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar($data, $enlace);
+                $cliente = curl_init();
+                curl_setopt($cliente, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($cliente, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($cliente, CURLOPT_URL, $url_servicio);
+                $repuestaWeb = curl_exec($cliente);
+                curl_close($cliente);
+                $repuestaWeb = explode("<json>", $repuestaWeb);
+                $proveedor = json_decode($repuestaWeb[1]);
+                $proveedor = (array) $proveedor;
+                $proveedor = (array) $proveedor['datos'];
+            
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------               
 
-        $cadenaSql = $this->miSql->getCadenaSql('consultarProveedor', $orden ['proveedor']);
-        $datosProveedor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-        $datosProveedor = $datosProveedor [0];
-
-        $cadenaSql = $this->miSql->getCadenaSql('polizas', $_REQUEST ['id_orden']);
+        $cadenaSql = $this->miSql->getCadenaSql('polizasDocumento', $_REQUEST ['id_orden']);
         $polizas = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        
 
         $cadenaSql = $this->miSql->getCadenaSql('ordenadorDocumento', $orden ['ordenador_gasto']);
         $ordenador = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
@@ -481,25 +497,25 @@ class RegistradorOrden {
 
             <table style='width:100%;'>
 			<tr> 
-			<td style='width:50%;'>Razón Social : " . $datosProveedor ['nombre_razon_social'] . " </td>
-			<td style='width:50%;'>Nit : " . $datosProveedor ['identificacion'] . " </td>
+			<td style='width:50%;'>Razón Social : " . $proveedor ['nomempresa'] . " </td>
+			<td style='width:50%;'>Nit : " . $proveedor ['nit'] . " </td>
 			</tr>
 			<tr> 
-			<td style='width:50%;'>Dirección : " . $datosProveedor ['direccion'] . " </td>
-			<td style='width:50%;'>Telefono : " . $datosProveedor ['telefono'] . " </td>
+			<td style='width:50%;'>Dirección : " . $proveedor ['direccion'] . " </td>
+			<td style='width:50%;'>Telefono : " . $proveedor ['telefono'] . " </td>
 			</tr>		
 			</table>
 					
   			 <table style='width:100%;'>
 			<tr> 
-			<td style='width:50%;'>Nombre Contratista : " . $datosProveedor ['nombre_contratista'] . " </td>
-			<td style='width:50%;'>Identificación : " . $datosProveedor ['identificacion_contratista_representante'] . " </td>
+			<td style='width:50%;'>Nombre Contratista : " . $proveedor ['primernombre']." ".$proveedor ['segundonombre']." ".$proveedor ['primerapellido'] ." ".$proveedor ['segundoapellido']. " </td>
+			<td style='width:50%;'>Identificación : " . $proveedor ['numdocumento'] . " </td>
 			</tr>
 			</table>
 					
 			<table style='width:100%;'>
 			<tr> 
-			<td style='width:100%;'>Cargo : " . $datosProveedor ['cargo_contratista_representante'] . "</td>
+			<td style='width:100%;'>Cargo : " . "CARGO" . "</td>
 			</tr>
          	</table>			
 					
@@ -747,11 +763,11 @@ class RegistradorOrden {
 			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>" . $ordenador [1] . "</td>
 			</tr>
 			<tr>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>NOMBRE: " . $datosProveedor ['nombre_razon_social'] . "</td>
+			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>NOMBRE: " . $proveedor ['nomempresa'] . "</td>
 			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>ORDENADOR GASTO</td>
 			</tr>
 			<tr>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>C.C: " . $datosProveedor ['identificacion'] . "</td>
+			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>C.C: " . $proveedor ['nit'] . "</td>
 			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $ordenador [0] . "-" . $ordenador[1] . "</td>
 			</tr>
 			</table>

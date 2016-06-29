@@ -37,44 +37,6 @@ class RegistradorOrden {
 
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
-
-        if ($_REQUEST ['tipo_persona'] == 'Natural') {
-            $tipo_persona = 1;
-        } else {
-            $tipo_persona = 2;
-        }
-        if ($_REQUEST ['tipo_documento'] == 1) {
-            $tipo_documento = 184;
-        } else {
-            $tipo_documento = 186;
-        }
-        if ($_REQUEST ['pais'] == '') {
-            $nacionalidad = 'Colombia';
-        } else {
-            $nacionalidad = $_REQUEST ['pais'];
-        }
-
-        $datosContratista = array('razonSocial' => $_REQUEST ['nombre_razon_proveedor'],
-            'direcccion' => $_REQUEST ['direccion_proveedor'],
-            'nombreRepresentante' => $_REQUEST ['nombre_contratista'],
-            'identificacionRepresentante' => $_REQUEST ['identifcacion_contratista'],
-            'cargo_contratista' => $_REQUEST ['cargo_contratista'],
-            'nit' => $_REQUEST ['identifcacion_proveedor'],
-            'telefono' => $_REQUEST ['telefono_proveedor'],
-            'correo' => $_REQUEST ['correo_proveedor'],
-            'digito_verificacion' => $_REQUEST ['digito_verificacion'],
-            'nacionalidad' => $_REQUEST ['pais'],
-            'sitio_web' => $_REQUEST ['sitio_web'],
-            'nombre_acesor' => $_REQUEST ['nombre_acesor'],
-            'procedencia' => $_REQUEST ['procedencia'],
-            'ubicacion_proveedor' => $_REQUEST ['ubicacion_proveedor'],
-            'fecha' => date('Y-m-d'),
-            'tipo_persona' => $tipo_persona,
-            'tipo_documento' => $tipo_documento,
-            'registro_mercantil' => $_REQUEST ['registro_mercantil']);
-
-       
-
        
         if ($_REQUEST ['identificador_unidad']==1) {
             $unidad_ejecutura = 209;
@@ -131,6 +93,7 @@ class RegistradorOrden {
         $datosOrden = array('tipo_orden' => $_REQUEST ['tipo_orden'],
             'id_orden' => $Identificadores['id_orden'],
             'unidad_ejecucion' => $_REQUEST ['unidad_ejecucion'],
+            'nombre_proveedor' => $_REQUEST ['nombre_razon_proveedor'],
             'proveedor' => $_REQUEST ['identifcacion_proveedor']);
 
 
@@ -143,22 +106,6 @@ class RegistradorOrden {
         for ($i = 0; $i < count($_POST); $i++) {
             if (isset($_POST["poliza" . "$i"])) {
                 array_push($polizas, $i);
-            }
-        }
-
-        $sqlValidarContratista = $this->miSql->getCadenaSql('validarContratista', $datosContratista['nit']);
-        $contratista = $esteRecursoDB->ejecutarAcceso($sqlValidarContratista, "busqueda");
-        if ($contratista == false) {
-            // Registro Contratista
-            $SQLsContratista = $this->miSql->getCadenaSql('insertarContratista', $datosContratista);
-            array_push($SQLs, $SQLsContratista);
-        } else {
-            if ($datosContratista['cargo_contratista'] != '') {
-
-                $datos = array('cargo' => $datosContratista['cargo_contratista'],
-                    'id' => $datosContratista['nit']);
-                $SQLsContratista = $this->miSql->getCadenaSql('modificarContratista', $datos);
-                array_push($SQLs, $SQLsContratista);
             }
         }
 

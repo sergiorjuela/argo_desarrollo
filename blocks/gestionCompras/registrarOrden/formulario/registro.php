@@ -1172,7 +1172,7 @@ class registrarForm {
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                    $atributos ['validar'] = 'required, minSize[1]';
+                    $atributos ['validar'] = '';
 
                     if (isset($_REQUEST [$esteCampo])) {
                         $atributos ['valor'] = $_REQUEST [$esteCampo];

@@ -139,13 +139,12 @@ class Sql extends \Sql {
             
             case "consultarOrdenGeneral" :
 
-                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, c.identificacion ||'-'|| c.nombre_razon_social as proveedor,"
+                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, o.proveedor ||'-'|| o.nombre_proveedor as proveedor,"
                         . " se.\"ESF_SEDE\" ||'-'|| dep.\"ESF_DEP_ENCARGADA\" as SedeDependencia ";
-                $cadenaSql .= "FROM orden o, parametros p, contratista c, contrato_general cg, \"SICapital\".\"sedes_SIC\" se, \"SICapital\".\"dependencia_SIC\" dep ";
+                $cadenaSql .= "FROM orden o, parametros p, contrato_general cg, \"SICapital\".\"sedes_SIC\" se, \"SICapital\".\"dependencia_SIC\" dep ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
                 $cadenaSql .= "AND se.\"ESF_ID_SEDE\" = cg.sede_solicitante ";
                 $cadenaSql .= "AND dep.\"ESF_CODIGO_DEP\" = cg.dependencia_solicitante ";
-                $cadenaSql .= "AND o.proveedor = c.identificacion ";
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
                 $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
@@ -182,12 +181,11 @@ class Sql extends \Sql {
                 
             case "consultarOrdenIdexud" :
 
-                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, c.identificacion ||'-'|| c.nombre_razon_social as proveedor,"
+                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, o.proveedor ||'-'|| o.nombre_proveedor as proveedor,"
                         . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia ";
-                $cadenaSql .= "FROM orden o, parametros p, contratista c, contrato_general cg, convenio conv ";
+                $cadenaSql .= "FROM orden o, parametros p, contrato_general cg, convenio conv ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
                 $cadenaSql .= "AND conv.\"NUMERO_PRO\"  = cg.dependencia_solicitante ";
-                $cadenaSql .= "AND o.proveedor = c.identificacion ";
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
                 $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
