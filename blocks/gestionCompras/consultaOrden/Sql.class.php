@@ -1022,9 +1022,9 @@ class Sql extends \Sql {
             case "consultarElementosOrden" :
                 $cadenaSql = "SELECT  ela.*, ct.elemento_nombre nivel_nombre, tb.descripcion nombre_tipo, iv.descripcion nombre_iva,elemento_nombre  ";
                 $cadenaSql .= "FROM elemento_acta_recibido ela ";
-                $cadenaSql .= "JOIN  catalogo.catalogo_elemento ct ON ct.elemento_id=ela.nivel ";
-                $cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes=ela.tipo_bien ";
-                $cadenaSql .= "JOIN  arka_inventarios.aplicacion_iva iv ON iv.id_iva=ela.iva  ";
+                $cadenaSql .= "JOIN  inventarios.catalogo_elemento ct ON ct.elemento_id=ela.nivel ";
+                $cadenaSql .= "JOIN  inventarios.tipo_bienes tb ON tb.id_tipo_bienes=ela.tipo_bien ";
+                $cadenaSql .= "JOIN  inventarios.aplicacion_iva iv ON iv.id_iva=ela.iva  ";
                 $cadenaSql .= "WHERE id_orden ='" . $variable . "'  ";
                 $cadenaSql .= "AND  ela.estado=true; ";
                 break;
@@ -1039,8 +1039,8 @@ class Sql extends \Sql {
             case "consultar_nivel_inventario" :
 
                 $cadenaSql = "SELECT ce.elemento_id, ce.elemento_codigo||' - '||ce.elemento_nombre ";
-                $cadenaSql .= "FROM catalogo.catalogo_elemento  ce ";
-                $cadenaSql .= "JOIN catalogo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
+                $cadenaSql .= "FROM inventarios.catalogo_elemento  ce ";
+                $cadenaSql .= "JOIN inventarios.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
                 $cadenaSql .= "WHERE cl.lista_activo = 1  ";
                 $cadenaSql .= "AND  ce.elemento_id > 0  ";
                 $cadenaSql .= "AND  ce.elemento_padre > 0  ";
@@ -1051,23 +1051,23 @@ class Sql extends \Sql {
             case "consultar_tipo_poliza" :
 
                 $cadenaSql = "SELECT id_tipo_poliza, descripcion ";
-                $cadenaSql .= "FROM arka_inventarios.tipo_poliza;";
+                $cadenaSql .= "FROM inventarios.tipo_poliza;";
 
                 break;
 
             case "consultar_tipo_iva" :
 
                 $cadenaSql = "SELECT id_iva, descripcion ";
-                $cadenaSql .= "FROM arka_inventarios.aplicacion_iva;";
+                $cadenaSql .= "FROM inventarios.aplicacion_iva;";
 
                 break;
 
             case "ConsultaTipoBien" :
 
                 $cadenaSql = "SELECT ge.elemento_tipobien , tb.descripcion  ";
-                $cadenaSql .= "FROM  catalogo.catalogo_elemento ce ";
-                $cadenaSql .= "JOIN  grupo.catalogo_elemento ge  ON (ge.elemento_id)::text =ce .elemento_grupoc  ";
-                $cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ge.elemento_tipobien  ";
+                $cadenaSql .= "FROM  inventarios.catalogo_elemento ce ";
+                $cadenaSql .= "JOIN  inventarios.catalogo_elemento_grupo ge  ON (ge.elemento_id)::text =ce .elemento_grupoc  ";
+                $cadenaSql .= "JOIN  inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ge.elemento_tipobien  ";
                 $cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
 
                 break;
@@ -1082,7 +1082,7 @@ class Sql extends \Sql {
 
             case "ActualizarElementoImagen" :
 
-                $cadenaSql = " UPDATE arka_inventarios.asignar_imagen_acta ";
+                $cadenaSql = " UPDATE inventarios.asignar_imagen_acta ";
                 $cadenaSql .= "SET  id_elemento_acta='" . $variable ['elemento'] . "', imagen='" . $variable ['imagen'] . "' ";
                 $cadenaSql .= "WHERE id_imagen='" . $variable ['id_imagen'] . "';";
 
@@ -1090,7 +1090,7 @@ class Sql extends \Sql {
 
             case "RegistrarElementoImagen" :
 
-                $cadenaSql = " 	INSERT INTO arka_inventarios.asignar_imagen_acta(";
+                $cadenaSql = " 	INSERT INTO inventarios.asignar_imagen_acta(";
                 $cadenaSql .= " id_elemento_acta, imagen ) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= "'" . $variable ['elemento'] . "',";
@@ -1102,7 +1102,7 @@ class Sql extends \Sql {
             case "consultar_iva" :
 
                 $cadenaSql = "SELECT iva ";
-                $cadenaSql .= "FROM arka_inventarios.aplicacion_iva ";
+                $cadenaSql .= "FROM inventarios.aplicacion_iva ";
                 $cadenaSql .= "WHERE id_iva='" . $variable . "';";
 
                 break;

@@ -243,8 +243,6 @@ class registrarForm {
 
                         $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("consultar_nivel_inventario");
                         $matrizItems = $esteRecursoDB->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
-//                                                var_dump($esteRecursoDB);
-//                                                var_dump($matrizItems);
                         $atributos ['matrizItems'] = $matrizItems;
 
                         // Utilizar lo siguiente cuando no se pase un arreglo:

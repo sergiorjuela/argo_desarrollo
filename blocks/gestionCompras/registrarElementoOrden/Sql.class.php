@@ -346,7 +346,7 @@ class Sql extends \Sql {
             case "consultar_iva" :
 
                 $cadenaSql = "SELECT iva ";
-                $cadenaSql .= "FROM arka_inventarios.aplicacion_iva ";
+                $cadenaSql .= "FROM inventarios.aplicacion_iva ";
                 $cadenaSql .= "WHERE id_iva='" . $variable . "';";
 
                 break;
@@ -356,9 +356,9 @@ class Sql extends \Sql {
             case "ConsultaTipoBien" :
 
                 $cadenaSql = "SELECT ge.elemento_tipobien , tb.descripcion  ";
-                $cadenaSql .= "FROM  catalogo.catalogo_elemento ce ";
-                $cadenaSql .= "JOIN  grupo.catalogo_elemento ge  ON (ge.elemento_id)::text =ce .elemento_grupoc  ";
-                $cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ge.elemento_tipobien  ";
+                $cadenaSql .= "FROM  inventarios.catalogo_elemento ce ";
+                $cadenaSql .= "JOIN  inventarios.catalogo_elemento_grupo ge  ON (ge.elemento_id)::text =ce .elemento_grupoc  ";
+                $cadenaSql .= "JOIN  inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ge.elemento_tipobien  ";
                 $cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
                 break;
 
@@ -397,28 +397,28 @@ class Sql extends \Sql {
             case "consultar_tipo_bien" :
 
                 $cadenaSql = "SELECT id_tipo_bienes, descripcion ";
-                $cadenaSql .= "FROM arka_inventarios.tipo_bienes;";
+                $cadenaSql .= "FROM inventarios.tipo_bienes;";
 
                 break;
 
             case "consultar_tipo_poliza" :
 
                 $cadenaSql = "SELECT id_tipo_poliza, descripcion ";
-                $cadenaSql .= "FROM arka_inventarios.tipo_poliza;";
+                $cadenaSql .= "FROM inventarios.tipo_poliza;";
 
                 break;
 
             case "consultar_tipo_iva" :
 
                 $cadenaSql = "SELECT id_iva, descripcion ";
-                $cadenaSql .= "FROM arka_inventarios.aplicacion_iva;";
+                $cadenaSql .= "FROM inventarios.aplicacion_iva;";
 
                 break;
 
             case "consultar_bodega" :
 
                 $cadenaSql = "SELECT id_bodega, descripcion ";
-                $cadenaSql .= "FROM arka_inventarios.bodega;";
+                $cadenaSql .= "FROM inventarios.bodega;";
 
                 break;
 
@@ -471,15 +471,15 @@ class Sql extends \Sql {
             case "consultar_tipo_iva" :
 
                 $cadenaSql = "SELECT id_iva, descripcion ";
-                $cadenaSql .= "FROM arka_inventarios.aplicacion_iva;";
+                $cadenaSql .= "FROM inventarios.aplicacion_iva;";
 
                 break;
 
             case "consultar_nivel_inventario" :
 
                 $cadenaSql = "SELECT ce.elemento_id, ce.elemento_codigo||' - '||ce.elemento_nombre ";
-                $cadenaSql .= "FROM catalogo.catalogo_elemento  ce ";
-                $cadenaSql .= "JOIN catalogo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
+                $cadenaSql .= "FROM inventarios.catalogo_elemento  ce ";
+                $cadenaSql .= "JOIN inventarios.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
                 $cadenaSql .= "WHERE cl.lista_activo = 1  ";
                 $cadenaSql .= "AND  ce.elemento_id > 0  ";
                 $cadenaSql .= "AND  ce.elemento_padre > 0  ";
@@ -666,8 +666,8 @@ class Sql extends \Sql {
                 $cadenaSql = "SELECT  ";
                 $cadenaSql .= "entrada.id_entrada, entrada.fecha_registro,  ";
                 $cadenaSql .= " cl.descripcion,proveedor, consecutivo||' - ('||entrada.vigencia||')' entradas,entrada.vigencia    ";
-                $cadenaSql .= "FROM arka_inventarios.entrada ";
-                $cadenaSql .= "JOIN arka_inventarios.clase_entrada cl ON cl.id_clase = entrada.clase_entrada ";
+                $cadenaSql .= "FROM inventarios.entrada ";
+                $cadenaSql .= "JOIN inventarios.clase_entrada cl ON cl.id_clase = entrada.clase_entrada ";
                 $cadenaSql .= "WHERE entrada.id_entrada = '" . $variable . "';";
 
                 break;

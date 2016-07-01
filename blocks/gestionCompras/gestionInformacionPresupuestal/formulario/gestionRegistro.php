@@ -55,7 +55,7 @@ class registrarForm {
             $_REQUEST ['numero_disponibilidad'],
             $_REQUEST ['unidad_ejecutora']
         );
-
+       
         $cadenaSql = $this->miSql->getCadenaSql('ConsultarRegistrosPresupuestales', $datos);
         $registro_presupuestales_exitentes = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
@@ -88,7 +88,7 @@ class registrarForm {
         $atributos ['tipoEtiqueta'] = 'inicio';
         echo $this->miFormulario->formulario($atributos); {
 
-
+      
             if (isset($_REQUEST ['mensaje'])) {
                 switch ($_REQUEST ['mensaje']) {
                     case 'registroPresupuestal' :

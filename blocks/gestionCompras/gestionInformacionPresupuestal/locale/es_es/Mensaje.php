@@ -15,8 +15,8 @@ $this->idioma ["sedeTitulo"] = "Seleccione el convenio";
 
 
 
-$this->idioma ["vigencia_disponibilidad"] = "Vigencia :";
-$this->idioma ["vigencia_disponibilidadTitulo"] = "Seleccione Vigencia";
+$this->idioma ["vigencia_solicitud"] = "Vigencia :";
+$this->idioma ["vigencia_solicitudTitulo"] = "Seleccione Vigencia";
 
 $this->idioma ["diponibilidad"] = "Número Disponibilidad : ";
 $this->idioma ["diponibilidadTitulo"] = "Seleccione Número Disponibilidad";
@@ -36,6 +36,10 @@ $this->idioma ["unidad_ejecutoraTitulo"] = "Seleccione Unidad Ejecutoria ";
 
 $this->idioma ["valor_solicitud"] = "Valor a Solicitar ($): ";
 $this->idioma ["valor_solicitudTitulo"] = "Ingrese Valor a Solicitar de la Disponibilidad";
+
+
+$this->idioma ["numero_solicitud"] = "Numero Solicitud de Necesidad ";
+$this->idioma ["numero_solicitudTitulo"] = "Seleccione Numero Solicitud de Necesidad";
 
 
 // --Consulta Acta Recibido .----------------------------------------

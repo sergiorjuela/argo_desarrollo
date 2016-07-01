@@ -605,7 +605,7 @@ class Sql extends \Sql {
 
 
             case "insertarEncargado" :
-                $cadenaSql = " INSERT INTO arka_inventarios.encargado(";
+                $cadenaSql = " INSERT INTO inventarios.encargado(";
                 $cadenaSql .= " id_tipo_encargado,";
                 $cadenaSql .= " nombre, ";
                 $cadenaSql .= " identificacion,";
@@ -843,7 +843,7 @@ class Sql extends \Sql {
 
             case "vigencias_sica_disponibilidades" :
                 $cadenaSql = " SELECT DISTINCT SN.VIGENCIA AS valor, SN.VIGENCIA AS informacion  FROM CO.CO_SOLICITUD_ADQ SN ";
-                $cadenaSql .= " where SN.CODIGO_UNIDAD_EJECUTORA = 01 ORDER BY SN.VIGENCIA DESC ";
+                $cadenaSql .= " ORDER BY SN.VIGENCIA DESC ";
 
                 break;
             case "obtener_solicitudes_vigencia" :
@@ -857,18 +857,7 @@ class Sql extends \Sql {
 
                 break;
             
-            case "obtener_solicitudes_vigencia" :
-                $cadenaSql = " SELECT DISTINCT SN.NUM_SOL_ADQ as valor , SN.NUM_SOL_ADQ as informacion  ";
-                $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
-                $cadenaSql .= " CO.CO_DEPENDENCIAS DP where SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ ";
-                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= $variable  ";
-                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = 01   ";
-                $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
-                $cadenaSql .= " ORDER BY SN.NUM_SOL_ADQ ASC ";
-
-                break;
-            
-            case "obtener_cdp_numerosol" :
+           case "obtener_cdp_numerosol" :
                 $cadenaSql = " SELECT DISTINCT CDP.NUMERO_DISPONIBILIDAD as valor , CDP.NUMERO_DISPONIBILIDAD as informacion  ";
                 $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
                 $cadenaSql .= " CO.CO_DEPENDENCIAS DP where SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ ";

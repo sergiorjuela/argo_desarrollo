@@ -39,7 +39,7 @@ class RegistradorOrden {
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$arregloDatos = array (
-				"vigencia" => $_REQUEST ['vigencia_disponibilidad'],
+				"vigencia" => $_REQUEST ['vigencia_solicitud'],
 				"unidad_ejecutora" => $_REQUEST ['unidad_ejecutora_hidden'],
 				"diponibilidad" => $_REQUEST ['diponibilidad'],
 				"fecha_diponibilidad" => $_REQUEST ['fecha_diponibilidad'],

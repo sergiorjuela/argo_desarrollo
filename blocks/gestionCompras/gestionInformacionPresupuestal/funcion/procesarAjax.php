@@ -3,6 +3,9 @@
 $conexion = "contractual";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
+$conexionSICA = "sicapital";
+$DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
+
 class EnLetras {
 
     var $Void = "";
@@ -280,12 +283,12 @@ if ($_REQUEST ['funcion'] == 'letrasNumeros') {
 
 if ($_REQUEST ['funcion'] == 'disponibilidades') {
 
-    $cadenaSql = $this->sql->getCadenaSql('buscar_disponibilidad', array(
+    $cadenaSql = $this->sql->getCadenaSql('obtener_cdp_numerosol', array(
         $_REQUEST ['vigencia'],
-        $_REQUEST ['unidad']
+        $_REQUEST ['unidad'],
+        $_REQUEST ['Numsolicitud']
             ));
-
-    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+    $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
 
     $resultado = json_encode($resultadoItems);
 
@@ -296,15 +299,24 @@ if ($_REQUEST ['funcion'] == 'Infodisponibilidades') {
 
     $arreglo = array(
         $_REQUEST ['disponibilidad'],
+        $_REQUEST ['numsolicitud'],
         $_REQUEST ['vigencia'],
         $_REQUEST ['unidad']
     );
 
     $cadenaSql = $this->sql->getCadenaSql('info_disponibilidad', $arreglo);
-    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
+    $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
     $resultado = json_encode($resultadoItems [0]);
 
+    echo $resultado;
+}
+
+if ($_REQUEST ['funcion'] == 'ObtenerSolicitudesCdp') {
+    
+    $datos = array (0=> $_REQUEST['vigencia'],1=> $_REQUEST['unidad']);
+    $cadenaSql = $this->sql->getCadenaSql('obtener_solicitudes_vigencia', $datos);
+    $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
+    $resultado = json_encode($resultadoItems);
     echo $resultado;
 }
 
@@ -362,8 +374,7 @@ if ($_REQUEST ['funcion'] == 'consultarRubro') {
         $_REQUEST ['disponbilidad'],
         $_REQUEST ['unidad']
             ));
-
-    $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+    $resultado =  $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
 
     $resultado = json_encode($resultado);
 

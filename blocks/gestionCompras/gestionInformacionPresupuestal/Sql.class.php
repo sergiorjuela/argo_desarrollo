@@ -57,7 +57,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " convenio; ";
                 break;
-            
+
             case "buscar_nombre_convenio" :
                 $cadenaSql = " SELECT ";
                 $cadenaSql .= " \"NOMBRE\"";
@@ -151,7 +151,7 @@ class Sql extends \Sql {
 
                 break;
 
-             case "consultarOrdenIdexud" :
+            case "consultarOrdenIdexud" :
 
                 $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, o.proveedor ||'-'|| o.nombre_proveedor as proveedor,"
                         . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia ";
@@ -325,7 +325,7 @@ class Sql extends \Sql {
             case "consultar_iva" :
 
                 $cadenaSql = "SELECT iva ";
-                $cadenaSql .= "FROM arka_inventarios.aplicacion_iva ";
+                $cadenaSql .= "FROM inventarios.aplicacion_iva ";
                 $cadenaSql .= "WHERE id_iva='" . $variable . "';";
 
                 break;
@@ -335,8 +335,8 @@ class Sql extends \Sql {
             case "ConsultaTipoBien" :
 
                 $cadenaSql = "SELECT  ce.elemento_tipobien , tb.descripcion  ";
-                $cadenaSql .= "FROM grupo.catalogo_elemento ce ";
-                $cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ce.elemento_tipobien  ";
+                $cadenaSql .= "FROM inventarios.catalogo_elemento ce ";
+                $cadenaSql .= "JOIN  inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ce.elemento_tipobien  ";
                 $cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
 
                 break;
@@ -376,28 +376,28 @@ class Sql extends \Sql {
             case "consultar_tipo_bien" :
 
                 $cadenaSql = "SELECT id_tipo_bienes, descripcion ";
-                $cadenaSql .= "FROM arka_inventarios.tipo_bienes;";
+                $cadenaSql .= "FROM inventarios.tipo_bienes;";
 
                 break;
 
             case "consultar_tipo_poliza" :
 
                 $cadenaSql = "SELECT id_tipo_poliza, descripcion ";
-                $cadenaSql .= "FROM arka_inventarios.tipo_poliza;";
+                $cadenaSql .= "FROM inventarios.tipo_poliza;";
 
                 break;
 
             case "consultar_tipo_iva" :
 
                 $cadenaSql = "SELECT id_iva, descripcion ";
-                $cadenaSql .= "FROM arka_inventarios.aplicacion_iva;";
+                $cadenaSql .= "FROM inventarios.aplicacion_iva;";
 
                 break;
 
             case "consultar_bodega" :
 
                 $cadenaSql = "SELECT id_bodega, descripcion ";
-                $cadenaSql .= "FROM arka_inventarios.bodega;";
+                $cadenaSql .= "FROM inventarios.bodega;";
 
                 break;
 
@@ -450,8 +450,8 @@ class Sql extends \Sql {
             case "consultar_nivel_inventario" :
 
                 $cadenaSql = "SELECT ce.elemento_id, ce.elemento_codigo||' - '||ce.elemento_nombre ";
-                $cadenaSql .= "FROM grupo.catalogo_elemento  ce ";
-                $cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
+                $cadenaSql .= "FROM inventarios.catalogo_elemento  ce ";
+                $cadenaSql .= "JOIN inventarios.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
                 $cadenaSql .= "WHERE cl.lista_activo = 1  ";
                 $cadenaSql .= "AND  ce.elemento_id > 0  ";
                 $cadenaSql .= "AND  ce.elemento_padre > 0  ";
@@ -636,8 +636,8 @@ class Sql extends \Sql {
                 $cadenaSql = "SELECT  ";
                 $cadenaSql .= "entrada.id_entrada, entrada.fecha_registro,  ";
                 $cadenaSql .= " cl.descripcion,proveedor, consecutivo||' - ('||entrada.vigencia||')' entradas,entrada.vigencia    ";
-                $cadenaSql .= "FROM arka_inventarios.entrada ";
-                $cadenaSql .= "JOIN arka_inventarios.clase_entrada cl ON cl.id_clase = entrada.clase_entrada ";
+                $cadenaSql .= "FROM inventarios.entrada ";
+                $cadenaSql .= "JOIN inventarios.clase_entrada cl ON cl.id_clase = entrada.clase_entrada ";
                 $cadenaSql .= "WHERE entrada.id_entrada = '" . $variable . "';";
 
                 break;
@@ -693,20 +693,43 @@ class Sql extends \Sql {
                 break;
 
             case "info_disponibilidad" :
-                $cadenaSql = "SELECT DISTINCT \"DIS_FECHA_REGISTRO\" AS FECHA, \"DIS_VALOR\" ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
-                $cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [1] . "' ";
-                $cadenaSql .= "AND  \"DIS_IDENTIFICADOR\"='" . $variable [0] . "' ";
-                $cadenaSql .= "AND  \"DIS_UNIDAD_EJECUTORA\"='" . $variable [2] . "' ";
+                $cadenaSql = " SELECT CDP.FECHA_REGISTRO AS FECHA , SN.VALOR_CONTRATACION AS VALOR  ";
+                $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
+                $cadenaSql .= " CO.CO_DEPENDENCIAS DP where SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ ";
+                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= " . $variable [2] . " ";
+                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = '0$variable[3]'  and SN.NUM_SOL_ADQ = " . $variable [1] . " and CDP.NUMERO_DISPONIBILIDAD = $variable[0] ";
+                $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
+                $cadenaSql .= " ORDER BY CDP.NUMERO_DISPONIBILIDAD ";
+
 
                 break;
 
-            case "buscar_disponibilidad" :
-                $cadenaSql = "SELECT DISTINCT \"DIS_NUMERO_DISPONIBILIDAD\" AS identificador,\"DIS_NUMERO_DISPONIBILIDAD\" AS numero ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
-                $cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [0] . "' ";
-                $cadenaSql .= "AND \"DIS_UNIDAD_EJECUTORA\"='" . $variable [1] . "' ";
-                $cadenaSql .= "ORDER BY \"DIS_NUMERO_DISPONIBILIDAD\" DESC ;";
+
+            case "vigencias_sica_disponibilidades" :
+                $cadenaSql = " SELECT DISTINCT SN.VIGENCIA AS valor, SN.VIGENCIA AS informacion  FROM CO.CO_SOLICITUD_ADQ SN ";
+                $cadenaSql .= "  ORDER BY SN.VIGENCIA DESC ";
+
+                break;
+
+            case "obtener_solicitudes_vigencia" :
+                $cadenaSql = " SELECT DISTINCT SN.NUM_SOL_ADQ as valor , SN.NUM_SOL_ADQ as informacion  ";
+                $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
+                $cadenaSql .= " CO.CO_DEPENDENCIAS DP where SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ ";
+                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= $variable[0]  ";
+                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = '0$variable[1]'   ";
+                $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
+                $cadenaSql .= " ORDER BY SN.NUM_SOL_ADQ ASC ";
+
+                break;
+
+            case "obtener_cdp_numerosol" :
+                $cadenaSql = " SELECT  CDP.NUMERO_DISPONIBILIDAD as valor , CDP.NUMERO_DISPONIBILIDAD as informacion  ";
+                $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
+                $cadenaSql .= " CO.CO_DEPENDENCIAS DP where SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ ";
+                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= " . $variable [0] . " ";
+                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = '0$variable[1]'  and SN.NUM_SOL_ADQ = " . $variable [2] . " ";
+                $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
+                $cadenaSql .= " ORDER BY CDP.NUMERO_DISPONIBILIDAD ";
 
                 break;
 
@@ -764,12 +787,9 @@ class Sql extends \Sql {
 
             case "consultarRubro" :
 
-                $cadenaSql = " SELECT \"DIS_CODIGO_RUBRO\" identificador, \"DIS_CODIGO_RUBRO\" ||' - '|| \"DIS_DESCRIPCION_RUBRO\" descripcion ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal ";
-                $cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [0] . "'  ";
-                $cadenaSql .= "AND  \"DIS_NUMERO_DISPONIBILIDAD\"='" . $variable [1] . "'  ";
-                $cadenaSql .= "AND  \"DIS_UNIDAD_EJECUTORA\"='" . $variable [2] . "';  ";
-
+                $cadenaSql = " SELECT RB.INTERNO, RB.DESCRIPCION";
+                $cadenaSql.=" FROM PR.PR_RUBRO RB JOIN PR.PR_DISPONIBILIDAD_RUBRO DR ON RB.INTERNO = DR.RUBRO_INTERNO ";
+                $cadenaSql.=" WHERE RB.VIGENCIA = $variable[0] AND DR.NUMERO_DISPONIBILIDAD = $variable[1] AND DR.CODIGO_UNIDAD_EJECUTORA='0$variable[2]'";
                 break;
 
             case "consultarValorDisponibilidades" :
@@ -792,6 +812,12 @@ class Sql extends \Sql {
                 $cadenaSql .= "valor_solicitado='" . $variable ['valor_solicitud'] . "', ";
                 $cadenaSql .= "valor_letras_solicitud='" . $variable ['valorLetras_disponibilidad'] . "'  ";
                 $cadenaSql .= " WHERE id_disponibilidad='" . $variable ['id_disponibilidad'] . "' ;";
+
+                break;
+
+            case "vigencias_sica_disponibilidades" :
+                $cadenaSql = " SELECT DISTINCT CDP.VIGENCIA AS valor, CDP.VIGENCIA AS informacion  FROM PR.PR_DISPONIBILIDADES CDP ";
+                $cadenaSql .= " where CDP.CODIGO_UNIDAD_EJECUTORA = $variable ORDER BY CDP.VIGENCIA DESC ";
 
                 break;
 
