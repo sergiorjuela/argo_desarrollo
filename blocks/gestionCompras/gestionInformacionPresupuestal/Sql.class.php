@@ -679,18 +679,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " GROUP BY id_orden;  ";
                 break;
 
-            case "vigencia_disponibilidad" :
-                $cadenaSql = "SELECT \"DIS_VIGENCIA\" AS valor, \"DIS_VIGENCIA\" AS vigencia  ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal ";
-                $cadenaSql .= "GROUP BY \"DIS_VIGENCIA\" ORDER BY  \"DIS_VIGENCIA\"  DESC; ";
-                break;
-
-            case "Unidad_Ejecutoria" :
-
-                $cadenaSql = " SELECT DISTINCT \"DIS_UNIDAD_EJECUTORA\" valor ,\"DIS_UNIDAD_EJECUTORA\" descripcion  ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal; ";
-
-                break;
+         
 
             case "info_disponibilidad" :
                 $cadenaSql = " SELECT CDP.FECHA_REGISTRO AS FECHA , SN.VALOR_CONTRATACION AS VALOR  ";

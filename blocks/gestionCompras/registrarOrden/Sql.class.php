@@ -169,13 +169,13 @@ class Sql extends \Sql {
                 
             case "ordenadores_orden" :
 
-                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from arka_parametros.argo_ordenadores ";
+                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from argo_ordenadores ";
                 $cadenaSql .= " where \"ORG_ESTADO\" = 'A' and \"ORG_ORDENADOR_GASTO\" <> 'DIRECTOR IDEXUD'; ";
 
                 break;
             case "ordenadores_orden_idexud" :
 
-                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from arka_parametros.argo_ordenadores ";
+                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from argo_ordenadores ";
                 $cadenaSql .= " where \"ORG_ESTADO\" = 'A' and \"ORG_ORDENADOR_GASTO\" = 'DIRECTOR IDEXUD'; ";
 
                 break;
@@ -193,7 +193,7 @@ class Sql extends \Sql {
 
             case "informacion_ordenador" :
                 $cadenaSql = " 	SELECT  \"ORG_NOMBRE\",  \"ORG_IDENTIFICACION\",  \"ORG_IDENTIFICADOR\"  ";
-                $cadenaSql .= " FROM arka_parametros.argo_ordenadores ";
+                $cadenaSql .= " FROM argo_ordenadores ";
                 $cadenaSql .= " WHERE \"ORG_ESTADO\" = 'A' and  \"ORG_IDENTIFICACION\" = $variable;";
 
                 break;
@@ -478,31 +478,8 @@ class Sql extends \Sql {
                 $cadenaSql .= "GROUP BY CON_VIGENCIA ";
                 break;
 
-            case "vigencia_disponibilidad" :
-                $cadenaSql = "SELECT \"DIS_VIGENCIA\" AS valor, \"DIS_VIGENCIA\" AS vigencia  ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal ";
-                $cadenaSql .= "GROUP BY \"DIS_VIGENCIA\" ORDER BY  \"DIS_VIGENCIA\"  DESC; ";
-                break;
-
-            case "buscar_disponibilidad" :
-                $cadenaSql = "SELECT DISTINCT \"DIS_NUMERO_DISPONIBILIDAD\" AS identificador,\"DIS_NUMERO_DISPONIBILIDAD\" AS numero ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
-                $cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [0] . "' ";
-                $cadenaSql .= "AND \"DIS_UNIDAD_EJECUTORA\"='" . $variable [1] . "' ";
-                $cadenaSql .= "ORDER BY \"DIS_NUMERO_DISPONIBILIDAD\" DESC ;";
-
-                break;
-
-            case "info_disponibilidad" :
-                $cadenaSql = "SELECT DISTINCT \"DIS_FECHA_REGISTRO\" AS FECHA, \"DIS_VALOR\" ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
-                $cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [1] . "' ";
-                $cadenaSql .= "AND  \"DIS_IDENTIFICADOR\"='" . $variable [0] . "' ";
-                $cadenaSql .= "AND  \"DIS_UNIDAD_EJECUTORA\"='" . $variable [2] . "' ";
-
-                break;
-
-            case "vigencia_registro" :
+    
+           case "vigencia_registro" :
                 $cadenaSql = "SELECT REP_VIGENCIA AS VALOR,REP_VIGENCIA AS VIGENCIA ";
                 $cadenaSql .= "FROM REGISTRO_PRESUPUESTAL ";
                 $cadenaSql .= "GROUP BY REP_VIGENCIA ";
@@ -797,15 +774,6 @@ class Sql extends \Sql {
                 $cadenaSql .= " WHERE vigencia ='" . $variable['vigencia'] . "' ";
                 $cadenaSql .= " AND unidad_ejecutora ='" . $variable['unidad_ejecutora'] . "';";
                 break;
-
-            case "Unidad_Ejecutoria" :
-
-                $cadenaSql = " SELECT DISTINCT \"DIS_UNIDAD_EJECUTORA\" valor ,\"DIS_UNIDAD_EJECUTORA\" descripcion  ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal; ";
-
-                break;
-
-
 
             case "obtenerIdSupervisor" :
 

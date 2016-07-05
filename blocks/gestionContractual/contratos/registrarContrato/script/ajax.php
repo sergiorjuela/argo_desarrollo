@@ -28,6 +28,24 @@ $urlVigencia = $url . $cadena;
 
 
 
+// Variables
+$cadenaACodificarProveedor = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarProveedor .= "&procesarAjax=true";
+$cadenaACodificarProveedor .= "&action=index.php";
+$cadenaACodificarProveedor .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarProveedor .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarProveedor .= "&funcion=consultaProveedor";
+$cadenaACodificarProveedor .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarProveedor, $enlace);
+
+// URL definitiva
+$urlFinalProveedor = $url . $cadena;
+
 
 $cadenaACodificar2 = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
 $cadenaACodificar2 .= "&procesarAjax=true";
@@ -136,8 +154,14 @@ $urlPersonaGenero = $url . $cadena3;
 //---------------------Inicio Ajax Tipo Persona y Genero ------------------
 
 
+    $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").change(function () {
+        if ($("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").val() != '') {
+            alert($("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").val());
+        } 
+    });
+
     $("#<?php echo $this->campoSeguro('tipo_persona') ?>").change(function () {
-       if ($("#<?php echo $this->campoSeguro('tipo_persona') ?>").val() != '') {
+        if ($("#<?php echo $this->campoSeguro('tipo_persona') ?>").val() != '') {
             cargarGeneros();
         } else {
             $("#<?php echo $this->campoSeguro('genero') ?>").attr('disabled', '');
@@ -175,6 +199,43 @@ $urlPersonaGenero = $url . $cadena3;
     ;
 //---------------------Fin Ajax Tipo Persona y Genero------------------        
 //---------------------Inicio Ajax Persona Natural y Juridica------------------
+
+
+//---------------Inicio JavaScript y Ajax Proveedor ---------------------------------------------------------------------------------------------------
+
+
+
+
+    function consultarContratistas(elem, request, response) {
+        if ($("#<?php echo $this->campoSeguro('selec_proveedor') ?>").val() != "") {
+            $.ajax({
+                url: "<?php echo $urlFinalProveedor ?>",
+                dataType: "json",
+                data: {proveedor: $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").val()},
+                success: function (data) {
+
+                    if (data.datos != 'null') {
+                        console.log(data.status);
+                        if (data.status == 200) {
+                          console.log(data.datos);
+                        } else {
+                            alert("Sin Cocincidencias en la Busqueda.");
+                        }
+                    } else {
+                        alert("Servidor de Proveedores No Disponible.");
+
+                    }
+
+                }
+
+            });
+        } else {
+            alert("Ingrese la Identificacion o el nombre del proveedor");
+        }
+    }
+    ;
+
+
 
 
 </script>

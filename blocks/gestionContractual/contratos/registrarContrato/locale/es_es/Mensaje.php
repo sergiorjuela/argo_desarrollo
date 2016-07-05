@@ -20,6 +20,12 @@ $this->idioma ["numero_contrato"] = "Número de Contrato: ";
 $this->idioma ["numero_contratoTitulo"] = "Ingrese Número de Contrato";
 
 
+$this->idioma ["selec_proveedor"] = "Contratista: ";
+$this->idioma ["selec_proveedorTitulo"] = "Ingrese la cedula del contratista y de clic en el Boton 'Buscar Contratista'";
+
+$this->idioma ["botonContratista"] = "Buscar Contratista: ";
+
+
 $this->idioma ["unidad_ejecutora"] = "Unidad Ejecutora: ";
 
 $this->idioma ["clausula_presupuesto"] = "Sujeto a registro presupuestal (Hasta Agotar Presupuesto): ";

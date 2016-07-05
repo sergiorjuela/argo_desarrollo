@@ -5,6 +5,8 @@ use contratos\registrarContrato\Sql;
 $conexion = "contractual";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
+
+
 //---------------Obtener Numeros de Solicitud de Necesidad
 if ($_REQUEST ['funcion'] == 'NumeroSolicitud') {
 
@@ -52,5 +54,24 @@ if ($_REQUEST ['funcion'] == 'AlmacenarDatos') {
         var_dump($cadenaSql);
         $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
     }
+  
+}
+    
+    //-------------------------Obtener Proveedor ----------------------------------------------------------
+if ($_REQUEST ['funcion'] == 'consultaProveedor') {
+    
+    $parametro = $_REQUEST ['proveedor'];
+    $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+    $url = "http://10.20.0.38/agora/index.php?";
+    $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&Parametro1=$parametro";
+    $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar_url($data, $enlace);
+    $cliente = curl_init();
+    curl_setopt($cliente, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($cliente, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($cliente, CURLOPT_URL, $url_servicio);
+    $repuestaWeb = curl_exec($cliente);
+    curl_close($cliente);
+    $repuestaWeb = explode("<json>", $repuestaWeb);
+    echo $repuestaWeb[1];
 }
 ?>

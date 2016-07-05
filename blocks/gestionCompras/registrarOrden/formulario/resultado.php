@@ -113,10 +113,11 @@ class registrarForm {
             'unidad_ejecutora' => $unidadEjecutora[0]['unidad_ejecutora']
         );
       
-
+        
+     
         
         $cadenaSql = $this->miSql->getCadenaSql('obtenerSolicitudesCdp', $arreglo_consulta);
- 
+        
         $solicitudesCDPs = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
         
        

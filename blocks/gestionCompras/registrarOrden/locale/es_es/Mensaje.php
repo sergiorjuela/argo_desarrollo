@@ -13,6 +13,7 @@ $this->idioma ["sede"] = "Sede : ";
 $this->idioma ["sedeTitulo"] = "Seleccione Sede";
 
 
+
 $this->idioma ["sede_idexud"] = "Sede : ";
 $this->idioma ["sede_idexud"] = "Sede: Idexud";
 

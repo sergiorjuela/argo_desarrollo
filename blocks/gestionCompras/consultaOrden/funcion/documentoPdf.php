@@ -326,9 +326,9 @@ class RegistradorOrden {
         $infDisponibilidad = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         
 
-        $cadenaSql = $this->miSql->getCadenaSql('consultarInformaciónRegistro', $_REQUEST ['id_orden']);
-        $inRegistro = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
+        //$cadenaSql = $this->miSql->getCadenaSql('consultarInformaciónRegistro', $_REQUEST ['id_orden']);
+        //$inRegistro = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        $inRegistro=false;
         $cadenaSql = $this->miSql->getCadenaSql('consultarSupervisor', $orden ['supervisor']);
 
         $supervisor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
@@ -762,7 +762,7 @@ class RegistradorOrden {
 			</tr>
 			<tr>
 			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>FIRMA CONTRATISTA</td>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>" . $ordenador [1] . "</td>
+			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>" . $ordenador ['ordenador'] . "</td>
 			</tr>
 			<tr>
 			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>NOMBRE: " . $proveedor ['nomempresa'] . "</td>
@@ -770,7 +770,7 @@ class RegistradorOrden {
 			</tr>
 			<tr>
 			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>C.C: " . $proveedor ['nit'] . "</td>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $ordenador [0] . "-" . $ordenador[1] . "</td>
+			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $ordenador ['identificacion'] . "-" . $ordenador['nombre'] . "</td>
 			</tr>
 			</table>
 							

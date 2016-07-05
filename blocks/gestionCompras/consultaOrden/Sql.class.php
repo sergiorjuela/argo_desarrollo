@@ -218,10 +218,9 @@ class Sql extends \Sql {
 
             case "ordenadorDocumento" :
 
-                $cadenaSql = " 	SELECT f.\"identificacion\",p.descripcion ";
-                $cadenaSql .= " FROM \"SICapital\".\"funcionario\" f ,\"SICapital\".\"funcionario_tipo_ordenador\"  o, parametros p ";
-                $cadenaSql .= " WHERE o.\"estado\"=True and f.\"identificacion\"= o.\"funcionario\" and p.id_parametro= o.\"tipo_ordenador\" ";
-                $cadenaSql .= " and f.\"identificacion\"='$variable';";
+                $cadenaSql = " 	SELECT \"ORG_ORDENADOR_GASTO\" as ordenador , \"ORG_NOMBRE\" as nombre , \"ORG_IDENTIFICACION\" as identificacion  ";
+                $cadenaSql .= " FROM argo_ordenadores ";
+                $cadenaSql .= " WHERE \"ORG_IDENTIFICACION\" =$variable;";
 
                 break;
 
@@ -259,13 +258,13 @@ class Sql extends \Sql {
                 break;
             case "ordenadores_orden" :
 
-                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from arka_parametros.argo_ordenadores ";
+                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from argo_ordenadores ";
                 $cadenaSql .= " where \"ORG_ESTADO\" = 'A' and \"ORG_ORDENADOR_GASTO\" <> 'DIRECTOR IDEXUD'; ";
 
                 break;
             case "ordenadores_orden_idexud" :
 
-                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from arka_parametros.argo_ordenadores ";
+                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from argo_ordenadores ";
                 $cadenaSql .= " where \"ORG_ESTADO\" = 'A' and \"ORG_ORDENADOR_GASTO\" = 'DIRECTOR IDEXUD'; ";
 
                 break;
@@ -326,7 +325,7 @@ class Sql extends \Sql {
 
             case "informacion_ordenador" :
                 $cadenaSql = " 	SELECT  \"ORG_NOMBRE\",  \"ORG_IDENTIFICACION\",  \"ORG_IDENTIFICADOR\"  ";
-                $cadenaSql .= " FROM arka_parametros.argo_ordenadores ";
+                $cadenaSql .= " FROM argo_ordenadores ";
                 $cadenaSql .= " WHERE \"ORG_ESTADO\" = 'A' and  \"ORG_IDENTIFICACION\" = $variable;";
 
                 break;
@@ -625,29 +624,6 @@ class Sql extends \Sql {
                 $cadenaSql .= "GROUP BY CON_VIGENCIA ";
                 break;
 
-            case "vigencia_disponibilidad" :
-                $cadenaSql = "SELECT \"DIS_VIGENCIA\" AS valor, \"DIS_VIGENCIA\" AS vigencia  ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal ";
-                $cadenaSql .= "GROUP BY \"DIS_VIGENCIA\" ORDER BY  \"DIS_VIGENCIA\"  DESC; ";
-                break;
-
-            case "buscar_disponibilidad" :
-                $cadenaSql = "SELECT DISTINCT \"DIS_NUMERO_DISPONIBILIDAD\" AS identificador,\"DIS_NUMERO_DISPONIBILIDAD\" AS numero ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
-                $cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [0] . "' ";
-                $cadenaSql .= "AND \"DIS_UNIDAD_EJECUTORA\"='" . $variable [1] . "' ";
-                $cadenaSql .= "ORDER BY \"DIS_NUMERO_DISPONIBILIDAD\" DESC ;";
-
-                break;
-
-            case "info_disponibilidad" :
-                $cadenaSql = "SELECT DISTINCT \"DIS_FECHA_REGISTRO\" AS FECHA, \"DIS_VALOR\" ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
-                $cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [1] . "' ";
-                $cadenaSql .= "AND  \"DIS_IDENTIFICADOR\"='" . $variable [0] . "' ";
-                // $cadenaSql .= "AND ROWNUM = 1 ";
-
-                break;
 
             case "vigencia_registro" :
                 $cadenaSql = "SELECT REP_VIGENCIA AS VALOR,REP_VIGENCIA AS VIGENCIA ";
@@ -1192,20 +1168,6 @@ class Sql extends \Sql {
 
                 break;
 
-            case "disponibilidades_consultas" :
-                $cadenaSql = "SELECT DISTINCT \"DIS_NUMERO_DISPONIBILIDAD\" AS identificador,\"DIS_NUMERO_DISPONIBILIDAD\" AS numero ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
-                $cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable . "'";
-                $cadenaSql .= "ORDER BY \"DIS_NUMERO_DISPONIBILIDAD\" DESC ;";
-
-                break;
-
-            case "Unidad_Ejecutoria" :
-
-                $cadenaSql = " SELECT DISTINCT \"DIS_UNIDAD_EJECUTORA\" valor ,\"DIS_UNIDAD_EJECUTORA\" descripcion  ";
-                $cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal; ";
-
-                break;
 
             case "consultarInformaciónDisponibilidad" :
 
@@ -1217,21 +1179,7 @@ class Sql extends \Sql {
 
                 break;
 
-            case "consultarInformaciónRegistro" :
-
-                $cadenaSql = "SELECT ro.* , \"DIS_DESCRIPCION_RUBRO\" descr_rubro,od.id_rubro ";
-                $cadenaSql .= " FROM registro_presupuestal_orden ro  ";
-                $cadenaSql .= " JOIN disponibilidad_orden od ON od.id_disponibilidad=ro.id_disponibilidad  ";
-                $cadenaSql .= " JOIN   arka_parametros.arka_disponibilidadpresupuestal ru
-								ON  ru.\"DIS_NUMERO_DISPONIBILIDAD\"=od.numero_diponibilidad
-						        AND  ru.\"DIS_VIGENCIA\"=od.vigencia
-								AND ru.\"DIS_UNIDAD_EJECUTORA\"=od.unidad_ejecutora
-								AND ru.\"DIS_CODIGO_RUBRO\"=od.id_rubro
-								";
-
-                $cadenaSql .= " WHERE od.id_orden='" . $variable . "'";
-                break;
-
+      
             case "consultarConsecutivo" :
 
                 $cadenaSql = "SELECT ro.vigencia,ro.unidad_ejecutora, ro.consecutivo_servicio,ro.consecutivo_compras,ro.tipo_orden   ";
