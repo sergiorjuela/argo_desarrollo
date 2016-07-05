@@ -735,17 +735,19 @@ class Sql extends \Sql {
 
             case "registrarDisponibilidad" :
                 $cadenaSql = "INSERT INTO disponibilidad_orden( ";
-                $cadenaSql .= "id_orden, vigencia, unidad_ejecutora, numero_diponibilidad, ";
-                $cadenaSql .= "fecha_disponibilidad,valor_diponibilidad, valor_solicitado,valor_letras_solicitud,id_rubro, fecha_registro)";
+                $cadenaSql .= "id_orden, vigencia, unidad_ejecutora, numero_solicitud, numero_diponibilidad, ";
+                $cadenaSql .= "fecha_disponibilidad,valor_diponibilidad, valor_solicitado,valor_letras_solicitud,descripcion_rubro,id_rubro, fecha_registro)";
                 $cadenaSql .= "VALUES(";
                 $cadenaSql .= "'" . $variable ['id_orden'] . "',  ";
                 $cadenaSql .= "'" . $variable ['vigencia'] . "',  ";
                 $cadenaSql .= "'" . $variable ['unidad_ejecutora'] . "',  ";
+                $cadenaSql .= " " . $variable ['numero_solicitud'] . ",  ";
                 $cadenaSql .= "'" . $variable ['diponibilidad'] . "',  ";
                 $cadenaSql .= "'" . $variable ['fecha_diponibilidad'] . "',  ";
                 $cadenaSql .= "'" . $variable ['valor_disponibilidad'] . "',  ";
                 $cadenaSql .= "'" . $variable ['valor_solicitud'] . "',  ";
                 $cadenaSql .= "'" . $variable ['valorLetras_disponibilidad'] . "',  ";
+                $cadenaSql .= "'" . $variable ['descripcion_rubro'] . "',  ";
                 $cadenaSql .= "'" . $variable ['id_rubro'] . "',  ";
                 $cadenaSql .= "'" . date('Y-m-d') . "' ) ";
 
@@ -754,13 +756,8 @@ class Sql extends \Sql {
 
             case "consultarDisponibilidades" :
 
-                $cadenaSql = "SELECT disponibilidad_orden.* ,rb.\"DIS_CODIGO_RUBRO\" ||' - '|| rb.\"DIS_DESCRIPCION_RUBRO\" rubro ";
+                $cadenaSql = "SELECT *  ";
                 $cadenaSql .= " FROM disponibilidad_orden   ";
-                $cadenaSql .= " JOIN   arka_parametros.arka_disponibilidadpresupuestal
-				rb ON rb.\"DIS_VIGENCIA\"= disponibilidad_orden.vigencia  
-				AND  rb.\"DIS_CODIGO_RUBRO\"= disponibilidad_orden.id_rubro 
-				AND  rb.\"DIS_NUMERO_DISPONIBILIDAD\"= disponibilidad_orden.numero_diponibilidad 
-				AND  rb.\"DIS_UNIDAD_EJECUTORA\"= disponibilidad_orden.unidad_ejecutora ";
                 $cadenaSql .= " WHERE id_orden='" . $variable . "' ";
                 $cadenaSql .= " AND estado_registro='t'  ";
                 $cadenaSql .= " ORDER BY id_orden ASC;  ";
@@ -807,6 +804,8 @@ class Sql extends \Sql {
                 $cadenaSql .= "unidad_ejecutora='" . $variable ['unidad_ejecutora'] . "', ";
                 $cadenaSql .= "numero_diponibilidad='" . $variable ['diponibilidad'] . "', ";
                 $cadenaSql .= "fecha_disponibilidad='" . $variable ['fecha_diponibilidad'] . "', ";
+                $cadenaSql .= "numero_solicitud=" . $variable ['numero_solicitud'] . ", ";
+                $cadenaSql .= "descripcion_rubro='" . $variable ['descripcion_rubro'] . "', ";
                 $cadenaSql .= "id_rubro='" . $variable ['id_rubro'] . "', ";
                 $cadenaSql .= "valor_diponibilidad='" . $variable ['valor_disponibilidad'] . "', ";
                 $cadenaSql .= "valor_solicitado='" . $variable ['valor_solicitud'] . "', ";

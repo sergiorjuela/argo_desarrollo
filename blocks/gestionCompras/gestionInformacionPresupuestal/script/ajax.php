@@ -158,10 +158,22 @@ $urlFinalRubro = $url . $cadenaRubro;
 
     //--------------Inicio JavaScript y Ajax Vigencia y Numero solicitud ---------------------------------------------------------------------------------------------    
 
+    $("#<?php echo $this->campoSeguro('rubro') ?>").change(function () {
+
+        if ($("#<?php echo $this->campoSeguro('rubro') ?>").val() != '') {
+            var descripcionRubro = $("#<?php echo $this->campoSeguro('rubro') ?>").find(":selected").text();
+            $("#<?php echo $this->campoSeguro('descripcion_rubro_hidden') ?>").val(descripcionRubro);
+
+        }
+
+    });
+
+
     $("#<?php echo $this->campoSeguro('vigencia_solicitud') ?>").change(function () {
 
         if ($("#<?php echo $this->campoSeguro('vigencia_solicitud') ?>").val() != '') {
             $("#<?php echo $this->campoSeguro('diponibilidad') ?>").attr('disabled', '');
+            $("#<?php echo $this->campoSeguro('rubro') ?>").attr('disabled', '');
             consultarSoliditudyCdp();
         } else {
             $("#<?php echo $this->campoSeguro('vigencia_solicitud') ?>").attr('disabled', '');
@@ -459,7 +471,7 @@ $urlFinalRubro = $url . $cadenaRubro;
 
             if ($("#<?php echo $this->campoSeguro('numero_solicitud') ?>").val() != '') {
 
-
+            $("#<?php echo $this->campoSeguro('rubro') ?>").attr('disabled', '');
                 disponibilidades();
 
 

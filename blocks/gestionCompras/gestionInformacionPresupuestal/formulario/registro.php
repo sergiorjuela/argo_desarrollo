@@ -87,8 +87,7 @@ class registrarForm {
 
         // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
         $atributos ['tipoEtiqueta'] = 'inicio';
-        echo $this->miFormulario->formulario($atributos);
-        {
+        echo $this->miFormulario->formulario($atributos); {
 
             if (!isset($_REQUEST ['mostrarFormularioRegistro'])) {
                 $_REQUEST ['mostrarFormularioRegistro'] = true;
@@ -102,12 +101,12 @@ class registrarForm {
             $valores_orden = $valores_orden [0];
 
             $cadenaSql = $this->miSql->getCadenaSql('consultarDisponibilidades', $_REQUEST ['id_orden']);
-            echo $cadenaSql;
+
 
             $disponibilidades = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
+           
             $cadenaSql = $this->miSql->getCadenaSql('consultarValorDisponibilidades', $_REQUEST ['id_orden']);
-
+          
             $disponibilidadesvalor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
             $total = $disponibilidadesvalor [0] [0];
@@ -127,8 +126,7 @@ class registrarForm {
             $atributos ['tipoEtiqueta'] = 'inicio';
             $atributos ["leyenda"] = $_REQUEST ['mensaje_titulo'];
             echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
-            unset($atributos);
-            {
+            unset($atributos); {
 
                 if (isset($_REQUEST ['mensaje'])) {
                     switch ($_REQUEST ['mensaje']) {
@@ -257,8 +255,7 @@ class registrarForm {
                     $esteCampo = "Disponibilidades Presupuestales Registradas";
                     $atributos ['id'] = $esteCampo;
                     $atributos ['leyenda'] = "Certificados Disponibilidad Presupuestal Registrados";
-                    echo $this->miFormulario->agrupacion('inicio', $atributos);
-                    {
+                    echo $this->miFormulario->agrupacion('inicio', $atributos); {
 
                         echo "<table id='tablaDisponibilidades'>";
 
@@ -266,10 +263,11 @@ class registrarForm {
                              <tr>
 								<th>Vigencia</th>
 								<th>Unidad Ejecutora</th>
-                                <th>Número Disponibilidad</th>
+								<th>Número de Solicitud</th>
+                                                                <th>Número Disponibilidad</th>
 								<th>Rubro</th>
-                    			<th>Fecha Disponibilidad</th>
-            					<th>Valor Disponibilidad</th>
+                    			                        <th>Fecha Disponibilidad</th>
+            					                <th>Valor Disponibilidad</th>
 								<th>Valor Solicitado<br>Disponibilidad</th>
 								<th>Modificar<br>Disponibilidad</th>
 								<th>Asignar Registro<br>Presupuestal</th>
@@ -301,8 +299,9 @@ class registrarForm {
                             $mostrarHtml = "<tr>
     					                    <td><center>" . $valor ['vigencia'] . "</center></td>
     					                    <td><center>" . $valor ['unidad_ejecutora'] . "</center></td>
+						                    <td><center>" . $valor ['numero_solicitud'] . "</center></td>
 						                    <td><center>" . $valor ['numero_diponibilidad'] . "</center></td>
-						                    <td><center>" . $valor ['rubro'] . "</center></td>
+						                    <td><center>" . $valor ['id_rubro'] ." - ".$valor ['descripcion_rubro'] . "</center></td>
 						                    <td><center>" . $valor ['fecha_disponibilidad'] . "</center></td>
 						                    <td><center>$ " . number_format($valor ['valor_diponibilidad'], 2, ",", ".") . "</center></td>
 						                    <td><center>$ " . number_format($valor ['valor_solicitado'], 2, ",", ".") . "</center></td>
@@ -327,8 +326,7 @@ class registrarForm {
 
                         $atributos ["id"] = "Valor_Orden";
                         echo $this->miFormulario->division("inicio", $atributos);
-                        unset($atributos);
-                        {
+                        unset($atributos); {
                             $esteCampo = 'ValorResidual';
                             $atributos ["id"] = $esteCampo;
                             $atributos ["estilo"] = $esteCampo;
@@ -369,8 +367,7 @@ class registrarForm {
                     $esteCampo = "AgrupacionDisponibilidad";
                     $atributos ['id'] = $esteCampo;
                     $atributos ['leyenda'] = "Registro de Certificado Disponibilidad Presupuestal";
-                    echo $this->miFormulario->agrupacion('inicio', $atributos);
-                    {
+                    echo $this->miFormulario->agrupacion('inicio', $atributos); {
 
                         $esteCampo = "vigencia_solicitud";
                         $atributos ['nombre'] = $esteCampo;
@@ -427,7 +424,7 @@ class registrarForm {
                         $atributos ['tab'] = $tab;
                         $atributos ['tamanno'] = 1;
                         $atributos ['estilo'] = 'jqueryui';
-                        $atributos ['validar'] = '';
+                        $atributos ['validar'] = 'required';
                         $atributos ['limitar'] = false;
                         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                         $atributos ['anchoEtiqueta'] = 300;
@@ -640,6 +637,20 @@ class registrarForm {
                         echo $this->miFormulario->campoCuadroTexto($atributos);
                         unset($atributos);
 
+                        //-------------------Almacena la descripcion del rubro seleccionado no cambiar nombre.
+                        $esteCampo = 'descripcion_rubro_hidden';
+                        $atributos ["id"] = $esteCampo; // No cambiar este nombre
+                        $atributos ["tipo"] = "hidden";
+                        $atributos ['estilo'] = '';
+                        $atributos ["obligatorio"] = false;
+                        $atributos ['marco'] = true;
+                        $atributos ["etiqueta"] = "";
+                        $atributos ['valor'] = "";
+                        $atributos = array_merge($atributos, $atributosGlobales);
+                        echo $this->miFormulario->campoCuadroTexto($atributos);
+                        unset($atributos);
+
+
                         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                         $esteCampo = 'valorLetras_disponibilidad';
                         $atributos ['id'] = $esteCampo;
@@ -820,8 +831,7 @@ class registrarForm {
             // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
             // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
             $atributos ['tipoEtiqueta'] = 'inicio';
-            echo $this->miFormulario->formulario($atributos);
-            {
+            echo $this->miFormulario->formulario($atributos); {
 
                 // $esteCampo = "marcoDatosBasicosMensaje";
                 // $atributos ['id'] = $esteCampo;

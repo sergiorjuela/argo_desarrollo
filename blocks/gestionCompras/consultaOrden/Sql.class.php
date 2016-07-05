@@ -1209,15 +1209,11 @@ class Sql extends \Sql {
 
             case "consultarInformaciónDisponibilidad" :
 
-                $cadenaSql = "SELECT od.* , \"DIS_DESCRIPCION_RUBRO\" descr_rubro ";
-                $cadenaSql .= " FROM disponibilidad_orden od  ";
-                $cadenaSql .= " JOIN   arka_parametros.arka_disponibilidadpresupuestal ru 
-								ON  ru.\"DIS_NUMERO_DISPONIBILIDAD\"=od.numero_diponibilidad
-						        AND  ru.\"DIS_VIGENCIA\"=od.vigencia
-								AND ru.\"DIS_UNIDAD_EJECUTORA\"=od.unidad_ejecutora
-								AND ru.\"DIS_CODIGO_RUBRO\"=od.id_rubro
-								";
-                $cadenaSql .= " WHERE od.id_orden='" . $variable . "'";
+                $cadenaSql = "SELECT *  ";
+                $cadenaSql .= " FROM disponibilidad_orden   ";
+                $cadenaSql .= " WHERE id_orden='" . $variable . "' ";
+                $cadenaSql .= " AND estado_registro='t'  ";
+                $cadenaSql .= " ORDER BY id_orden ASC;  ";
 
                 break;
 

@@ -689,8 +689,9 @@ class RegistradorOrden {
 			<tr>
 			<td style='width:6.5%;text-align=center;'>Vigencia</td>
 			<td style='width:6.5%;text-align=center;'>Unidad Ejecutora</td>
+			<td style='width:10%;text-align=center;'>Número<br>Solicitud</td>
 			<td style='width:10%;text-align=center;'>Número<br>Disponibilidad</td>
-			<td style='width:40%;text-align=center;'>Rubro</td>
+			<td style='width:30%;text-align=center;'>Rubro</td>
 			<td style='width:15%;text-align=center;'>Valor<br>Solicitado($)</td>
 			<td style='width:22%;text-align=center;'>Valor Letras</td>
 			</tr>
@@ -703,8 +704,9 @@ class RegistradorOrden {
                 $contenidoPagina .= "<tr>";
                 $contenidoPagina .= "<td style='width:6.5%;text-align=center;'>" . $valor ['vigencia'] . "</td>";
                 $contenidoPagina .= "<td style='width:6.5%;text-align=center;'>" . $valor ['unidad_ejecutora'] . "</td>";
+                $contenidoPagina .= "<td style='width:10%;text-align=center;'>" . $valor ['numero_solicitud'] . "</td>";
                 $contenidoPagina .= "<td style='width:10%;text-align=center;'>" . $valor ['numero_diponibilidad'] . "</td>";
-                $contenidoPagina .= "<td style='width:40%;text-align=justify;'>" . $valor ['id_rubro'] . " " . $valor ['descr_rubro'] . "</td>";
+                $contenidoPagina .= "<td style='width:30%;text-align=justify;'>" . $valor ['id_rubro'] . "- " . $valor ['descripcion_rubro'] . "</td>";
                 $contenidoPagina .= "<td style='width:15%;text-align=center;'>$ " . number_format($valor ['valor_solicitado'], 2, ",", ".") . "</td>";
                 $contenidoPagina .= "<td style='width:22%;text-align=center;'>" . $valor ['valor_letras_solicitud'] . "</td>";
                 $contenidoPagina .= "</tr>";

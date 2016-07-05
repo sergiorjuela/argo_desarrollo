@@ -42,11 +42,13 @@ class RegistradorOrden {
 				"vigencia" => $_REQUEST ['vigencia_solicitud'],
 				"unidad_ejecutora" => $_REQUEST ['unidad_ejecutora_hidden'],
 				"diponibilidad" => $_REQUEST ['diponibilidad'],
+				"numero_solicitud" => $_REQUEST ['numero_solicitud'],
 				"fecha_diponibilidad" => $_REQUEST ['fecha_diponibilidad'],
 				"valor_disponibilidad" => $_REQUEST ['valor_disponibilidad'],
 				"valor_solicitud" => $_REQUEST ['valor_solicitud'],
 				"valorLetras_disponibilidad" => $_REQUEST ['valorLetras_disponibilidad'],
 				"id_orden" => $_REQUEST ['id_orden'],
+				"descripcion_rubro" => $_REQUEST ['descripcion_rubro_hidden'],
 				"id_rubro" => $_REQUEST ['rubro'] 
 		);
 		
