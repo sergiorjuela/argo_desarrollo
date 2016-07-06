@@ -6,8 +6,16 @@ $_REQUEST ['tiempo'] = time ();
 
 	 
 
-
-
+                
+        $("#<?php echo $this->campoSeguro('tipo_identificacion')?>").select2();
+	$("#<?php echo $this->campoSeguro('tipo_persona')?>").select2(); 
+	$("#<?php echo $this->campoSeguro('genero')?>").select2();
+	$("#<?php echo $this->campoSeguro('nacionalidad')?>").select2(); 
+	$("#<?php echo $this->campoSeguro('perfil')?>").select2();
+	$("#<?php echo $this->campoSeguro('tipo_cuenta')?>").select2(); 
+	$("#<?php echo $this->campoSeguro('tipo_configuracion')?>").select2();
+	$("#<?php echo $this->campoSeguro('clase_contratista')?>").select2();
+	
 
 		$("#<?php echo $this->campoSeguro('perfil')?>").change(function() {
 		
@@ -403,20 +411,9 @@ $_REQUEST ['tiempo'] = time ();
 			 	
 	$("#<?php echo $this->campoSeguro('tipo_control')?>").select2();
 		 
-	//$("#<?php echo $this->campoSeguro('vigencia')?>").select2();
-	//$("#<?php echo $this->campoSeguro('num_solicitud')?>").select2(); 
-	$("#<?php echo $this->campoSeguro('tipo_identificacion')?>").select2();
-	$("#<?php echo $this->campoSeguro('tipo_persona')?>").select2(); 
-	//$("#<?php echo $this->campoSeguro('genero')?>").select2();
-	//$("#<?php echo $this->campoSeguro('nacionalidad')?>").select2(); 
-	$("#<?php echo $this->campoSeguro('genero')?>").select2();
-	$("#<?php echo $this->campoSeguro('nacionalidad')?>").select2(); 
-	$("#<?php echo $this->campoSeguro('perfil')?>").select2();
-	$("#<?php echo $this->campoSeguro('tipo_cuenta')?>").select2(); 
-	$("#<?php echo $this->campoSeguro('tipo_configuracion')?>").select2();
-	$("#<?php echo $this->campoSeguro('clase_contratista')?>").select2();
+	 
 	
-	//$("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").select2();
+	
 	
         setTimeout(function() {
             $('#mensajeEdicionPrevio').hide( "drop", { direction: "up" }, "slow" );

@@ -89,50 +89,6 @@ class registrarForm {
         unset($atributos);
         {
 
-            $cadena_sql_Temp = $this->miSql->getCadenaSql('Consultar_info_Temporal', $_REQUEST ['numero_contrato']);
-            $infoTemporal = $esteRecursoDB->ejecutarAcceso($cadena_sql_Temp, "busqueda");
-
-
-            if ($infoTemporal != false) {
-
-                $ventanaClaseContratista = 'none';
-                $ventanaConvenio = 'none';
-                $informacioAlmacenada = array();
-                for ($j = 0; $j < count($infoTemporal); $j++) {
-                    $temp = array($infoTemporal[$j][0] => $infoTemporal[$j][1]);
-                    $informacioAlmacenada = array_merge($informacioAlmacenada, $temp);
-                }
-                 $cadena_sql = $this->miSql->getCadenaSql('Consultar_Disponibilidad', $_REQUEST ['id_solicitud_necesidad']);
-                $disponibilidad = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-                $registrosPresupuestales = array();
-                for ($i = 0; $i < count($disponibilidad); $i++) {
-                    $cadena_sql = $this->miSql->getCadenaSql('Consultar_Registro_Presupuestales', $disponibilidad[$i]['id_disponibilidad']);
-                    $registrosP = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-                    if ($registrosP != false) {
-                        $registrosPresupuestales = array_merge($registrosPresupuestales, $registrosP);
-                    }
-                }
-                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Contratista', $_REQUEST ['id_solicitud_necesidad']);
-                $contratista = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-                $contratista = $contratista [0];
-                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Solicitud_Particular', $_REQUEST ['id_solicitud_necesidad']);
-                $solicitud = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-                $solicitud = $solicitud [0];
-
-                $_REQUEST = array_merge($_REQUEST, $informacioAlmacenada);
-                
-                
-
-                if ($_REQUEST ['clase_contratista'] == '33' || $_REQUEST ['clase_contratista'] == '34') {
-
-                    $ventanaClaseContratista = 'block';
-                }
-                if ($_REQUEST ['tipo_compromiso'] == '46') {
-
-                    $ventanaConvenio = 'block';
-                }
-                $mensaje = "Proceso de Edición Iniciado Previamente.";
-            } else {
                 $ventanaClaseContratista = 'none';
                 $ventanaConvenio = 'none';
 
@@ -249,7 +205,7 @@ class registrarForm {
                     $_REQUEST = array_merge($_REQUEST, $arregloContratista);
                 }
                 $mensaje = "";
-            }
+            
             
             
             $miSesion = Sesion::singleton();
@@ -306,6 +262,65 @@ class registrarForm {
                     echo $this->miFormulario->division("inicio", $atributos);
                     unset($atributos);
                     {
+                        
+                        
+                        $esteCampo = "selec_proveedor";
+                        $atributos ['id'] = $esteCampo;
+                        $atributos ['nombre'] = $esteCampo;
+                        $atributos ['tipo'] = 'text';
+                        $atributos ['estilo'] = 'jqueryui';
+                        $atributos ['marco'] = true;
+                        $atributos ['estiloMarco'] = '';
+                        $atributos ["etiquetaObligatorio"] = false;
+                        $atributos ['columnas'] = 1;
+                        $atributos ['dobleLinea'] = 0;
+                        $atributos ['tabIndex'] = $tab;
+                        $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+                        $atributos ['validar'] = ' ';
+                        $atributos ['textoFondo'] = 'Ingrese el documento y de clic en el boton que aparece a continuación.';
+
+                        if (isset($_REQUEST [$esteCampo])) {
+                            $atributos ['valor'] = $_REQUEST [$esteCampo];
+                        } else {
+                            $atributos ['valor'] = '';
+                        }
+                        $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+                        $atributos ['deshabilitado'] = false;
+                        $atributos ['tamanno'] = 50;
+                        $atributos ['maximoTamanno'] = '';
+                        $atributos ['anchoEtiqueta'] = 220;
+                        $tab ++;
+
+
+
+                        // Aplica atributos globales al control
+                        $atributos = array_merge($atributos, $atributosGlobales);
+                        echo $this->miFormulario->campoCuadroTexto($atributos);
+                        unset($atributos);
+
+                        $esteCampo = 'botonContratista';
+                        $atributos ["id"] = $esteCampo;
+                        $atributos ["tabIndex"] = $tab;
+                        $atributos ["tipo"] = 'boton';
+                        // submit: no se coloca si se desea un tipo button genérico
+                        $atributos ['onClick'] = 'consultarContratistas()';
+                        $atributos ["estiloMarco"] = '';
+                        $atributos ["estiloBoton"] = '';
+                        // verificar: true para verificar el formulario antes de pasarlo al servidor.
+                        $atributos ["verificar"] = '';
+                        $atributos ["tipoSubmit"] = ''; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+                        $atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
+                        $tab ++;
+
+                        // Aplica atributos globales al control
+                        $atributos = array_merge($atributos, $atributosGlobales);
+                        echo $this->miFormulario->campoBoton($atributos);
+                        unset($atributos);
+
+
+                        
+                        
+                        
                         $esteCampo = 'tipo_identificacion';
                         $atributos ['columnas'] = 2;
                         $atributos ['nombre'] = $esteCampo;

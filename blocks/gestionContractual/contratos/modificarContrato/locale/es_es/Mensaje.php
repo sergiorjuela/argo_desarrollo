@@ -16,6 +16,12 @@ $this->idioma ["fecha_finalTitulo"] = "Seleccione Fecha Final";
 
 $this->idioma ["botonConsultar"] = "Consultar";
 
+$this->idioma ["selec_proveedor"] = "Contratista: ";
+$this->idioma ["selec_proveedorTitulo"] = "Ingrese la cedula del contratista y de clic en el Boton 'Buscar Contratista'";
+
+$this->idioma ["botonContratista"] = "Buscar Contratista: ";
+
+
 $this->idioma ["numero_contrato"] = "Número de Contrato: ";
 $this->idioma ["numero_contratoTitulo"] = "Ingrese Número de Contrato";
 

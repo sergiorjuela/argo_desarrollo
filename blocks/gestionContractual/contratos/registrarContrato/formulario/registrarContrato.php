@@ -109,9 +109,10 @@ class registrarForm {
                         $registrosPresupuestales = array_merge($registrosPresupuestales, $registrosP);
                     }
                 }
-                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Contratista', $_REQUEST ['id_solicitud_necesidad']);
-                $contratista = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-                $contratista = $contratista [0];
+                $contratista = false;
+                //$cadena_sql = $this->miSql->getCadenaSql('Consultar_Contratista', $_REQUEST ['id_solicitud_necesidad']);
+                //$contratista = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                //$contratista = $contratista [0];
                 $cadena_sql = $this->miSql->getCadenaSql('Consultar_Solicitud_Particular', $_REQUEST ['id_solicitud_necesidad']);
                 $solicitud = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
                 $solicitud = $solicitud [0];
@@ -143,42 +144,40 @@ class registrarForm {
                         $registrosPresupuestales = array_merge($registrosPresupuestales, $registrosP);
                     }
                 }
-
-                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Contratista', $_REQUEST ['id_solicitud_necesidad']);
-                $contratista = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-
-
-                if ($contratista) {
-                    $contratista = $contratista [0];
-
-                    $nacionalidad = $contratista['nacionalidad'];
-                    if ($nacionalidad == 'Colombia') {
-                        $nacionalidad = 3;
-                    } else {
-                        $nacionalidad = 4;
-                    }
-                    $arregloContratista = array(
-                        "tipo_identificacion" => $contratista ['tipo_documento'],
-                        "numero_identificacion" => $contratista ['identificacion'],
-                        "digito_verificacion" => $contratista ['digito_verificacion'],
-                        "tipo_persona" => $contratista ['tipo_naturaleza'],
-                        "genero" => $contratista ['genero'],
-                        "direccion" => $contratista ['direccion'],
-                        "telefono" => $contratista ['telefono'],
-                        "correo" => $contratista ['correo'],
-                        "tipo_cuenta" => $contratista ['tipo_cuenta'],
-                        "numero_cuenta" => $contratista ['numero_cuenta'],
-                        "entidad_bancaria" => $contratista ['nombre_banco'],
-                        "perfil" => $contratista ['perfil'],
-                        "nacionalidad" => $nacionalidad,
-                        "profesion" => $contratista ['profesion'],
-                        "especialidad" => $contratista ['especialidad'],
-                        "nombre_Razon_Social" => $contratista ['nombre_razon_social'],
-                        "supervisor" => $contratista ['funcionario_solicitante']
-                    );
-                    $_REQUEST = array_merge($_REQUEST, $arregloContratista);
-                }
                 $mensaje = "";
+                $contratista = false;
+                //$cadena_sql = $this->miSql->getCadenaSql('Consultar_Contratista', $_REQUEST ['id_solicitud_necesidad']);
+                //$contratista = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+//                if ($contratista) {
+//                    $contratista = $contratista [0];
+//
+//                    $nacionalidad = $contratista['nacionalidad'];
+//                    if ($nacionalidad == 'Colombia') {
+//                        $nacionalidad = 3;
+//                    } else {
+//                        $nacionalidad = 4;
+//                    }
+//                    $arregloContratista = array(
+//                        "tipo_identificacion" => $contratista ['tipo_documento'],
+//                        "numero_identificacion" => $contratista ['identificacion'],
+//                        "digito_verificacion" => $contratista ['digito_verificacion'],
+//                        "tipo_persona" => $contratista ['tipo_naturaleza'],
+//                        "genero" => $contratista ['genero'],
+//                        "direccion" => $contratista ['direccion'],
+//                        "telefono" => $contratista ['telefono'],
+//                        "correo" => $contratista ['correo'],
+//                        "tipo_cuenta" => $contratista ['tipo_cuenta'],
+//                        "numero_cuenta" => $contratista ['numero_cuenta'],
+//                        "entidad_bancaria" => $contratista ['nombre_banco'],
+//                        "perfil" => $contratista ['perfil'],
+//                        "nacionalidad" => $nacionalidad,
+//                        "profesion" => $contratista ['profesion'],
+//                        "especialidad" => $contratista ['especialidad'],
+//                        "nombre_Razon_Social" => $contratista ['nombre_razon_social'],
+//                        "supervisor" => $contratista ['funcionario_solicitante']
+//                    );
+//                    //$_REQUEST = array_merge($_REQUEST, $arregloContratista);
+//                }
             }
             $miSesion = Sesion::singleton();
             $id_usuario = $miSesion->idUsuario();
@@ -908,7 +907,7 @@ class registrarForm {
                             $atributos ['deshabilitado'] = false;
                         } else {
                             $atributos ['valor'] = '';
-                            $atributos ['deshabilitado'] = true;
+                            $atributos ['deshabilitado'] = false;
                         }
                         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                         $atributos ['tamanno'] = 20;
@@ -940,7 +939,7 @@ class registrarForm {
                             $atributos ['deshabilitado'] = false;
                         } else {
                             $atributos ['valor'] = '';
-                            $atributos ['deshabilitado'] = true;
+                            $atributos ['deshabilitado'] = false;
                         }
                         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                         $atributos ['tamanno'] = 20;

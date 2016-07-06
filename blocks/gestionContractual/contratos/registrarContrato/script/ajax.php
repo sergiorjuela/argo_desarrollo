@@ -156,8 +156,8 @@ $urlPersonaGenero = $url . $cadena3;
 
     $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").change(function () {
         if ($("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").val() != '') {
-            alert($("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").val());
-        } 
+
+        }
     });
 
     $("#<?php echo $this->campoSeguro('tipo_persona') ?>").change(function () {
@@ -215,9 +215,51 @@ $urlPersonaGenero = $url . $cadena3;
                 success: function (data) {
 
                     if (data.datos != 'null') {
-                        console.log(data.status);
                         if (data.status == 200) {
-                          console.log(data.datos);
+                            console.log(data.datos);
+                            $("#<?php echo $this->campoSeguro('numero_identificacion') ?>").val(data.datos.nit);
+                            $("#<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").val(data.datos.nomempresa);
+                            $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data.datos.digitoverificacion);
+                            $("#<?php echo $this->campoSeguro('direccion') ?>").val(data.datos.direccion);
+                            $("#<?php echo $this->campoSeguro('correo') ?>").val(data.datos.correo);
+                            $("#<?php echo $this->campoSeguro('telefono') ?>").val(data.datos.telefono);
+                            if (data.datos.pais == null) {
+                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").val(3);
+                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").select2();
+                            } else {
+                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").val(4);
+                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").select2();
+                            }
+                            $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(data.datos.tipopersona);
+                            $("#<?php echo $this->campoSeguro('tipo_persona') ?>").select2();
+
+                            if (data.datos.tipodocumento == 1) {
+                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").val(184);
+                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").select2();
+                            } else {
+                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").val(190);
+                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").select2();
+                            }
+                            //----------------------Vacios Temporalmente Mientras se termina de Reestructurar Agora----------------
+                            
+                             $("#<?php echo $this->campoSeguro('genero') ?>").val(null);
+                             $("#<?php echo $this->campoSeguro('genero') ?>").select2();
+                             $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").val(null);
+                             $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").select2();
+                             $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").val(null);
+                             $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").select2();
+                             $("#<?php echo $this->campoSeguro('perfil') ?>").val(null);
+                             $("#<?php echo $this->campoSeguro('perfil') ?>").select2();
+                             $("#<?php echo $this->campoSeguro('clase_contratista') ?>").val(null);
+                             $("#<?php echo $this->campoSeguro('clase_contratista') ?>").select2();
+                             $("#<?php echo $this->campoSeguro('profesion') ?>").val("");
+                             $("#<?php echo $this->campoSeguro('especialidad') ?>").val("");
+                             $("#<?php echo $this->campoSeguro('numero_cuenta') ?>").val("");
+                             $("#<?php echo $this->campoSeguro('entidad_bancaria') ?>").val("");
+                             
+                            
+                            
+
                         } else {
                             alert("Sin Cocincidencias en la Busqueda.");
                         }

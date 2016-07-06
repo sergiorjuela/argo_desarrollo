@@ -65,6 +65,28 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($caden
 // URL definitiva
 $urlContratista = $url . $cadena;
 
+
+
+// Variables
+$cadenaACodificarProveedor = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarProveedor .= "&procesarAjax=true";
+$cadenaACodificarProveedor .= "&action=index.php";
+$cadenaACodificarProveedor .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarProveedor .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarProveedor .= "&funcion=consultaProveedor";
+$cadenaACodificarProveedor .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarProveedor, $enlace);
+
+// URL definitiva
+$urlFinalProveedor = $url . $cadena;
+
+
+
 $cadenaACodificar2 = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
 $cadenaACodificar2 .= "&procesarAjax=true";
 $cadenaACodificar2 .= "&action=index.php";
@@ -238,7 +260,87 @@ $urlPersonaGenero = $url . $cadena3;
         });
     }
     ;
-//---------------------Fin Ajax Tipo Persona y Genero------------------       
+//---------------------Fin Ajax Tipo Persona y Genero------------------ 
+
+
+//---------------Inicio JavaScript y Ajax Proveedor ---------------------------------------------------------------------------------------------------
+
+
+
+
+    function consultarContratistas(elem, request, response) {
+        if ($("#<?php echo $this->campoSeguro('selec_proveedor') ?>").val() != "") {
+            $.ajax({
+                url: "<?php echo $urlFinalProveedor ?>",
+                dataType: "json",
+                data: {proveedor: $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").val()},
+                success: function (data) {
+
+                    if (data.datos != 'null') {
+                        if (data.status == 200) {
+                            console.log(data.datos);
+                            $("#<?php echo $this->campoSeguro('numero_identificacion') ?>").val(data.datos.nit);
+                            $("#<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").val(data.datos.nomempresa);
+                            $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data.datos.digitoverificacion);
+                            $("#<?php echo $this->campoSeguro('direccion') ?>").val(data.datos.direccion);
+                            $("#<?php echo $this->campoSeguro('correo') ?>").val(data.datos.correo);
+                            $("#<?php echo $this->campoSeguro('telefono') ?>").val(data.datos.telefono);
+                            if (data.datos.pais == null) {
+                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").val(3);
+                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").select2();
+                            } else {
+                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").val(4);
+                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").select2();
+                            }
+                            $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(data.datos.tipopersona);
+                            $("#<?php echo $this->campoSeguro('tipo_persona') ?>").select2();
+
+                            if (data.datos.tipodocumento == 1) {
+                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").val(184);
+                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").select2();
+                            } else {
+                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").val(190);
+                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").select2();
+                            }
+                            //----------------------Vacios Temporalmente Mientras se termina de Reestructurar Agora----------------
+                          
+                             $("#<?php echo $this->campoSeguro('genero') ?>").val(null);
+                             //$("#<?php echo $this->campoSeguro('genero') ?>").select2();
+                             $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").val(null);
+                             $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").select2();
+                             $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").val(null);
+                             $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").select2();
+                             $("#<?php echo $this->campoSeguro('perfil') ?>").val(null);
+                             $("#<?php echo $this->campoSeguro('perfil') ?>").select2();
+                             $("#<?php echo $this->campoSeguro('clase_contratista') ?>").val(null);
+                             $("#<?php echo $this->campoSeguro('clase_contratista') ?>").select2();
+                             $("#<?php echo $this->campoSeguro('profesion') ?>").val("");
+                             $("#<?php echo $this->campoSeguro('especialidad') ?>").val("");
+                             $("#<?php echo $this->campoSeguro('numero_cuenta') ?>").val("");
+                             $("#<?php echo $this->campoSeguro('entidad_bancaria') ?>").val("");
+                             
+                            
+                            
+
+                        } else {
+                            alert("Sin Cocincidencias en la Busqueda.");
+                        }
+                    } else {
+                        alert("Servidor de Proveedores No Disponible.");
+
+                    }
+
+                }
+
+            });
+        } else {
+            alert("Ingrese la Identificacion o el nombre del proveedor");
+        }
+    }
+    ;
+
+
+
 
 </script>
 
