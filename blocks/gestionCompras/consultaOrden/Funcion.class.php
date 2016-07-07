@@ -55,6 +55,9 @@ class Funcion {
 	function modificarOrden() {
 		include_once ($this->ruta . "funcion/modificarOrden.php");
 	}
+	function aprobarContrato() {
+		include_once ($this->ruta . "funcion/aprobarContrato.php");
+	}
 	function modificarElementos() {
 		include_once ($this->ruta . "funcion/procesarModificarElementos.php");
 	}
@@ -65,8 +68,9 @@ class Funcion {
 		include_once ($this->ruta . "funcion/documentoPdf.php");
 	}
 	function action() {
-		
-		// Evitar qu44444444rrrre se ingrese codigo HTML y PHP en los campos de texto
+            
+                           
+            	// Evitar qu44444444rrrre se ingrese codigo HTML y PHP en los campos de texto
 		// Campos que se quieren excluir de la limpieza de código. Formato: nombreCampo1|nombreCampo2|nombreCampo3
 		$excluir = "";
 		$_REQUEST = $this->miInspectorHTML->limpiarPHPHTML ( $_REQUEST );
@@ -80,8 +84,9 @@ class Funcion {
 		if (isset ( $_REQUEST ['procesarAjax'] )) {
 			$this->procesarAjax ();
 		} elseif (isset ( $_REQUEST ["opcion"] )) {
-			
-			switch ($_REQUEST ['opcion']) {
+                    
+                 
+                  switch ($_REQUEST ['opcion']) {
 				
 				case 'modificarOrden' :
 					$this->modificarOrden ();
@@ -89,6 +94,11 @@ class Funcion {
 				
 				case 'procesarModificarElementos' :
 					$this->modificarElementos ();
+					break;
+				
+                                case 'aprobarContratoFuncion' :
+                                        
+                                      	$this->aprobarContrato ();
 					break;
 				
 				case 'eliminarElementoOrden' :
@@ -100,14 +110,7 @@ class Funcion {
 					break;
 			}
 			
-			// if (isset ( $_REQUEST ["redireccionar"])&&$_REQUEST ['redireccionar'] == 'regresar') {
-			// redireccion::redireccionar($_REQUEST['opcion']);
-			// }
 			
-			// if ($_REQUEST ['opcion'] == 'modificarOrden') {
-			
-			// $this->modificarOrden ();
-			// }
 		}
 	}
 	function __construct() {

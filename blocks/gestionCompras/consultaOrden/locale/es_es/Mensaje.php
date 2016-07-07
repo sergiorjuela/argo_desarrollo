@@ -359,6 +359,7 @@ $this->idioma ["ordenadorGasto"] = "Ordenador Gasto";
 $this->idioma ["botonAceptar"] = "Actualizar Orden";
 $this->idioma ["botonCancelar"] = "Cancelar";
 $this->idioma ["botonContinuar"] = "Continuar";
+$this->idioma ["botonAceptarAprobacion"] = "Aprobar Contrato";
 $this->idioma ["botonConsultar"] = "Consultar";
 $this->idioma ["botonRegresar"] = "< < Regresar";
 $this->idioma ["restablecerCargo"] = "Reestablecer Cargo";

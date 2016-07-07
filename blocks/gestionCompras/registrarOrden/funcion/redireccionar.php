@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace gestionCompras\registrarOrden\funcion;
 
@@ -27,6 +27,8 @@ class redireccion {
 				$variable .= "&mensaje=error";
 				
 				break;
+			
+		
 			
 			case "notextos" :
 				$variable = "pagina=" . $miPaginaActual;
