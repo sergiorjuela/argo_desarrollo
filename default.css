@@ -1,0 +1,22 @@
+#espacio_trabajo {
+}
+
+
+
+.bannerAplicativo {
+    clear: both;
+    position: relative;
+    width: 100%;
+    height: 180px;
+    z-index: 1;
+    opacity: 1;
+}
+
+
+.cbp-hrmenu {
+    width: 100%;
+    border-bottom: 3px solid #2c3670;
+    position: relative;
+    top:  -15px;
+    z-index: 1;
+}

@@ -65,6 +65,10 @@ class Frontera {
                 case "ConsultarOrden" :
                     include_once ($this->ruta . "/formulario/resultado.php");
                     break;
+                
+                case "consultarOrdenDetalle" :
+                    include_once ($this->ruta . "/formulario/consultarOrden.php");
+                    break;
  }
         } else {
             $_REQUEST ['opcion'] = "mostrar";

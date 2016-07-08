@@ -13,6 +13,8 @@ $funcion [$indice ++] = "timepicker.js";
 $funcion[$indice ++]="modernizr.custom.js";
 $funcion [$indice ++] = "jquery.autocomplete.js";
 $funcion [$indice ++] = "jquery.autocomplete.min.js";
+$funcion [$indice ++] = "bootstrap.js";
+$funcion [$indice ++] = "bootstrap.min.js";
 
 $rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
 $rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" );

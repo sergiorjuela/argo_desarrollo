@@ -58,6 +58,9 @@ class CheckBoxHtml extends HtmlBase{
         if (isset ( $this->atributos [self::SELECCIONADO] ) && $this->atributos [self::SELECCIONADO]) {
             $this->miOpcion .= "checked ";
         }
+        if (isset ( $this->atributos [self::DESHABILITADO] ) && $this->atributos [self::DESHABILITADO]) {
+            $this->miOpcion .= " disabled ";
+        }
     
         $this->miOpcion .= "/>";
         return $this->miOpcion;

@@ -10,6 +10,13 @@ $estilo[$indice++]="chosen.css";
 $estilo[$indice++]="select2.css";
 $estilo[$indice++]="jquery_switch.css";
 
+
+
+$estilo[$indice++]="bootstrap-theme.css";
+$estilo[$indice++]="bootstrap-theme.min.css";
+$estilo[$indice++]="bootstrap";
+$estilo[$indice++]="bootstrap.min.css";
+
 // Tablas
 $estilo[$indice++]="demo_page.css";
 $estilo[$indice++]="demo_table.css";
