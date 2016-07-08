@@ -69,7 +69,7 @@ class Sql extends \Sql {
                 $cadenaSql = " 	SELECT 	o.numero_contrato ||'-'|| o.vigencia as value, o.numero_contrato ||'-'||o.vigencia as orden ";
                 $cadenaSql .= " FROM orden o, contrato_general cg ";
                 $cadenaSql .= " WHERE o.numero_contrato = cg.numero_contrato and o.vigencia = cg.vigencia and cg.unidad_ejecutora ='" . $variable['unidad'] . "' ";
-                $cadenaSql .= " and tipo_orden ='" . $variable['tipo_orden'] . "';";
+                $cadenaSql .= " and tipo_orden ='" . $variable['tipo_orden'] . "' and cg.estado_aprobacion = 't' ;";
 
                 break;
 
@@ -134,7 +134,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
                 $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
-                $cadenaSql .= "AND o.estado = 'true' AND cg.estado_aprobacion = 'f' ";
+                $cadenaSql .= "AND o.estado = 'true' AND cg.estado_aprobacion = 't' ";
                 if ($variable ['tipo_orden'] != '') {
                     $cadenaSql .= " AND o.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
                 }
@@ -146,7 +146,7 @@ class Sql extends \Sql {
                 }
 
                 if ($variable ['nit'] != '') {
-                    $cadenaSql .= " AND c.identificacion = '" . $variable ['nit'] . "' ";
+                    $cadenaSql .= " AND o.proveedor = '" . $variable ['nit'] . "' ";
                 }
 
                 if ($variable ['sede'] != '') {
@@ -175,7 +175,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
                 $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
-                $cadenaSql .= "AND o.estado = 'true' AND cg.estado_aprobacion = 'f' ";
+                $cadenaSql .= "AND o.estado = 'true' AND cg.estado_aprobacion = 't' ";
                 if ($variable ['tipo_orden'] != '') {
                     $cadenaSql .= " AND o.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
                 }
@@ -187,7 +187,7 @@ class Sql extends \Sql {
                 }
 
                 if ($variable ['nit'] != '') {
-                    $cadenaSql .= " AND c.identificacion = '" . $variable ['nit'] . "' ";
+                    $cadenaSql .= " AND o.proveedor = '" . $variable ['nit'] . "' ";
                 }
 
                 if ($variable ['dependencia'] != '') {
@@ -200,6 +200,12 @@ class Sql extends \Sql {
 
                 $cadenaSql .= " ; ";
 
+                break;
+
+            case "buscarProveedoresFiltro" :
+                $cadenaSql = " SELECT DISTINCT proveedor||' - ('||nombre_proveedor||')' AS  value, proveedor AS data  ";
+                $cadenaSql .= " FROM orden ";
+                $cadenaSql .= " WHERE cast(proveedor as text) LIKE '%$variable%' OR nombre_proveedor LIKE '%$variable%' LIMIT 10; ";
                 break;
 
             case "polizas" :
@@ -445,14 +451,14 @@ class Sql extends \Sql {
             case "aprobarContrato" :
                 $cadenaSql = " INSERT INTO contrato_aprobado( ";
                 $cadenaSql.=" numero_contrato, vigencia, fecha_aprobacion, usuario)";
-                $cadenaSql.=" VALUES (".$variable['numero_contrato'].", ".$variable['vigencia'].", ";
-                $cadenaSql.=" '".$variable['fecha_aprobacion']."', '".$variable['usuario']."');";
-    
+                $cadenaSql.=" VALUES (" . $variable['numero_contrato'] . ", " . $variable['vigencia'] . ", ";
+                $cadenaSql.=" '" . $variable['fecha_aprobacion'] . "', '" . $variable['usuario'] . "');";
+
                 break;
-            
+
             case "obteneConsecutivoContratoAprobado" :
                 $cadenaSql = " SELECT MAX(consecutivo_contrato) as consecutivo_contrato FROM contrato_aprobado; ";
-                 
+
                 break;
 
 

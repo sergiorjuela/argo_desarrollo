@@ -148,7 +148,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
                 $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
-                $cadenaSql .= "AND o.estado = 'true' ";
+                $cadenaSql .= "AND o.estado = 'true' AND cg.estado_aprobacion = 'f' ";
                 if ($variable ['tipo_orden'] != '') {
                     $cadenaSql .= " AND o.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
                 }
@@ -160,7 +160,7 @@ class Sql extends \Sql {
                 }
 
                 if ($variable ['nit'] != '') {
-                    $cadenaSql .= " AND c.identificacion = '" . $variable ['nit'] . "' ";
+                    $cadenaSql .= " AND o.proveedor = '" . $variable ['nit'] . "' ";
                 }
 
                 if ($variable ['sede'] != '') {
@@ -189,7 +189,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
                 $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
-                $cadenaSql .= "AND o.estado = 'true' ";
+                $cadenaSql .= "AND o.estado = 'true' AND cg.estado_aprobacion = 'f' ";
                 if ($variable ['tipo_orden'] != '') {
                     $cadenaSql .= " AND o.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
                 }
@@ -201,7 +201,7 @@ class Sql extends \Sql {
                 }
 
                 if ($variable ['nit'] != '') {
-                    $cadenaSql .= " AND c.identificacion = '" . $variable ['nit'] . "' ";
+                    $cadenaSql .= " AND o.proveedor = '" . $variable ['nit'] . "' ";
                 }
 
                 if ($variable ['dependencia'] != '') {
@@ -327,7 +327,7 @@ class Sql extends \Sql {
                 }
 
                 if ($variable ['nit'] != '') {
-                    $cadenaSql .= " AND cn.identificacion = '" . $variable ['nit'] . "' ";
+                    $cadenaSql .= " AND o.proveedor = '" . $variable ['nit'] . "' ";
                 }
 
                 if ($variable ['dependencia'] != '') {
@@ -690,7 +690,7 @@ class Sql extends \Sql {
                 $cadenaSql = " 	SELECT 	o.numero_contrato ||'-'|| o.vigencia as value, o.numero_contrato ||'-'||o.vigencia as orden ";
                 $cadenaSql .= " FROM orden o, contrato_general cg ";
                 $cadenaSql .= " WHERE o.numero_contrato = cg.numero_contrato and o.vigencia = cg.vigencia and cg.unidad_ejecutora ='".$variable['unidad']."' ";
-                $cadenaSql .= " and tipo_orden ='" . $variable['tipo_orden'] . "';";
+                $cadenaSql .= " and tipo_orden ='" . $variable['tipo_orden'] . "' and cg.estado_aprobacion = 'f' ;";
 
                 break;
             case "cargos_existentes" :
@@ -699,6 +699,13 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM arka_parametros.arka_funcionarios; ";
 
                 break;
+            
+              case "buscarProveedoresFiltro" :
+                $cadenaSql = " SELECT DISTINCT proveedor||' - ('||nombre_proveedor||')' AS  value, proveedor AS data  ";
+                $cadenaSql .= " FROM orden ";
+                $cadenaSql .= " WHERE cast(proveedor as text) LIKE '%$variable%' OR nombre_proveedor LIKE '%$variable%' LIMIT 10; ";
+                break;
+
         }
         return $cadenaSql;
     }

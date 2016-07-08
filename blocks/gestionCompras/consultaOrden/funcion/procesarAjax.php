@@ -314,7 +314,7 @@ if ($_REQUEST ['funcion'] == 'disponibilidades') {
     $cadenaSql = $this->sql->getCadenaSql('buscar_disponibilidad', array(
         $_REQUEST ['vigencia'],
         $_REQUEST ['unidad']
-            ));
+    ));
 
     $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
@@ -405,11 +405,11 @@ if ($_REQUEST ['funcion'] == 'SeleccionProveedor') {
 if ($_REQUEST ['funcion'] == 'consultarCargoSuper') {
 
     $cadenaSql = $this->sql->getCadenaSql('cargoSuper', $_REQUEST ['valor']);
-   
+
     $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
     $resultado = json_encode($resultado [0]);
-  
+
 
     echo $resultado;
 }
@@ -449,6 +449,21 @@ if ($_REQUEST ['funcion'] == 'consultarDependencia') {
     $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
     $resultado = json_encode($resultado);
     echo $resultado;
+}
+
+if ($_REQUEST ['funcion'] == 'consultarProveedorFiltro') {
+
+    $cadenaSql = $this->sql->getCadenaSql('buscarProveedoresFiltro', $_GET ['query']);
+    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+    foreach ($resultadoItems as $key => $values) {
+        $keys = array(
+            'value',
+            'data'
+        );
+        $resultado [$key] = array_intersect_key($resultadoItems [$key], array_flip($keys));
+    }
+  
+    echo '{"suggestions":' . json_encode($resultado) . '}';
 }
 
 if ($_REQUEST ['funcion'] == 'SeleccionTipoBien') {

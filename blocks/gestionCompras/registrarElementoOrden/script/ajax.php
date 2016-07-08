@@ -94,6 +94,22 @@ $cadenaiva = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $
 $urlFinaliva = $url . $cadenaiva;
 
 
+$cadenaACodificarProveedorFiltro = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarProveedorFiltro .= "&procesarAjax=true";
+$cadenaACodificarProveedorFiltro .= "&action=index.php";
+$cadenaACodificarProveedorFiltro .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarProveedorFiltro .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarProveedorFiltro .= $cadenaACodificarProveedorFiltro . "&funcion=consultarProveedorFiltro";
+$cadenaACodificarProveedorFiltro .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadenaACodificarProveedorFiltro = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarProveedorFiltro, $enlace);
+
+// URL definitiva
+$urlProveedorFiltro = $url . $cadenaACodificarProveedorFiltro;
+
+
 
 ?>
 <script type='text/javascript'>
@@ -296,7 +312,7 @@ $(function() {
 
     $("#<?php echo $this->campoSeguro('nitproveedor') ?>").autocomplete({
     	minChars: 3,
-    	serviceUrl: '<?php echo $urlFinalProveedor; ?>',
+    	serviceUrl: '<?php echo $urlProveedorFiltro; ?>',
     	onSelect: function (suggestion) {
         	
     	        $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val(suggestion.data);

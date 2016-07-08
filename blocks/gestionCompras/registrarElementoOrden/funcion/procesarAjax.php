@@ -61,4 +61,19 @@ if ($_REQUEST ['funcion'] == 'consultarNumeroOrden') {
 	echo $resultado;
 }
 
+if ($_REQUEST ['funcion'] == 'consultarProveedorFiltro') {
+
+    $cadenaSql = $this->sql->getCadenaSql('buscarProveedoresFiltro', $_GET ['query']);
+    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+    foreach ($resultadoItems as $key => $values) {
+        $keys = array(
+            'value',
+            'data'
+        );
+        $resultado [$key] = array_intersect_key($resultadoItems [$key], array_flip($keys));
+    }
+  
+    echo '{"suggestions":' . json_encode($resultado) . '}';
+}
+
 ?>
