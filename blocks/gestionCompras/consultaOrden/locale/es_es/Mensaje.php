@@ -92,6 +92,10 @@ $this->idioma ["paisTitulo"] = "Pais de Origen";
 //--------------------
 $this->idioma ["botonContratista"] = "Buscar Proveedor ";
 
+
+$this->idioma ["botonAprobacionMultiple"] = "Aprobación Multiple ";
+$this->idioma ["botonAprobarMultiple"] = "Aprobar Contratos ";
+
 $this->idioma ["botonAceptarElemento"] = "Actualizar Elemento ";
 
 $this->idioma ["marca"] = "Marca : ";

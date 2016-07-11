@@ -22,9 +22,8 @@
             });
         });
 
-                     $('#tablaTitulos').dataTable( {
-                "sPaginationType": "full_numbers"
-                 } );
+                                     
+$("#tablaModalOrdenes").dataTable().fnDestroy();            
 
 $('#<?php echo $this->campoSeguro('dependencia_solicitante')?>').width(350);
 $("#<?php echo $this->campoSeguro('dependencia_solicitante')?>").select2(); 

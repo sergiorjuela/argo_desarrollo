@@ -78,6 +78,9 @@ class Frontera {
                 case "aprobarContrato" :
                     include_once ($this->ruta . "/formulario/aprobar.php");
                     break;
+                case "aprobarContratoMultiple" :
+                    include_once ($this->ruta . "/formulario/aprobarContratoMultiple.php");
+                    break;
 
                 case "modificarElementos" :
                     include_once ($this->ruta . "/formulario/modificarElementos.php");

@@ -13,8 +13,9 @@ $funcion [$indice ++] = "timepicker.js";
 $funcion[$indice ++]="modernizr.custom.js";
 $funcion [$indice ++] = "jquery.autocomplete.js";
 $funcion [$indice ++] = "jquery.autocomplete.min.js";
-$funcion [$indice ++] = "bootstrap.js";
-$funcion [$indice ++] = "bootstrap.min.js";
+$funcion [$indice ++] = "modal.js";
+
+
 
 $rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
 $rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" );
@@ -40,5 +41,6 @@ if (isset ( $funcion [0] )) {
 }
 
 include ("ajax.php");
+include ("procesar_tabla.php");
 
 ?>

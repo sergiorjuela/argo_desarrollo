@@ -12,10 +12,7 @@ $estilo[$indice++]="jquery_switch.css";
 
 
 
-$estilo[$indice++]="bootstrap-theme.css";
-$estilo[$indice++]="bootstrap-theme.min.css";
-$estilo[$indice++]="bootstrap";
-$estilo[$indice++]="bootstrap.min.css";
+$estilo[$indice++]="modal.css";
 
 // Tablas
 $estilo[$indice++]="demo_page.css";

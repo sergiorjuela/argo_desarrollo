@@ -199,6 +199,114 @@ class registrarForm {
         $atributos ['redirLugar'] = true;
         echo $this->miFormulario->enlace($atributos);
         unset($atributos);
+
+
+
+        echo "<div id='myModal' class='modal'>
+                 <div class='modal-content'>
+                    <span class='close'>x</span>";
+
+        $esteCampo = "marcoSeleccionMultiple";
+        $atributos ['id'] = $esteCampo;
+        $atributos ["estilo"] = "jqueryui";
+        $atributos ['tipoEtiqueta'] = 'inicio';
+        $atributos ["leyenda"] = "Aprobacion Multiple";
+        echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
+
+
+
+
+
+        if ($Orden) {
+
+
+
+            echo "<table id='tablaModalOrdenes'>";
+            echo "<thead>
+                             <tr>
+                                <th>Tipo Orden</th>
+                                <th>Número Orden</th>
+                                <th>Numero CDP</th>
+                    		<th>Vigencia</th>            
+            			<th><center>Seleccione</center></th>
+                             </tr>
+                          </thead>
+                          <tbody>";
+
+            for ($i = 0; $i < count($Orden); $i ++) {
+
+
+                $nombre = 'checkbox' .$i;
+                $atributos ['id'] = $nombre;
+                $atributos ['nombre'] = $nombre;
+                $atributos ['estilo'] = 'campoCuadroSeleccionCorta';
+                $atributos ['marco'] = true;
+                $atributos ['estiloMarco'] = true;
+                $atributos ["etiquetaObligatorio"] = true;
+                $atributos ['columnas'] = 1;
+                $atributos ['dobleLinea'] = 1;
+                $atributos ['tabIndex'] = $tab;
+                $atributos ['etiqueta'] = '';
+                $atributos ['validar'] = '';
+                $atributos ['valor'] = $Orden [$i] ['numero_contrato']."-".$Orden [$i] ['vigencia'];
+                $atributos ['deshabilitado'] = false;
+                $tab ++;
+
+                // Aplica atributos globales al control
+                $atributos = array_merge($atributos, $atributosGlobales);
+
+
+                $mostrarHtml = "<tr>
+                                <td><center>" . $Orden [$i] ['descripcion'] . "</center></td>
+                                <td><center>" . $Orden [$i] ['numero_contrato'] . "</center></td>		
+                                <td><center>" . $Orden [$i] ['numero_cdp'] . "</center></td>		
+                                <td><center>" . $Orden [$i] ['vigencia'] . "</center></td>
+                                <td><center>" . $this->miFormulario->campoCuadroSeleccion($atributos) . " </center></td>         		
+                                </tr>";
+                echo $mostrarHtml;
+                unset($mostrarHtml);
+                unset($atributos);
+                unset($variable);
+            }
+
+            echo "</tbody>";
+
+            echo "</table>";
+            echo "<br>";
+
+            $atributos ["id"] = "botones";
+            $atributos ["estilo"] = "marcoBotones";
+            echo $this->miFormulario->division("inicio", $atributos);
+
+            $esteCampo = 'botonAprobarMultiple';
+            $atributos ["id"] = $esteCampo;
+            $atributos ["tabIndex"] = $tab;
+            $atributos ["tipo"] = 'boton';
+            // submit: no se coloca si se desea un tipo button genérico
+            $atributos ['submit'] = 'true';
+            $atributos ["estiloMarco"] = '';
+            $atributos ["estiloBoton"] = 'jqueryui';
+            // verificar: true para verificar el formulario antes de pasarlo al servidor.
+            $atributos ["verificar"] = '';
+            $atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+            $atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
+            $atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+            $tab ++;
+
+            // Aplica atributos globales al control
+            $atributos = array_merge($atributos, $atributosGlobales);
+            echo $this->miFormulario->campoBoton($atributos);
+
+            echo $this->miFormulario->division('fin');
+        }
+        unset($atributos);
+
+        echo $this->miFormulario->marcoAgrupacion('fin');
+        echo " </div></div>";
+
+
+
+
         if ($Orden) {
 
             echo "<table id='tablaTitulos'>";
@@ -218,6 +326,11 @@ class registrarForm {
 				<th>Revisar<br>Aprobar Contrato</th>
                              </tr>
                           </thead>
+                          
+                          
+                          
+
+
                           <tbody>";
 
             for ($i = 0; $i < count($Orden); $i ++) {
@@ -301,27 +414,15 @@ class registrarForm {
 
             echo "</table>";
             echo "<br>";
-            $esteCampo = 'botonCargo';
-            $atributos ["id"] = $esteCampo;
-            $atributos ["tabIndex"] = $tab;
-            $atributos ["tipo"] = 'boton';
-            // submit: no se coloca si se desea un tipo button genérico
-            $atributos ['onClick'] = 'registrarNuevoCargo()';
-            $atributos ["estiloMarco"] = '';
-            $atributos ["estiloBoton"] = '';
-            // verificar: true para verificar el formulario antes de pasarlo al servidor.
-            $atributos ["verificar"] = '';
-            $atributos ["tipoSubmit"] = ''; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
-            $atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
-            $tab ++;
 
-            // Aplica atributos globales al control
-            $atributos = array_merge($atributos, $atributosGlobales);
-            echo $this->miFormulario->campoBoton($atributos);
-            unset($atributos);
-
-            // Fin de Conjunto de Controles
-            // echo $this->miFormulario->marcoAgrupacion("fin");
+            $atributos ["id"] = "botones";
+            $atributos ["estilo"] = "marcoBotones";
+            echo $this->miFormulario->division("inicio", $atributos);
+            echo "<button id='myBtn'>Aprobación Multiple</button>";
+            echo $this->miFormulario->division('fin');
+            
+            
+            
         } else {
 
             $mensaje = "No Se Encontraron<br>Ordenes.";
@@ -358,12 +459,9 @@ class registrarForm {
         // En este formulario se utiliza el mecanismo (b) para pasar las siguientes variables:
         // Paso 1: crear el listado de variables
 
-        $valorCodificado = "actionBloque=" . $esteBloque ["nombre"];
-        $valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion('pagina');
-        $valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
-        $valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-        $valorCodificado .= "&opcion=regresar";
-        $valorCodificado .= "&redireccionar=regresar";
+        $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion('pagina');
+        $valorCodificado .= "&opcion=aprobarContratoMultiple";
+      
         /**
          * SARA permite que los nombres de los campos sean dinámicos.
          * Para ello utiliza la hora en que es creado el formulario para
