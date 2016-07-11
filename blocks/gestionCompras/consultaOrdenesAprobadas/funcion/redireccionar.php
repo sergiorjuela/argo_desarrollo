@@ -68,7 +68,7 @@ class redireccion {
 
 
                 break;
-
+            
             case "noActualizoElemento" :
                 $variable = "pagina=" . $miPaginaActual;
                 $variable .= "&opcion=mensaje";

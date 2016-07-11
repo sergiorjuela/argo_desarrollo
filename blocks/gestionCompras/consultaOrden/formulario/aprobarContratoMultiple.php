@@ -128,7 +128,7 @@ class registrarForm {
             }
            
             $mensaje = "<p><h3>APROBACION DE CONTRATOS</h2></p> <br> <p><h4>LOS CONTRATOS DE ORDEN DE COMPRA REFERIDOS A CONTINUACIÓN: </h3></p> ";
-            for ($j = 0; $j < count($datos)-1; $j++) {
+            for ($j = 0; $j < count($datos); $j++) {
                
                         $mensaje .= "NUMERO: " . $datos[$j]['numero_contrato'] .
                                     " CON VIGENCIA:  " . $datos[$j]['vigencia'] . " | </h4>";
@@ -143,7 +143,9 @@ class registrarForm {
             $mensaje .= "</p><h4>SE APROBARAN Y OBTENDRA UN CONSECUTIVO UNICO". $this->miFormulario->cuadroMensaje($atributos) . "</h4></p>";
             
             
-            seria
+            $datos = serialize($datos);
+            $datos =  urlencode ($datos);
+            
           
             // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
             $esteCampo = 'mensajeAprobacion';
@@ -224,7 +226,8 @@ class registrarForm {
         $valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
         $valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
         $valorCodificado .= "&opcion=aprobarContratoFuncion";
-        $valorCodificado .= "&datos=" . $datos;
+        $valorCodificado .= "&multiple=true";
+        $valorCodificado .= "&datos=" .$datos;
         $valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
 
         /**

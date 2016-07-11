@@ -55,7 +55,7 @@ class redireccion {
                 $variable .= "&usuario=" . $valor['usuario'];
                 $variable .= "&consecutivo_contrato=" . $valor[0];
 
-         
+
 
                 break;
 
@@ -66,6 +66,23 @@ class redireccion {
                 $variable .= "&numero_contrato=" . $valor['numero_contrato'];
                 $variable .= "&vigencia=" . $valor['vigencia'];
 
+
+                break;
+            case "aproboContratos" :
+
+                $datos = serialize($valor);
+                $datos = urlencode($datos);
+                $variable = "pagina=" . $miPaginaActual;
+                $variable .= "&opcion=mensaje";
+                $variable .= "&mensaje=aproboContratos";
+                $variable .= "&datos=" . $datos;
+                break;
+
+            case "noAproboContratos" :
+                $variable = "pagina=" . $miPaginaActual;
+                $variable .= "&opcion=mensaje";
+                $variable .= "&mensaje=noAproboContratos";
+                $variable .= "&datos=" . $valor;
 
                 break;
 

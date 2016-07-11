@@ -32,37 +32,64 @@ class RegistradorOrden {
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         $SQLs = [];
-        $datos = array(
-            'id_orden' => $_REQUEST['id_orden'],
-            'numero_contrato' => $_REQUEST['numero_contrato'],
-            'vigencia' => $_REQUEST['vigencia'],
-        );
 
+        if (isset($_REQUEST['multiple']) && $_REQUEST['multiple'] = "true") {
+            $datos = stripslashes($_REQUEST['datos']);
+            $datos = urldecode($datos);
+            $datos = unserialize($datos);
+            for ($i = 0; $i < count($datos); $i++) {
+                $SQLEstadoAprobacion = $this->miSql->getCadenaSql('updateEstadoAprobacion', $datos[$i]);
+                array_push($SQLs, $SQLEstadoAprobacion);
+                $datosAprobacion = array(
+                    'numero_contrato' => $datos[$i]['numero_contrato'],
+                    'vigencia' => $datos[$i]['vigencia'],
+                    'fecha_aprobacion' => date("Y-m-d"),
+                    'usuario' => $_REQUEST['usuario']
+                );
+                $SQLAprobarContrato = $this->miSql->getCadenaSql('aprobarContrato', $datosAprobacion);
+                array_push($SQLs, $SQLAprobarContrato);
+            }
+            $trans_aprobar_contratos = $esteRecursoDB->transaccion($SQLs);
 
-        $SQLEstadoAprobacion = $this->miSql->getCadenaSql('updateEstadoAprobacion', $datos);
-        array_push($SQLs, $SQLEstadoAprobacion);
-
-        $datosAprobacion = array(
-            'id_orden' => $_REQUEST['id_orden'],
-            'numero_contrato' => $_REQUEST['numero_contrato'],
-            'vigencia' => $_REQUEST['vigencia'],
-            'fecha_aprobacion' => date("Y-m-d"),
-            'usuario' => $_REQUEST['usuario']
-        );
-
-        $SQLAprobarContrato = $this->miSql->getCadenaSql('aprobarContrato', $datosAprobacion);
-        array_push($SQLs, $SQLAprobarContrato);
-        $trans_aprobar_contrato = $esteRecursoDB->transaccion($SQLs);
-
-        if ($trans_aprobar_contrato != false) {
-            $sqlConsecutivoContrato = $this->miSql->getCadenaSql('obteneConsecutivoContratoAprobado');
-            $resultado = $esteRecursoDB->ejecutarAcceso($sqlConsecutivoContrato, "busqueda");
-            $consecutivoUnico = $resultado[0][0];
-            array_push($datosAprobacion, $consecutivoUnico);
-            redireccion::redireccionar('aproboContrato', $datosAprobacion);
-            
+            if ($trans_aprobar_contratos != false) {
+                redireccion::redireccionar('aproboContratos',$datos);
+                
+            } else {
+                redireccion::redireccionar('noAproboContratos', $datos);
+            }
         } else {
-            redireccion::redireccionar('noAproboContrato', $datos);
+            $datos = array(
+                'id_orden' => $_REQUEST['id_orden'],
+                'numero_contrato' => $_REQUEST['numero_contrato'],
+                'vigencia' => $_REQUEST['vigencia'],
+            );
+
+
+            $SQLEstadoAprobacion = $this->miSql->getCadenaSql('updateEstadoAprobacion', $datos);
+            array_push($SQLs, $SQLEstadoAprobacion);
+
+            $datosAprobacion = array(
+                'id_orden' => $_REQUEST['id_orden'],
+                'numero_contrato' => $_REQUEST['numero_contrato'],
+                'vigencia' => $_REQUEST['vigencia'],
+                'fecha_aprobacion' => date("Y-m-d"),
+                'usuario' => $_REQUEST['usuario']
+            );
+
+            $SQLAprobarContrato = $this->miSql->getCadenaSql('aprobarContrato', $datosAprobacion);
+
+            array_push($SQLs, $SQLAprobarContrato);
+            $trans_aprobar_contrato = $esteRecursoDB->transaccion($SQLs);
+
+            if ($trans_aprobar_contrato != false) {
+                $sqlConsecutivoContrato = $this->miSql->getCadenaSql('obteneConsecutivoContratoAprobado');
+                $resultado = $esteRecursoDB->ejecutarAcceso($sqlConsecutivoContrato, "busqueda");
+                $consecutivoUnico = $resultado[0][0];
+                array_push($datosAprobacion, $consecutivoUnico);
+                redireccion::redireccionar('aproboContrato', $datosAprobacion);
+            } else {
+                redireccion::redireccionar('noAproboContrato', $datos);
+            }
         }
     }
 
