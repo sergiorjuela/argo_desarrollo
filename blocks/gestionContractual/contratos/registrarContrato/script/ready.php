@@ -383,6 +383,12 @@ $_REQUEST ['tiempo'] = time ();
 	
 	$("#<?php echo $this->campoSeguro('supervisor')?>").width(220);
 	$("#<?php echo $this->campoSeguro('supervisor')?>").select2();
+	
+        $("#<?php echo $this->campoSeguro('dependencia_solicitud')?>").width(220);
+	$("#<?php echo $this->campoSeguro('dependencia_solicitud')?>").select2();
+	
+        $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta')?>").width(220);
+	$("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta')?>").select2();
 			 
 	$("#<?php echo $this->campoSeguro('formaPago')?>").width(180);
 	$("#<?php echo $this->campoSeguro('formaPago')?>").select2();

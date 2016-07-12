@@ -108,7 +108,7 @@ class Sql extends \Sql {
                 break;
 
             case "obtenerInfoUsuario" :
-                $cadenaSql = "SELECT u.dependencia_especifica ||' - '|| u.dependencia as nombre ";
+                $cadenaSql = "SELECT u.dependencia_especifica ||' - '|| u.dependencia as nombre, unidad_ejecutora ";
                 $cadenaSql .= "FROM frame_work.argo_usuario u  ";
                 $cadenaSql .= "WHERE u.id_usuario='" . $variable . "' ";
                 break;
@@ -635,10 +635,9 @@ class Sql extends \Sql {
                 break;
 
             case 'buscar_contratista' :
-                $cadenaSql = " SELECT  identificacion||' - '||nombre_razon_social AS  value, identificacion  AS data  ";
-                $cadenaSql .= " FROM contratista ";
-                $cadenaSql .= "WHERE cast(identificacion as text) LIKE '%" . $variable . "%' ";
-                $cadenaSql .= "OR cast(nombre_razon_social as text ) LIKE '%" . $variable . "%' LIMIT 10; ";
+                $cadenaSql = " SELECT contratista ||'-'|| nombre_contratista AS  value, contratista  AS data  ";
+                $cadenaSql .= " FROM contrato_general ";
+                $cadenaSql .= "WHERE cast(contratista as text) LIKE '%" . $variable . "%' or  nombre_contratista LIKE '%" . $variable . "%' LIMIT 10; ";
                 break;
 
             case "unidad_ejecutora_gasto" :
@@ -651,26 +650,22 @@ class Sql extends \Sql {
 
             case "consultarContrato" :
 
-                $cadenaSql = " SELECT c.numero_contrato, c.vigencia,  ";
-                $cadenaSql .= " cg.id_orden_contrato, ";
-                $cadenaSql .= " ct.identificacion || '-'|| ct.nombre_razon_social as contratista, ";
-                $cadenaSql .= " oc.solicitud_necesidad  ";
+                $cadenaSql = " SELECT cg.numero_contrato, cg.vigencia,  ";
+                $cadenaSql .= " cg.contratista || '-'|| cg.nombre_contratista as contratista, ";
+                $cadenaSql .= " cg.numero_solicitud_necesidad, cg.numero_cdp  ";
                 $cadenaSql .= " FROM ";
-                $cadenaSql .= " contractual.contrato c, contractual.contrato_general cg, ";
-                $cadenaSql .= " contractual.contratista ct, \"SICapital\".orden_contrato oc ";
+                $cadenaSql .= " contractual.contrato c, contractual.contrato_general cg ";
                 $cadenaSql .= " WHERE ";
                 $cadenaSql .= " c.numero_contrato=cg.numero_contrato and ";
-                $cadenaSql .= " c.vigencia=cg.vigencia and ";
-                $cadenaSql .= " oc.id_orden_contr = cg.id_orden_contrato and ";
-                $cadenaSql .= " oc.contratista=ct.id_contratista ";
+                $cadenaSql .= " c.vigencia=cg.vigencia ";
                 if ($variable ['id_contrato'] != '') {
-                    $cadenaSql .= " AND c.numero_contrato='" . $variable ['id_contrato'] . "' ";
+                    $cadenaSql .= " AND cg.numero_contrato='" . $variable ['id_contrato'] . "' ";
                 }
                 if ($variable ['clase_contrato'] != '') {
                     $cadenaSql .= " AND cg.tipo_contrato='" . $variable ['clase_contrato'] . "' ";
                 }
                 if ($variable ['id_contratista'] != '') {
-                    $cadenaSql .= " AND ct.identificacion='" . $variable ['id_contratista'] . "' ";
+                    $cadenaSql .= " AND cg.contratista='" . $variable ['id_contratista'] . "' ";
                 }
                 if ($variable ['unidad_ejecutora'] != '') {
                     $cadenaSql .= " AND cg.unidad_ejecutora='" . $variable ['unidad_ejecutora'] . "' ";

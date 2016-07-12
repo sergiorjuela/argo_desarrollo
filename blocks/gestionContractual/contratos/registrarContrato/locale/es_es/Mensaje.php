@@ -25,6 +25,23 @@ $this->idioma ["selec_proveedorTitulo"] = "Ingrese la cedula del contratista y d
 
 $this->idioma ["botonContratista"] = "Buscar Contratista: ";
 
+$this->idioma ["vigencia_solicitud_consulta"] = "Vigencia: ";
+$this->idioma ["vigencia_solicitud_consultaTitulo"] = "seleccione la vigencia del cdp";
+
+
+$this->idioma ["numero_solicitud"] = "Numero de la Solicitud : ";
+$this->idioma ["numero_solicitudTitulo"] = "Seleccione el Numero de la Solicitud ";
+
+$this->idioma ["numero_cdp"] = "Numero de la Disponbilidad (CDP) : ";
+$this->idioma ["numero_cdpTitulo"] = "Seleccione el Numero Numero de la Disponbilidad (CDP) ";
+
+$this->idioma ["dependencia_solicitud"] = "Dependencia Solicitante : ";
+$this->idioma ["dependencia_solicitudTitulo"] = "Seleccione la Dependencia Solicitante ";
+
+$this->idioma ["fecha_inicial"] = "Fecha Inicial : ";
+$this->idioma ["fecha_inicialTitulo"] = "Seleccione la Fecha Inicial(YYYY-MM-DD)";
+$this->idioma ["fecha_final"] = "Fecha Final: ";
+$this->idioma ["fecha_finalTitulo"] = "Ingrese Fecha Disponibilidad Presupuestal (YYYY-MM-DD)";
 
 $this->idioma ["unidad_ejecutora"] = "Unidad Ejecutora: ";
 
@@ -243,6 +260,7 @@ $this->idioma ["observaciones_interventoria"] = "Observaciones Interventoria: ";
 $this->idioma ["observaciones_interventoriaTitulo"] = "Ingrese Observaciones Interventoria";
 
 
+$this->idioma ["botonRegresar"] = "<< Regresar";
 $this->idioma ["botonContinuar"] = "Continuar";
 
 $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaje.php";

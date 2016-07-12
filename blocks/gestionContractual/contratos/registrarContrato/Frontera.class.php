@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace contratos\registrarContrato;
 

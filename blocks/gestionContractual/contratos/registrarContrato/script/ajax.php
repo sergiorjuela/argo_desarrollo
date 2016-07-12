@@ -69,6 +69,38 @@ $cadenaACodificar3 .= "&usuario=" . $_REQUEST['usuario'];
 $cadenaACodificar3 .="&tiempo=" . $_REQUEST['tiempo'];
 $cadena3 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificar3, $enlace);
 $urlPersonaGenero = $url . $cadena3;
+
+
+$cadenaACodificarSolCdp = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarSolCdp .= "&procesarAjax=true";
+$cadenaACodificarSolCdp .= "&action=index.php";
+$cadenaACodificarSolCdp .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarSolCdp .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarSolCdp .= $cadenaACodificarSolCdp . "&funcion=ObtenerSolicitudesCdp";
+$cadenaACodificarSolCdp .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadenaACodificarSolCdp = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarSolCdp, $enlace);
+
+// URL definitiva
+$urlFinalSolCdp = $url . $cadenaACodificarSolCdp;
+
+
+$cadenaACodificarCdps = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarCdps .= "&procesarAjax=true";
+$cadenaACodificarCdps .= "&action=index.php";
+$cadenaACodificarCdps .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarCdps .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarCdps .= $cadenaACodificarCdps . "&funcion=ObtenerCdps";
+$cadenaACodificarCdps .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadenaACodificarCdps = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarCdps, $enlace);
+
+// URL definitiva
+$urlFinalCdps = $url . $cadenaACodificarCdps;
 ?>
 <script type='text/javascript'>
 //----------------------------Configuracion Paso a Paso--------------------------------------
@@ -276,6 +308,112 @@ $urlPersonaGenero = $url . $cadena3;
         }
     }
     ;
+    
+    
+    //--------------Inicio JavaScript y Ajax Vigencia y Numero solicitud ---------------------------------------------------------------------------------------------    
+
+    $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").change(function () {
+
+        if ($("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val() != '') {
+            $("#<?php echo $this->campoSeguro('numero_cdp') ?>").attr('disabled', '');
+            consultarSoliditudyCdp();
+        } else {
+            $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").attr('disabled', '');
+        }
+
+    });
+
+    function consultarSoliditudyCdp(elem, request, response) {
+
+        $.ajax({
+            url: "<?php echo $urlFinalSolCdp ?>",
+            dataType: "json",
+            data: {vigencia: $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val(),
+                   unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val()},
+            success: function (data) {
+
+
+                if (data[0] != " ") {
+
+                    $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").html('');
+                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_solicitud') ?>");
+                    $.each(data, function (indice, valor) {
+
+                        $("<option value='" + data[ indice ].VALOR + "'>" + data[ indice ].INFORMACION + "</option>").appendTo("#<?php echo $this->campoSeguro('numero_solicitud') ?>");
+
+                    });
+
+                    $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").removeAttr('disabled');
+
+                    $('#<?php echo $this->campoSeguro('numero_solicitud') ?>').width(200);
+                    $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").select2();
+
+
+
+                }
+
+
+            }
+
+        });
+    }
+    ;
+
+    //--------------Fin JavaScript y Ajax SVigencia y Numero solicitud --------------------------------------------------------------------------------------------------   
+
+//--------------Inicio JavaScript y Ajax CDP x Solicitud ---------------------------------------------------------------------------------------------    
+
+    $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").change(function () {
+
+        if ($("#<?php echo $this->campoSeguro('numero_solicitud') ?>").val() != '') {
+
+
+            consultarCDPs();
+        } else {
+            $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").attr('disabled', '');
+        }
+
+    });
+
+    function consultarCDPs(elem, request, response) {
+
+        $.ajax({
+            url: "<?php echo $urlFinalCdps ?>",
+            dataType: "json",
+            data: {numsol: $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").val(), 
+                   vigencia: $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val(),
+                   unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val()},
+            success: function (data) {
+
+
+                if (data[0] != " ") {
+
+                    $("#<?php echo $this->campoSeguro('numero_cdp') ?>").html('');
+                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_cdp') ?>");
+                    $.each(data, function (indice, valor) {
+
+                        $("<option value='" + data[ indice ].VALOR + "'>" + data[ indice ].INFORMACION + "</option>").appendTo("#<?php echo $this->campoSeguro('numero_cdp') ?>");
+
+                    });
+
+                    $("#<?php echo $this->campoSeguro('numero_cdp') ?>").removeAttr('disabled');
+
+                    $('#<?php echo $this->campoSeguro('numero_cdp') ?>').width(200);
+                    $("#<?php echo $this->campoSeguro('numero_cdp') ?>").select2();
+
+
+
+                }
+
+
+            }
+
+        });
+    }
+    ;
+
+    //--------------Fin JavaScript y Ajax CDP x Solicitud --------------------------------------------------------------------------------------------------   
+
 
 
 

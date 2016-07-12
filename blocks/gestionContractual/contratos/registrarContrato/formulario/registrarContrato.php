@@ -47,7 +47,8 @@ class registrarForm {
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         $conexionFrameWork = "estructura";
         $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
-
+        $conexionSICA = "sicapital";
+        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
 
         // Limpia Items Tabla temporal
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -84,100 +85,68 @@ class registrarForm {
         $atributos ['id'] = $esteCampo;
         $atributos ["estilo"] = "jqueryui";
         $atributos ['tipoEtiqueta'] = 'inicio';
-        $atributos ["leyenda"] = "Registrar Contrato";
+        $atributos ["leyenda"] = "Registrar Contrato--> " . $_REQUEST['mensaje_titulo'];
         echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
         unset($atributos);
         {
+            $conexionFrameWork = "estructura";
+            $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
+            $miSesion = Sesion::singleton();
+            $id_usuario = $miSesion->idUsuario();
+            $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
+            $unidad = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
 
-            $cadena_sql_Temp = $this->miSql->getCadenaSql('Consultar_info_Temporal', $_REQUEST ['id_solicitud_necesidad'] . "" . $_REQUEST ['numero_solicitud']);
+            $cadena_sql_Temp = $this->miSql->getCadenaSql('Consultar_info_Temporal', $_REQUEST ['numeroSolicitud'] . "" . $_REQUEST ['numeroCdp']);
             $infoTemporal = $esteRecursoDB->ejecutarAcceso($cadena_sql_Temp, "busqueda");
+
             if ($infoTemporal != false) {
                 $informacioAlmacenada = array();
                 for ($j = 0; $j < count($infoTemporal); $j++) {
                     $temp = array($infoTemporal[$j][0] => $infoTemporal[$j][1]);
                     $informacioAlmacenada = array_merge($informacioAlmacenada, $temp);
                 }
-
-                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Disponibilidad', $_REQUEST ['id_solicitud_necesidad']);
-                $disponibilidad = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-                $registrosPresupuestales = array();
-                for ($i = 0; $i < count($disponibilidad); $i++) {
-                    $cadena_sql = $this->miSql->getCadenaSql('Consultar_Registro_Presupuestales', $disponibilidad[$i]['id_disponibilidad']);
-                    $registrosP = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-                    if ($registrosP != false) {
-                        $registrosPresupuestales = array_merge($registrosPresupuestales, $registrosP);
-                    }
-                }
+                $datosDisponibilidades = array(0 => $_REQUEST['numeroSolicitud'], 1 => $_REQUEST['vigencia'],
+                    2 => $unidad[0]['unidad_ejecutora']);
+                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Disponibilidad', $datosDisponibilidades);
+                $disponibilidad = $DBSICA->ejecutarAcceso($cadena_sql, "busqueda");
+//                $registrosPresupuestales = array();
+//                for ($i = 0; $i < count($disponibilidad); $i++) {
+//                    $cadena_sql = $this->miSql->getCadenaSql('Consultar_Registro_Presupuestales', $disponibilidad[$i]['numeroCdp']);
+//                    $registrosP = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+//                    if ($registrosP != false) {
+//                        $registrosPresupuestales = array_merge($registrosPresupuestales, $registrosP);
+//                    }
+//                }
+                $registrosPresupuestales = false;
                 $contratista = false;
-                //$cadena_sql = $this->miSql->getCadenaSql('Consultar_Contratista', $_REQUEST ['id_solicitud_necesidad']);
-                //$contratista = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-                //$contratista = $contratista [0];
-                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Solicitud_Particular', $_REQUEST ['id_solicitud_necesidad']);
-                $solicitud = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Solicitud_Particular', $datosDisponibilidades);
+                $solicitud = $DBSICA->ejecutarAcceso($cadena_sql, "busqueda");
                 $solicitud = $solicitud [0];
                 $_REQUEST = array_merge($_REQUEST, $informacioAlmacenada);
                 $mensaje = "Proceso de Inserción Iniciado Previamente.";
             } else {
-                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Solicitud_Particular', $_REQUEST ['id_solicitud_necesidad']);
-                $solicitud = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+
+                $datosDisponibilidades = array(0 => $_REQUEST['numeroSolicitud'], 1 => $_REQUEST['vigencia'],
+                    2 => $unidad[0]['unidad_ejecutora']);
+                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Solicitud_Particular', $datosDisponibilidades);
+                $solicitud = $DBSICA->ejecutarAcceso($cadena_sql, "busqueda");
                 $solicitud = $solicitud [0];
+              
+                 $cadena_sql = $this->miSql->getCadenaSql('Consultar_Disponibilidad', $datosDisponibilidades);
+                $disponibilidad = $DBSICA->ejecutarAcceso($cadena_sql, "busqueda");
 
-                $arregloSolicitud = array(
-                    "objeto_contrato" => $solicitud ['objeto_contrato'],
-                    "dependencia" => $solicitud ['dependencia_solicitante'],
-                    "ordenador_gasto" => $solicitud ['ordenador_gasto'],
-                    "valor_contrato" => $solicitud ['valor_contratacion'],
-                    "clase_contrato" => $solicitud ['tipo_contrato']
-                );
-
-                $_REQUEST = array_merge($_REQUEST, $arregloSolicitud);
-
-                $cadena_sql = $this->miSql->getCadenaSql('Consultar_Disponibilidad', $_REQUEST ['id_solicitud_necesidad']);
-                $disponibilidad = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-
-                $registrosPresupuestales = array();
-                for ($i = 0; $i < count($disponibilidad); $i++) {
-                    $cadena_sql = $this->miSql->getCadenaSql('Consultar_Registro_Presupuestales', $disponibilidad[$i]['id_disponibilidad']);
-                    $registrosP = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-                    if ($registrosP != false) {
-                        $registrosPresupuestales = array_merge($registrosPresupuestales, $registrosP);
-                    }
-                }
+                $registrosPresupuestales = false;
+//                $registrosPresupuestales = array();
+//                for ($i = 0; $i < count($disponibilidad); $i++) {
+//                    $cadena_sql = $this->miSql->getCadenaSql('Consultar_Registro_Presupuestales', $disponibilidad[$i]['numeroCdp']);
+//                    $registrosP = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+//                    if ($registrosP != false) {
+//                        $registrosPresupuestales = array_merge($registrosPresupuestales, $registrosP);
+//                    }
+//                }
                 $mensaje = "";
                 $contratista = false;
-                //$cadena_sql = $this->miSql->getCadenaSql('Consultar_Contratista', $_REQUEST ['id_solicitud_necesidad']);
-                //$contratista = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-//                if ($contratista) {
-//                    $contratista = $contratista [0];
-//
-//                    $nacionalidad = $contratista['nacionalidad'];
-//                    if ($nacionalidad == 'Colombia') {
-//                        $nacionalidad = 3;
-//                    } else {
-//                        $nacionalidad = 4;
-//                    }
-//                    $arregloContratista = array(
-//                        "tipo_identificacion" => $contratista ['tipo_documento'],
-//                        "numero_identificacion" => $contratista ['identificacion'],
-//                        "digito_verificacion" => $contratista ['digito_verificacion'],
-//                        "tipo_persona" => $contratista ['tipo_naturaleza'],
-//                        "genero" => $contratista ['genero'],
-//                        "direccion" => $contratista ['direccion'],
-//                        "telefono" => $contratista ['telefono'],
-//                        "correo" => $contratista ['correo'],
-//                        "tipo_cuenta" => $contratista ['tipo_cuenta'],
-//                        "numero_cuenta" => $contratista ['numero_cuenta'],
-//                        "entidad_bancaria" => $contratista ['nombre_banco'],
-//                        "perfil" => $contratista ['perfil'],
-//                        "nacionalidad" => $nacionalidad,
-//                        "profesion" => $contratista ['profesion'],
-//                        "especialidad" => $contratista ['especialidad'],
-//                        "nombre_Razon_Social" => $contratista ['nombre_razon_social'],
-//                        "supervisor" => $contratista ['funcionario_solicitante']
-//                    );
-//                    //$_REQUEST = array_merge($_REQUEST, $arregloContratista);
-//                }
             }
             $miSesion = Sesion::singleton();
             $id_usuario = $miSesion->idUsuario();
@@ -1449,8 +1418,8 @@ class registrarForm {
                         $atributos ['tamanno'] = 10;
                         $atributos ['maximoTamanno'] = '';
                         $atributos ['anchoEtiqueta'] = 220;
-                        if (isset($_REQUEST [$esteCampo])) {
-                            $atributos ['valor'] = $_REQUEST [$esteCampo];
+                        if (isset($solicitud ['OBJETO'])) {
+                            $atributos ['valor'] = $solicitud ['OBJETO'];
                         } else {
                             $atributos ['valor'] = '';
                         }
@@ -2009,8 +1978,8 @@ class registrarForm {
                         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                         $atributos ['validar'] = 'required,custom[number]';
 
-                        if (isset($_REQUEST [$esteCampo])) {
-                            $atributos ['valor'] = $_REQUEST [$esteCampo];
+                        if (isset($solicitud['VALOR_CONTRATO'])) {
+                            $atributos ['valor'] = $solicitud['VALOR_CONTRATO'];
                         } else {
                             $atributos ['valor'] = '';
                         }
@@ -2043,20 +2012,18 @@ class registrarForm {
                                 <th>Número</th>
                                 <th>Fecha </th>
                                 <th>Vigencia </th>
-            			<th>Valor($)</th>
-                                <th>Codigo - Nombre Rubro</th>
-                                 
+                                <th>Valor($)</th>
+                                                               
                              </tr>
 				            </thead>
             				<tbody>";
 
                             foreach ($disponibilidad as $valor) {
                                 $mostrarHtml = "<tr>
-							                    <td><center>" . $valor ['numero_disp'] . "</center></td>
-							                    <td><center>" . $valor ['fecha_disp'] . "</center></td>
-							                    <td><center>" . $valor ['vigencia'] . "</center></td>
-							                    <td><center>$" . number_format($valor ['valor_disp'], 2, ",", ".") . "</center></td>
-							                   	<td><center>" . " rubro" . "</center></td>
+							                    <td><center>" . $valor ['NUMERO_DISPONIBILIDAD'] . "</center></td>
+							                    <td><center>" . $valor ['FECHA_REGISTRO'] . "</center></td>
+							                    <td><center>" . $valor ['VIGENCIA'] . "</center></td>
+							                    <td><center>$" . number_format($valor ['VALOR_CONTRATACION'], 2, ",", ".") . "</center></td>
 							                    </tr>";
                                 echo $mostrarHtml;
                                 unset($mostrarHtml);
@@ -2082,21 +2049,19 @@ class registrarForm {
                             echo "<thead>
                              <tr>
                                 <th>Número</th>
-                    			<th>Fecha</th>
-                    			<th>Vigencia</th>
-            					<th>Valor($)</th>
-                                <th>Codigo - Nombre Rubro</th>
-                              </tr>
+                                <th>Fecha</th>
+                    		<th>Vigencia</th>
+            			<th>Valor($)</th>
+                             </tr>
 				            </thead>
             				<tbody>";
 
                             foreach ($registrosPresupuestales as $valor) {
                                 $mostrarHtml = "<tr>
-							                    <td><center>" . $valor ['numero_registro'] . "</center></td>
-							                    <td><center>" . $valor ['fecha_rgs_pr'] . "</center></td>
-                                                                            <td><center>" . $valor ['vigencia'] . "</center></td>
-							                    <td><center>$" . number_format($valor ['valor_registro'], 2, ",", ".") . "</center></td>
-							                   <td><center>" . "rubro" . "</center></td>
+							                    <td><center>" . $valor ['NUMERO_DISPONIBILIDAD'] . "</center></td>
+							                    <td><center>" . $valor ['FECHA_REGISTRO'] . "</center></td>
+                                                                            <td><center>" . $valor ['VIGENCIA'] . "</center></td>
+							                    <td><center>$" . number_format($valor ['VALOR_CONTRATACION'], 2, ",", ".") . "</center></td>
 							                    </tr>";
                                 echo $mostrarHtml;
                                 unset($mostrarHtml);
@@ -2656,7 +2621,7 @@ class registrarForm {
                 $atributos ['columnas'] = 1;
                 $atributos ['dobleLinea'] = false;
                 $atributos ['tabIndex'] = $tab;
-                $atributos ['valor'] = $_REQUEST ['id_solicitud_necesidad'] . ";" . $_REQUEST ['numero_solicitud'];
+                $atributos ['valor'] = $_REQUEST ['numeroSolicitud'] . ";" . $_REQUEST ['numeroCdp'];
                 $atributos ['deshabilitado'] = false;
                 $atributos ['tamanno'] = 30;
                 $atributos ['maximoTamanno'] = '';
@@ -2709,14 +2674,8 @@ class registrarForm {
         $valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
         $valorCodificado .= "&opcion=" . $opcion;
         $valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
-        $valorCodificado .= "&id_solicitud_necesidad=" . $_REQUEST ['id_solicitud_necesidad'];
-
-        if ($contratista) {
-
-            $valorCodificado .= "&id_contratista=" . $contratista ['id_contratista'];
-            $valorCodificado .= "&id_inf_bancaria=" . $contratista ['id_inf_bancaria'];
-            $valorCodificado .= "&id_orden_contrato=" . $contratista ['id_orden_contr'];
-        }
+        $valorCodificado .= "&numero_solicitud_necesidad=" . $_REQUEST ['numeroSolicitud'];
+        $valorCodificado .= "&numero_cdp=" . $_REQUEST ['numeroCdp'];
 
         /**
          * SARA permite que los nombres de los campos sean dinámicos.

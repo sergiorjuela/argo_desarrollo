@@ -122,10 +122,7 @@ class registrarForm {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarContrato', $arreglo );
                         $contratos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-                
-                      
-                       
-			
+                	
 		}
 		
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -158,8 +155,8 @@ class registrarForm {
                                 <th>Vigencia</th>
                                 <th>Número Contrato</th>            
             			<th>Identificacion<br>Contratista</th>
-                                <th>Orden de Contrato</th>            
-            			<th>Solicitud de Necesidad</th>
+                                <th>Solicitud de Necesidad</th>            
+            			<th>Numero de CDP</th>
                                 <th>Actualizar<br>Contrato</th>
                              </tr>
             </thead>
@@ -168,7 +165,7 @@ class registrarForm {
 			foreach (  $contratos as $valor ) {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=modificarContratos";
-				$variable .= "&id_solicitud_necesidad=" . $valor ['solicitud_necesidad'];
+				$variable .= "&id_solicitud_necesidad=" . $valor ['numero_solicitud_necesidad'];
 				$variable .= "&numero_contrato=" . $valor ['numero_contrato'];
 				$variable .= "&vigencia=" . $valor ['vigencia'];
 				$variable .= "&usuario=" . $_REQUEST ['usuario'];
@@ -183,8 +180,8 @@ class registrarForm {
                     <td><center>" . $valor ['vigencia'] . "</center></td>
                     <td><center>" . $valor ['numero_contrato'] . "</center></td>
                     <td><center>" . $valor ['contratista'] . "</center></td>
-                    <td><center>" . $valor ['id_orden_contrato'] . "</center></td>
-                    <td><center>" . $valor ['solicitud_necesidad'] . "</center></td>
+                    <td><center>" . $valor ['numero_solicitud_necesidad'] . "</center></td>
+                    <td><center>" . $valor ['numero_cdp'] . "</center></td>
                     <td><center>
                     	<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/modificar.png' width='15px'>

@@ -5,7 +5,8 @@ use contratos\registrarContrato\Sql;
 $conexion = "contractual";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
-
+$conexionSICA = "sicapital";
+$DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
 
 //---------------Obtener Numeros de Solicitud de Necesidad
 if ($_REQUEST ['funcion'] == 'NumeroSolicitud') {
@@ -20,6 +21,23 @@ if ($_REQUEST ['funcion'] == 'obtenerGeneros') {
     $cadenaSql = $this->sql->getCadenaSql('tipo_genero_ajax', $_REQUEST ['valor']);
     $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
     echo json_encode($resultadoItems);
+}
+//-------------------------Obtener Solicitud y CDPs por Vigencia ----------------------------------------------------------
+if ($_REQUEST ['funcion'] == 'ObtenerSolicitudesCdp') {
+    
+    $datos = array (0 => $_REQUEST ['unidad'],1 =>$_REQUEST ['vigencia']);
+    $cadenaSql = $this->sql->getCadenaSql('obtener_solicitudes_vigencia', $datos);
+    $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
+    $resultado = json_encode($resultadoItems);
+    echo $resultado;
+}
+if ($_REQUEST ['funcion'] == 'ObtenerCdps') {
+    
+    $datos = array ('numsol' => $_REQUEST ['numsol'], 'vigencia'=> $_REQUEST ['vigencia'], 'unidad' =>$_REQUEST ['unidad']);
+    $cadenaSql = $this->sql->getCadenaSql('obtener_cdp_numerosol', $datos);
+    $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
+    $resultado = json_encode($resultadoItems);
+    echo $resultado;
 }
 
 

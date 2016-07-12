@@ -33,92 +33,7 @@ class RegistradorContrato {
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         $SQLs = [];
 
-        if (isset($_REQUEST ['id_contratista']) == true && $_REQUEST ['id_contratista'] != '') {
-
-            $arreglo_contratista = array(
-                "tipo_identificacion" => $_REQUEST ['tipo_identificacion'],
-                "numero_identificacion" => $_REQUEST ['numero_identificacion'],
-                "digito_verificacion" => $_REQUEST ['digito_verificacion'],
-                "tipo_persona" => $_REQUEST ['tipo_persona'],
-                "genero" => $_REQUEST ['genero'],
-                "nacionalidad" => $_REQUEST ['nacionalidad'],
-                "direccion" => $_REQUEST ['direccion'],
-                "telefono" => $_REQUEST ['telefono'],
-                "correo" => $_REQUEST ['correo'],
-                "perfil" => $_REQUEST ['perfil'],
-                "profesion" => $_REQUEST ['profesion'],
-                "especialidad" => $_REQUEST ['especialidad'],
-                "razon_social" => $_REQUEST ['nombre_Razon_Social'],
-                "id_contratista" => $_REQUEST ['id_contratista'],
-                "fecha_registro" => date('Y-m-d')
-            );
-
-            $SqlContratista = $this->miSql->getCadenaSql('actualizar_contratista', $arreglo_contratista);
-            array_push($SQLs, $SqlContratista);
             
-            if ($_REQUEST ['id_inf_bancaria'] != '') {
-
-                $arreglo_info_bancaria = array(
-                    "tipo_cuenta" => $_REQUEST ['tipo_cuenta'],
-                    "numero_cuenta" => $_REQUEST ['numero_cuenta'],
-                    "entidad_bancaria" => $_REQUEST ['entidad_bancaria'],
-                    "id_info_bancaria" => $_REQUEST ['id_inf_bancaria']
-                );
-
-                $SqlInfoBancaria = $this->miSql->getCadenaSql('actualizar_informacion_bancaria', $arreglo_info_bancaria);
-                
-                array_push($SQLs, $SqlInfoBancaria);
-            } else {
-
-                $arreglo_info_bancaria = array(
-                    "tipo_cuenta" => $_REQUEST ['tipo_cuenta'],
-                    "numero_cuenta" => $_REQUEST ['numero_cuenta'],
-                    "entidad_bancaria" => $_REQUEST ['entidad_bancaria'],
-                    "id_contratista" => $_REQUEST ['id_contratista'],
-                    "fecha_registro" => date('Y-m-d')
-                );
-
-                $SqlInfoBancaria = $this->miSql->getCadenaSql('registrar_informacion_bancaria', $arreglo_info_bancaria);
-                array_push($SQLs, $SqlInfoBancaria);
-            }
-
-           
-        } else {
-
-
-             $arreglo_contratista = array(
-                "tipo_identificacion" => $_REQUEST ['tipo_identificacion'],
-                "numero_identificacion" => $_REQUEST ['numero_identificacion'],
-                "digito_verificacion" => $_REQUEST ['digito_verificacion'],
-                "tipo_persona" => $_REQUEST ['tipo_persona'],
-                "genero" => $_REQUEST ['genero'],
-                "nacionalidad" => $_REQUEST ['nacionalidad'],
-                "direccion" => $_REQUEST ['direccion'],
-                "telefono" => $_REQUEST ['telefono'],
-                "correo" => $_REQUEST ['correo'],
-                "perfil" => $_REQUEST ['perfil'],
-                "profesion" => $_REQUEST ['profesion'],
-                "especialidad" => $_REQUEST ['especialidad'],
-                "razon_social" => $_REQUEST ['nombre_Razon_Social'],
-                "fecha_registro" => date('Y-m-d')
-            );
-
-            $SqlContratista = $this->miSql->getCadenaSql('registrar_contratista', $arreglo_contratista);
-            array_push($SQLs, $SqlContratista);
-            $arreglo_info_bancaria = array(
-                "tipo_cuenta" => $_REQUEST ['tipo_cuenta'],
-                "numero_cuenta" => $_REQUEST ['numero_cuenta'],
-                "entidad_bancaria" => $_REQUEST ['entidad_bancaria'],
-                "id_contratista" => "currval('contratista_id_contratista_seq')",
-                "fecha_registro" => date('Y-m-d')
-            );
-
-            $SqlInfoBancaria = $this->miSql->getCadenaSql('registrar_informacion_bancaria', $arreglo_info_bancaria);
-            array_push($SQLs, $SqlInfoBancaria);
-
-
-        }
-
         //Validacion campos nulos de tipo compromiso y clase contratista
 
         if ($_REQUEST ['tipo_compromiso'] != '34') {
@@ -175,7 +90,7 @@ class RegistradorContrato {
         $cargo = $esteRecursoDB->ejecutarAcceso($SqlCargoSupervisor, "busqueda");
       
         $arreglo_contrato_general = array('vigencia' => (int) date('Y'),
-            'id_orden_contrato' => $_REQUEST ['id_orden_contrato'],
+            'id_orden_contrato' => 1,
             'tipo_contrato' => $_REQUEST['clase_contrato'],
             'unidad_ejecutura' => $unidad_ejecutura,
             'objeto_contrato' => $_REQUEST ['objeto_contrato'],
@@ -186,6 +101,10 @@ class RegistradorContrato {
             'ordenador_gasto' => $_REQUEST ['ordenador_gasto'],
             'supervisor' => $_REQUEST ['supervisor'],
             'cargo_supervisor' => $cargo[0]['cargo'],
+            'numero_solicitud_necesidad' =>$_REQUEST ['numero_solicitud_necesidad'],
+            'numero_cdp' => $_REQUEST ['numero_cdp'],
+            'contratista' => $_REQUEST ['numero_identificacion'],
+            'nombre_contratista' => $_REQUEST ['nombre_Razon_Social'],
             'forma_pago' => $_REQUEST ['formaPago']);
         
         $SqlcontratoGeneral = $this->miSql->getCadenaSql('insertarContratoGeneral', $arreglo_contrato_general);
@@ -230,6 +149,7 @@ class RegistradorContrato {
         $SqlContrato = $this->miSql->getCadenaSql('registrar_contrato', $arreglo_contrato);
         array_push($SQLs, $SqlContrato);
         
+      
         
         $trans_Registro_contrato = $esteRecursoDB->transaccion($SQLs);
         $sqlNumeroContrato = $this->miSql->getCadenaSql('obtenerInfoOrden');
