@@ -437,24 +437,22 @@ class Sql extends \Sql {
 
                 break;
 
-            case "Consultar_Solicitud_Particular" :
-                $cadenaSql = "SELECT DISTINCT ";
-                $cadenaSql .= " *  ";
-                $cadenaSql .= "FROM \"SICapital\".solicitud_necesidad sn ";
-                $cadenaSql .= "WHERE sn.estado_registro= TRUE ";
-                $cadenaSql .= " AND sn.id_sol_necesidad = '" . $variable . "' ;";
+           case "Consultar_Solicitud_Particular" :
+                $cadenaSql = " SELECT NUM_SOL_ADQ, OBJETO as objeto, DEPENDENCIA as dependencia, ";
+                $cadenaSql.=" VALOR_CONTRATACION as valor_contrato FROM CO.CO_SOLICITUD_ADQ WHERE ";
+                $cadenaSql.=" NUM_SOL_ADQ=$variable[0] and VIGENCIA=$variable[1] and CODIGO_UNIDAD_EJECUTORA = '0$variable[2]'";
 
                 break;
 
-            case "Consultar_Disponibilidad" :
-                $cadenaSql = "SELECT dp.id_disponibilidad, dp.numero_disp,dp.valor_disp, dp.vigencia,dp.fecha_disp  ";
-                $cadenaSql .= " FROM \"SICapital\".solicitud_necesidad sn, ";
-                $cadenaSql .= "\"SICapital\".disponibilidad_presupuestal dp,  ";
-                $cadenaSql .= "\"SICapital\".solicitud_diponibilidad sd   ";
-                $cadenaSql .= "WHERE sn.id_sol_necesidad = sd.solicitud_necesidad and ";
-                $cadenaSql .= "dp.id_disponibilidad = sd.disponibilidad_presupuestal and ";
-                $cadenaSql .= "dp.estado_registro=true and sn.id_sol_necesidad=" . $variable . ";";
+           case "Consultar_Disponibilidad" :
+                $cadenaSql = " SELECT DISTINCT CDP.NUMERO_DISPONIBILIDAD, CDP.VIGENCIA,";
+                $cadenaSql.=" CDP.FECHA_REGISTRO,SN.VALOR_CONTRATACION from ";
+                $cadenaSql.=" CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, CO.CO_DEPENDENCIAS DP ";
+                $cadenaSql.=" where SN.NUM_SOL_ADQ = CDP.NUM_SOL_ADQ and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and ";
+                $cadenaSql.=" SN.VIGENCIA= $variable[1] and SN.CODIGO_UNIDAD_EJECUTORA = '0$variable[2]' and SN.NUM_SOL_ADQ = $variable[0] ";
+                $cadenaSql.=" and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
                 break;
+
 
             case "Consultar_Registro_Presupuestales" :
                 $cadenaSql = " SELECT rp.id_registro_pres, rp.numero_registro, rp.valor_registro, rp.vigencia,rp.fecha_rgs_pr  ";
@@ -722,7 +720,8 @@ class Sql extends \Sql {
                 $cadenaSql = " SELECT  ";
                 $cadenaSql .= " c.*,cg.tipo_contrato,cg.objeto_contrato,cg.fecha_inicio, ";
                 $cadenaSql .= " cg.fecha_final,cg.plazo_ejecucion,cg.forma_pago,cg.ordenador_gasto, ";
-                $cadenaSql .= " cg.supervisor,cg.clausula_registro_presupuestal,cg.cargo_supervisor ";
+                $cadenaSql .= " cg.supervisor,cg.clausula_registro_presupuestal,cg.cargo_supervisor, ";
+                $cadenaSql .= " cg.numero_solicitud_necesidad,cg.numero_cdp,cg.contratista ";
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " contractual.contrato c,contractual.contrato_general cg ";
                 $cadenaSql .= " WHERE ";

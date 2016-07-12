@@ -120,8 +120,8 @@ $urlPersonaGenero = $url . $cadena3;
         transitionEffect: "slideLeft",
         onStepChanging: function (event, currentIndex, newIndex) {
 
-            $resultado = $("#modificarContrato").validationEngine("validate");
-            //almacenarInfoTemporal(currentIndex, newIndex);
+            //$resultado = $("#modificarContrato").validationEngine("validate");
+            $resultado =true;
             if ($resultado) {
                 return true;
             }
