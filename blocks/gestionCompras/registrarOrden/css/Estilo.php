@@ -11,6 +11,7 @@ $estilo[$indice++]="EstiloBloque.css";
 $estilo[$indice++]="jquery.dataTables.css";
 $estilo[$indice++]="demo_table.css";
 $estilo[$indice++]="jquery.dataTables_themeroller.css";
+$estilo[$indice++]="modal.css";
 //$estilo[$indice++]="bootstrap-theme.min.css";
 //$estilo[$indice++]="bootstrap.css";
 //$estilo[$indice++]="bootstrap.min.css";

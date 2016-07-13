@@ -1255,9 +1255,6 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
     //--------------Fin JavaScript y Ajax CDP x Solicitud --------------------------------------------------------------------------------------------------   
 
 
-  
-
-
 
 </script>
 <script>
@@ -1273,3 +1270,4 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
 
 
 </script> 
+

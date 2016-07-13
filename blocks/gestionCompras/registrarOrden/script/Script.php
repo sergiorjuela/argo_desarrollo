@@ -17,6 +17,7 @@ $funcion[$indice ++]="modernizr.custom.js";
 $funcion[$indice ++]="jquery.dlmenu.js";
 $funcion [$indice ++] = "jquery.autocomplete.js";
 $funcion [$indice ++] = "jquery.autocomplete.min.js";
+$funcion [$indice ++] = "modal.js";
 
 $rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
 $rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" );

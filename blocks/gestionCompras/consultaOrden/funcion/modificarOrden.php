@@ -29,7 +29,7 @@ class RegistradorOrden {
 
     function procesarFormulario() {
 
-      
+
         $SQLs = [];
         $Identificadores = array('numero_contrato' => $_REQUEST['numerocontrato'],
             'vigencia' => $_REQUEST['vigencia'],
@@ -37,8 +37,8 @@ class RegistradorOrden {
 
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
-       
-        if ($_REQUEST ['identificador_unidad']==1) {
+
+        if ($_REQUEST ['identificador_unidad'] == 1) {
             $unidad_ejecutura = 209;
             $sede_solicitante = $_REQUEST ['sede'];
             $dependencia_solicitante = $_REQUEST ['dependencia_solicitante'];
@@ -47,7 +47,7 @@ class RegistradorOrden {
             $sede_solicitante = $_REQUEST ['sede_idexud'];
             $dependencia_solicitante = $_REQUEST ['convenio_solicitante'];
         }
-       
+
         if (isset($_POST['clausula_presupuesto'])) {
             $clausula_presupuesto = $_POST['clausula_presupuesto'];
             if ($clausula_presupuesto = 't') {
@@ -105,7 +105,7 @@ class RegistradorOrden {
         $polizas = [];
         for ($i = 0; $i < count($_POST); $i++) {
             if (isset($_POST["poliza" . "$i"])) {
-                array_push($polizas, $i);
+                array_push($polizas, $i+1);
             }
         }
 
@@ -123,25 +123,28 @@ class RegistradorOrden {
         if ($resultado == false) {
             redireccion::redireccionar('noInserto', $datos);
         } else {
-
+           
             for ($i = 0; $i < count($polizas); $i++) {
+                $contador = $polizas[$i] - 1;
+               
                 $datosPoliza = array('poliza' => $polizas[$i],
-                    'orden' => $Identificadores['id_orden']);
+                    'orden' => $Identificadores['id_orden'],
+                    'fecha_inicio' => $_REQUEST["fecha_inicio_poliza$contador"],
+                    'fecha_final' => $_REQUEST["fecha_final_poliza$contador"]);
                 $sqlPoliza = $this->miSql->getCadenaSql('insertarPoliza', $datosPoliza);
                 array_push($SQLs, $sqlPoliza);
             }
         }
-
-
+      
         $trans_actualizacion_orden = $esteRecursoDB->transaccion($SQLs);
 
         $datos = array('numero_contrato' => $Identificadores['numero_contrato'],
             'vigencia' => $Identificadores['vigencia']);
 
-       
+
         if ($trans_actualizacion_orden != false) {
             $this->miConfigurador->setVariableConfiguracion("cache", true);
-            
+
             redireccion::redireccionar('actualizoOrden', $datos);
         } else {
 

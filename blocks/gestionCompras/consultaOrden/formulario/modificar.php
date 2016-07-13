@@ -39,9 +39,6 @@ class registrarForm {
          * Si se utiliza esta técnica es necesario realizar un mezcla entre este arreglo y el específico en cada control:
          * $atributos= array_merge($atributos,$atributosGlobales);
          */
-        
-        
-        
         $atributosGlobales ['campoSeguro'] = 'true';
 
         $_REQUEST ['tiempo'] = time();
@@ -56,7 +53,7 @@ class registrarForm {
         $cadenaSql = $this->miSql->getCadenaSql('ConsultarInformacionOrden', $datosOrden);
         $Orden = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
         $Orden = $Orden [0];
-       
+
 
         $arreglo = array(
             'tipo_orden' => $Orden ['tipo_orden'],
@@ -658,7 +655,7 @@ class registrarForm {
                 $proveedor = json_decode($repuestaWeb[1]);
                 $proveedor = (array) $proveedor;
                 $proveedor = (array) $proveedor['datos'];
-                
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------               
 
                 $esteCampo = "AgrupacionContratista";
@@ -1156,7 +1153,7 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required,maxSize[10],custom[onlyNumberSp]';
 
-                    if ($proveedor['numdocumento']== null) {
+                    if ($proveedor['numdocumento'] == null) {
                         $atributos ['valor'] = $proveedor['cedula_extranjeria'];
                     } else {
                         $atributos ['valor'] = $proveedor['numdocumento'];
@@ -1189,7 +1186,7 @@ class registrarForm {
                     $atributos ['validar'] = 'required, minSize[1]';
 
                     if ($proveedor['tipo_doc_extranjero'] != null) {
-                        $atributos ['valor'] = $proveedor['tipo_procedencia']." (".$proveedor['tipo_doc_extranjero'].")";
+                        $atributos ['valor'] = $proveedor['tipo_procedencia'] . " (" . $proveedor['tipo_doc_extranjero'] . ")";
                     } else {
                         $atributos ['valor'] = $proveedor['tipo_procedencia'];
                     }
@@ -1323,38 +1320,47 @@ class registrarForm {
 
                     $sqlPolizasactivas = $this->miSql->getCadenaSql('obtenerPolizarOrden', $Orden['id_orden']);
                     $polizasActivas = $DBContractual->ejecutarAcceso($sqlPolizasactivas, "busqueda");
+                     echo "<div id='myModal' class='modal'>
+                            <div class='modal-content'>";
+
                     $esteCampo = "AgrupacionPoliza";
                     $atributos ['id'] = $esteCampo;
-                    $atributos ['leyenda'] = "Requerimiento de Póliza";
+                    $atributos ["estilo"] = "jqueryui";
+                    $atributos ['tipoEtiqueta'] = 'inicio';
+                    $atributos ['leyenda'] = "Gestion de Pólizas";
                     echo $this->miFormulario->agrupacion('inicio', $atributos);
+                    $cadenaSql = $this->miSql->getCadenaSql('polizas');
+                    $resultado_polizas = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
                     {
-                        $cadenaSql = $this->miSql->getCadenaSql('polizas');
-                        $resultado_polizas = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
-                        for ($i = 1; $i < count($resultado_polizas); $i ++) {
+                        for ($i = 0; $i < count($resultado_polizas); $i ++) {
 
-
+                            $esteCampo = "AgrupacionPoliza$i";
+                            $atributos ['id'] = $esteCampo;
+                            $atributos ['leyenda'] = "";
+                            $atributos ["estilo"] = "jqueryui";
+                            echo $this->miFormulario->agrupacion('inicio', $atributos);
                             // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                             $nombre = 'poliza' . $i;
                             $atributos ['id'] = $nombre;
                             $atributos ['nombre'] = $nombre;
                             $atributos ['estilo'] = 'campoCuadroSeleccionCorta';
                             $atributos ['marco'] = true;
-                            $atributos ['estiloMarco'] = true;
+                            $atributos ['estiloMarco'] = false;
                             $atributos ["etiquetaObligatorio"] = true;
-                            $atributos ['columnas'] = 1;
+                            $atributos ['columnas'] = 2;
                             $atributos ['dobleLinea'] = 1;
                             $atributos ['tabIndex'] = $tab;
                             $atributos ['etiqueta'] = $resultado_polizas [$i]['descripcion_poliza'];
                             $atributos ['validar'] = '';
+
                             for ($j = 0; $j < count($polizasActivas); $j++) {
-                                if ($i == $polizasActivas[$j]['poliza']) {
+                                if ($i + 1 == $polizasActivas[$j]['poliza']) {
                                     $atributos ['valor'] = 'TRUE';
                                     $atributos ['seleccionado'] = 'checked';
                                 } else {
                                     $atributos ['valor'] = 'TRUE';
                                 }
                             }
-
                             $atributos ['deshabilitado'] = false;
                             $tab ++;
 
@@ -1362,12 +1368,107 @@ class registrarForm {
                             $atributos = array_merge($atributos, $atributosGlobales);
                             echo $this->miFormulario->campoCuadroSeleccion($atributos);
                             unset($atributos);
+                            
+                            $estilo = "display:none";
+                            for ($j = 0; $j < count($polizasActivas); $j++) {
+                                if ($i + 1 == $polizasActivas[$j]['poliza']) {
+                                    $estilo = "";
+                                }
+                              
+                            }
+
+                            $atributos ["id"] = "divisionPoliza$i";
+                            $atributos ["estiloEnLinea"] = $estilo;
+                            echo $this->miFormulario->division("inicio", $atributos);
+                            unset($atributos);
+
+                            // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+                            $esteCampo = 'fecha_inicio_poliza' . $i;
+                            $atributos ['id'] = $esteCampo;
+                            $atributos ['nombre'] = $esteCampo;
+                            $atributos ['tipo'] = 'fecha';
+                            $atributos ['estilo'] = 'jqueryui';
+                            $atributos ['marco'] = true;
+                            $atributos ['estiloMarco'] = '';
+                            $atributos ["etiquetaObligatorio"] = false;
+                            $atributos ['columnas'] = 2;
+                            $atributos ['dobleLinea'] = 0;
+                            $atributos ['tabIndex'] = $tab;
+                            $atributos ['etiqueta'] = "Fecha Inicio Poliza";
+                            $atributos ['validar'] = '';
+
+                            for ($j = 0; $j < count($polizasActivas); $j++) {
+                                if ($i + 1 == $polizasActivas[$j]['poliza']) {
+                                    $atributos ['valor'] = $polizasActivas[$j]['fecha_inicio'];
+                                }
+                            }
+                            $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+                            $atributos ['deshabilitado'] = false;
+                            $atributos ['tamanno'] = 8;
+                            $atributos ['maximoTamanno'] = '';
+                            $atributos ['anchoEtiqueta'] = 147;
+                            $tab ++;
+
+                            // Aplica atributos globales al control
+                            $atributos = array_merge($atributos, $atributosGlobales);
+
+                            echo $this->miFormulario->campoCuadroTexto($atributos);
+                            unset($atributos);
+
+                            // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+                            $esteCampo = 'fecha_final_poliza' . $i;
+                            $atributos ['id'] = $esteCampo;
+                            $atributos ['nombre'] = $esteCampo;
+                            $atributos ['tipo'] = 'fecha';
+                            $atributos ['estilo'] = 'jqueryui';
+                            $atributos ['marco'] = true;
+                            $atributos ['estiloMarco'] = '';
+                            $atributos ["etiquetaObligatorio"] = false;
+                            $atributos ['columnas'] = 2;
+                            $atributos ['dobleLinea'] = 0;
+                            $atributos ['tabIndex'] = $tab;
+                            $atributos ['etiqueta'] = "Fecha Final Poliza:";
+                            $atributos ['validar'] = '';
+
+                            for ($j = 0; $j < count($polizasActivas); $j++) {
+                                if ($i + 1 == $polizasActivas[$j]['poliza']) {
+                                    $atributos ['valor'] = $polizasActivas[$j]['fecha_final'];
+                                }
+                            }
+                            $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+                            $atributos ['deshabilitado'] = false;
+                            $atributos ['tamanno'] = 8;
+                            $atributos ['maximoTamanno'] = '';
+                            $atributos ['anchoEtiqueta'] = 147;
+                            $tab ++;
+
+                            // Aplica atributos globales al control
+                            $atributos = array_merge($atributos, $atributosGlobales);
+
+                            echo $this->miFormulario->campoCuadroTexto($atributos);
+                            unset($atributos);
+
+                            // ------------------Fin Division para las polizas-------------------------
+                            echo $this->miFormulario->division("fin");
+                            unset($atributos);
+                            echo $this->miFormulario->agrupacion('fin');
                         }
+                        $atributos ["id"] = "divisiobotonPolizas";
+                        $atributos ["estilo"] = "marcoBotones";
+                        echo $this->miFormulario->division("inicio", $atributos);
+                        echo "<center><span class='close'>CONFIRMAR</span><center>";
+                        echo $this->miFormulario->division('fin');
                     }
                     echo $this->miFormulario->agrupacion('fin');
+                    echo " </div></div>";
+
+                    $atributos ["id"] = "botones";
+                    $atributos ["estilo"] = "marcoBotones";
+                    echo $this->miFormulario->division("inicio", $atributos);
+                    echo "<button id='myBtn' >Gestionar Polizas</button>";
+                    echo $this->miFormulario->division('fin');
                 }
                 echo $this->miFormulario->agrupacion('fin');
-
                 $esteCampo = "AgrupacionReferentePago";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = "Información Referente al Pago";

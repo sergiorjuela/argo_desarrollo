@@ -293,10 +293,12 @@ class Sql extends \Sql {
 
             case "insertarPoliza" :
                 $cadenaSql = " INSERT INTO orden_poliza(";
-                $cadenaSql .= " orden, poliza) ";
+                $cadenaSql .= " orden, poliza, fecha_inicio,fecha_final) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['orden'] . ",";
-                $cadenaSql .= $variable ['poliza'] . ");";
+                $cadenaSql .= $variable ['poliza'] . ",";
+                $cadenaSql .= "'".$variable ['fecha_inicio'] . "',";
+                $cadenaSql .= "'".$variable ['fecha_final'] . "');";
 
                 break;
 

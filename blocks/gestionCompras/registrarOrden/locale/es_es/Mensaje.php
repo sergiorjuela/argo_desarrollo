@@ -51,6 +51,7 @@ $this->idioma ["fecha_registroTitulo"] = "Fecha de Registro Presupuestal";
 $this->idioma ["valorL_registro"] = "Valor en Letras : ";
 $this->idioma ["valorL_registroTitulo"] = "Valor en Letras  Registro Presupuestal";
 
+
 // --
 
 $this->idioma ["vigencia_disponibilidad"] = "Vigencia :";
@@ -249,6 +250,7 @@ $this->idioma ["botonConsultar"] = "Consultar";
 $this->idioma ["botonCancelar"] = "Cancelar";
 $this->idioma ["botonContinuar"] = "Salir";
 $this->idioma ["botonCargo"] = "Otro Cargo";
+$this->idioma ["botonConfirmarPolizas"] = "Confirmar Polizas";
 $this->idioma ["restablecerCargo"] = "Reestablecer Cargo";
 
 $this->idioma ["botonRegresar"] = "< < Regresar";

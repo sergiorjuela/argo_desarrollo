@@ -530,13 +530,15 @@ class RegistradorOrden {
 			<td style='width:100%;text-align:justify;font-size: 8px;font-size-adjust: 0.3;'>" . $orden ['objeto_contrato'] . " </td>
 			</tr>		
 			</table>";
-
+        
         if ($polizas != false) {
             $contenidoPagina .= "<table style='width:100%;'>";
             for ($i = 0; $i < count($polizas); $i++) {
                 $contenidoPagina.=
                         "<tr> 
-			<td style='width:90%;text-align:left;'>" . $polizas [$i][0] . "</td>	
+			<td style='width:60%;text-align:left;'>" . $polizas [$i][0] . "</td>	
+			<td style='width:20%;text-align:left;'>Fecha Inicial: " . $polizas [$i][2] . "</td>	
+			<td style='width:20%;text-align:left;'>Fecha Final: " . $polizas [$i][3] . "</td>	
 			</tr>";
             }
             $contenidoPagina .= "</table>";

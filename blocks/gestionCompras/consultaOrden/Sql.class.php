@@ -219,7 +219,7 @@ class Sql extends \Sql {
                 break;
 
             case "polizasDocumento" :
-                $cadenaSql = " SELECT p.descripcion_poliza, p.id_poliza FROM poliza p , orden o, orden_poliza op ";
+                $cadenaSql = " SELECT p.descripcion_poliza, p.id_poliza, op.fecha_inicio, op.fecha_final FROM poliza p , orden o, orden_poliza op ";
                 $cadenaSql .= " WHERE o.id_orden = op.orden and op.poliza = p.id_poliza and op.orden=$variable; ";
                 break;
 
@@ -339,7 +339,7 @@ class Sql extends \Sql {
 
 
             case "obtenerPolizarOrden" :
-                $cadenaSql = " 	SELECT poliza ";
+                $cadenaSql = " 	SELECT poliza, fecha_inicio, fecha_final ";
                 $cadenaSql .= " FROM orden_poliza ";
                 $cadenaSql .= " WHERE orden=" . $variable;
 
@@ -426,12 +426,15 @@ class Sql extends \Sql {
             case "elimnarPolizas":
                 $cadenaSql = "DELETE FROM orden_poliza WHERE orden=" . $variable . ";";
                 break;
+            
             case "insertarPoliza" :
                 $cadenaSql = " INSERT INTO orden_poliza(";
-                $cadenaSql .= " orden, poliza) ";
+                $cadenaSql .= " orden, poliza, fecha_inicio,fecha_final) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['orden'] . ",";
-                $cadenaSql .= $variable ['poliza'] . ");";
+                $cadenaSql .= $variable ['poliza'] . ",";
+                $cadenaSql .= "'".$variable ['fecha_inicio'] . "',";
+                $cadenaSql .= "'".$variable ['fecha_final'] . "');";
 
                 break;
 
