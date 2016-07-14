@@ -45,7 +45,7 @@ class registrarForm {
         // -------------------------------------------------------------------------------------------------
         $conexionContractual = "contractual";
         $DBContractual = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionContractual);
-        
+
         $conexionSICA = "sicapital";
         $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
 
@@ -73,8 +73,8 @@ class registrarForm {
         $id_usuario = $miSesion->idUsuario();
         $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidad = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
-        $unidad = strpos($unidad[0][0], 'IDEXUD');
-        if (!is_int($unidad)) {
+        
+        if ($unidad [0]['unidad_ejecutora'] == 1) {
             $unidadEjecutora = 209;
         } else {
             $unidadEjecutora = 208;
@@ -92,8 +92,8 @@ class registrarForm {
         $atributos ['tipoEtiqueta'] = 'inicio';
         $atributos ["leyenda"] = "Consultar Solicitud de Necesidad y CDP";
         echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
-        
-         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+
+        // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
         $esteCampo = 'vigencia_solicitud_consulta';
         $atributos ['columnas'] = 2;
         $atributos ['nombre'] = $esteCampo;
@@ -126,8 +126,8 @@ class registrarForm {
         $atributos = array_merge($atributos, $atributosGlobales);
         echo $this->miFormulario->campoCuadroLista($atributos);
         unset($atributos);
-        
-         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+
+        // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
         $esteCampo = 'numero_solicitud';
         $atributos ['columnas'] = 2;
         $atributos ['nombre'] = $esteCampo;
@@ -169,7 +169,7 @@ class registrarForm {
         $atributos = array_merge($atributos, $atributosGlobales);
         echo $this->miFormulario->campoCuadroLista($atributos);
         unset($atributos);
-         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+        // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
         $esteCampo = 'numero_cdp';
         $atributos ['columnas'] = 2;
         $atributos ['nombre'] = $esteCampo;
@@ -181,7 +181,7 @@ class registrarForm {
         $atributos ['tab'] = $tab;
         $atributos ['tamanno'] = 1;
         $atributos ['estilo'] = 'jqueryui';
-        $atributos ['validar'] = '';
+        $atributos ['validar'] = 'required';
         $atributos ['limitar'] = false;
         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
         $atributos ['anchoEtiqueta'] = 250;
@@ -246,7 +246,7 @@ class registrarForm {
         echo $this->miFormulario->campoCuadroLista($atributos);
         unset($atributos);
 
-   // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+        // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 
         $esteCampo = 'fecha_inicial';
         $atributos ['id'] = $esteCampo;
@@ -308,12 +308,55 @@ class registrarForm {
         // Aplica atributos globales al control
         $atributos = array_merge($atributos, $atributosGlobales);
         echo $this->miFormulario->campoCuadroTexto($atributos);
-      
+
+
+        $sqlConsultaSolicitudRegistradas = $this->miSql->getCadenaSql("cdpRegistradas");
+        $resultado = $DBContractual->ejecutarAcceso($sqlConsultaSolicitudRegistradas, "busqueda");
+       
+
+        $esteCampo = 'cdpRegistradas';
+        $atributos ['id'] = $esteCampo;
+        $atributos ['nombre'] = $esteCampo;
+        $atributos ['tipo'] = 'hidden';
+        $atributos ['estilo'] = 'jqueryui';
+        $atributos ['marco'] = true;
+        $atributos ['columnas'] = 1;
+        $atributos ['dobleLinea'] = false;
+        $atributos ['tabIndex'] = $tab;
+        $atributos ['valor'] = $resultado[0][0];
+        $atributos ['deshabilitado'] = false;
+        $atributos ['tamanno'] = 30;
+        $atributos ['maximoTamanno'] = '';
+        $tab ++;
+        // Aplica atributos globales al control
+        $atributos = array_merge($atributos, $atributosGlobales);
+        echo $this->miFormulario->campoCuadroTexto($atributos);
+        unset($atributos);
+
+
+
+
+        $esteCampo = 'unidad_ejecutora_hidden';
+        $atributos ['id'] = $esteCampo;
+        $atributos ['nombre'] = $esteCampo;
+        $atributos ['tipo'] = 'hidden';
+        $atributos ['estilo'] = 'jqueryui';
+        $atributos ['marco'] = true;
+        $atributos ['columnas'] = 1;
+        $atributos ['dobleLinea'] = false;
+        $atributos ['tabIndex'] = $tab;
+        $atributos ['valor'] = $unidad[0]['unidad_ejecutora'];
+        $atributos ['deshabilitado'] = false;
+        $atributos ['tamanno'] = 30;
+        $atributos ['maximoTamanno'] = '';
+        $tab ++;
+        // Aplica atributos globales al control
+        $atributos = array_merge($atributos, $atributosGlobales);
+        echo $this->miFormulario->campoCuadroTexto($atributos);
+        unset($atributos);
+
 
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-
-        
-
         // ------------------Division para los botones-------------------------
         $atributos ["id"] = "botones";
         $atributos ["estilo"] = "marcoBotones";

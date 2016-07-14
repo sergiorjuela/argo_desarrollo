@@ -83,6 +83,14 @@ class Sql extends \Sql {
 
 //-----------------------------------------------------------SQLs SIN DDEFINIR USO-----------------------------------------------------------------------------------
 
+             case "funcionarios" :
+
+                $cadenaSql = "SELECT identificacion, identificacion ||' - '|| nombre_cp ";
+                $cadenaSql .= "FROM \"SICapital\".\"funcionario\" ";
+                $cadenaSql .= "WHERE estado='A' ";
+
+                break;
+            
             case "buscarUsuario" :
                 $cadenaSql = "SELECT ";
                 $cadenaSql .= "FECHA_CREACION, ";
@@ -279,7 +287,7 @@ class Sql extends \Sql {
              * Clausulas Del Caso Uso.
              */
              case "dependenciasConsultadas" :
-                $cadenaSql = "SELECT DISTINCT on (\"ESF_DEP_ENCARGADA\")  id_dependencia , \"ESF_DEP_ENCARGADA\" ";
+                $cadenaSql = "SELECT DISTINCT \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
                 $cadenaSql .= " FROM \"SICapital\".\"dependencia_SIC\" ad ";
                 $cadenaSql .= " JOIN  \"SICapital\".\"espaciosfisicos_SIC\" ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
                 $cadenaSql .= " JOIN  \"SICapital\".\"sedes_SIC\" sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
@@ -517,7 +525,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " elemento_acta_recibido(
 							             fecha_registro, nivel, tipo_bien, descripcion, 
 							            cantidad, unidad, valor, iva, subtotal_sin_iva, total_iva, total_iva_con, 
-							             marca, serie,referencia,placa, observacion, id_orden) ";
+							             marca, serie,referencia,placa, observacion,codigo_dependencia,funcionario, id_orden) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= "'" . $variable [0] . "',";
                 $cadenaSql .= "'" . $variable [1] . "',";
@@ -535,6 +543,8 @@ class Sql extends \Sql {
                 $cadenaSql .= (is_null($variable [14]) == true) ? ' NULL , ' : "'" . $variable [14] . "',";
                 $cadenaSql .= (is_null($variable [15]) == true) ? ' NULL , ' : "'" . $variable [15] . "',";
                 $cadenaSql .= (is_null($variable [16]) == true) ? ' NULL , ' : "'" . $variable [16] . "',";
+                $cadenaSql .= (is_null($variable [17]) == true) ? ' NULL , ' : "'" . $variable [17] . "',";
+                $cadenaSql .= (is_null($variable [18]) == true) ? ' NULL , ' : "'" . $variable [18] . "',";
                 $cadenaSql .= "'" . $variable [13] . "') ";
                 $cadenaSql .= "RETURNING  id_elemento_ac ";
 
@@ -546,7 +556,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "  fecha_registro, nivel, tipo_bien, descripcion,
 											 cantidad, unidad, valor, iva, subtotal_sin_iva, total_iva, total_iva_con,
 											 tipo_poliza, fecha_inicio_pol, fecha_final_pol, marca, serie,
-											 referencia,placa, observacion,id_orden)";
+											 referencia,placa, observacion,codigo_dependencia,funcionario,id_orden)";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= "'" . $variable [0] . "',";
                 $cadenaSql .= "'" . $variable [1] . "',";
@@ -575,6 +585,8 @@ class Sql extends \Sql {
                 $cadenaSql .= (is_null($variable [17]) == true) ? ' NULL , ' : "'" . $variable [17] . "',";
                 $cadenaSql .= (is_null($variable [18]) == true) ? ' NULL , ' : "'" . $variable [18] . "',";
                 $cadenaSql .= (is_null($variable [19]) == true) ? ' NULL , ' : "'" . $variable [19] . "',";
+                $cadenaSql .= (is_null($variable [20]) == true) ? ' NULL , ' : "'" . $variable [20] . "',";
+                $cadenaSql .= (is_null($variable [21]) == true) ? ' NULL , ' : "'" . $variable [21] . "',";
                 $cadenaSql .= "'" . $variable [16] . "') ";
                 $cadenaSql .= "RETURNING  id_elemento_ac; ";
 

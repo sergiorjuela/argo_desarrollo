@@ -41,6 +41,9 @@ $("#<?php echo $this->campoSeguro('vigencia_convenio')?>").select2();
 $('#<?php echo $this->campoSeguro('sede')?>').width(350);
 $("#<?php echo $this->campoSeguro('sede')?>").select2();                 
 
+$('#<?php echo $this->campoSeguro('funcionario')?>').width(350);
+$("#<?php echo $this->campoSeguro('funcionario')?>").select2();                 
+
 $('#<?php echo $this->campoSeguro('formaPago')?>').width(150);
 $("#<?php echo $this->campoSeguro('formaPago')?>").select2();                 
 

@@ -109,12 +109,75 @@ $cadenaACodificarProveedorFiltro = $this->miConfigurador->fabricaConexiones->cry
 // URL definitiva
 $urlProveedorFiltro = $url . $cadenaACodificarProveedorFiltro;
 
+// Variables
+$cadenaACodificarDependencia = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarDependencia .= "&procesarAjax=true";
+$cadenaACodificarDependencia .= "&action=index.php";
+$cadenaACodificarDependencia .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarDependencia .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarDependencia .= $cadenaACodificarDependencia . "&funcion=consultarDependencias";
+$cadenaACodificarDependencia .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadenaDependencia = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarDependencia, $enlace);
+
+// URL definitiva
+$urlFinalDependencia = $url . $cadenaDependencia;
 
 
 ?>
 <script type='text/javascript'>
 
 
+//--------------Inicio JavaScript y Ajax Sede y Dependencia elemento ---------------------------------------------------------------------------------------------    
+
+   $("#<?php echo $this->campoSeguro('sede') ?>").change(function () {
+
+        if ($("#<?php echo $this->campoSeguro('sede') ?>").val() != '') {
+            consultarDependencia();
+        } else {
+            $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").attr('disabled', '');
+        }
+
+    });
+
+    function consultarDependencia(elem, request, response) {
+        $.ajax({
+            url: "<?php echo $urlFinalDependencia ?>",
+            dataType: "json",
+            data: {valor: $("#<?php echo $this->campoSeguro('sede') ?>").val()},
+            success: function (data) {
+
+
+
+                if (data[0] != " ") {
+
+                    $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").html('');
+                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>");
+                    $.each(data, function (indice, valor) {
+
+                        $("<option value='" + data[ indice ].ESF_CODIGO_DEP + "'>" + data[ indice ].ESF_DEP_ENCARGADA + "</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>");
+
+                    });
+
+                    $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").removeAttr('disabled');
+
+                    $('#<?php echo $this->campoSeguro('dependencia_solicitante') ?>').width(350);
+                    $("#<?php echo $this->campoSeguro('dependencia_solicitante') ?>").select2();
+
+
+
+                }
+
+
+            }
+
+        });
+    }
+    ;
+
+    //--------------Fin JavaScript y Ajax Sede y Dependencia elemento --------------------------------------------------------------------------------------------------   
 
 
 

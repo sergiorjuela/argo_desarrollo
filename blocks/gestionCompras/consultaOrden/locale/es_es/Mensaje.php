@@ -78,6 +78,8 @@ $this->idioma ["cargo_contratistaTitulo"] = "Ingrese Cargo del Contratista";
 $this->idioma ["sitio_web"] = "Sitio Web :";
 $this->idioma ["sitio_webTitulo"] = "Sitio Web del proveedor";
 
+
+
 $this->idioma ["ubicacion_proveedor"] = "Ubicación local: ";
 $this->idioma ["ubicacion_proveedorTitulo"] = "Ubicación del proveddor a nivel nacional(Colombia)";
 
@@ -149,6 +151,9 @@ $this->idioma ["total_ivaTitulo"] = "Ingrese total IVA";
 $this->idioma ["total_iva_con"] = "Total con IVA : ";
 $this->idioma ["total_iva_conTitulo"] = "Ingrese Total con IVA";
 
+
+$this->idioma ["funcionario"] = "Funcionario a Cargo :";
+$this->idioma ["funcionarioTitulo"] = "Funcionario a Cargo del Elemento";
 // ................
 
 $this->idioma ["tipo_orden"] = "Tipo Orden: ";

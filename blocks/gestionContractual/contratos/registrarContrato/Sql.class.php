@@ -731,14 +731,23 @@ class Sql extends \Sql {
                 $cadenaSql .= " ORDER BY SN.NUM_SOL_ADQ ASC ";
 
                 break;
+            
+             case "cdpRegistradas" :
+
+                $cadenaSql = " select string_agg(cast(numero_cdp as text),',' ";
+                $cadenaSql.=" order by numero_cdp) from contrato_general;";
+
+                break;
+
 
             case "obtener_cdp_numerosol" :
                 $cadenaSql = " SELECT DISTINCT CDP.NUMERO_DISPONIBILIDAD as valor , CDP.NUMERO_DISPONIBILIDAD as informacion  ";
                 $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
                 $cadenaSql .= " CO.CO_DEPENDENCIAS DP where SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ ";
-                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= " . $variable ['vigencia'] . " ";
-                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = " . $variable ['unidad'] . "  and SN.NUM_SOL_ADQ = " . $variable ['numsol'] . " ";
+                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= " . $variable [0] . " ";
+                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = '0$variable[2]' and SN.NUM_SOL_ADQ = " . $variable [1] . " ";
                 $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
+                $cadenaSql .= " and CDP.NUMERO_DISPONIBILIDAD NOT IN ($variable[3]) ";
                 $cadenaSql .= " ORDER BY CDP.NUMERO_DISPONIBILIDAD ";
 
                 break;

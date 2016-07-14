@@ -1571,12 +1571,8 @@ class registrarForm {
                         $atributos ['anchoEtiqueta'] = 170;
                         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                         $atributos ['evento'] = '';
-                        if (isset($_REQUEST [$esteCampo])) {
-                            $atributos ['seleccion'] = $_REQUEST [$esteCampo];
-                        } else {
-                            $atributos ['seleccion'] = - 1;
-                        }
-                        $atributos ['deshabilitado'] = false;
+                        $atributos ['seleccion'] = 240;
+                        $atributos ['deshabilitado'] = true;
                         $atributos ['columnas'] = 2;
                         $atributos ['tamanno'] = 1;
                         $atributos ['estilo'] = "jqueryui";

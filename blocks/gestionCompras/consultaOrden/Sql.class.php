@@ -64,6 +64,11 @@ class Sql extends \Sql {
                 $cadenaSql .= " AND  ad.\"ESF_ESTADO\"='A'";
                 break;
 
+            case "dependenciasElemetos" :
+                $cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+                $cadenaSql .= " FROM \"SICapital\".\"dependencia_SIC\" ";
+                break;
+
             case "buscar_numero_orden" :
 
                 $cadenaSql = " 	SELECT 	o.numero_contrato ||'-'|| o.vigencia as value, o.numero_contrato ||'-'||o.vigencia as orden ";
@@ -252,7 +257,7 @@ class Sql extends \Sql {
             case "forma_pago" :
                 $cadenaSql = " 	SELECT id_parametro, descripcion ";
                 $cadenaSql .= " FROM  parametros ";
-                $cadenaSql .= " WHERE rel_parametro=28;";
+                $cadenaSql .= " WHERE rel_parametro=28 and id_parametro = 240 ;";
 
                 break;
             case "tipoComprador" :
@@ -426,15 +431,15 @@ class Sql extends \Sql {
             case "elimnarPolizas":
                 $cadenaSql = "DELETE FROM orden_poliza WHERE orden=" . $variable . ";";
                 break;
-            
+
             case "insertarPoliza" :
                 $cadenaSql = " INSERT INTO orden_poliza(";
                 $cadenaSql .= " orden, poliza, fecha_inicio,fecha_final) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['orden'] . ",";
                 $cadenaSql .= $variable ['poliza'] . ",";
-                $cadenaSql .= "'".$variable ['fecha_inicio'] . "',";
-                $cadenaSql .= "'".$variable ['fecha_final'] . "');";
+                $cadenaSql .= "'" . $variable ['fecha_inicio'] . "',";
+                $cadenaSql .= "'" . $variable ['fecha_final'] . "');";
 
                 break;
 
@@ -1026,9 +1031,12 @@ class Sql extends \Sql {
                 break;
 
             case "consultarElementosOrden" :
-                $cadenaSql = "SELECT  ela.*, ct.elemento_nombre nivel_nombre, tb.descripcion nombre_tipo, iv.descripcion nombre_iva,elemento_nombre  ";
+                $cadenaSql = "SELECT  ela.*, ct.elemento_nombre nivel_nombre, tb.descripcion nombre_tipo, iv.descripcion nombre_iva,elemento_nombre,  ";
+                $cadenaSql .= " f.nombre_cp, dep.\"ESF_DEP_ENCARGADA\"   ";
                 $cadenaSql .= "FROM elemento_acta_recibido ela ";
                 $cadenaSql .= "JOIN  inventarios.catalogo_elemento ct ON ct.elemento_id=ela.nivel ";
+                $cadenaSql .= "JOIN \"SICapital\".\"dependencia_SIC\" dep ON dep.\"ESF_CODIGO_DEP\"=ela.codigo_dependencia ";
+                $cadenaSql .= "JOIN \"SICapital\".\"funcionario\" f ON f.\"identificacion\"=ela.funcionario ";
                 $cadenaSql .= "JOIN  inventarios.tipo_bienes tb ON tb.id_tipo_bienes=ela.tipo_bien ";
                 $cadenaSql .= "JOIN  inventarios.aplicacion_iva iv ON iv.id_iva=ela.iva  ";
                 $cadenaSql .= "WHERE id_orden ='" . $variable . "'  ";
@@ -1129,7 +1137,10 @@ class Sql extends \Sql {
                 $cadenaSql .= (is_null($variable [11]) == true) ? "serie=NULL,  " : "serie='" . $variable [11] . "',  ";
                 $cadenaSql .= (is_null($variable [13]) == true) ? "referencia=NULL, " : "referencia='" . $variable [13] . "', ";
                 $cadenaSql .= (is_null($variable [14]) == true) ? "placa=NULL,  " : "placa='" . $variable [14] . "',  ";
-                $cadenaSql .= (is_null($variable [15]) == true) ? "observacion=NULL " : "observacion='" . $variable [15] . "'  ";
+                $cadenaSql .= (is_null($variable [15]) == true) ? "observacion=NULL, " : "observacion='" . $variable [15] . "',  ";
+                $cadenaSql .= (is_null($variable [16]) == true) ? "codigo_dependencia=NULL,  " : "codigo_dependencia='" . $variable [16] . "',  ";
+                $cadenaSql .= (is_null($variable [17]) == true) ? "funcionario=NULL " : "funcionario='" . $variable [17] . "'  ";
+                
                 $cadenaSql .= "WHERE id_elemento_ac ='" . $variable [12] . "'  ";
 
                 break;
@@ -1157,11 +1168,13 @@ class Sql extends \Sql {
                     $cadenaSql .= "fecha_final_pol='" . $variable [12] . "', ";
                 }
                 $cadenaSql .= (is_null($variable [13]) == true) ? "marca=NULL, " : "marca='" . $variable [13] . "', ";
-                $cadenaSql .= (is_null($variable [14]) == true) ? "serie=NULL " : "serie='" . $variable [14] . "',  ";
+                $cadenaSql .= (is_null($variable [14]) == true) ? "serie=NULL, " : "serie='" . $variable [14] . "',  ";
 
                 $cadenaSql .= (is_null($variable [16]) == true) ? "referencia=NULL, " : "referencia='" . $variable [16] . "', ";
                 $cadenaSql .= (is_null($variable [17]) == true) ? "placa=NULL,  " : "placa='" . $variable [17] . "',  ";
-                $cadenaSql .= (is_null($variable [18]) == true) ? "observacion=NULL, " : "observacion='" . $variable [18] . "'  ";
+                $cadenaSql .= (is_null($variable [18]) == true) ? "observacion=NULL, " : "observacion='" . $variable [18] . "',  ";
+                $cadenaSql .= (is_null($variable [19]) == true) ? "codigo_dependencia=NULL,  " : "codigo_dependencia='" . $variable [19] . "',  ";
+                $cadenaSql .= (is_null($variable [20]) == true) ? "funcionario=NULL " : "funcionario='" . $variable [20] . "'  ";
 
                 $cadenaSql .= "WHERE id_elemento_ac ='" . $variable [15] . "' ";
 

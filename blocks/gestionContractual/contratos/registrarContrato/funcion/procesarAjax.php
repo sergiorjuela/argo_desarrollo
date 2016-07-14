@@ -33,7 +33,7 @@ if ($_REQUEST ['funcion'] == 'ObtenerSolicitudesCdp') {
 }
 if ($_REQUEST ['funcion'] == 'ObtenerCdps') {
     
-    $datos = array ('numsol' => $_REQUEST ['numsol'], 'vigencia'=> $_REQUEST ['vigencia'], 'unidad' =>$_REQUEST ['unidad']);
+    $datos = array ( 1 => $_REQUEST ['numsol'], 0=> $_REQUEST ['vigencia'],2 => $_REQUEST ['unidad'],3 => $_REQUEST ['cdps']);
     $cadenaSql = $this->sql->getCadenaSql('obtener_cdp_numerosol', $datos);
     $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
     $resultado = json_encode($resultadoItems);

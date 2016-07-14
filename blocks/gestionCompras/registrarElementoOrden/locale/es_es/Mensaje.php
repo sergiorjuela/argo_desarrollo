@@ -25,6 +25,12 @@ $this->idioma ["dependenciaConsultaTitulo"] = "Ingrese Nombre Dependencia";
 $this->idioma ["sedeConsulta"] = "Sede : ";
 $this->idioma ["sedeConsultaTitulo"] = "Seleccione Sede";
 
+$this->idioma ["sede"] = "Sede : ";
+$this->idioma ["sedeTitulo"] = "Seleccione Sede";
+
+$this->idioma ["funcionario"] = "Funcionario a Cargo  : ";
+$this->idioma ["funcionarioTitulo"] = "Seleccione el Funcionario a Cargo ";
+
 
 $this->idioma ["numero_orden"] = "Vigencia y/o Número Orden : ";
 $this->idioma ["numero_ordenTitulo"] = "Seleccion Tipo Orden" ;

@@ -80,7 +80,13 @@
  $("#<?php echo $this->campoSeguro('convenio_solicitante')?>").select2();  
  
  $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2();              	            
-              	 			
+              	
+ 
+ $('#<?php echo $this->campoSeguro('sede')?>').width(300);
+$("#<?php echo $this->campoSeguro('sede')?>").select2();
+			
+ $('#<?php echo $this->campoSeguro('funcionario')?>').width(300);
+$("#<?php echo $this->campoSeguro('funcionario')?>").select2();
 			
 $("#<?php echo $this->campoSeguro('clase')?>").select2();
 $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();

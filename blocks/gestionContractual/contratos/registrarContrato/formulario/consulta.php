@@ -179,7 +179,7 @@ class registrarForm {
         $atributos ['tab'] = $tab;
         $atributos ['tamanno'] = 1;
         $atributos ['estilo'] = 'jqueryui';
-        $atributos ['validar'] = '';
+        $atributos ['validar'] = 'required';
         $atributos ['limitar'] = false;
         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
         $atributos ['anchoEtiqueta'] = 250;
@@ -306,6 +306,29 @@ class registrarForm {
         // Aplica atributos globales al control
         $atributos = array_merge($atributos, $atributosGlobales);
         echo $this->miFormulario->campoCuadroTexto($atributos);
+        
+     $sqlConsultaSolicitudRegistradas = $this->miSql->getCadenaSql("cdpRegistradas");
+        $resultado = $DBContractual->ejecutarAcceso($sqlConsultaSolicitudRegistradas, "busqueda");
+       
+
+        $esteCampo = 'cdpRegistradas';
+        $atributos ['id'] = $esteCampo;
+        $atributos ['nombre'] = $esteCampo;
+        $atributos ['tipo'] = 'hidden';
+        $atributos ['estilo'] = 'jqueryui';
+        $atributos ['marco'] = true;
+        $atributos ['columnas'] = 1;
+        $atributos ['dobleLinea'] = false;
+        $atributos ['tabIndex'] = $tab;
+        $atributos ['valor'] = $resultado[0][0];
+        $atributos ['deshabilitado'] = false;
+        $atributos ['tamanno'] = 30;
+        $atributos ['maximoTamanno'] = '';
+        $tab ++;
+        // Aplica atributos globales al control
+        $atributos = array_merge($atributos, $atributosGlobales);
+        echo $this->miFormulario->campoCuadroTexto($atributos);
+        unset($atributos);
 
 
         $esteCampo = 'unidad_ejecutora_hidden';

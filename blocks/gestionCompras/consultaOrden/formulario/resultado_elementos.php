@@ -116,10 +116,11 @@ class registrarForm {
 		$atributos ["leyenda"] = "ELEMENTOS ".$_REQUEST['mensaje_titulo'];
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		unset($atributos);
+                
 		
 		if ($ElementosOrden) {
 			
-			echo "<table id='tablaTitulos'>";
+			echo "<table id='tablaElmentos'>";
 			
 			echo "<thead>
                              <tr>
@@ -129,6 +130,8 @@ class registrarForm {
                                 <th>Cantidad</th>
                                  <th>Valor($)</th>
                                 <th>Iva Aplicado</th>
+                                <th>Dependencia</th>
+                                <th>Funcionario</th>
 			        <th>Modificar</th>
                                 <th>Eliminar</th>
                              </tr>
@@ -161,6 +164,8 @@ class registrarForm {
                     <td><center>" . $ElementosOrden [$i] ['cantidad'] . "</center></td>
                     <td><center>" . $ElementosOrden [$i] ['valor'] . "</center></td>
                     <td><center>" . $ElementosOrden [$i] ['nombre_iva'] . "</center></td>
+                    <td><center>" . $ElementosOrden [$i] ['ESF_DEP_ENCARGADA'] . "</center></td>
+                    <td><center>" . $ElementosOrden [$i] ['nombre_cp'] . "</center></td>
                     <td><center>
                     	<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>

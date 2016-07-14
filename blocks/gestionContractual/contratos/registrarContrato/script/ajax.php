@@ -112,6 +112,7 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
         transitionEffect: "slideLeft",
         onStepChanging: function (event, currentIndex, newIndex) {
             $resultado = $("#registrarContrato").validationEngine("validate");
+
             almacenarInfoTemporal(currentIndex, newIndex);
             if ($resultado) {
 
@@ -273,24 +274,24 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
                                 $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").select2();
                             }
                             //----------------------Vacios Temporalmente Mientras se termina de Reestructurar Agora----------------
-                            
-                             $("#<?php echo $this->campoSeguro('genero') ?>").val(null);
-                             $("#<?php echo $this->campoSeguro('genero') ?>").select2();
-                             $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").val(null);
-                             $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").select2();
-                             $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").val(null);
-                             $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").select2();
-                             $("#<?php echo $this->campoSeguro('perfil') ?>").val(null);
-                             $("#<?php echo $this->campoSeguro('perfil') ?>").select2();
-                             $("#<?php echo $this->campoSeguro('clase_contratista') ?>").val(null);
-                             $("#<?php echo $this->campoSeguro('clase_contratista') ?>").select2();
-                             $("#<?php echo $this->campoSeguro('profesion') ?>").val("");
-                             $("#<?php echo $this->campoSeguro('especialidad') ?>").val("");
-                             $("#<?php echo $this->campoSeguro('numero_cuenta') ?>").val("");
-                             $("#<?php echo $this->campoSeguro('entidad_bancaria') ?>").val("");
-                             
-                            
-                            
+
+                            $("#<?php echo $this->campoSeguro('genero') ?>").val(null);
+                            $("#<?php echo $this->campoSeguro('genero') ?>").select2();
+                            $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").val(null);
+                            $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").select2();
+                            $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").val(null);
+                            $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").select2();
+                            $("#<?php echo $this->campoSeguro('perfil') ?>").val(null);
+                            $("#<?php echo $this->campoSeguro('perfil') ?>").select2();
+                            $("#<?php echo $this->campoSeguro('clase_contratista') ?>").val(null);
+                            $("#<?php echo $this->campoSeguro('clase_contratista') ?>").select2();
+                            $("#<?php echo $this->campoSeguro('profesion') ?>").val("");
+                            $("#<?php echo $this->campoSeguro('especialidad') ?>").val("");
+                            $("#<?php echo $this->campoSeguro('numero_cuenta') ?>").val("");
+                            $("#<?php echo $this->campoSeguro('entidad_bancaria') ?>").val("");
+
+
+
 
                         } else {
                             alert("Sin Cocincidencias en la Busqueda.");
@@ -308,8 +309,8 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
         }
     }
     ;
-    
-    
+
+
     //--------------Inicio JavaScript y Ajax Vigencia y Numero solicitud ---------------------------------------------------------------------------------------------    
 
     $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").change(function () {
@@ -329,7 +330,7 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
             url: "<?php echo $urlFinalSolCdp ?>",
             dataType: "json",
             data: {vigencia: $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val(),
-                   unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val()},
+                unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val()},
             success: function (data) {
 
 
@@ -380,9 +381,10 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
         $.ajax({
             url: "<?php echo $urlFinalCdps ?>",
             dataType: "json",
-            data: {numsol: $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").val(), 
-                   vigencia: $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val(),
-                   unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val()},
+            data: {numsol: $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").val(),
+                vigencia: $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val(),
+                unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val(),
+                cdps: $("#<?php echo $this->campoSeguro('cdpRegistradas') ?>").val()},
             success: function (data) {
 
 

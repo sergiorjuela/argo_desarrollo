@@ -425,7 +425,8 @@ if ($_REQUEST ['funcion'] == 'SeleccionProveedor') {
 //-------------------------Obtener Solicitud y CDPs por Vigencia ----------------------------------------------------------
 if ($_REQUEST ['funcion'] == 'ObtenerSolicitudesCdp') {
     
-    $cadenaSql = $this->sql->getCadenaSql('obtener_solicitudes_vigencia', $_REQUEST ['vigencia']);
+    $datos = array (0=>$_REQUEST ['vigencia'],1=>$_REQUEST ['unidad']);
+    $cadenaSql = $this->sql->getCadenaSql('obtener_solicitudes_vigencia', $datos);
     $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
     $resultado = json_encode($resultadoItems);
     echo $resultado;
@@ -433,7 +434,7 @@ if ($_REQUEST ['funcion'] == 'ObtenerSolicitudesCdp') {
 
 if ($_REQUEST ['funcion'] == 'ObtenerCdps') {
     
-    $datos = array ('numsol' => $_REQUEST ['numsol'], 'vigencia'=> $_REQUEST ['vigencia']);
+    $datos = array (1 => $_REQUEST ['numsol'], 0=> $_REQUEST ['vigencia'],2 => $_REQUEST ['unidad'],3 => $_REQUEST ['cdps']);
     $cadenaSql = $this->sql->getCadenaSql('obtener_cdp_numerosol', $datos);
     $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
     $resultado = json_encode($resultadoItems);
@@ -445,8 +446,8 @@ if ($_REQUEST ['funcion'] == 'consultaProveedor') {
 
     $parametro = $_REQUEST ['proveedor'];
     $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
-    $url = "http://10.20.0.38/agora/index.php?";
-    $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&Parametro1=$parametro";
+    $url = "http://10.20.2.38/agora/index.php?";
+    $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&parametro1=$parametro";
     $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar_url($data, $enlace);
     $cliente = curl_init();
     curl_setopt($cliente, CURLOPT_SSL_VERIFYPEER, false);

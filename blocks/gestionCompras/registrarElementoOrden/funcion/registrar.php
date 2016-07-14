@@ -62,7 +62,7 @@ class RegistradorOrden {
 
                 $valor_iva = $valor_iva [0] [0];
 
-               
+
                 if ($_REQUEST ['id_tipo_bien'] == 1) {
 
                     $arreglo = array(
@@ -82,7 +82,9 @@ class RegistradorOrden {
                         $_REQUEST ['id_orden'],
                         (isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
                         (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
-                        ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null
+                        ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null,
+                        (isset($_REQUEST ['dependencia_solicitante'])) ? $_REQUEST ['dependencia_solicitante'] : null,
+                        (isset($_REQUEST ['funcionario'])) ? $_REQUEST ['funcionario'] : null
                     );
 
                     $cadenaSql = $this->miSql->getCadenaSql('ingresar_elemento_tipo_1', $arreglo);
@@ -107,14 +109,14 @@ class RegistradorOrden {
                         $_REQUEST ['id_orden'],
                         (isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
                         (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
-                        ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null
+                        ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null,
+                        (isset($_REQUEST ['dependencia_solicitante'])) ? $_REQUEST ['dependencia_solicitante'] : null,
+                        (isset($_REQUEST ['funcionario'])) ? $_REQUEST ['funcionario'] : null
                     );
 
                     $cadenaSql = $this->miSql->getCadenaSql('ingresar_elemento_tipo_1', $arreglo);
 
                     $elemento = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $arreglo, 'ingresar_elemento_tipo_1');
-                  
-                    
                 } else if ($_REQUEST ['id_tipo_bien'] == 3) {
 
                     if ($_REQUEST ['tipo_poliza'] == 0) {
@@ -138,7 +140,9 @@ class RegistradorOrden {
                             $_REQUEST ['id_orden'],
                             (isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
                             (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
-                            ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null
+                            ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null,
+                            (isset($_REQUEST ['dependencia_solicitante'])) ? $_REQUEST ['dependencia_solicitante'] : null,
+                            (isset($_REQUEST ['funcionario'])) ? $_REQUEST ['funcionario'] : null
                         );
                     } else if ($_REQUEST ['tipo_poliza'] == 1) {
                         $arreglo = array(
@@ -161,7 +165,9 @@ class RegistradorOrden {
                             $_REQUEST ['id_orden'],
                             (isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
                             (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
-                            ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null
+                            ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null,
+                            (isset($_REQUEST ['dependencia_solicitante'])) ? $_REQUEST ['dependencia_solicitante'] : null,
+                            (isset($_REQUEST ['funcionario'])) ? $_REQUEST ['funcionario'] : null
                         );
                     }
 
@@ -199,8 +205,8 @@ class RegistradorOrden {
 
                     $imagen = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $arreglo, 'ElementoImagen');
                 }
-                
-                
+
+
                 if ($elemento) {
                     $this->miConfigurador->setVariableConfiguracion("cache", true);
 
@@ -365,6 +371,10 @@ class RegistradorOrden {
                                 $datos [$i] ['Placa'] = $objPHPExcel->getActiveSheet()->getCell('R' . $i)->getCalculatedValue();
 
                                 $datos [$i] ['Observaciones'] = $objPHPExcel->getActiveSheet()->getCell('S' . $i)->getCalculatedValue();
+
+                                $datos [$i] ['Dependencia'] = $objPHPExcel->getActiveSheet()->getCell('T' . $i)->getCalculatedValue();
+
+                                $datos [$i] ['Funcionario'] = $objPHPExcel->getActiveSheet()->getCell('U' . $i)->getCalculatedValue();
                             }
 
                             for ($i = 2; $i <= $highestRow; $i ++) {
@@ -427,7 +437,9 @@ class RegistradorOrden {
                                         $_REQUEST ['id_orden'],
                                         (is_null($datos [$i] ['Referencia']) == true) ? null : trim($datos [$i] ['Referencia'], "'"),
                                         (is_null($datos [$i] ['Placa']) == true) ? null : trim($datos [$i] ['Placa'], "'"),
-                                        (is_null($datos [$i] ['Observaciones']) == true) ? null : trim($datos [$i] ['Observaciones'], "'")
+                                        (is_null($datos [$i] ['Observaciones']) == true) ? null : trim($datos [$i] ['Observaciones'], "'"),
+                                        (is_null($datos [$i] ['Dependencia']) == true) ? null : trim($datos [$i] ['Dependencia'], "'"),
+                                        (is_null($datos [$i] ['Funcionario']) == true) ? null : trim($datos [$i] ['Funcionario'], "'")
                                     );
                                     $cadenaSql = $this->miSql->getCadenaSql('ingresar_elemento_tipo_1', $arreglo);
 
@@ -451,7 +463,9 @@ class RegistradorOrden {
                                         $_REQUEST ['id_orden'],
                                         (is_null($datos [$i] ['Referencia']) == true) ? null : trim($datos [$i] ['Referencia'], "'"),
                                         (is_null($datos [$i] ['Placa']) == true) ? null : trim($datos [$i] ['Placa'], "'"),
-                                        (is_null($datos [$i] ['Observaciones']) == true) ? null : trim($datos [$i] ['Observaciones'], "'")
+                                        (is_null($datos [$i] ['Observaciones']) == true) ? null : trim($datos [$i] ['Observaciones'], "'"),
+                                        (is_null($datos [$i] ['Dependencia']) == true) ? null : trim($datos [$i] ['Dependencia'], "'"),
+                                        (is_null($datos [$i] ['Funcionario']) == true) ? null : trim($datos [$i] ['Funcionario'], "'")
                                     );
 
                                     $cadenaSql = $this->miSql->getCadenaSql('ingresar_elemento_tipo_1', $arreglo);
@@ -481,7 +495,9 @@ class RegistradorOrden {
                                             $_REQUEST ['id_orden'],
                                             (is_null($datos [$i] ['Referencia']) == true) ? null : trim($datos [$i] ['Referencia'], "'"),
                                             (is_null($datos [$i] ['Placa']) == true) ? null : trim($datos [$i] ['Placa'], "'"),
-                                            (is_null($datos [$i] ['Observaciones']) == true) ? null : trim($datos [$i] ['Observaciones'], "'")
+                                            (is_null($datos [$i] ['Observaciones']) == true) ? null : trim($datos [$i] ['Observaciones'], "'"),
+                                            (is_null($datos [$i] ['Dependencia']) == true) ? null : trim($datos [$i] ['Dependencia'], "'"),
+                                            (is_null($datos [$i] ['Funcionario']) == true) ? null : trim($datos [$i] ['Funcionario'], "'")
                                         );
                                     } else if ($datos [$i] ['Tipo_poliza'] == 1) {
 
@@ -505,7 +521,9 @@ class RegistradorOrden {
                                             $_REQUEST ['id_orden'],
                                             (is_null($datos [$i] ['Referencia']) == true) ? null : trim($datos [$i] ['Referencia'], "'"),
                                             (is_null($datos [$i] ['Placa']) == true) ? null : trim($datos [$i] ['Placa'], "'"),
-                                            (is_null($datos [$i] ['Observaciones']) == true) ? null : trim($datos [$i] ['Observaciones'], "'")
+                                            (is_null($datos [$i] ['Observaciones']) == true) ? null : trim($datos [$i] ['Observaciones'], "'"),
+                                            (is_null($datos [$i] ['Dependencia']) == true) ? null : trim($datos [$i] ['Dependencia'], "'"),
+                                            (is_null($datos [$i] ['Funcionario']) == true) ? null : trim($datos [$i] ['Funcionario'], "'")
                                         );
                                     }
 

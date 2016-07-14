@@ -111,8 +111,8 @@ $this->idioma ["dependencia_supervisorTitulo"] = "Seleccione Dependencia";
 $this->idioma ["nombre_razon_proveedor"] = "Razón Social :";
 $this->idioma ["nombre_razon_proveedorTitulo"] = "Ingrese Razón Social";
 
-$this->idioma ["identifcacion_proveedor"] = "Nit :";
-$this->idioma ["identifcacion_proveedorTitulo"] = "Ingrese Nit De Acuerdo con  la Razón Social";
+$this->idioma ["identifcacion_proveedor"] = "Identificacion Proveedor :";
+$this->idioma ["identifcacion_proveedorTitulo"] = "Identificacion del Proveedor";
 
 $this->idioma ["direccion_proveedor"] = "Dirección :";
 $this->idioma ["direccion_proveedorTitulo"] = "Ingrese Dirección del Proveedor";
@@ -129,8 +129,8 @@ $this->idioma ["nombre_acesorTitulo"] = "Nombre del acesor";
 $this->idioma ["procedencia"] = "Procedencia: ";
 $this->idioma ["procedenciaTitulo"] = "Procedencia representante";
 
-$this->idioma ["pais"] = "Pais de Procedencia: ";
-$this->idioma ["paisTitulo"] = "Pais de Origen";
+$this->idioma ["pais"] = "Pais de Contacto: ";
+$this->idioma ["paisTitulo"] = "Pais de Contacto";
 
 $this->idioma ["telefono_proveedor"] = "Teléfono Fijo :";
 $this->idioma ["telefono_proveedorTitulo"] = "Ingrese Teléfono Fijo del Proveedor";

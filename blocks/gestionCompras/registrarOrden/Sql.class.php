@@ -145,7 +145,7 @@ class Sql extends \Sql {
             case "tipo_unidad_ejecucion" :
                 $cadenaSql = " SELECT id_parametro, descripcion  ";
                 $cadenaSql .= " FROM parametros WHERE rel_parametro=21; ";
-            
+
                 break;
 
 
@@ -166,7 +166,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " and p.id_parametro = 202 ;";
 
                 break;
-                
+
             case "ordenadores_orden" :
 
                 $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from argo_ordenadores ";
@@ -179,15 +179,21 @@ class Sql extends \Sql {
                 $cadenaSql .= " where \"ORG_ESTADO\" = 'A' and \"ORG_ORDENADOR_GASTO\" = 'DIRECTOR IDEXUD'; ";
 
                 break;
-            
-            
-            
+
+
+
 
             case "cargoSuper" :
 
                 $cadenaSql = "SELECT f.\"cargo\" ";
                 $cadenaSql .= "FROM \"SICapital\".\"funcionario\" f  ";
                 $cadenaSql .= "WHERE f.\"identificacion\"='$variable' ";
+
+                break;
+            case "cdpRegistradas" :
+
+                $cadenaSql = " select string_agg(cast(numero_cdp as text),',' ";
+                $cadenaSql.=" order by numero_cdp) from contrato_general;";
 
                 break;
 
@@ -201,7 +207,7 @@ class Sql extends \Sql {
             case "forma_pago" :
                 $cadenaSql = " 	SELECT id_parametro, descripcion ";
                 $cadenaSql .= " FROM  parametros ";
-                $cadenaSql .= " WHERE rel_parametro=28;";
+                $cadenaSql .= " WHERE rel_parametro=28 and id_parametro=240;";
 
                 break;
 
@@ -272,8 +278,8 @@ class Sql extends \Sql {
                 $cadenaSql .= "'" . $variable ['sede_solicitante'] . "',";
                 $cadenaSql .= "'" . $variable ['dependencia_solicitante'] . "',";
                 $cadenaSql .= "'" . $variable ['cargo_supervisor'] . "',";
-                $cadenaSql .=  $variable ['numero_solicitud'] . ", ";
-                $cadenaSql .=  $variable ['numero_cdp'] . ");";
+                $cadenaSql .= $variable ['numero_solicitud'] . ", ";
+                $cadenaSql .= $variable ['numero_cdp'] . ");";
 
                 break;
             case "insertarOrden" :
@@ -297,8 +303,8 @@ class Sql extends \Sql {
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['orden'] . ",";
                 $cadenaSql .= $variable ['poliza'] . ",";
-                $cadenaSql .= "'".$variable ['fecha_inicio'] . "',";
-                $cadenaSql .= "'".$variable ['fecha_final'] . "');";
+                $cadenaSql .= "'" . $variable ['fecha_inicio'] . "',";
+                $cadenaSql .= "'" . $variable ['fecha_final'] . "');";
 
                 break;
 
@@ -480,8 +486,8 @@ class Sql extends \Sql {
                 $cadenaSql .= "GROUP BY CON_VIGENCIA ";
                 break;
 
-    
-           case "vigencia_registro" :
+
+            case "vigencia_registro" :
                 $cadenaSql = "SELECT REP_VIGENCIA AS VALOR,REP_VIGENCIA AS VIGENCIA ";
                 $cadenaSql .= "FROM REGISTRO_PRESUPUESTAL ";
                 $cadenaSql .= "GROUP BY REP_VIGENCIA ";
@@ -820,20 +826,21 @@ class Sql extends \Sql {
                 $cadenaSql = " SELECT DISTINCT SN.NUM_SOL_ADQ as valor , SN.NUM_SOL_ADQ as informacion  ";
                 $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
                 $cadenaSql .= " CO.CO_DEPENDENCIAS DP where SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ ";
-                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= $variable  ";
-                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = 01   ";
+                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= $variable[0]  ";
+                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = '0$variable[1]'   ";
                 $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
                 $cadenaSql .= " ORDER BY SN.NUM_SOL_ADQ ASC ";
 
                 break;
-            
-           case "obtener_cdp_numerosol" :
+
+            case "obtener_cdp_numerosol" :
                 $cadenaSql = " SELECT DISTINCT CDP.NUMERO_DISPONIBILIDAD as valor , CDP.NUMERO_DISPONIBILIDAD as informacion  ";
                 $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
                 $cadenaSql .= " CO.CO_DEPENDENCIAS DP where SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ ";
-                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= ".$variable ['vigencia']." ";
-                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = 01  and SN.NUM_SOL_ADQ = ".$variable ['numsol']." ";
+                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= " . $variable [0] . " ";
+                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = '0$variable[2]' and SN.NUM_SOL_ADQ = " . $variable [1] . " ";
                 $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
+                $cadenaSql .= " and CDP.NUMERO_DISPONIBILIDAD NOT IN ($variable[3]) ";
                 $cadenaSql .= " ORDER BY CDP.NUMERO_DISPONIBILIDAD ";
 
                 break;
@@ -852,18 +859,17 @@ class Sql extends \Sql {
                 $cadenaSql .= " and SN.VIGENCIA= " . $variable['vigencia_solicitud_consulta'] . " and SN.CODIGO_UNIDAD_EJECUTORA =" . $variable['unidad_ejecutora'] . " ";
                 $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE'  ";
                 if ($variable['numero_solicitud'] != '') {
-                    $cadenaSql .= " and SN.NUM_SOL_ADQ = ". $variable['numero_solicitud']." " ;
+                    $cadenaSql .= " and SN.NUM_SOL_ADQ = " . $variable['numero_solicitud'] . " ";
                 }
                 if ($variable['dependencia_solicitud'] != '') {
-                    $cadenaSql .= " and SN.DEPENDENCIA = ". $variable['dependencia_solicitud'] ." ";
+                    $cadenaSql .= " and SN.DEPENDENCIA = " . $variable['dependencia_solicitud'] . " ";
                 }
                 if ($variable['numero_cdp'] != '') {
-                    $cadenaSql .= " and CDP.NUMERO_DISPONIBILIDAD = ". $variable['numero_cdp'] ." ";
+                    $cadenaSql .= " and CDP.NUMERO_DISPONIBILIDAD = " . $variable['numero_cdp'] . " ";
                 }
                 if ($variable['fecha_inicial'] != '') {
-                     $cadenaSql .= " and CDP.FECHA_REGISTRO BETWEEN TO_DATE ('".$variable['fecha_inicial']."', 'yyyy/mm/dd') ";
-                     $cadenaSql .= " AND TO_DATE ('".$variable['fecha_final']."', 'yyyy/mm/dd') ";
-                     
+                    $cadenaSql .= " and CDP.FECHA_REGISTRO BETWEEN TO_DATE ('" . $variable['fecha_inicial'] . "', 'yyyy/mm/dd') ";
+                    $cadenaSql .= " AND TO_DATE ('" . $variable['fecha_final'] . "', 'yyyy/mm/dd') ";
                 }
                 break;
         }
@@ -871,5 +877,4 @@ class Sql extends \Sql {
     }
 
 }
-
 ?>

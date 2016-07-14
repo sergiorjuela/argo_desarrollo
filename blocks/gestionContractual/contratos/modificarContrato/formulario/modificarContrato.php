@@ -1588,18 +1588,14 @@ class registrarForm {
                         $atributos ['anchoEtiqueta'] = 170;
                         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                         $atributos ['evento'] = '';
-                        if (isset($_REQUEST [$esteCampo])) {
-                            $atributos ['seleccion'] = $_REQUEST [$esteCampo];
-                        } else {
-                            $atributos ['seleccion'] = - 1;
-                        }
-                        $atributos ['deshabilitado'] = false;
+                        $atributos ['seleccion'] = 240;
+                        $atributos ['deshabilitado'] = true;
                         $atributos ['columnas'] = 2;
                         $atributos ['tamanno'] = 1;
                         $atributos ['estilo'] = "jqueryui";
                         $atributos ['validar'] = 'required';
                         $atributos ['limitar'] = true;
-                        $atributos ['anchoCaja'] = 40;
+                        $atributos ['anchoCaja'] = 50;
                         $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("forma_pago");
                         $matrizItems = array(
                             array(
