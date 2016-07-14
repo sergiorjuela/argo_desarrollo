@@ -648,44 +648,46 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
                 success: function (data) {
 
                     if (data.datos != 'null') {
-                        console.log(data.datos);
                         if (data.status == 200) {
 
-                            if (data.datos.tipo_persona = 'JURIDICA') {
+                            $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(data.datos.tipo_persona);
+                            if (data.datos.tipo_persona != 'NATURAL') {
                                 $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data.datos.nom_empresa);
+                                $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val('NIT: ' + data.datos.num_nit_empresa);
+                                $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data.datos.digito_verificacion_empresa);
+                                $("#<?php echo $this->campoSeguro('telefono_proveedor') ?>").val(data.datos.telefono_empresa + ' - ' + data.datos.movil_empresa);
+                                $("#<?php echo $this->campoSeguro('procedencia') ?>").val(data.datos.nom_pais_empresa + ' (' + data.datos.nom_departamento_empresa + ' - ' + data.datos.nom_ciudad_empresa + ')');
+                                $("#<?php echo $this->campoSeguro('nombre_acesor') ?>").val(data.datos.nom_asesor_empresa);
+                                $("#<?php echo $this->campoSeguro('nombre_contratista') ?>").val(data.datos.primer_nombre_representante + ' '
+                                        + data.datos.segundo_nombre_representante + ' ' + data.datos.primer_apellido_representante + ' ' + data.datos.segundo_apellido_representante);
+                                $("#<?php echo $this->campoSeguro('tipo_documento') ?>").val(data.datos.tipo_documento_representante);
+                                $("#<?php echo $this->campoSeguro('identifcacion_contratista') ?>").val(data.datos.num_documento_representante);
+                                $("#<?php echo $this->campoSeguro('cargo_contratista') ?>").val(data.datos.cargo_representante);
+                                $("#<?php echo $this->campoSeguro('genero') ?>").val(data.datos.genero_empresa);
                             } else {
+
                                 $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data.datos.primer_nombre_persona_natural +
                                         ' ' + data.datos.segundo_nombre_persona_natural + ' ' + data.datos.primer_apellido_persona_natural + ' ' +
                                         data.datos.segundo_nombre_persona_natural);
-                            }
-                            if (data.datos.tipo_persona = 'JURIDICA') {
-                                $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val(data.datos.num_nit_empresa);
-                            } else {
                                 $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val(data.datos.num_documento_persona_natural);
-                            }
-                            if (data.datos.tipo_persona = 'JURIDICA') {
-                                $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data.datos.digito_verificacion_empresa);
-                            } else {
                                 $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data.datos.digito_verificacion_persona_natural);
-                            }
-                            $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(data.datos.tipo_persona);
-                            $("#<?php echo $this->campoSeguro('direccion_proveedor') ?>").val(data.datos.dir_contacto);
-                            if (data.datos.tipo_persona = 'JURIDICA') {
-                                $("#<?php echo $this->campoSeguro('telefono_proveedor') ?>").val(data.datos.telefono_empresa + ' ' + data.datos.movil_empresa);
-                            } else {
-                                $("#<?php echo $this->campoSeguro('telefono_proveedor') ?>").val(data.datos.telefono_persona_natural);
-                            }
-                            $("#<?php echo $this->campoSeguro('sitio_web') ?>").val(data.datos.web_contacto);
+                                $("#<?php echo $this->campoSeguro('telefono_proveedor') ?>").val(data.datos.telefono_persona_natural + ' - ' + data.datos.movil_persona_natural);
+                                $("#<?php echo $this->campoSeguro('procedencia') ?>").val(data.datos.pais_nacimiento_persona_natural);
+                                $("#<?php echo $this->campoSeguro('cargo_contratista') ?>").val(data.datos.cargo_persona_natural);
+                                $("#<?php echo $this->campoSeguro('genero') ?>").val(data.datos.genero_persona_natural);
+                                $("#<?php echo $this->campoSeguro('tipo_documento') ?>").val(data.datos.tipo_documento_persona_natural);
+                                $("#<?php echo $this->campoSeguro('nombre_acesor') ?>").val('N/A');
+                                $("#<?php echo $this->campoSeguro('nombre_contratista') ?>").val('N/A');
+                                $("#<?php echo $this->campoSeguro('identifcacion_contratista') ?>").val('N/A');
 
+                            }
+
+
+                            $("#<?php echo $this->campoSeguro('direccion_proveedor') ?>").val(data.datos.dir_contacto);
+                            $("#<?php echo $this->campoSeguro('sitio_web') ?>").val(data.datos.web_contacto);
                             $("#<?php echo $this->campoSeguro('pais') ?>").val(data.datos.nom_pais_contacto + ' (' + data.datos.nom_departamento_contacto + ' - ' + data.datos.nom_ciudad_contacto + ')');
 
-                            $("#<?php echo $this->campoSeguro('ubicacion_proveedor') ?>").val(data.datos.tipodocumento);
-                            $("#<?php echo $this->campoSeguro('nombre_acesor') ?>").val(data.datos.numdocumento);
-                            $("#<?php echo $this->campoSeguro('nombre_contratista') ?>").val();
-                            $("#<?php echo $this->campoSeguro('tipo_documento') ?>").val(data.datos.tipo_documento_persona_natural);
-                            $("#<?php echo $this->campoSeguro('identifcacion_contratista') ?>").val();
-                            $("#<?php echo $this->campoSeguro('procedencia') ?>").val(data.datos.pais_nacimiento_persona_natural);
-                            $("#<?php echo $this->campoSeguro('cargo_contratista') ?>").val(data.datos.cargo_persona_natural);
+
                             $("#<?php echo $this->campoSeguro('correo_proveedor') ?>").val(data.datos.correo_contacto);
 
                         } else {

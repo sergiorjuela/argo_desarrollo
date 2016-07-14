@@ -709,7 +709,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -720,7 +720,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -736,7 +736,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -747,7 +747,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -763,7 +763,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -774,7 +774,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -791,7 +791,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -802,7 +802,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -818,7 +818,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -829,7 +829,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -845,7 +845,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -856,7 +856,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -871,7 +871,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -882,7 +882,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -897,7 +897,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -908,7 +908,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -916,14 +916,14 @@ class registrarForm {
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-                    $esteCampo = 'ubicacion_proveedor';
+                    $esteCampo = 'genero';
                     $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
                     $atributos ['tipo'] = 'text';
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -934,7 +934,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -953,7 +953,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -964,7 +964,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -979,7 +979,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -990,7 +990,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -1006,7 +1006,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -1017,7 +1017,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -1033,7 +1033,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -1044,7 +1044,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -1063,7 +1063,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -1074,7 +1074,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -1089,7 +1089,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -1100,7 +1100,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -1115,7 +1115,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = true;
+                    $atributos ["etiquetaObligatorio"] = false;
                     $atributos ['columnas'] = 5;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -1126,7 +1126,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 180;
+                    $atributos ['anchoEtiqueta'] = 200;
                     $tab ++;
 
                     // Aplica atributos globales al control

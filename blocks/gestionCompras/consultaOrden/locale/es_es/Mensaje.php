@@ -57,8 +57,8 @@ $this->idioma ["identifcacion_proveedorTitulo"] = "Ingrese Nit De Acuerdo con  l
 $this->idioma ["direccion_proveedor"] = "Dirección :";
 $this->idioma ["direccion_proveedorTitulo"] = "Ingrese Dirección del Proveedor";
 
-$this->idioma ["telefono_proveedor"] = "Teléfono Fijo :";
-$this->idioma ["telefono_proveedorTitulo"] = "Ingrese Teléfono Fijo del Proveedor";
+$this->idioma ["telefono_proveedor"] = "Teléfonos :";
+$this->idioma ["telefono_proveedorTitulo"] = "telefonos del contacto del proveedor";
 
 $this->idioma ["nombre_contratista"] = "Nombre Contratista :";
 $this->idioma ["nombre_contratistaTitulo"] = "Ingrese Nombre del Contratista";
@@ -94,6 +94,9 @@ $this->idioma ["paisTitulo"] = "Pais de Origen";
 //--------------------
 $this->idioma ["botonContratista"] = "Buscar Proveedor ";
 
+
+$this->idioma ["genero"] = "Genero: ";
+$this->idioma ["generoTitulo"] = "Genero del Proveedor";
 
 $this->idioma ["botonAprobacionMultiple"] = "Aprobación Multiple ";
 $this->idioma ["botonAprobarMultiple"] = "Aprobar Contratos ";

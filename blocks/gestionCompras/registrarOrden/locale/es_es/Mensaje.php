@@ -120,8 +120,8 @@ $this->idioma ["direccion_proveedorTitulo"] = "Ingrese Dirección del Proveedor"
 $this->idioma ["sitio_web"] = "Sitio Web :";
 $this->idioma ["sitio_webTitulo"] = "Sitio Web del proveedor";
 
-$this->idioma ["ubicacion_proveedor"] = "Ubicación local: ";
-$this->idioma ["ubicacion_proveedorTitulo"] = "Ubicación del proveddor a nivel nacional(Colombia)";
+$this->idioma ["genero"] = "Genero: ";
+$this->idioma ["generoTitulo"] = "Genero del Proveedor";
 
 $this->idioma ["nombre_acesor"] = "Nombre del Acesor: ";
 $this->idioma ["nombre_acesorTitulo"] = "Nombre del acesor";
@@ -132,8 +132,8 @@ $this->idioma ["procedenciaTitulo"] = "Procedencia representante";
 $this->idioma ["pais"] = "Pais de Contacto: ";
 $this->idioma ["paisTitulo"] = "Pais de Contacto";
 
-$this->idioma ["telefono_proveedor"] = "Teléfono Fijo :";
-$this->idioma ["telefono_proveedorTitulo"] = "Ingrese Teléfono Fijo del Proveedor";
+$this->idioma ["telefono_proveedor"] = "Teléfonos :";
+$this->idioma ["telefono_proveedorTitulo"] = "telefonos del contacto del proveedor";
 
 
 $this->idioma ["correo_proveedor"] = "Correo Electronico:";
