@@ -93,8 +93,8 @@ if ($_REQUEST ['funcion'] == 'consultaProveedor') {
     
     $parametro = $_REQUEST ['proveedor'];
     $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
-    $url = "http://10.20.0.38/agora/index.php?";
-    $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&Parametro1=$parametro";
+    $url = "http://10.20.2.38/agora/index.php?";
+    $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&parametro1=$parametro";
     $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar_url($data, $enlace);
     $cliente = curl_init();
     curl_setopt($cliente, CURLOPT_SSL_VERIFYPEER, false);

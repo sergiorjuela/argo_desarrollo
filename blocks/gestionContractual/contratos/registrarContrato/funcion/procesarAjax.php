@@ -24,16 +24,16 @@ if ($_REQUEST ['funcion'] == 'obtenerGeneros') {
 }
 //-------------------------Obtener Solicitud y CDPs por Vigencia ----------------------------------------------------------
 if ($_REQUEST ['funcion'] == 'ObtenerSolicitudesCdp') {
-    
-    $datos = array (0 => $_REQUEST ['unidad'],1 =>$_REQUEST ['vigencia']);
+
+    $datos = array(0 => $_REQUEST ['unidad'], 1 => $_REQUEST ['vigencia']);
     $cadenaSql = $this->sql->getCadenaSql('obtener_solicitudes_vigencia', $datos);
     $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
     $resultado = json_encode($resultadoItems);
     echo $resultado;
 }
 if ($_REQUEST ['funcion'] == 'ObtenerCdps') {
-    
-    $datos = array ( 1 => $_REQUEST ['numsol'], 0=> $_REQUEST ['vigencia'],2 => $_REQUEST ['unidad'],3 => $_REQUEST ['cdps']);
+
+    $datos = array(1 => $_REQUEST ['numsol'], 0 => $_REQUEST ['vigencia'], 2 => $_REQUEST ['unidad'], 3 => $_REQUEST ['cdps']);
     $cadenaSql = $this->sql->getCadenaSql('obtener_cdp_numerosol', $datos);
     $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
     $resultado = json_encode($resultadoItems);
@@ -54,13 +54,13 @@ if ($_REQUEST ['funcion'] == 'AlmacenarDatos') {
     echo $idContratoTemp;
     $cadenaVerificarTemp = $this->sql->getCadenaSql('obtenerInfoTemporal', $idContratoTemp);
     $infoTemp = $esteRecursoDB->ejecutarAcceso($cadenaVerificarTemp, "busqueda");
-    if($infoTemp != false){
-    echo "entro";
-     $cadenaEliminarInfoTemporal = $this->sql->getCadenaSql('eliminarInfoTemporal', $idContratoTemp);
-     $infoTemp = $esteRecursoDB->ejecutarAcceso($cadenaEliminarInfoTemporal, "acceso");
-     //var_dump($cadenaEliminarInfoTemporal);
+    if ($infoTemp != false) {
+        echo "entro";
+        $cadenaEliminarInfoTemporal = $this->sql->getCadenaSql('eliminarInfoTemporal', $idContratoTemp);
+        $infoTemp = $esteRecursoDB->ejecutarAcceso($cadenaEliminarInfoTemporal, "acceso");
+        //var_dump($cadenaEliminarInfoTemporal);
     }
-   
+
     for ($i = 0; $i < count($arregloDatos); $i++) {
         $Datos = explode(";", $arregloDatos[$i]);
         $infoCadena = array('campo' => substr($this->miConfigurador->fabricaConexiones->crypto->decodificar($Datos[1], $enlace), 0, -10),
@@ -72,16 +72,15 @@ if ($_REQUEST ['funcion'] == 'AlmacenarDatos') {
         var_dump($cadenaSql);
         $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
     }
-  
 }
-    
-    //-------------------------Obtener Proveedor ----------------------------------------------------------
+
+//-------------------------Obtener Proveedor ----------------------------------------------------------
 if ($_REQUEST ['funcion'] == 'consultaProveedor') {
-    
+
     $parametro = $_REQUEST ['proveedor'];
     $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
-    $url = "http://10.20.0.38/agora/index.php?";
-    $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&Parametro1=$parametro";
+    $url = "http://10.20.2.38/agora/index.php?";
+    $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&parametro1=$parametro";
     $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar_url($data, $enlace);
     $cliente = curl_init();
     curl_setopt($cliente, CURLOPT_SSL_VERIFYPEER, false);

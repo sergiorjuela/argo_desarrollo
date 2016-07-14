@@ -21,6 +21,9 @@ $this->idioma ["selec_proveedorTitulo"] = "Ingrese la cedula del contratista y d
 
 $this->idioma ["botonContratista"] = "Buscar Contratista: ";
 
+$this->idioma ["nombre_representante"] = "Representante: ";
+
+
 
 $this->idioma ["numero_contrato"] = "Número de Contrato: ";
 $this->idioma ["numero_contratoTitulo"] = "Ingrese Número de Contrato";

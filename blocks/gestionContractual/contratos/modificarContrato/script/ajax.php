@@ -278,49 +278,65 @@ $urlPersonaGenero = $url . $cadena3;
 
                     if (data.datos != 'null') {
                         if (data.status == 200) {
-                            console.log(data.datos);
-                            $("#<?php echo $this->campoSeguro('numero_identificacion') ?>").val(data.datos.nit);
-                            $("#<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").val(data.datos.nomempresa);
-                            $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data.datos.digitoverificacion);
-                            $("#<?php echo $this->campoSeguro('direccion') ?>").val(data.datos.direccion);
-                            $("#<?php echo $this->campoSeguro('correo') ?>").val(data.datos.correo);
-                            $("#<?php echo $this->campoSeguro('telefono') ?>").val(data.datos.telefono);
-                            if (data.datos.pais == null) {
-                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").val(3);
-                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").select2();
-                            } else {
-                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").val(4);
-                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").select2();
-                            }
-                            $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(data.datos.tipopersona);
-                            $("#<?php echo $this->campoSeguro('tipo_persona') ?>").select2();
 
-                            if (data.datos.tipodocumento == 1) {
-                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").val(184);
-                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").select2();
+                            $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(data.datos.tipo_persona);
+                            if (data.datos.tipo_persona != 'NATURAL') {
+                               
+                                $("#<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").val(data.datos.nom_empresa);
+                                $("#<?php echo $this->campoSeguro('numero_identificacion') ?>").val(data.datos.num_nit_empresa);
+                                $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data.datos.digito_verificacion_empresa);
+                                $("#<?php echo $this->campoSeguro('telefono') ?>").val(data.datos.telefono_empresa + ' - ' + data.datos.movil_empresa);
+                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").val(data.datos.nom_pais_empresa + ' (' + data.datos.nom_departamento_empresa + ' - ' + data.datos.nom_ciudad_empresa + ')');
+                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").val("NIT");
+                                $("#<?php echo $this->campoSeguro('identifcacion_contratista') ?>").val(data.datos.num_documento_representante);
+                                $("#<?php echo $this->campoSeguro('cargo_contratista') ?>").val(data.datos.cargo_representante);
+                                $("#<?php echo $this->campoSeguro('genero') ?>").val(data.datos.genero_empresa);
+                                $("#<?php echo $this->campoSeguro('perfil') ?>").val(data.datos.perfil_representante);
+                                $("#<?php echo $this->campoSeguro('profesion') ?>").val(data.datos.profesion_representante);
+                                $("#<?php echo $this->campoSeguro('especialidad') ?>").val(data.datos.especialidad_representante);
+                                $("#<?php echo $this->campoSeguro('nombre_representante') ?>").val(data.datos.primer_nombre_representante + ' '
+                                        + data.datos.segundo_nombre_representante + ' ' + data.datos.primer_nombre_representante + ' ' + data.datos.segundo_apellido_representante+ ' ('+ data.datos.cargo_representante+')');
+                                $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").val(data.datos.tipo_cuenta_bancaria_empresa);
+                                $("#<?php echo $this->campoSeguro('numero_cuenta') ?>").val(data.datos.num_cuenta_bancaria_empresa);
+                                $("#<?php echo $this->campoSeguro('entidad_bancaria') ?>").val(data.datos.nom_banco_empresa);
+                                $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").val("N/A");
                             } else {
-                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").val(190);
-                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").select2();
+               
+                                $("#<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").val(data.datos.primer_nombre_persona_natural +
+                                        ' ' + data.datos.segundo_nombre_persona_natural + ' ' + data.datos.primer_apellido_persona_natural + ' ' +
+                                        data.datos.segundo_nombre_persona_natural);
+                                $("#<?php echo $this->campoSeguro('numero_identificacion') ?>").val(data.datos.num_documento_persona_natural);
+                                $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data.datos.digito_verificacion_persona_natural);
+                                $("#<?php echo $this->campoSeguro('telefono') ?>").val(data.datos.telefono_persona_natural + ' - ' + data.datos.movil_persona_natural);
+                                $("#<?php echo $this->campoSeguro('nacionalidad') ?>").val(data.datos.pais_nacimiento_persona_natural);
+                                $("#<?php echo $this->campoSeguro('cargo_contratista') ?>").val(data.datos.cargo_persona_natural);
+                                $("#<?php echo $this->campoSeguro('genero') ?>").val(data.datos.genero_persona_natural);
+                                $("#<?php echo $this->campoSeguro('tipo_identificacion') ?>").val(data.datos.tipo_documento_persona_natural);
+                                $("#<?php echo $this->campoSeguro('nombre_acesor') ?>").val('N/A');
+                                $("#<?php echo $this->campoSeguro('nombre_contratista') ?>").val('N/A');
+                                $("#<?php echo $this->campoSeguro('identifcacion_contratista') ?>").val('N/A');
+                                $("#<?php echo $this->campoSeguro('perfil') ?>").val(data.datos.perfil_persona_natural);
+                                $("#<?php echo $this->campoSeguro('profesion') ?>").val(data.datos.profesion_persona_natural);
+                                $("#<?php echo $this->campoSeguro('especialidad') ?>").val(data.datos.especialidad_persona_natural);
+                                $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").val(data.datos.tipo_cuenta_bancaria_persona_natural);
+                                $("#<?php echo $this->campoSeguro('numero_cuenta') ?>").val(data.datos.num_cuenta_bancaria_persona_natural);
+                                $("#<?php echo $this->campoSeguro('entidad_bancaria') ?>").val(data.datos.nom_banco_persona_natural);
+                                $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").val("N/A");
+                                $("#<?php echo $this->campoSeguro('nombre_representante') ?>").val("N/A");
+
                             }
-                            //----------------------Vacios Temporalmente Mientras se termina de Reestructurar Agora----------------
-                          
-                             $("#<?php echo $this->campoSeguro('genero') ?>").val(null);
-                             //$("#<?php echo $this->campoSeguro('genero') ?>").select2();
-                             $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").val(null);
-                             $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").select2();
-                             $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").val(null);
-                             $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").select2();
-                             $("#<?php echo $this->campoSeguro('perfil') ?>").val(null);
-                             $("#<?php echo $this->campoSeguro('perfil') ?>").select2();
-                             $("#<?php echo $this->campoSeguro('clase_contratista') ?>").val(null);
-                             $("#<?php echo $this->campoSeguro('clase_contratista') ?>").select2();
-                             $("#<?php echo $this->campoSeguro('profesion') ?>").val("");
-                             $("#<?php echo $this->campoSeguro('especialidad') ?>").val("");
-                             $("#<?php echo $this->campoSeguro('numero_cuenta') ?>").val("");
-                             $("#<?php echo $this->campoSeguro('entidad_bancaria') ?>").val("");
-                             
-                            
-                            
+
+
+                            $("#<?php echo $this->campoSeguro('direccion') ?>").val(data.datos.dir_contacto);
+                            $("#<?php echo $this->campoSeguro('sitio_web') ?>").val(data.datos.web_contacto);
+                            $("#<?php echo $this->campoSeguro('pais') ?>").val(data.datos.nom_pais_contacto + ' (' + data.datos.nom_departamento_contacto + ' - ' + data.datos.nom_ciudad_contacto + ')');
+
+
+                            $("#<?php echo $this->campoSeguro('correo') ?>").val(data.datos.correo_contacto);
+
+
+
+
 
                         } else {
                             alert("Sin Cocincidencias en la Busqueda.");

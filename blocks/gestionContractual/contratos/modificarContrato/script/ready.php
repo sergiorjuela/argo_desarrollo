@@ -6,14 +6,7 @@ $_REQUEST ['tiempo'] = time ();
 
 	 
 
-                
-        $("#<?php echo $this->campoSeguro('tipo_identificacion')?>").select2();
-	$("#<?php echo $this->campoSeguro('tipo_persona')?>").select2(); 
-	$("#<?php echo $this->campoSeguro('genero')?>").select2();
-	$("#<?php echo $this->campoSeguro('nacionalidad')?>").select2(); 
-	$("#<?php echo $this->campoSeguro('perfil')?>").select2();
-	$("#<?php echo $this->campoSeguro('tipo_cuenta')?>").select2(); 
-	$("#<?php echo $this->campoSeguro('tipo_configuracion')?>").select2();
+       
 	$("#<?php echo $this->campoSeguro('clase_contratista')?>").select2();
 	
 
