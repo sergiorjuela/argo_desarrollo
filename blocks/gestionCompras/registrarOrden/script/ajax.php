@@ -651,6 +651,7 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
                         if (data.status == 200) {
 
                             $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(data.datos.tipo_persona);
+                            
                             if (data.datos.tipo_persona != 'NATURAL') {
                                 $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data.datos.nom_empresa);
                                 $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val('NIT: ' + data.datos.num_nit_empresa);

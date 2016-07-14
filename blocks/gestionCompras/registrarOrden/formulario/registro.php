@@ -621,6 +621,10 @@ class registrarForm {
                 $atributos ['leyenda'] = "Información del Contratista";
                 echo $this->miFormulario->agrupacion('inicio', $atributos); {
 
+
+                    echo "<center>";
+                    echo "<h3>Consulta de Contratista</h3>";
+
                     $esteCampo = "selec_proveedor";
                     $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
@@ -632,7 +636,7 @@ class registrarForm {
                     $atributos ['columnas'] = 1;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
-                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+                    $atributos ['etiqueta'] = "";
                     $atributos ['validar'] = ' ';
                     $atributos ['textoFondo'] = 'Ingrese el documento y de clic en el boton que aparece a continuación.';
 
@@ -655,6 +659,12 @@ class registrarForm {
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
 
+                    echo "</center>";
+
+                    $atributos ["id"] = "botones";
+                    $atributos ["estilo"] = "marcoBotones";
+                    echo $this->miFormulario->division("inicio", $atributos);
+
                     $esteCampo = 'botonContratista';
                     $atributos ["id"] = $esteCampo;
                     $atributos ["tabIndex"] = $tab;
@@ -673,6 +683,8 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoBoton($atributos);
                     unset($atributos);
+
+                    echo $this->miFormulario->division('fin');
 
 
                     $esteCampo = 'id_proveedor';
@@ -730,7 +742,7 @@ class registrarForm {
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'identifcacion_proveedor';
-                     $atributos ['id'] = $esteCampo;
+                    $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
                     $atributos ['tipo'] = 'text';
                     $atributos ['estilo'] = 'jqueryui';
@@ -757,7 +769,7 @@ class registrarForm {
 
                     //-----Campo digito de verificacion
                     $esteCampo = 'digito_verificacion';
-                     $atributos ['id'] = $esteCampo;
+                    $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
                     $atributos ['tipo'] = 'text';
                     $atributos ['estilo'] = 'jqueryui';
@@ -839,7 +851,7 @@ class registrarForm {
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'telefono_proveedor';
-                     $atributos ['id'] = $esteCampo;
+                    $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
                     $atributos ['tipo'] = 'text';
                     $atributos ['estilo'] = 'jqueryui';
@@ -865,7 +877,7 @@ class registrarForm {
                     unset($atributos);
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'sitio_web';
-                     $atributos ['id'] = $esteCampo;
+                    $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
                     $atributos ['tipo'] = 'text';
                     $atributos ['estilo'] = 'jqueryui';
@@ -973,7 +985,7 @@ class registrarForm {
                     unset($atributos);
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'nombre_contratista';
-                     $atributos ['id'] = $esteCampo;
+                    $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
                     $atributos ['tipo'] = 'text';
                     $atributos ['estilo'] = 'jqueryui';
@@ -1083,7 +1095,7 @@ class registrarForm {
                     unset($atributos);
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'cargo_contratista';
-                     $atributos ['id'] = $esteCampo;
+                    $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
                     $atributos ['tipo'] = 'text';
                     $atributos ['estilo'] = 'jqueryui';
@@ -1136,7 +1148,6 @@ class registrarForm {
 
                     //-----Campos Hidden para capturar la informacion del adicional del proveedor 
                     //-----Hidden registro mercantil
-                  
                 }
                 echo $this->miFormulario->agrupacion('fin');
 
@@ -1192,7 +1203,6 @@ class registrarForm {
                     echo $this->miFormulario->agrupacion('inicio', $atributos);
                     $cadenaSql = $this->miSql->getCadenaSql('polizas');
                     $resultado_polizas = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
-            
                     {
                         for ($i = 0; $i < count($resultado_polizas); $i ++) {
 
@@ -1322,7 +1332,7 @@ class registrarForm {
                     echo $this->miFormulario->division('fin');
                 }
                 echo $this->miFormulario->agrupacion('fin');
-           
+
                 $esteCampo = "AgrupacionReferentePago";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = "Duración de Contrato";
@@ -1634,7 +1644,7 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-                    
+
                     $atributos ["id"] = "tipo_ordenador"; // No cambiar este nombre
                     $atributos ["tipo"] = "hidden";
                     $atributos ['estilo'] = '';

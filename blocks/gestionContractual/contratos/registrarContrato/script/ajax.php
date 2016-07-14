@@ -212,7 +212,7 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
 
                             $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(data.datos.tipo_persona);
                             if (data.datos.tipo_persona != 'NATURAL') {
-                               
+
                                 $("#<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").val(data.datos.nom_empresa);
                                 $("#<?php echo $this->campoSeguro('numero_identificacion') ?>").val(data.datos.num_nit_empresa);
                                 $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data.datos.digito_verificacion_empresa);
@@ -226,13 +226,13 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
                                 $("#<?php echo $this->campoSeguro('profesion') ?>").val(data.datos.profesion_representante);
                                 $("#<?php echo $this->campoSeguro('especialidad') ?>").val(data.datos.especialidad_representante);
                                 $("#<?php echo $this->campoSeguro('nombre_representante') ?>").val(data.datos.primer_nombre_representante + ' '
-                                        + data.datos.segundo_nombre_representante + ' ' + data.datos.primer_nombre_representante + ' ' + data.datos.segundo_apellido_representante+ ' ('+ data.datos.cargo_representante+')');
+                                        + data.datos.segundo_nombre_representante + ' ' + data.datos.primer_apellido_representante + ' ' + data.datos.segundo_apellido_representante + ' (' + data.datos.cargo_representante + ')');
                                 $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").val(data.datos.tipo_cuenta_bancaria_empresa);
                                 $("#<?php echo $this->campoSeguro('numero_cuenta') ?>").val(data.datos.num_cuenta_bancaria_empresa);
                                 $("#<?php echo $this->campoSeguro('entidad_bancaria') ?>").val(data.datos.nom_banco_empresa);
-                                $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").val("N/A");
+                                $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").val(data.datos.tipo_conformacion_empresa);
                             } else {
-               
+
                                 $("#<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").val(data.datos.primer_nombre_persona_natural +
                                         ' ' + data.datos.segundo_nombre_persona_natural + ' ' + data.datos.primer_apellido_persona_natural + ' ' +
                                         data.datos.segundo_nombre_persona_natural);

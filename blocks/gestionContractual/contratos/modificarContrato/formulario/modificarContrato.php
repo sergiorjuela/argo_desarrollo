@@ -94,7 +94,8 @@ class registrarForm {
         $atributos ['tipoEtiqueta'] = 'inicio';
         $atributos ["leyenda"] = "Actualizar Contrato";
         echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
-        unset($atributos); {
+        unset($atributos);
+        {
 
             $ventanaClaseContratista = 'none';
             $ventanaConvenio = 'none';
@@ -219,7 +220,8 @@ class registrarForm {
             // ------------------Division para los botones-------------------------
             $atributos ["id"] = "ventanaA";
             echo $this->miFormulario->division("inicio", $atributos);
-            unset($atributos); {
+            unset($atributos);
+            {
 
                 //-------------- Se accede al Servicio de Agora para Consultar el Proveedor de la Orden de Compra -------------------------------------------------------------------
 
@@ -244,14 +246,14 @@ class registrarForm {
 
 
                 echo "<h3>Datos Personales</h3>
-							<section>"; {
+							<section>";
+                {
 
 
 
                     echo "<center>";
+                    echo "<h3>Consulta de Contratista</h3>";
 
-
-                    var_dump($proveedor);
                     $esteCampo = "selec_proveedor";
                     $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
@@ -263,7 +265,7 @@ class registrarForm {
                     $atributos ['columnas'] = 1;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
-                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+                    $atributos ['etiqueta'] = "";
                     $atributos ['validar'] = ' ';
                     $atributos ['textoFondo'] = 'Ingrese el documento y de clic en el boton que aparece a continuación.';
 
@@ -328,7 +330,13 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = "NIT";
+                    } else {
+                        $atributos ['valor'] = utf8_decode ($proveedor['tipo_documento_persona_natural']);
+                    }
+
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -354,7 +362,11 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = $proveedor['num_nit_empresa'];
+                    } else {
+                        $atributos ['valor'] = $proveedor['num_documento_persona_natural'];
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -385,7 +397,11 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = $proveedor['digito_verificacion_empresa'];
+                    } else {
+                        $atributos ['valor'] = $proveedor['digito_verificacion_persona_natural'];
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -414,7 +430,7 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    $atributos ['valor'] = $proveedor['tipo_persona'];
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -446,7 +462,14 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = $proveedor['nom_empresa'];
+                    } else {
+                        $atributos ['valor'] = $proveedor['primer_nombre_persona_natural'] . " " .
+                                $proveedor['segundo_nombre_persona_natural'] . " " .
+                                $proveedor['primer_apellido_persona_natural'] . " " .
+                                $proveedor['segundo_nombre_persona_natural'];
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -474,7 +497,11 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = $proveedor['genero_empresa'];
+                    } else {
+                        $atributos ['valor'] = $proveedor['genero_persona_natural'];
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -500,7 +527,11 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = $proveedor['nom_pais_empresa'] . " (" . $proveedor['nom_departamento_empresa'] . " - " . $proveedor['nom_ciudad_empresa'] . ")";
+                    } else {
+                        $atributos ['valor'] = $proveedor['pais_nacimiento_persona_natural'];
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -528,7 +559,7 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    $atributos ['valor'] = $proveedor['dir_contacto'];
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -554,7 +585,11 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = $proveedor['telefono_empresa'] . " -" . $proveedor['movil_empresa'];
+                    } else {
+                        $atributos ['valor'] = $proveedor['telefono_persona_natural'] . " -" . $proveedor['movil_persona_natural'];
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -566,8 +601,6 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
-
-
 
                     $esteCampo = 'nombre_representante';
                     $atributos ['id'] = $esteCampo;
@@ -582,7 +615,13 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = $proveedor['primer_nombre_representante'] . " " .
+                                $proveedor['segundo_nombre_representante'] . " " . $proveedor['primer_apellido_representante'] . " " .
+                                $proveedor['segundo_apellido_representante'];
+                    } else {
+                        $atributos ['valor'] = "N/A";
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -606,7 +645,7 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    $atributos ['valor'] = $proveedor['correo_contacto'];
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -632,7 +671,11 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = $proveedor['perfil_representante'];
+                    } else {
+                        $atributos ['valor'] = $proveedor['perfil_persona_natural'];
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -661,7 +704,11 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = $proveedor['profesion_representante'];
+                    } else {
+                        $atributos ['valor'] = $proveedor['profesion_persona_natural'];
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -687,7 +734,11 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = '';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = $proveedor['especialidad_representante'];
+                    } else {
+                        $atributos ['valor'] = $proveedor['especialidad_persona_natural'];
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -713,7 +764,11 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = $proveedor['tipo_cuenta_bancaria_empresa'];
+                    } else {
+                        $atributos ['valor'] = $proveedor['tipo_cuenta_bancaria_persona_natural'];
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -739,7 +794,11 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = $proveedor['num_cuenta_bancaria_empresa'];
+                    } else {
+                        $atributos ['valor'] = $proveedor['num_cuenta_bancaria_persona_natural'];
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -767,7 +826,11 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = $proveedor['nom_banco_empresa'];
+                    } else {
+                        $atributos ['valor'] = $proveedor['nom_banco_persona_natural'];
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -793,7 +856,11 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['valor'] = "";
+                    if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                        $atributos ['valor'] = utf8_decode ($proveedor['tipo_conformacion_empresa']);
+                    } else {
+                        $atributos ['valor'] = "N/A";
+                    }
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 25;
@@ -848,7 +915,8 @@ class registrarForm {
                     $atributos ["estiloEnLinea"] = "display:" . $ventanaClaseContratista;
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->division("inicio", $atributos);
-                    unset($atributos); {
+                    unset($atributos);
+                    {
 
                         $esteCampo = 'identificacion_clase_contratista';
                         $atributos ['id'] = $esteCampo;
@@ -950,11 +1018,13 @@ class registrarForm {
 
                 echo "</section>
 							<h3>Datos Contrato</h3>
-							<section>"; {
+							<section>";
+                {
 
                     $atributos ["id"] = "division";
                     echo $this->miFormulario->division("inicio", $atributos);
-                    unset($atributos); {
+                    unset($atributos);
+                    {
 
                         $esteCampo = 'clase_contrato';
                         $atributos ['columnas'] = 2;
@@ -1035,7 +1105,8 @@ class registrarForm {
                         $atributos ["estiloEnLinea"] = "display:" . $ventanaConvenio;
                         $atributos = array_merge($atributos, $atributosGlobales);
                         echo $this->miFormulario->division("inicio", $atributos);
-                        unset($atributos); {
+                        unset($atributos);
+                        {
 
                             $esteCampo = 'numero_convenio';
                             $atributos ['id'] = $esteCampo;
@@ -1173,7 +1244,8 @@ class registrarForm {
 
                     $atributos ["id"] = "division";
                     echo $this->miFormulario->division("inicio", $atributos);
-                    unset($atributos); {
+                    unset($atributos);
+                    {
 
                         $esteCampo = 'plazo_ejecucion';
                         $atributos ['id'] = $esteCampo;
@@ -1307,7 +1379,8 @@ class registrarForm {
 
                     $atributos ["id"] = "division";
                     echo $this->miFormulario->division("inicio", $atributos);
-                    unset($atributos); {
+                    unset($atributos);
+                    {
 
                         $esteCampo = 'fecha_inicio_poliza';
                         $atributos ['id'] = $esteCampo;
@@ -1378,7 +1451,8 @@ class registrarForm {
 
                     $atributos ["id"] = "division";
                     echo $this->miFormulario->division("inicio", $atributos);
-                    unset($atributos); {
+                    unset($atributos);
+                    {
 
                         $esteCampo = 'dependencia';
                         $atributos ['columnas'] = 2;
@@ -1460,7 +1534,8 @@ class registrarForm {
 
                     $atributos ["id"] = "division";
                     echo $this->miFormulario->division("inicio", $atributos);
-                    unset($atributos); {
+                    unset($atributos);
+                    {
 
                         $esteCampo = 'numero_constancia';
                         $atributos ['id'] = $esteCampo;
@@ -1536,7 +1611,8 @@ class registrarForm {
 
                     $atributos ["id"] = "division";
                     echo $this->miFormulario->division("inicio", $atributos);
-                    unset($atributos); {
+                    unset($atributos);
+                    {
 
                         $esteCampo = 'procedimiento';
                         $atributos ['columnas'] = 2;
@@ -1619,11 +1695,13 @@ class registrarForm {
 
                 echo "</section>
 							<h3>Información Presupuestal</h3>
-							<section>"; {
+							<section>";
+                {
 
                     $atributos ["id"] = "division";
                     echo $this->miFormulario->division("inicio", $atributos);
-                    unset($atributos); {
+                    unset($atributos);
+                    {
 
                         $esteCampo = 'tipo_moneda';
                         $atributos ['columnas'] = 2;
@@ -1700,7 +1778,8 @@ class registrarForm {
                     $esteCampo = "AgrupacionDisponibilidad";
                     $atributos ['id'] = $esteCampo;
                     $atributos ['leyenda'] = "Disponibilidades Presupuestales Asociadas";
-                    echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                    echo $this->miFormulario->agrupacion('inicio', $atributos);
+                    {
                         if ($disponibilidad) {
                             echo "<table id='tablaDisponibilidades'>";
 
@@ -1740,7 +1819,8 @@ class registrarForm {
                     $esteCampo = "AgrupacionRegistrosP";
                     $atributos ['id'] = $esteCampo;
                     $atributos ['leyenda'] = "Registros Presupuestales Asociados";
-                    echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                    echo $this->miFormulario->agrupacion('inicio', $atributos);
+                    {
                         if ($registrosPresupuestales) {
                             echo "<center><table id='tablaRegistros'>";
 
@@ -1818,7 +1898,8 @@ class registrarForm {
 
                     $atributos ["id"] = "division";
                     echo $this->miFormulario->division("inicio", $atributos);
-                    unset($atributos); {
+                    unset($atributos);
+                    {
 
                         $esteCampo = 'tipo_gasto';
                         $atributos ['columnas'] = 2;
@@ -1900,7 +1981,8 @@ class registrarForm {
 
                     $atributos ["id"] = "division";
                     echo $this->miFormulario->division("inicio", $atributos);
-                    unset($atributos); {
+                    unset($atributos);
+                    {
 
                         $esteCampo = 'origen_presupuesto';
                         $atributos ['columnas'] = 2;
@@ -1982,7 +2064,8 @@ class registrarForm {
 
                     $atributos ["id"] = "division";
                     echo $this->miFormulario->division("inicio", $atributos);
-                    unset($atributos); {
+                    unset($atributos);
+                    {
 
                         $esteCampo = 'valor_contrato_moneda_ex';
                         $atributos ['id'] = $esteCampo;
@@ -2085,7 +2168,8 @@ class registrarForm {
 
                 echo "</section>
 							<h3>Supervisión del Contrato</h3>
-							<section>"; {
+							<section>";
+                {
 
                     $esteCampo = 'tipo_control';
                     $atributos ['columnas'] = 1;
@@ -2126,7 +2210,8 @@ class registrarForm {
 
                     $atributos ["id"] = "division";
                     echo $this->miFormulario->division("inicio", $atributos);
-                    unset($atributos); {
+                    unset($atributos);
+                    {
 
                         $esteCampo = 'supervisor';
                         $atributos ['columnas'] = 1;
@@ -2171,7 +2256,8 @@ class registrarForm {
 
                     $atributos ["id"] = "division";
                     echo $this->miFormulario->division("inicio", $atributos);
-                    unset($atributos); {
+                    unset($atributos);
+                    {
 
                         $esteCampo = 'digito_supervisor';
                         $atributos ['id'] = $esteCampo;

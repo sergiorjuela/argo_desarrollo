@@ -18,7 +18,7 @@
                     return true;
                 }else{
                     
-                    alert("Verifique las fechas de polizas seleccionadas previamente. Es posible que alguna este sin Regsitrar");
+                    alert("Verifique que todos los campos requeridos del formulario este debidamente registrados.");
                     return false;
                 
                 }

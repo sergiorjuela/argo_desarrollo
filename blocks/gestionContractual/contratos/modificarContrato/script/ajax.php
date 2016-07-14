@@ -295,11 +295,11 @@ $urlPersonaGenero = $url . $cadena3;
                                 $("#<?php echo $this->campoSeguro('profesion') ?>").val(data.datos.profesion_representante);
                                 $("#<?php echo $this->campoSeguro('especialidad') ?>").val(data.datos.especialidad_representante);
                                 $("#<?php echo $this->campoSeguro('nombre_representante') ?>").val(data.datos.primer_nombre_representante + ' '
-                                        + data.datos.segundo_nombre_representante + ' ' + data.datos.primer_nombre_representante + ' ' + data.datos.segundo_apellido_representante+ ' ('+ data.datos.cargo_representante+')');
+                                        + data.datos.segundo_nombre_representante + ' ' + data.datos.primer_apellido_representante + ' ' + data.datos.segundo_apellido_representante+ ' ('+ data.datos.cargo_representante+')');
                                 $("#<?php echo $this->campoSeguro('tipo_cuenta') ?>").val(data.datos.tipo_cuenta_bancaria_empresa);
                                 $("#<?php echo $this->campoSeguro('numero_cuenta') ?>").val(data.datos.num_cuenta_bancaria_empresa);
                                 $("#<?php echo $this->campoSeguro('entidad_bancaria') ?>").val(data.datos.nom_banco_empresa);
-                                $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").val("N/A");
+                                $("#<?php echo $this->campoSeguro('tipo_configuracion') ?>").val(data.datos.tipo_conformacion_empresa);
                             } else {
                
                                 $("#<?php echo $this->campoSeguro('nombre_Razon_Social') ?>").val(data.datos.primer_nombre_persona_natural +

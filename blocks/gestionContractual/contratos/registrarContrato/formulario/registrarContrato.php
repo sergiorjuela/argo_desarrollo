@@ -200,6 +200,7 @@ class registrarForm {
                     // ------------------Division para los botones-------------------------
 
                     echo "<center>";
+                    echo "<h3>Consulta de Contratista</h3>";
                     $esteCampo = "selec_proveedor";
                     $atributos ['id'] = $esteCampo;
                     $atributos ['nombre'] = $esteCampo;
@@ -211,7 +212,7 @@ class registrarForm {
                     $atributos ['columnas'] = 1;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
-                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+                    $atributos ['etiqueta'] = "";
                     $atributos ['validar'] = ' ';
                     $atributos ['textoFondo'] = 'Ingrese el documento y de clic en el boton que aparece a continuación.';
 
