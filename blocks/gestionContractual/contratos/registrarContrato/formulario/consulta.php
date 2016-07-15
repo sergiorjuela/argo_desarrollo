@@ -306,10 +306,10 @@ class registrarForm {
         // Aplica atributos globales al control
         $atributos = array_merge($atributos, $atributosGlobales);
         echo $this->miFormulario->campoCuadroTexto($atributos);
-        
-     $sqlConsultaSolicitudRegistradas = $this->miSql->getCadenaSql("cdpRegistradas");
+
+        $sqlConsultaSolicitudRegistradas = $this->miSql->getCadenaSql("cdpRegistradas");
         $resultado = $DBContractual->ejecutarAcceso($sqlConsultaSolicitudRegistradas, "busqueda");
-       
+
 
         $esteCampo = 'cdpRegistradas';
         $atributos ['id'] = $esteCampo;

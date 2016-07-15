@@ -654,7 +654,7 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
                             
                             if (data.datos.tipo_persona != 'NATURAL') {
                                 $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data.datos.nom_empresa);
-                                $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val('NIT: ' + data.datos.num_nit_empresa);
+                                $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val(data.datos.num_nit_empresa);
                                 $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data.datos.digito_verificacion_empresa);
                                 $("#<?php echo $this->campoSeguro('telefono_proveedor') ?>").val(data.datos.telefono_empresa + ' - ' + data.datos.movil_empresa);
                                 $("#<?php echo $this->campoSeguro('procedencia') ?>").val(data.datos.nom_pais_empresa + ' (' + data.datos.nom_departamento_empresa + ' - ' + data.datos.nom_ciudad_empresa + ')');

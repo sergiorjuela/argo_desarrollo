@@ -66,8 +66,7 @@ class RegistradorOrden {
         } else {
             $fecha_fin = 'null';
         }
-
-
+        
         $datosContratoGeneral = array(
             'id_orden_contrato' => 1,
             'tipo_contrato' => 98,
@@ -135,7 +134,8 @@ class RegistradorOrden {
                 array_push($SQLs, $sqlPoliza);
             }
         }
-      
+        
+        
         $trans_actualizacion_orden = $esteRecursoDB->transaccion($SQLs);
 
         $datos = array('numero_contrato' => $Identificadores['numero_contrato'],

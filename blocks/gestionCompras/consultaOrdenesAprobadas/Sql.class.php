@@ -337,13 +337,12 @@ class Sql extends \Sql {
                 break;
 
 
-            case "obtenerPolizarOrden" :
-                $cadenaSql = " 	SELECT poliza ";
+             case "obtenerPolizarOrden" :
+                $cadenaSql = " 	SELECT poliza, fecha_inicio, fecha_final ";
                 $cadenaSql .= " FROM orden_poliza ";
                 $cadenaSql .= " WHERE orden=" . $variable;
 
                 break;
-
             case "ConsultarDescripcionParametro" :
                 $cadenaSql = "SELECT descripcion ";
                 $cadenaSql .= " FROM parametros ";

@@ -69,6 +69,9 @@ $this->idioma ["identifcacion_contratista"] = "Identificación Contratista:";
 $this->idioma ["identifcacion_contratistaTitulo"] = "Ingrese Identificación del Contratista";
 
 
+$this->idioma ["genero"] = "Genero: ";
+$this->idioma ["generoTitulo"] = "Genero del Proveedor";
+
 $this->idioma ["cargo_contratista"] = "Cargo :";
 $this->idioma ["cargo_contratistaTitulo"] = "Ingrese Cargo del Contratista";
 

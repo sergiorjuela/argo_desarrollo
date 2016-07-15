@@ -390,9 +390,3 @@ $("#<?php echo $this->campoSeguro('rubro')?>").select2({
           });  
           
           
-
-
-
-
-
-

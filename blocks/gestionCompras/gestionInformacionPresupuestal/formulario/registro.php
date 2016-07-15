@@ -99,6 +99,7 @@ class registrarForm {
 
             $valores_orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
             $valores_orden = $valores_orden [0];
+           
 
             $cadenaSql = $this->miSql->getCadenaSql('consultarDisponibilidades', $_REQUEST ['id_orden']);
 
@@ -209,7 +210,7 @@ class registrarForm {
                 unset($atributos);
                 echo "<br>";
                 echo "<br><br><a href='" . $variable_documento . "'><img src='" . $rutaBloque . "/css/images/pdf.png' width='50px'></a>";
-
+               
                 // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                 $esteCampo = 'botonDocumentos';
                 $atributos ['id'] = $esteCampo;

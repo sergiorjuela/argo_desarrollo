@@ -209,7 +209,7 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
 
                     if (data.datos != 'null') {
                         if (data.status == 200) {
-
+                            console.log(data.datos);
                             $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(data.datos.tipo_persona);
                             if (data.datos.tipo_persona != 'NATURAL') {
 

@@ -804,7 +804,7 @@ class registrarForm {
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
                     if ($proveedor['tipo_persona'] == 'JURIDICA') {
-                        $atributos ['valor'] = "NIT: " . $proveedor['num_nit_empresa'];
+                        $atributos ['valor'] = $proveedor['num_nit_empresa'];
                     } else {
                         $atributos ['valor'] = $proveedor['num_documento_persona_natural'];
                     }
@@ -1589,7 +1589,7 @@ class registrarForm {
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['evento'] = '';
                     $atributos ['seleccion'] = 240;
-                    $atributos ['deshabilitado'] = true;
+                    $atributos ['deshabilitado'] = false;
                     $atributos ['columnas'] = 3;
                     $atributos ['tamanno'] = 1;
                     $atributos ['estilo'] = "jqueryui";

@@ -51,7 +51,7 @@ $this->idioma ["botonCargo"] = "Otro Cargo";
 $this->idioma ["nombre_razon_proveedor"] = "Razón Social :";
 $this->idioma ["nombre_razon_proveedorTitulo"] = "Ingrese Razón Social";
 
-$this->idioma ["identifcacion_proveedor"] = "Nit :";
+$this->idioma ["identifcacion_proveedor"] = "Nit o Documento:";
 $this->idioma ["identifcacion_proveedorTitulo"] = "Ingrese Nit De Acuerdo con  la Razón Social";
 
 $this->idioma ["direccion_proveedor"] = "Dirección :";

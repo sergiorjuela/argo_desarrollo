@@ -784,7 +784,7 @@ class registrarForm {
                         $atributos ['tab'] = $tab;
                         $atributos ['tamanno'] = 1;
                         $atributos ['estilo'] = 'jqueryui';
-                        $atributos ['validar'] = 'required';
+                        $atributos ['validar'] = '';
                         $atributos ['limitar'] = true;
                         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                         $atributos ['anchoEtiqueta'] = 170;
@@ -813,7 +813,7 @@ class registrarForm {
                         $atributos ['nombre'] = $esteCampo;
                         $atributos ['id'] = $esteCampo;
                         $atributos ['evento'] = '';
-                        $atributos ['deshabilitado'] = true;
+                        $atributos ['deshabilitado'] = false;
                         $atributos ["etiquetaObligatorio"] = true;
                         $atributos ['tab'] = $tab;
                         $atributos ['tamanno'] = 1;

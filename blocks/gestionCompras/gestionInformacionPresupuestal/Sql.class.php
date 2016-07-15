@@ -684,7 +684,7 @@ class Sql extends \Sql {
 
                 $cadenaSql = "SELECT id_orden,SUM(total_iva_con) valor ";
                 $cadenaSql .= " FROM elemento_acta_recibido  ";
-                $cadenaSql .= " WHERE id_orden='" . $variable . "' ";
+                $cadenaSql .= " WHERE id_orden='" . $variable . "' and estado='t' ";
                 $cadenaSql .= " GROUP BY id_orden;  ";
                 break;
 

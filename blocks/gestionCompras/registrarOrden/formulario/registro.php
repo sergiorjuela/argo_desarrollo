@@ -1484,7 +1484,7 @@ class registrarForm {
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['evento'] = '';
                     $atributos ['seleccion'] = 240;
-                    $atributos ['deshabilitado'] = true;
+                    $atributos ['deshabilitado'] = false;
                     $atributos ['columnas'] = 3;
                     $atributos ['tamanno'] = 1;
                     $atributos ['estilo'] = "jqueryui";

@@ -52,6 +52,8 @@ class registrarForm {
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosOrden', $_REQUEST ['id_orden'] );
+            
+                
                 $ElementosOrden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
                 
 		
