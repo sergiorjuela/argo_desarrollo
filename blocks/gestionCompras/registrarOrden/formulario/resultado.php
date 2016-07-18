@@ -208,7 +208,7 @@ class registrarForm {
                                 <td><center>" . $solicitudesCDPs [$i] ['NOMBRE_DEPENDENCIA'] . "</center></td>		
                                 <td><center>" . $solicitudesCDPs [$i] ['ESTADO'] . "</center></td>
                                 <td><center>" . $solicitudesCDPs [$i] ['NUMERO_DISPONIBILIDAD'] . "</center></td>
-                                <td><center>" . $solicitudesCDPs [$i] ['VALOR_CONTRATACION'] . "</center></td>
+                                <td><center>" .  number_format($solicitudesCDPs [$i] ['VALOR_CONTRATACION'], 2, ",", ".") . "</center></td>
                                 <td><center>" . $solicitudesCDPs [$i] ['ESTADOCDP'] . "</center></td>
                                 <td><center>" . $solicitudesCDPs [$i] ['FECHA_REGISTRO'] . "</center></td>
                                 <td><center>
@@ -216,7 +216,7 @@ class registrarForm {
                                         <img src='" . $rutaBloque . "/css/images/contrato.png' width='20px'>
                                     </a>
                                 </center> </td>
-                	      		
+                	      		 
                                 </tr>";
                 echo $mostrarHtml;
                 unset($mostrarHtml);

@@ -230,19 +230,19 @@ class Sql extends \Sql {
                 $cadenaSql .= "WHERE rl.descripcion ='genero'; ";
 
                 break;
-            
-              case "tipo_genero_ajax" :
+
+            case "tipo_genero_ajax" :
 
                 $cadenaSql = "SELECT id_parametro  id, pr.descripcion valor   ";
                 $cadenaSql .= " FROM relacion_parametro rl ";
                 $cadenaSql .= "JOIN parametros pr ON pr.rel_parametro=rl.id_rel_parametro ";
                 $cadenaSql .= "WHERE rl.descripcion ='genero' and ";
-                if($variable == 1){
-                $condicion = " id_parametro <> 247; ";    
+                if ($variable == 1) {
+                    $condicion = " id_parametro <> 247; ";
                 } else {
-                $condicion = " id_parametro = 247; ";     
+                    $condicion = " id_parametro = 247; ";
                 }
-                
+
                 $cadenaSql .= $condicion;
 
                 break;
@@ -437,14 +437,14 @@ class Sql extends \Sql {
 
                 break;
 
-           case "Consultar_Solicitud_Particular" :
+            case "Consultar_Solicitud_Particular" :
                 $cadenaSql = " SELECT NUM_SOL_ADQ, OBJETO as objeto, DEPENDENCIA as dependencia, ";
                 $cadenaSql.=" VALOR_CONTRATACION as valor_contrato FROM CO.CO_SOLICITUD_ADQ WHERE ";
                 $cadenaSql.=" NUM_SOL_ADQ=$variable[0] and VIGENCIA=$variable[1] and CODIGO_UNIDAD_EJECUTORA = '0$variable[2]'";
 
                 break;
 
-           case "Consultar_Disponibilidad" :
+            case "Consultar_Disponibilidad" :
                 $cadenaSql = " SELECT DISTINCT CDP.NUMERO_DISPONIBILIDAD, CDP.VIGENCIA,";
                 $cadenaSql.=" CDP.FECHA_REGISTRO,SN.VALOR_CONTRATACION from ";
                 $cadenaSql.=" CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, CO.CO_DEPENDENCIAS DP ";
@@ -459,7 +459,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM \"SICapital\".registro_presupuestal rp ";
                 $cadenaSql .= " WHERE rp.estado_registro=true and rp.disponibilidad_presupuestal=$variable;";
                 break;
-            
+
             case "Consultar_Contratista" :
                 $cadenaSql = " SELECT cns.*, ib.tipo_cuenta,ib.nombre_banco,ib.numero_cuenta,ib.id_inf_bancaria,oc.id_orden_contr, sl.funcionario_solicitante  ";
                 $cadenaSql .= " FROM contratista cns";
@@ -607,6 +607,8 @@ class Sql extends \Sql {
                 $cadenaSql .= "ordenador_gasto=" . "'" . $variable ['ordenador_gasto'] . "',";
                 $cadenaSql .= "supervisor=" . "'" . $variable ['supervisor'] . "',";
                 $cadenaSql .= "clausula_registro_presupuestal=" . $variable ['clausula_presupuesto'] . ",";
+                $cadenaSql .= "contratista=" . $variable ['contratista'] . ",";
+                $cadenaSql .= "nombre_contratista='" . $variable ['nombre_contratista'] . "',";
                 $cadenaSql .= "cargo_supervisor=" . "'" . $variable ['cargo_supervisor'] . "' ";
                 $cadenaSql .= "WHERE numero_contrato=" . $variable ['numero_contrato'] . " and ";
                 $cadenaSql .= "vigencia=" . $variable ['vigencia'] . " ; ";
@@ -621,7 +623,7 @@ class Sql extends \Sql {
             case "forma_pago" :
                 $cadenaSql = " 	SELECT id_parametro, descripcion ";
                 $cadenaSql .= " FROM  parametros ";
-                $cadenaSql .= " WHERE rel_parametro=28;";
+                $cadenaSql .= " WHERE rel_parametro=28 and id_parametro=240;";
 
                 break;
 

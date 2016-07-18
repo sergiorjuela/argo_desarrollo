@@ -611,7 +611,7 @@ class registrarForm {
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                    $atributos ['validar'] = 'required';
+                    $atributos ['validar'] = '';
                     $atributos ['valor'] = "";
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['deshabilitado'] = true;
@@ -1238,7 +1238,7 @@ class registrarForm {
                         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                         $atributos ['evento'] = '';
                         $atributos ['seleccion'] = 240;
-                        $atributos ['deshabilitado'] = true;
+                        $atributos ['deshabilitado'] = false;
                         $atributos ['columnas'] = 2;
                         $atributos ['tamanno'] = 1;
                         $atributos ['estilo'] = "jqueryui";

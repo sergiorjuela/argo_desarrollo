@@ -119,57 +119,31 @@ class RegistradorOrden {
                     $elemento = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $arreglo, 'ingresar_elemento_tipo_1');
                 } else if ($_REQUEST ['id_tipo_bien'] == 3) {
 
-                    if ($_REQUEST ['tipo_poliza'] == 0) {
-                        $arreglo = array(
-                            $fechaActual,
-                            $_REQUEST ['nivel'],
-                            $_REQUEST ['id_tipo_bien'],
-                            $_REQUEST ['descripcion'],
-                            $_REQUEST ['cantidad'] = 1,
-                            $_REQUEST ['unidad'],
-                            $_REQUEST ['valor'],
-                            $_REQUEST ['iva'],
-                            $_REQUEST ['subtotal_sin_iva'],
-                            $_REQUEST ['total_iva'],
-                            $_REQUEST ['total_iva_con'],
-                            $_REQUEST ['tipo_poliza'],
-                            NULL,
-                            NULL,
-                            ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
-                            ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : NULL,
-                            $_REQUEST ['id_orden'],
-                            (isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
-                            (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
-                            ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null,
-                            (isset($_REQUEST ['dependencia_solicitante'])) ? $_REQUEST ['dependencia_solicitante'] : null,
-                            (isset($_REQUEST ['funcionario'])) ? $_REQUEST ['funcionario'] : null
-                        );
-                    } else if ($_REQUEST ['tipo_poliza'] == 1) {
-                        $arreglo = array(
-                            $fechaActual,
-                            $_REQUEST ['nivel'],
-                            $_REQUEST ['id_tipo_bien'],
-                            $_REQUEST ['descripcion'],
-                            $_REQUEST ['cantidad'] = 1,
-                            $_REQUEST ['unidad'],
-                            $_REQUEST ['valor'],
-                            $_REQUEST ['iva'],
-                            $_REQUEST ['subtotal_sin_iva'],
-                            $_REQUEST ['total_iva'],
-                            $_REQUEST ['total_iva_con'],
-                            $_REQUEST ['tipo_poliza'],
-                            $_REQUEST ['fecha_inicio'],
-                            $_REQUEST ['fecha_final'],
-                            ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
-                            ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : NULL,
-                            $_REQUEST ['id_orden'],
-                            (isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
-                            (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
-                            ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null,
-                            (isset($_REQUEST ['dependencia_solicitante'])) ? $_REQUEST ['dependencia_solicitante'] : null,
-                            (isset($_REQUEST ['funcionario'])) ? $_REQUEST ['funcionario'] : null
-                        );
-                    }
+
+                    $arreglo = array(
+                        $fechaActual,
+                        $_REQUEST ['nivel'],
+                        $_REQUEST ['id_tipo_bien'],
+                        $_REQUEST ['descripcion'],
+                        $_REQUEST ['cantidad'] = 1,
+                        $_REQUEST ['unidad'],
+                        $_REQUEST ['valor'],
+                        $_REQUEST ['iva'],
+                        $_REQUEST ['subtotal_sin_iva'],
+                        $_REQUEST ['total_iva'],
+                        $_REQUEST ['total_iva_con'],
+                        0,
+                        NULL,
+                        NULL,
+                        ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
+                        ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : NULL,
+                        $_REQUEST ['id_orden'],
+                        (isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
+                        (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
+                        ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null,
+                        (isset($_REQUEST ['dependencia_solicitante'])) ? $_REQUEST ['dependencia_solicitante'] : null,
+                        (isset($_REQUEST ['funcionario'])) ? $_REQUEST ['funcionario'] : null
+                    );
 
                     $cadenaSql = $this->miSql->getCadenaSql('ingresar_elemento_tipo_2', $arreglo);
 

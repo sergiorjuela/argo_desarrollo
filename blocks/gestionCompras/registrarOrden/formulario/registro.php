@@ -1410,9 +1410,9 @@ class registrarForm {
                     $atributos ['nombre'] = $esteCampo;
                     $atributos ['id'] = $esteCampo;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                    $atributos ["etiquetaObligatorio"] = false;
+                    $atributos ["etiquetaObligatorio"] = true;
                     $atributos ['tab'] = $tab ++;
-                    $atributos ['anchoEtiqueta'] = 150;
+                    $atributos ['anchoEtiqueta'] = 160;
                     $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                     $atributos ['evento'] = '';
                     if (isset($_REQUEST [$esteCampo])) {
@@ -1449,7 +1449,7 @@ class registrarForm {
                     $atributos ['estilo'] = 'jqueryui';
                     $atributos ['marco'] = true;
                     $atributos ['estiloMarco'] = '';
-                    $atributos ["etiquetaObligatorio"] = false;
+                    $atributos ["etiquetaObligatorio"] = true;
                     $atributos ['columnas'] = 3;
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
@@ -1465,7 +1465,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = false;
                     $atributos ['tamanno'] = 11;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 160;
+                    $atributos ['anchoEtiqueta'] = 300;
                     $tab ++;
 
                     // Aplica atributos globales al control

@@ -105,7 +105,7 @@ class registrarForm {
                 $cadena_sql = $this->miSql->getCadenaSql('Consultar_Contrato_Particular', $datosContrato);
                 $contrato = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
                 $contrato = $contrato [0];
-
+               
                 $arregloContrato = array(
                     "numero_contrato" => $contrato ['numero_contrato'],
                     "tipo_configuracion" => $contrato ['tipo_configuracion'],
@@ -227,7 +227,7 @@ class registrarForm {
 
                 $parametro = $contrato['contratista'];
                 $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
-                $url = "http://10.20.2.38/agora/index.php?";
+                $url = "http://10.20.0.127/agora/index.php?";
                 $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&parametro1=$parametro";
                 $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar_url($data, $enlace);
                 $cliente = curl_init();
@@ -670,7 +670,7 @@ class registrarForm {
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                    $atributos ['validar'] = 'required';
+                    $atributos ['validar'] = '';
                     if ($proveedor['tipo_persona'] == 'JURIDICA') {
                         $atributos ['valor'] = $proveedor['perfil_representante'];
                     } else {
@@ -703,7 +703,7 @@ class registrarForm {
                     $atributos ['dobleLinea'] = 0;
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                    $atributos ['validar'] = 'required';
+                    $atributos ['validar'] = '';
                     if ($proveedor['tipo_persona'] == 'JURIDICA') {
                         $atributos ['valor'] = $proveedor['profesion_representante'];
                     } else {
@@ -1352,7 +1352,7 @@ class registrarForm {
                         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                         $atributos ['evento'] = '';
                         $atributos ['seleccion'] = 240;
-                        $atributos ['deshabilitado'] = true;
+                        $atributos ['deshabilitado'] = false;
                         $atributos ['columnas'] = 2;
                         $atributos ['tamanno'] = 1;
                         $atributos ['estilo'] = "jqueryui";
@@ -2456,6 +2456,7 @@ class registrarForm {
         $valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
         $valorCodificado .= "&id_solicitud_necesidad=" . $_REQUEST ['id_solicitud_necesidad'];
         $valorCodificado .= "&numero_contrato=" . $_REQUEST ['numero_contrato'];
+        $valorCodificado .= "&id_contrato_normal=" . $contrato['id_contrato_normal'];
         $valorCodificado .= "&vigencia=" . $_REQUEST ['vigencia'];
 
         /**

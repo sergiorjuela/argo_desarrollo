@@ -805,6 +805,11 @@ class Sql extends \Sql {
                 $cadenaSql = " SELECT nombre_convenio  FROM contractual.convenio  ";
                 $cadenaSql .= " WHERE id_convenio = $variable;  ";
                 break;
+            
+            case "consultarConvenioDocumento" :
+                $cadenaSql = "SELECT \"NOMBRE\" FROM contractual.convenio WHERE \"NUMERO_PRO\" = '$variable';";
+             
+                break;
 
             case "consultarSede" :
                 $cadenaSql = " SELECT \"ESF_SEDE\" FROM  \"SICapital\".\"sedes_SIC\" ";

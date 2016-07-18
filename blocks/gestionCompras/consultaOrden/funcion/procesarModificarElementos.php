@@ -137,8 +137,7 @@ class RegistradorOrden {
 
             $elemento = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso", $arreglo, 'actualizar_elemento_tipo_1');
         } else if ($_REQUEST ['id_tipo_bien'] == 3) {
-
-            if ($_REQUEST ['tipo_poliza'] == 0) {
+         
                 $arreglo = array(
                     $_REQUEST ['nivel'],
                     $_REQUEST ['id_tipo_bien'],
@@ -150,7 +149,7 @@ class RegistradorOrden {
                     $_REQUEST ['subtotal_sin_iva'],
                     $_REQUEST ['total_iva'],
                     $_REQUEST ['total_iva_con'],
-                    $_REQUEST ['tipo_poliza'],
+                    0,
                     NULL,
                     NULL,
                     ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
@@ -162,32 +161,8 @@ class RegistradorOrden {
                     (isset($_REQUEST ['dependencia_solicitante'])) ? $_REQUEST ['dependencia_solicitante'] : null,
                     (isset($_REQUEST ['funcionario'])) ? $_REQUEST ['funcionario'] : null
                 );
-            } else if ($_REQUEST ['tipo_poliza'] == 1) {
-                $arreglo = array(
-                    $_REQUEST ['nivel'],
-                    $_REQUEST ['id_tipo_bien'],
-                    $_REQUEST ['descripcion'],
-                    $_REQUEST ['cantidad'] = 1,
-                    $_REQUEST ['unidad'],
-                    $_REQUEST ['valor'],
-                    $_REQUEST ['iva'],
-                    $_REQUEST ['subtotal_sin_iva'],
-                    $_REQUEST ['total_iva'],
-                    $_REQUEST ['total_iva_con'],
-                    $_REQUEST ['tipo_poliza'],
-                    $_REQUEST ['fecha_inicio'],
-                    $_REQUEST ['fecha_final'],
-                    ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
-                    ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : NULL,
-                    $_REQUEST ['id_elemento_acta'],
-                    (isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
-                    (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
-                    ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null,
-                    (isset($_REQUEST ['dependencia_solicitante'])) ? $_REQUEST ['dependencia_solicitante'] : null,
-                    (isset($_REQUEST ['funcionario'])) ? $_REQUEST ['funcionario'] : null
-                );
-            }
-
+           
+               
             $cadenaSql = $this->miSql->getCadenaSql('actualizar_elemento_tipo_2', $arreglo);
 
             $elemento = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso", $arreglo, 'actualizar_elemento_tipo_2');

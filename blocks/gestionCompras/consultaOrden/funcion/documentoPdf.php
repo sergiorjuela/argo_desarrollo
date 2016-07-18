@@ -339,7 +339,7 @@ class RegistradorOrden {
 
         $parametro = $orden ['proveedor'];
         $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
-        $url = "http://10.20.2.38/agora/index.php?";
+        $url = "http://10.20.0.127/agora/index.php?";
         $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&parametro1=$parametro";
         $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar_url($data, $enlace);
         $cliente = curl_init();
@@ -387,7 +387,7 @@ class RegistradorOrden {
         $formaPago = $formaPago[0][0];
 
         if ($orden['unidad_ejecutora'] == '208') {
-            $cadenaSql = $this->miSql->getCadenaSql('consultarConvenio', $orden ['dependencia_solicitante']);
+            $cadenaSql = $this->miSql->getCadenaSql('consultarConvenioDocumento', $orden ['dependencia_solicitante']);
             $dependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
             $dependencia = $dependencia[0][0];
             $sede = $orden['sede_solicitante'];
@@ -399,7 +399,7 @@ class RegistradorOrden {
             $dependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
             $dependencia = $dependencia[0][0];
         }
-
+      
         $contenidoPagina = "
 <style type=\"text/css\">
     table { 
@@ -485,7 +485,7 @@ class RegistradorOrden {
 
 		    <table style='width:100%;'>
 			<tr> 
-			<td style='width:50%;'>Dependencia : " . $dependencia . " </td>
+			<td style='width:50%;'>Dependencia / Convenio : " . $dependencia . " </td>
 			<td style='width:50%;'>Sede : " . $sede . " </td>
 			</tr>
 	           </table>	

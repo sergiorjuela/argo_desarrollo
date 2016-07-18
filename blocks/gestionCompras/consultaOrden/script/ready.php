@@ -87,22 +87,7 @@ $("#<?php echo $this->campoSeguro('rubro')?>").select2({
  		
 
  		
- 		
- 		     $( "#<?php echo $this->campoSeguro('tipo_poliza')?>" ).change(function() {
-            switch($("#<?php echo $this->campoSeguro('tipo_poliza')?>").val())
-            {
-                case '0':
-                    $("#<?php echo $this->campoSeguro('fechas_polizas')?>").css('display','none');
-                break;
-               case '1':
-                  $("#<?php echo $this->campoSeguro('fechas_polizas')?>").css('display','block');
-                break;
-				default:
-                $("#<?php echo $this->campoSeguro('fechas_polizas')?>").css('display','none');
-                  break;
-             }
-          });  
- 		
+ 	 		
  		
           
  		

@@ -150,10 +150,10 @@ class Sql extends \Sql {
                 $cadenaSql .= "WHERE identificacion='" . $variable . "' ";
                 break;
 
-            case "forma_pago" :
+          case "forma_pago" :
                 $cadenaSql = " 	SELECT id_parametro, descripcion ";
                 $cadenaSql .= " FROM  parametros ";
-                $cadenaSql .= " WHERE rel_parametro=28;";
+                $cadenaSql .= " WHERE rel_parametro=28 and id_parametro=240;";
 
                 break;
 

@@ -565,7 +565,7 @@ class registrarForm {
 
                 $parametro = $_REQUEST ['proveedor'];
                 $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
-                $url = "http://10.20.2.38/agora/index.php?data=";
+                $url = "http://10.20.0.127/agora/index.php?data=";
                 $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&parametro1=$parametro";
                 $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar($data, $enlace);
                 $cliente = curl_init();

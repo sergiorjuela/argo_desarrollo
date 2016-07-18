@@ -112,7 +112,7 @@ class RegistradorContrato {
         $arreglo_contrato = array(
             "vigencia" => (int)date('Y'),
             "numero_contrato" => "currval('contractual.numero_unico_contrato_seq')",
-            "tipo_configuracion" => $_REQUEST ['tipo_configuracion'],
+            "tipo_configuracion" => 0,
             "clase_contratista" => $_REQUEST ['clase_contratista'],
             "identificacion_clase_contratista" => $_REQUEST ['identificacion_clase_contratista'],
             "digito_verificacion_clase_contratista" => $_REQUEST ['digito_verificacion_clase_contratista'],
@@ -149,8 +149,7 @@ class RegistradorContrato {
         $SqlContrato = $this->miSql->getCadenaSql('registrar_contrato', $arreglo_contrato);
         array_push($SQLs, $SqlContrato);
         
-      
-        
+            
         $trans_Registro_contrato = $esteRecursoDB->transaccion($SQLs);
         $sqlNumeroContrato = $this->miSql->getCadenaSql('obtenerInfoOrden');
         $resultado = $esteRecursoDB->ejecutarAcceso($sqlNumeroContrato, "busqueda");
