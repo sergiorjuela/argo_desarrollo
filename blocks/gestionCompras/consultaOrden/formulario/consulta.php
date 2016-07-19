@@ -66,12 +66,11 @@ class registrarForm {
 
         $conexionFrameWork = "estructura";
         $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
-        $miSesion = Sesion::singleton();
-        $id_usuario = $miSesion->idUsuario();
+        $id_usuario = $_REQUEST['usuario'];
         $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidad = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
-       
-        if ($unidad[0]['unidad_ejecutora']==1) {
+
+        if ($unidad[0]['unidad_ejecutora'] == 1) {
             $unidadEjecutora = 209;
         } else {
             $unidadEjecutora = 208;
@@ -237,7 +236,7 @@ class registrarForm {
 
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 
-        if ($unidadEjecutora==209) {
+        if ($unidadEjecutora == 209) {
             $esteCampo = 'sedeConsulta';
             $atributos ['columnas'] = 2;
             $atributos ['nombre'] = $esteCampo;

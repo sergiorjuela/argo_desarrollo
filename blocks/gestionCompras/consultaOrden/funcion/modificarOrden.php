@@ -66,7 +66,7 @@ class RegistradorOrden {
         } else {
             $fecha_fin = 'null';
         }
-        
+
         $datosContratoGeneral = array(
             'id_orden_contrato' => 1,
             'tipo_contrato' => 98,
@@ -85,15 +85,16 @@ class RegistradorOrden {
             'vigencia' => $Identificadores['vigencia'],
             'sede_solicitante' => $sede_solicitante,
             'dependencia_solicitante' => $dependencia_solicitante,
-            'forma_pago' => $_REQUEST ['formaPago']);
+            'forma_pago' => $_REQUEST ['formaPago'],
+            'nombre_proveedor' => $_REQUEST ['nombre_razon_proveedor'],
+            'proveedor' => $_REQUEST ['identifcacion_proveedor']);
 
 
 
         $datosOrden = array('tipo_orden' => $_REQUEST ['tipo_orden'],
             'id_orden' => $Identificadores['id_orden'],
-            'unidad_ejecucion' => $_REQUEST ['unidad_ejecucion'],
-            'nombre_proveedor' => $_REQUEST ['nombre_razon_proveedor'],
-            'proveedor' => $_REQUEST ['identifcacion_proveedor']);
+            'unidad_ejecucion' => $_REQUEST ['unidad_ejecucion']
+        );
 
 
 
@@ -104,7 +105,7 @@ class RegistradorOrden {
         $polizas = [];
         for ($i = 0; $i < count($_POST); $i++) {
             if (isset($_POST["poliza" . "$i"])) {
-                array_push($polizas, $i+1);
+                array_push($polizas, $i + 1);
             }
         }
 
@@ -122,10 +123,10 @@ class RegistradorOrden {
         if ($resultado == false) {
             redireccion::redireccionar('noInserto', $datos);
         } else {
-           
+
             for ($i = 0; $i < count($polizas); $i++) {
                 $contador = $polizas[$i] - 1;
-               
+
                 $datosPoliza = array('poliza' => $polizas[$i],
                     'orden' => $Identificadores['id_orden'],
                     'fecha_inicio' => $_REQUEST["fecha_inicio_poliza$contador"],
@@ -134,8 +135,8 @@ class RegistradorOrden {
                 array_push($SQLs, $sqlPoliza);
             }
         }
-        
-        
+
+
         $trans_actualizacion_orden = $esteRecursoDB->transaccion($SQLs);
 
         $datos = array('numero_contrato' => $Identificadores['numero_contrato'],

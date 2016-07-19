@@ -1,6 +1,6 @@
 <?php
 
-namespace gestionContractual\novedad\registrarNovedad;
+namespace gestionCompras\novedadOrden\registrarNovedadOrden;
 
 if (!isset($GLOBALS ["autorizado"])) {
     include ("../index.php");
@@ -80,6 +80,20 @@ class Sql extends \Sql {
                 $cadenaSql .= "`telefono` = '" . $variable ["telefono"] . "' ";
                 $cadenaSql .= "WHERE ";
                 $cadenaSql .= "`idConductor` =" . $_REQUEST ["registro"] . " ";
+                break;
+            
+            
+            case "tipo_orden" :
+
+                $cadenaSql = " 	SELECT 	id_parametro, ";
+                $cadenaSql .= " descripcion ";
+                $cadenaSql .= " FROM  ";
+                $cadenaSql .= " parametros ";
+                $cadenaSql .= " WHERE  ";
+                $cadenaSql .= " estado_registro=TRUE  ";
+                $cadenaSql .= " AND  ";
+                $cadenaSql .= " rel_parametro=30;  ";
+
                 break;
 
             /**

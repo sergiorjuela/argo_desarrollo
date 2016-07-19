@@ -259,7 +259,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " objeto_contrato,fecha_inicio,fecha_final,plazo_ejecucion, ";
                 $cadenaSql .= " forma_pago,ordenador_gasto,supervisor,clausula_registro_presupuestal, ";
                 $cadenaSql .= " sede_supervisor,dependencia_supervisor,sede_solicitante,dependencia_solicitante,cargo_supervisor, ";
-                $cadenaSql .= " numero_solicitud_necesidad,numero_cdp) ";
+                $cadenaSql .= " proveedor, nombre_proveedor, numero_solicitud_necesidad,numero_cdp) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['vigencia'] . ",";
                 $cadenaSql .= $variable ['id_orden_contrato'] . ",";
@@ -278,6 +278,8 @@ class Sql extends \Sql {
                 $cadenaSql .= "'" . $variable ['sede_solicitante'] . "',";
                 $cadenaSql .= "'" . $variable ['dependencia_solicitante'] . "',";
                 $cadenaSql .= "'" . $variable ['cargo_supervisor'] . "',";
+                $cadenaSql .=  $variable ['proveedor'] . ",";
+                $cadenaSql .= "'" . $variable ['nombre_proveedor'] . "',";
                 $cadenaSql .= $variable ['numero_solicitud'] . ", ";
                 $cadenaSql .= $variable ['numero_cdp'] . ");";
 
@@ -285,14 +287,12 @@ class Sql extends \Sql {
             case "insertarOrden" :
                 $cadenaSql = " INSERT INTO orden(";
                 $cadenaSql .= " tipo_orden,numero_contrato, vigencia,fecha_registro, ";
-                $cadenaSql .= " proveedor,nombre_proveedor, unidad_ejecucion) ";
+                $cadenaSql .= " unidad_ejecucion) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['tipo_orden'] . ",";
                 $cadenaSql .= $variable ['numero_contrato'] . ",";
                 $cadenaSql .= $variable ['vigencia'] . ",";
                 $cadenaSql .= "'" . $variable ['fecha'] . "',";
-                $cadenaSql .= "'" . $variable ['proveedor'] . "',";
-                $cadenaSql .= "'" . $variable ['nombre_proveedor'] . "',";
                 $cadenaSql .= $variable ['unidad_ejecucion'] . ");";
 
                 break;
@@ -877,4 +877,5 @@ class Sql extends \Sql {
     }
 
 }
+
 ?>

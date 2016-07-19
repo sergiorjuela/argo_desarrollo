@@ -95,9 +95,9 @@ class Sql extends \Sql {
 
 
             case "buscarProveedoresFiltro" :
-                $cadenaSql = " SELECT DISTINCT proveedor||' - ('||nombre_proveedor||')' AS  value, proveedor AS data  ";
-                $cadenaSql .= " FROM orden ";
-                $cadenaSql .= " WHERE cast(proveedor as text) LIKE '%$variable%' OR nombre_proveedor LIKE '%$variable%' LIMIT 10; ";
+                $cadenaSql = " SELECT DISTINCT contratista||' - ('||nombre_contratista||')' AS  value, contratista AS data  ";
+                $cadenaSql .= " FROM contratista ";
+                $cadenaSql .= " WHERE cast(contratista as text) LIKE '%$variable%' OR nombre_contratista LIKE '%$variable%' LIMIT 10; ";
                 break;
 
 
@@ -137,7 +137,7 @@ class Sql extends \Sql {
 
             case "consultarOrdenGeneral" :
 
-                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, o.proveedor ||'-'|| o.nombre_proveedor as proveedor,"
+                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,"
                         . " se.\"ESF_SEDE\" ||'-'|| dep.\"ESF_DEP_ENCARGADA\" as SedeDependencia, cg.numero_solicitud_necesidad,cg.numero_cdp ";
                 $cadenaSql .= "FROM orden o, parametros p, contrato_general cg, \"SICapital\".\"sedes_SIC\" se, \"SICapital\".\"dependencia_SIC\" dep ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
@@ -158,7 +158,7 @@ class Sql extends \Sql {
                 }
 
                 if ($variable ['nit'] != '') {
-                    $cadenaSql .= " AND o.proveedor = '" . $variable ['nit'] . "' ";
+                    $cadenaSql .= " AND cg.contratista = '" . $variable ['nit'] . "' ";
                 }
 
                 if ($variable ['sede'] != '') {
@@ -179,7 +179,7 @@ class Sql extends \Sql {
 
             case "consultarOrdenIdexud" :
 
-                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, o.proveedor ||'-'|| o.nombre_proveedor as proveedor,"
+                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,"
                         . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia , cg.numero_solicitud_necesidad,cg.numero_cdp  ";
                 $cadenaSql .= "FROM orden o, parametros p,  contrato_general cg, convenio conv ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
@@ -199,7 +199,7 @@ class Sql extends \Sql {
                 }
 
                 if ($variable ['nit'] != '') {
-                    $cadenaSql .= " AND o.proveedor = '" . $variable ['nit'] . "' ";
+                    $cadenaSql .= " AND cg.contratista = '" . $variable ['nit'] . "' ";
                 }
 
                 if ($variable ['dependencia'] != '') {
@@ -400,8 +400,6 @@ class Sql extends \Sql {
                 $cadenaSql = " UPDATE orden ";
                 $cadenaSql .= " SET ";
                 $cadenaSql .= " tipo_orden = " . $variable['tipo_orden'] . ", ";
-                $cadenaSql .= " proveedor = " . $variable['proveedor'] . ", ";
-                $cadenaSql .= " nombre_proveedor = '" . $variable['nombre_proveedor'] . "', ";
                 $cadenaSql .= " unidad_ejecucion = " . $variable['unidad_ejecucion'] . " ";
                 $cadenaSql .= " WHERE id_orden=" . $variable['id_orden'] . ";";
 
@@ -421,6 +419,8 @@ class Sql extends \Sql {
                 $cadenaSql .= "sede_supervisor= '" . $variable['sede_supervisor'] . "', ";
                 $cadenaSql .= "dependencia_supervisor= '" . $variable['dependencia_supervisor'] . "', ";
                 $cadenaSql .= "sede_solicitante= '" . $variable['sede_solicitante'] . "', ";
+                $cadenaSql .= " contratista = " . $variable['proveedor'] . ", ";
+                $cadenaSql .= " nombre_contratista = '" . $variable['nombre_proveedor'] . "', ";
                 $cadenaSql .= "dependencia_solicitante= '" . $variable['dependencia_solicitante'] . "', ";
                 $cadenaSql .= "cargo_supervisor= '" . $variable['cargo_supervisor'] . "' ";
                 $cadenaSql .= "WHERE numero_contrato=" . $variable['numero_contrato'] . " and ";
@@ -805,10 +805,10 @@ class Sql extends \Sql {
                 $cadenaSql = " SELECT nombre_convenio  FROM contractual.convenio  ";
                 $cadenaSql .= " WHERE id_convenio = $variable;  ";
                 break;
-            
+
             case "consultarConvenioDocumento" :
                 $cadenaSql = "SELECT \"NOMBRE\" FROM contractual.convenio WHERE \"NUMERO_PRO\" = '$variable';";
-             
+
                 break;
 
             case "consultarSede" :
@@ -1145,7 +1145,7 @@ class Sql extends \Sql {
                 $cadenaSql .= (is_null($variable [15]) == true) ? "observacion=NULL, " : "observacion='" . $variable [15] . "',  ";
                 $cadenaSql .= (is_null($variable [16]) == true) ? "codigo_dependencia=NULL,  " : "codigo_dependencia='" . $variable [16] . "',  ";
                 $cadenaSql .= (is_null($variable [17]) == true) ? "funcionario=NULL " : "funcionario='" . $variable [17] . "'  ";
-                
+
                 $cadenaSql .= "WHERE id_elemento_ac ='" . $variable [12] . "'  ";
 
                 break;
