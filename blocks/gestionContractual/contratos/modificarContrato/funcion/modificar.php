@@ -105,6 +105,7 @@ class RegistradorContrato {
             'numero_contrato' => $_REQUEST ['numero_contrato'],
             'contratista' => $_REQUEST ['numero_identificacion'],
             'nombre_contratista' => $_REQUEST ['nombre_Razon_Social'],
+            "unidad_ejecucion_tiempo" => $_REQUEST ['unidad_ejecucion_tiempo'],
             'vigencia' => $_REQUEST ['vigencia']);
        
         
@@ -120,8 +121,7 @@ class RegistradorContrato {
             "tipo_compromiso" => $_REQUEST ['tipo_compromiso'],
             "numero_convenio" => $numero_convenio,
             "vigencia_convenio" => $vigencia_convenio,
-            "fecha_subcripcion" => $_REQUEST ['fecha_subcripcion'],
-            "unidad_ejecucion_tiempo" => $_REQUEST ['unidad_ejecucion_tiempo'],
+            "fecha_subcripcion" => $_REQUEST ['fecha_subcripcion'],            
             "dependencia" => $_REQUEST ['dependencia'],
             "tipologia_especifica" => $_REQUEST ['tipologia_especifica'],
             "numero_constancia" => $_REQUEST ['numero_constancia'],

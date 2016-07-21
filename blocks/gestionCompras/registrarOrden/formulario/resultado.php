@@ -96,13 +96,12 @@ class registrarForm {
         }
 
 
-    
-        $miSesion = Sesion::singleton();
-        $id_usuario = $miSesion->idUsuario();
-        $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerUnidadUsuario", $id_usuario);
+
+        $id_usuario = $_REQUEST['usuario'];
+        $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
-      
+
         $arreglo_consulta = array(
             'vigencia_solicitud_consulta' => $vigencia_solicitud,
             'numero_solicitud' => $numero_solicitud,
@@ -112,15 +111,15 @@ class registrarForm {
             'numero_cdp' => $numero_cdp,
             'unidad_ejecutora' => $unidadEjecutora[0]['unidad_ejecutora']
         );
-      
-        
-     
-        
+
+
+
+
         $cadenaSql = $this->miSql->getCadenaSql('obtenerSolicitudesCdp', $arreglo_consulta);
-        
+
         $solicitudesCDPs = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
-        
-       
+
+
         $arreglo_consulta = base64_encode(serialize($arreglo_consulta));
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
         $esteCampo = $esteBloque ['nombre'];
@@ -199,7 +198,7 @@ class registrarForm {
                 $variable .= "&objetoCDP=" . $solicitudesCDPs [$i] ['OBJETO'];
                 $variable .= "&arreglo=" . $arreglo_consulta;
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
-                $variable .= "&mensaje_titulo= Numero Solicitud: ".$solicitudesCDPs [$i] ['NUM_SOL_ADQ']." | Numero CDP: ".$solicitudesCDPs [$i] ['NUMERO_DISPONIBILIDAD']." | VIGENCIA: " . $solicitudesCDPs [$i] ['VIGENCIA'];
+                $variable .= "&mensaje_titulo= Numero Solicitud: " . $solicitudesCDPs [$i] ['NUM_SOL_ADQ'] . " | Numero CDP: " . $solicitudesCDPs [$i] ['NUMERO_DISPONIBILIDAD'] . " | VIGENCIA: " . $solicitudesCDPs [$i] ['VIGENCIA'];
                 $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
 
                 $mostrarHtml = "<tr>
@@ -208,11 +207,11 @@ class registrarForm {
                                 <td><center>" . $solicitudesCDPs [$i] ['NOMBRE_DEPENDENCIA'] . "</center></td>		
                                 <td><center>" . $solicitudesCDPs [$i] ['ESTADO'] . "</center></td>
                                 <td><center>" . $solicitudesCDPs [$i] ['NUMERO_DISPONIBILIDAD'] . "</center></td>
-                                <td><center>" .  number_format($solicitudesCDPs [$i] ['VALOR_CONTRATACION'], 2, ",", ".") . "</center></td>
+                                <td><center>" . number_format($solicitudesCDPs [$i] ['VALOR_CONTRATACION'], 2, ",", ".") . "</center></td>
                                 <td><center>" . $solicitudesCDPs [$i] ['ESTADOCDP'] . "</center></td>
                                 <td><center>" . $solicitudesCDPs [$i] ['FECHA_REGISTRO'] . "</center></td>
                                 <td><center>
-                                    <a href='".$variable."'>
+                                    <a href='" . $variable . "'>
                                         <img src='" . $rutaBloque . "/css/images/contrato.png' width='20px'>
                                     </a>
                                 </center> </td>

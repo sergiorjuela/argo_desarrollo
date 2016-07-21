@@ -161,7 +161,8 @@ class Sql extends \Sql {
                 $cadenaSql = " INSERT INTO contrato_general(";
                 $cadenaSql .= " vigencia,id_orden_contrato, tipo_contrato,unidad_ejecutora, ";
                 $cadenaSql .= " objeto_contrato,fecha_inicio,fecha_final,plazo_ejecucion, ";
-                $cadenaSql .= " forma_pago,ordenador_gasto,supervisor,nombre_contratista,contratista,numero_solicitud_necesidad,numero_cdp,clausula_registro_presupuestal, ";
+                $cadenaSql .= " forma_pago,ordenador_gasto,supervisor,nombre_contratista,contratista,numero_solicitud_necesidad,numero_cdp,"
+                        . " unidad_ejecucion, clausula_registro_presupuestal, ";
                 $cadenaSql .= " cargo_supervisor) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['vigencia'] . ",";
@@ -179,6 +180,7 @@ class Sql extends \Sql {
                 $cadenaSql .=  $variable ['contratista'] . ",";
                 $cadenaSql .=  $variable ['numero_solicitud_necesidad'] . ",";
                 $cadenaSql .=  $variable ['numero_cdp'] . ",";
+                $cadenaSql .=  $variable ['unidad_ejecucion_tiempo'] . ",";
                 $cadenaSql .= $variable ['clausula_presupuesto'] . ",";
                 $cadenaSql .= "'" . $variable ['cargo_supervisor'] . "');";
 
@@ -190,7 +192,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " valor_moneda_ext, valor_tasa_cb, fecha_sub_super, ";
                 $cadenaSql .= " fecha_lim_ejec, observacion_inter, observacion_contr, ";
                 $cadenaSql .= " tipologia_contrato, tipo_configuracion, clase_contratista, ";
-                $cadenaSql .= " clase_compromiso, numero_constancia, unidad_ejecucion_tiempo, ";
+                $cadenaSql .= " clase_compromiso, numero_constancia, ";
                 $cadenaSql .= " modalidad_seleccion, procedimiento, regimen_contratacion, tipo_moneda, ";
                 $cadenaSql .= " tipo_gasto, origen_recursos, origen_presupuesto, tema_corr_gst_inv, ";
                 $cadenaSql .= " tipo_control_ejecucion, fecha_registro, ";
@@ -210,7 +212,6 @@ class Sql extends \Sql {
                 $cadenaSql .= " '" . $variable ['clase_contratista'] . "',";
                 $cadenaSql .= " '" . $variable ['tipo_compromiso'] . "',";
                 $cadenaSql .= " '" . $variable ['numero_constancia'] . "',";
-                $cadenaSql .= " '" . $variable ['unidad_ejecucion_tiempo'] . "',";
                 $cadenaSql .= " '" . $variable ['modalidad_seleccion'] . "',";
                 $cadenaSql .= " '" . $variable ['procedimiento'] . "',";
                 $cadenaSql .= " '" . $variable ['regimen_contratación'] . "',";

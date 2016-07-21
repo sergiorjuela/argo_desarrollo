@@ -169,13 +169,13 @@ class Sql extends \Sql {
 
             case "ordenadores_orden" :
 
-                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from argo_ordenadores ";
+                $cadenaSql = " 	select \"ORG_IDENTIFICADOR_UNICO\", \"ORG_ORDENADOR_GASTO\"   from argo_ordenadores ";
                 $cadenaSql .= " where \"ORG_ESTADO\" = 'A' and \"ORG_ORDENADOR_GASTO\" <> 'DIRECTOR IDEXUD'; ";
 
                 break;
             case "ordenadores_orden_idexud" :
 
-                $cadenaSql = " 	select \"ORG_IDENTIFICACION\", \"ORG_ORDENADOR_GASTO\"   from argo_ordenadores ";
+                $cadenaSql = " 	select \"ORG_IDENTIFICADOR_UNICO\", \"ORG_ORDENADOR_GASTO\"   from argo_ordenadores ";
                 $cadenaSql .= " where \"ORG_ESTADO\" = 'A' and \"ORG_ORDENADOR_GASTO\" = 'DIRECTOR IDEXUD'; ";
 
                 break;
@@ -200,7 +200,7 @@ class Sql extends \Sql {
             case "informacion_ordenador" :
                 $cadenaSql = " 	SELECT  \"ORG_NOMBRE\",  \"ORG_IDENTIFICACION\",  \"ORG_IDENTIFICADOR\"  ";
                 $cadenaSql .= " FROM argo_ordenadores ";
-                $cadenaSql .= " WHERE \"ORG_ESTADO\" = 'A' and  \"ORG_IDENTIFICACION\" = $variable;";
+                $cadenaSql .= " WHERE \"ORG_ESTADO\" = 'A' and  \"ORG_IDENTIFICADOR_UNICO\" = '$variable';";
 
                 break;
 
@@ -257,7 +257,7 @@ class Sql extends \Sql {
                 $cadenaSql = " INSERT INTO contrato_general(";
                 $cadenaSql .= " vigencia,id_orden_contrato, tipo_contrato,unidad_ejecutora, ";
                 $cadenaSql .= " objeto_contrato,fecha_inicio,fecha_final,plazo_ejecucion, ";
-                $cadenaSql .= " forma_pago,ordenador_gasto,supervisor,clausula_registro_presupuestal, ";
+                $cadenaSql .= " forma_pago,unidad_ejecucion,ordenador_gasto,supervisor,clausula_registro_presupuestal, ";
                 $cadenaSql .= " sede_supervisor,dependencia_supervisor,sede_solicitante,dependencia_solicitante,cargo_supervisor, ";
                 $cadenaSql .= " proveedor, nombre_proveedor, numero_solicitud_necesidad,numero_cdp) ";
                 $cadenaSql .= " VALUES (";
@@ -270,6 +270,7 @@ class Sql extends \Sql {
                 $cadenaSql .= $variable ['fecha_fin'] . ",";
                 $cadenaSql .= $variable ['plazo_ejecucion'] . ",";
                 $cadenaSql .= $variable ['forma_pago'] . ",";
+                $cadenaSql .= $variable ['unidad_ejecucion'] . ",";
                 $cadenaSql .= "'" . $variable ['ordenador_gasto'] . "',";
                 $cadenaSql .= "'" . $variable ['supervisor'] . "',";
                 $cadenaSql .= $variable ['clausula_presupuesto'] . ",";
@@ -286,15 +287,13 @@ class Sql extends \Sql {
                 break;
             case "insertarOrden" :
                 $cadenaSql = " INSERT INTO orden(";
-                $cadenaSql .= " tipo_orden,numero_contrato, vigencia,fecha_registro, ";
-                $cadenaSql .= " unidad_ejecucion) ";
+                $cadenaSql .= " tipo_orden,numero_contrato, vigencia,fecha_registro) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['tipo_orden'] . ",";
                 $cadenaSql .= $variable ['numero_contrato'] . ",";
                 $cadenaSql .= $variable ['vigencia'] . ",";
-                $cadenaSql .= "'" . $variable ['fecha'] . "',";
-                $cadenaSql .= $variable ['unidad_ejecucion'] . ");";
-
+                $cadenaSql .= "'" . $variable ['fecha'] . "');";
+          
                 break;
 
             case "insertarPoliza" :

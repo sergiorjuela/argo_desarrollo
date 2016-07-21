@@ -66,7 +66,7 @@ class RegistradorOrden {
 
 
         $datosContratoGeneral = array('vigencia' => (int) date('Y'),
-            'id_orden_contrato' => 1,
+            'id_orden_contrato' => null,
             'tipo_contrato' => 98,
             'unidad_ejecutura' => $unidad_ejecutura,
             'objeto_contrato' => $_REQUEST ['objeto_contrato'],
@@ -85,7 +85,8 @@ class RegistradorOrden {
             'numero_solicitud' => $_REQUEST ['numero_solicitud'],
             'numero_cdp' => $_REQUEST ['numero_cdp'],
             'nombre_proveedor' => $_REQUEST['nombre_razon_proveedor'],
-            'proveedor' => $_REQUEST ['identifcacion_proveedor']
+            'proveedor' => $_REQUEST ['identifcacion_proveedor'],
+            'unidad_ejecucion' => $_REQUEST['unidad_ejecucion'],
         );
 
 
@@ -93,7 +94,7 @@ class RegistradorOrden {
             'numero_contrato' => "currval('numero_unico_contrato_seq')",
             'vigencia' => (int) date('Y'),
             'fecha' => date('Y-m-d'),
-            'unidad_ejecucion' => $_REQUEST['unidad_ejecucion'],
+            
         );
 
         $PolizasOrden = array('numero_contrato' => "curval('id_orden_seq')",

@@ -87,13 +87,13 @@ class RegistradorOrden {
             'dependencia_solicitante' => $dependencia_solicitante,
             'forma_pago' => $_REQUEST ['formaPago'],
             'nombre_proveedor' => $_REQUEST ['nombre_razon_proveedor'],
-            'proveedor' => $_REQUEST ['identifcacion_proveedor']);
+            'proveedor' => $_REQUEST ['identifcacion_proveedor'],
+            'unidad_ejecucion' => $_REQUEST ['unidad_ejecucion']);
 
 
 
         $datosOrden = array('tipo_orden' => $_REQUEST ['tipo_orden'],
             'id_orden' => $Identificadores['id_orden'],
-            'unidad_ejecucion' => $_REQUEST ['unidad_ejecucion']
         );
 
 

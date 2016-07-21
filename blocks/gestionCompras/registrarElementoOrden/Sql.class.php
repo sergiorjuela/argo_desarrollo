@@ -147,7 +147,7 @@ class Sql extends \Sql {
             
             case "consultarOrdenGeneral" :
 
-                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, o.proveedor ||'-'|| o.nombre_proveedor as proveedor,"
+                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,"
                         . " se.\"ESF_SEDE\" ||'-'|| dep.\"ESF_DEP_ENCARGADA\" as SedeDependencia ";
                 $cadenaSql .= "FROM orden o, parametros p, contrato_general cg, \"SICapital\".\"sedes_SIC\" se, \"SICapital\".\"dependencia_SIC\" dep ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
@@ -168,7 +168,7 @@ class Sql extends \Sql {
                 }
 
                 if ($variable ['nit'] != '') {
-                    $cadenaSql .= " AND o.proveedor = '" . $variable ['nit'] . "' ";
+                    $cadenaSql .= " AND cg.contratista = '" . $variable ['nit'] . "' ";
                 }
 
                 if ($variable ['sede'] != '') {
@@ -189,7 +189,7 @@ class Sql extends \Sql {
                 
             case "consultarOrdenIdexud" :
 
-                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, o.proveedor ||'-'|| o.nombre_proveedor as proveedor,"
+                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,"
                         . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia ";
                 $cadenaSql .= "FROM orden o, parametros p, contrato_general cg, convenio conv ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
@@ -209,7 +209,7 @@ class Sql extends \Sql {
                 }
 
                 if ($variable ['nit'] != '') {
-                    $cadenaSql .= " AND o.proveedor = '" . $variable ['nit'] . "' ";
+                    $cadenaSql .= " AND cg.contratista = '" . $variable ['nit'] . "' ";
                 }
 
                 if ($variable ['dependencia'] != '') {
@@ -713,9 +713,9 @@ class Sql extends \Sql {
                 break;
             
               case "buscarProveedoresFiltro" :
-                $cadenaSql = " SELECT DISTINCT proveedor||' - ('||nombre_proveedor||')' AS  value, proveedor AS data  ";
-                $cadenaSql .= " FROM orden ";
-                $cadenaSql .= " WHERE cast(proveedor as text) LIKE '%$variable%' OR nombre_proveedor LIKE '%$variable%' LIMIT 10; ";
+                $cadenaSql = " SELECT DISTINCT contratista||' - ('||nombre_contratista||')' AS  value, contratista AS data  ";
+                $cadenaSql .= " FROM contrato_general ";
+                $cadenaSql .= " WHERE cast(contratista as text) LIKE '%$variable%' OR nombre_contratista LIKE '%$variable%' LIMIT 10; ";
                 break;
 
         }

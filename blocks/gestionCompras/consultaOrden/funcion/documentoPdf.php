@@ -337,9 +337,11 @@ class RegistradorOrden {
 
         //-------------- Se accede al Servicio de Agora para Consultar el Proveedor de la Orden de Compra -------------------------------------------------------------------
 
-        $parametro = $orden ['proveedor'];
+     
+        $parametro = $orden ['contratista'];
+     
         $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
-        $url = "http://10.20.0.127/agora/index.php?";
+        $url = "http://10.20.2.38/agora/index.php?";
         $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&parametro1=$parametro";
         $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar_url($data, $enlace);
         $cliente = curl_init();
@@ -603,11 +605,11 @@ class RegistradorOrden {
 		<tr>
 		<td style='width:10%;text-align=center;'>Item</td>
 		<td style='width:15%;text-align=center;'>Unidad/Medida</td>
-		<td style='width:20%;text-align=center;'>Cantidad</td>
-		<td style='width:30%;text-align=center;'>Descripción</td>
-		<td style='width:8.3%;text-align=center;'>Valor Unitario($)</td>
+		<td style='width:10%;text-align=center;'>Cantidad</td>
+		<td style='width:25%;text-align=center;'>Descripción</td>
+		<td style='width:15.8%;text-align=center;'>Valor Unitario($)</td>
 		<td style='width:8.3%;text-align=center;'>Iva</td>
-		<td style='width:8.3%;text-align=center;'>Total</td>
+		<td style='width:15.8%;text-align=center;'>Total</td>
 		</tr>
 		</table>
 		<table style='width:100%;'>";
@@ -626,11 +628,11 @@ class RegistradorOrden {
                 $contenidoPagina .= "<tr>";
                 $contenidoPagina .= "<td style='width:10%;text-align=center;'>" . $j . "</td>";
                 $contenidoPagina .= "<td style='width:15%;text-align=center;'>" . $it ['unidad'] . "</td>";
-                $contenidoPagina .= "<td style='width:20%;text-align=center;'>" . $it ['cantidad'] . "</td>";
-                $contenidoPagina .= "<td style='width:30%;text-align=justify;'>" . $it ['descripcion'] . "</td>";
-                $contenidoPagina .= "<td style='width:8.3%;text-align=center;'>$ " . $it ['valor'] . "</td>";
+                $contenidoPagina .= "<td style='width:10%;text-align=center;'>" . $it ['cantidad'] . "</td>";
+                $contenidoPagina .= "<td style='width:25%;text-align=justify;'>" . $it ['descripcion'] . "</td>";
+                $contenidoPagina .= "<td style='width:15.8%;text-align=center;'>$ " . number_format($it ['valor'], 2, ",", ".") . "</td>";
                 $contenidoPagina .= "<td style='width:8.3%;text-align=center;'>" . $it ['nombre_iva'] . "</td>";
-                $contenidoPagina .= "<td style='width:8.3%;text-align=center;'>$ " . $it ['total_iva_con'] . "</td>";
+                $contenidoPagina .= "<td style='width:15.8%;text-align=center;'>$ " . number_format($it ['total_iva_con'], 2, ",", ".") . "</td>";
                 $contenidoPagina .= "</tr>";
 
                 $sumatoriaTotal = $sumatoriaTotal + $it ['total_iva_con'];
@@ -644,19 +646,19 @@ class RegistradorOrden {
         $contenidoPagina .= "		<table style='width:100%;'>
 		<tr>
 		
-		<td style='width:91.7%;text-align=left;'><b>SUBTOTAL  : </b></td>
-		<td style='width:8.3%;text-align=center;'><b>$" . $sumatoriaSubtotal . "</b></td>
+		<td style='width:75%;text-align=left;'><b>SUBTOTAL  : </b></td>
+		<td style='width:25%;text-align=center;'><b>$" . number_format($sumatoriaSubtotal, 2, ",", ".") . "</b></td>
 		</tr>
 		<tr>
 		
-		<td style='width:91.7%;text-align=left;'><b>TOTAL IVA  : </b></td>
-		<td style='width:8.3%;text-align=center;'><b>$" . $sumatoriaIva . "</b></td>
+		<td style='width:75%;text-align=left;'><b>TOTAL IVA  : </b></td>
+		<td style='width:25%;text-align=center;'><b>$" . number_format($sumatoriaIva, 2, ",", ".")  . "</b></td>
 		</tr>			
 				
 		<tr>
 		
-		<td style='width:91.7%;text-align=left;'><b>TOTAL  : </b></td>
-		<td style='width:8.3%;text-align=center;'><b>$" . $sumatoriaTotal . "</b></td>
+		<td style='width:75%;text-align=left;'><b>TOTAL  : </b></td>
+		<td style='width:25%;text-align=center;'><b>$" . number_format($sumatoriaTotal, 2, ",", ".") . "</b></td>
 		</tr>
 				
 				

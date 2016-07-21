@@ -498,6 +498,7 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
     $("#<?php echo $this->campoSeguro('asignacionOrdenador') ?>").change(function () {
 
         if ($("#<?php echo $this->campoSeguro('asignacionOrdenador') ?>").val() != '') {
+            
             datosOrdenador();
         } else {
             $("#<?php echo $this->campoSeguro('nombreOrdenador') ?>").val('');

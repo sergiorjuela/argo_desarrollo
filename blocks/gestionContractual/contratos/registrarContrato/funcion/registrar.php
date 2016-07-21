@@ -90,7 +90,7 @@ class RegistradorContrato {
         $cargo = $esteRecursoDB->ejecutarAcceso($SqlCargoSupervisor, "busqueda");
       
         $arreglo_contrato_general = array('vigencia' => (int) date('Y'),
-            'id_orden_contrato' => 1,
+            'id_orden_contrato' => null,
             'tipo_contrato' => $_REQUEST['clase_contrato'],
             'unidad_ejecutura' => $unidad_ejecutura,
             'objeto_contrato' => $_REQUEST ['objeto_contrato'],
@@ -105,6 +105,7 @@ class RegistradorContrato {
             'numero_cdp' => $_REQUEST ['numero_cdp'],
             'contratista' => $_REQUEST ['numero_identificacion'],
             'nombre_contratista' => $_REQUEST ['nombre_Razon_Social'],
+            "unidad_ejecucion_tiempo" => $_REQUEST ['unidad_ejecucion_tiempo'],
             'forma_pago' => $_REQUEST ['formaPago']);
         
         $SqlcontratoGeneral = $this->miSql->getCadenaSql('insertarContratoGeneral', $arreglo_contrato_general);
@@ -121,7 +122,6 @@ class RegistradorContrato {
             "numero_convenio" => $numero_convenio,
             "vigencia_convenio" => $vigencia_convenio,
             "fecha_subcripcion" => $_REQUEST ['fecha_subcripcion'],
-            "unidad_ejecucion_tiempo" => $_REQUEST ['unidad_ejecucion_tiempo'],
             "dependencia" => $_REQUEST ['dependencia'],
             "tipologia_especifica" => $_REQUEST ['tipologia_especifica'],
             "numero_constancia" => $_REQUEST ['numero_constancia'],

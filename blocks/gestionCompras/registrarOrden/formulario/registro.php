@@ -80,7 +80,8 @@ class registrarForm {
         // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
         // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
         $atributos ['tipoEtiqueta'] = 'inicio';
-        echo $this->miFormulario->formulario($atributos); {
+        echo $this->miFormulario->formulario($atributos);
+        {
             // ---------------- SECCION: Controles del Formulario -----------------------------------------------
 
             $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
@@ -100,7 +101,8 @@ class registrarForm {
             $atributos ['tipoEtiqueta'] = 'inicio';
             $atributos ["leyenda"] = "Registrar Orden --> " . $_REQUEST['mensaje_titulo'];
             echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
-            unset($atributos); {
+            unset($atributos);
+            {
 
 
                 // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -135,8 +137,7 @@ class registrarForm {
 
 
                 // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-                $miSesion = Sesion::singleton();
-                $id_usuario = $miSesion->idUsuario();
+                $id_usuario = $_REQUEST['usuario'];
                 $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
                 $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
@@ -180,7 +181,8 @@ class registrarForm {
                 $esteCampo = "AgrupacionSolicitante";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = "Información del Solicitante";
-                echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                echo $this->miFormulario->agrupacion('inicio', $atributos);
+                {
                     if ($unidadEjecutora[0]['unidad_ejecutora'] == 2) {
                         $esteCampo = 'sede_idexud';
                         $atributos ['id'] = $esteCampo;
@@ -387,7 +389,8 @@ class registrarForm {
                 $esteCampo = "AgrupacionSupervisor";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = "Datos del Supervisor";
-                echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                echo $this->miFormulario->agrupacion('inicio', $atributos);
+                {
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'sede_super';
@@ -619,7 +622,8 @@ class registrarForm {
                 $esteCampo = "AgrupacionContratista";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = "Información del Contratista";
-                echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                echo $this->miFormulario->agrupacion('inicio', $atributos);
+                {
 
 
                     echo "<center>";
@@ -1154,7 +1158,8 @@ class registrarForm {
                 $esteCampo = "AgrupacionObjetoContrato";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = "Información del Contrato";
-                echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                echo $this->miFormulario->agrupacion('inicio', $atributos);
+                {
 
                     echo "<center>";
                     echo "<div class=\"alert alert-info \"id=\"ejemplo\"> OBJETO CDP:  <br><br>" . $_REQUEST['objetoCDP'] . "</div>";
@@ -1202,8 +1207,7 @@ class registrarForm {
                     $atributos ['leyenda'] = "Gestion de Pólizas";
                     echo $this->miFormulario->agrupacion('inicio', $atributos);
                     $cadenaSql = $this->miSql->getCadenaSql('polizas');
-                    $resultado_polizas = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
-                    {
+                    $resultado_polizas = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda"); {
                         for ($i = 0; $i < count($resultado_polizas); $i ++) {
 
                             $esteCampo = "AgrupacionPoliza$i";
@@ -1336,7 +1340,8 @@ class registrarForm {
                 $esteCampo = "AgrupacionReferentePago";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = "Duración de Contrato";
-                echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                echo $this->miFormulario->agrupacion('inicio', $atributos);
+                {
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'fecha_inicio_pago';
@@ -1555,7 +1560,8 @@ class registrarForm {
                 $esteCampo = "ordenadorGasto";
                 $atributos ['id'] = $esteCampo;
                 $atributos ['leyenda'] = $this->lenguaje->getCadena($esteCampo);
-                echo $this->miFormulario->agrupacion('inicio', $atributos); {
+                echo $this->miFormulario->agrupacion('inicio', $atributos);
+                {
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'asignacionOrdenador';

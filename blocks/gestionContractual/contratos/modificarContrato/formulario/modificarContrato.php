@@ -114,7 +114,7 @@ class registrarForm {
                     "tipo_compromiso" => $contrato ['clase_compromiso'],
                     "fecha_subcripcion" => $contrato ['fecha_sub'],
                     "plazo_ejecucion" => $contrato ['plazo_ejecucion'],
-                    "unidad_ejecucion_tiempo" => $contrato ['unidad_ejecucion_tiempo'],
+                    "unidad_ejecucion_tiempo" => $contrato ['unidad_ejecucion'],
                     "fecha_inicio_poliza" => $contrato ['fecha_inicio'],
                     "fecha_final_poliza" => $contrato ['fecha_final'],
                     "tipologia_especifica" => $contrato ['tipologia_contrato'],

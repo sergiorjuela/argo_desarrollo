@@ -57,8 +57,8 @@ class registrarForm {
         $conexionFrameWork = "estructura";
         $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
 
-       
-       if (isset($_REQUEST ['numero_orden']) && $_REQUEST ['numero_orden'] != '') {
+
+        if (isset($_REQUEST ['numero_orden']) && $_REQUEST ['numero_orden'] != '') {
             $numero_orden = explode("-", $_REQUEST ['numero_orden']);
         } else {
             $numero_orden = array('', '');
@@ -106,12 +106,11 @@ class registrarForm {
             $convenio = '';
         }
 
-        $miSesion = Sesion::singleton();
-        $id_usuario = $miSesion->idUsuario();
+        $id_usuario = $_REQUEST['usuario'];
         $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
-     
-        if ($unidadEjecutora[0]['unidad_ejecutora']==1) {
+
+        if ($unidadEjecutora[0]['unidad_ejecutora'] == 1) {
             $unidadEjecutora = 209;
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,
@@ -144,10 +143,10 @@ class registrarForm {
 
             $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenIdexud', $arreglo);
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-             $arreglo = serialize($arreglo);
-             echo $arreglo;
+            $arreglo = serialize($arreglo);
+            echo $arreglo;
         }
-       
+
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
         $esteCampo = $esteBloque ['nombre'];
         $atributos ['id'] = $esteCampo;

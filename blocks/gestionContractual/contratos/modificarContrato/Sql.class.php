@@ -607,6 +607,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "ordenador_gasto=" . "'" . $variable ['ordenador_gasto'] . "',";
                 $cadenaSql .= "supervisor=" . "'" . $variable ['supervisor'] . "',";
                 $cadenaSql .= "clausula_registro_presupuestal=" . $variable ['clausula_presupuesto'] . ",";
+                $cadenaSql .= "unidad_ejecucion=" . $variable ['unidad_ejecucion_tiempo'] . ",";
                 $cadenaSql .= "contratista=" . $variable ['contratista'] . ",";
                 $cadenaSql .= "nombre_contratista='" . $variable ['nombre_contratista'] . "',";
                 $cadenaSql .= "cargo_supervisor=" . "'" . $variable ['cargo_supervisor'] . "' ";
@@ -694,7 +695,6 @@ class Sql extends \Sql {
                 $cadenaSql .= " clase_contratista='" . $variable ['clase_contratista'] . "',";
                 $cadenaSql .= " clase_compromiso='" . $variable ['tipo_compromiso'] . "',";
                 $cadenaSql .= " numero_constancia='" . $variable ['numero_constancia'] . "',";
-                $cadenaSql .= " unidad_ejecucion_tiempo='" . $variable ['unidad_ejecucion_tiempo'] . "',";
                 $cadenaSql .= " modalidad_seleccion='" . $variable ['modalidad_seleccion'] . "',";
                 $cadenaSql .= " procedimiento='" . $variable ['procedimiento'] . "',";
                 $cadenaSql .= " regimen_contratacion='" . $variable ['regimen_contratación'] . "',";
@@ -723,7 +723,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " c.*,cg.tipo_contrato,cg.objeto_contrato,cg.fecha_inicio, ";
                 $cadenaSql .= " cg.fecha_final,cg.plazo_ejecucion,cg.forma_pago,cg.ordenador_gasto, ";
                 $cadenaSql .= " cg.supervisor,cg.clausula_registro_presupuestal,cg.cargo_supervisor, ";
-                $cadenaSql .= " cg.numero_solicitud_necesidad,cg.numero_cdp,cg.contratista ";
+                $cadenaSql .= " cg.numero_solicitud_necesidad,cg.numero_cdp,cg.contratista,cg.unidad_ejecucion ";
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " contractual.contrato c,contractual.contrato_general cg ";
                 $cadenaSql .= " WHERE ";

@@ -69,8 +69,7 @@ class registrarForm {
 
         $conexionFrameWork = "estructura";
         $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
-        $miSesion = Sesion::singleton();
-        $id_usuario = $miSesion->idUsuario();
+        $id_usuario = $_REQUEST['usuario'];
         $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidad = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 

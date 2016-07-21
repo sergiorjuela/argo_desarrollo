@@ -107,8 +107,8 @@ class registrarForm {
 
 
 
-        $miSesion = Sesion::singleton();
-        $id_usuario = $miSesion->idUsuario();
+       
+        $id_usuario = $_REQUEST['usuario'];
         $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
@@ -236,7 +236,7 @@ class registrarForm {
             for ($i = 0; $i < count($Orden); $i ++) {
 
 
-                $nombre = 'checkbox' .$i;
+                $nombre = 'checkbox' . $i;
                 $atributos ['id'] = $nombre;
                 $atributos ['nombre'] = $nombre;
                 $atributos ['estilo'] = 'campoCuadroSeleccionCorta';
@@ -248,7 +248,7 @@ class registrarForm {
                 $atributos ['tabIndex'] = $tab;
                 $atributos ['etiqueta'] = '';
                 $atributos ['validar'] = '';
-                $atributos ['valor'] = $Orden [$i] ['numero_contrato']."-".$Orden [$i] ['vigencia'];
+                $atributos ['valor'] = $Orden [$i] ['numero_contrato'] . "-" . $Orden [$i] ['vigencia'];
                 $atributos ['deshabilitado'] = false;
                 $tab ++;
 
@@ -420,9 +420,6 @@ class registrarForm {
             echo $this->miFormulario->division("inicio", $atributos);
             echo "<button id='myBtn'>Aprobación Multiple</button>";
             echo $this->miFormulario->division('fin');
-            
-            
-            
         } else {
 
             $mensaje = "No Se Encontraron<br>Ordenes.";
@@ -461,7 +458,7 @@ class registrarForm {
 
         $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion('pagina');
         $valorCodificado .= "&opcion=aprobarContratoMultiple";
-      
+
         /**
          * SARA permite que los nombres de los campos sean dinámicos.
          * Para ello utiliza la hora en que es creado el formulario para

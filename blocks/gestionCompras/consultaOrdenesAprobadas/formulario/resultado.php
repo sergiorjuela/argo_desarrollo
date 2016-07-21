@@ -107,8 +107,7 @@ class registrarForm {
 
 
 
-        $miSesion = Sesion::singleton();
-        $id_usuario = $miSesion->idUsuario();
+        $id_usuario = $_REQUEST['usuario'];
         $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
@@ -147,6 +146,8 @@ class registrarForm {
 
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         }
+        
+       
 
         $arreglo = base64_encode(serialize($arreglo));
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
