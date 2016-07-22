@@ -259,7 +259,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " objeto_contrato,fecha_inicio,fecha_final,plazo_ejecucion, ";
                 $cadenaSql .= " forma_pago,unidad_ejecucion,ordenador_gasto,supervisor,clausula_registro_presupuestal, ";
                 $cadenaSql .= " sede_supervisor,dependencia_supervisor,sede_solicitante,dependencia_solicitante,cargo_supervisor, ";
-                $cadenaSql .= " proveedor, nombre_proveedor, numero_solicitud_necesidad,numero_cdp) ";
+                $cadenaSql .= " contratista, nombre_contratista, numero_solicitud_necesidad,numero_cdp) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['vigencia'] . ",";
                 $cadenaSql .= $variable ['id_orden_contrato'] . ",";

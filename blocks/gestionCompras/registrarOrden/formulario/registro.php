@@ -43,6 +43,7 @@ class registrarForm {
         $tiempo = $_REQUEST ['tiempo'];
 
         // ------------------------Declaracion Recursos de Conexion-------------------------------------------------------------------------
+        
         $conexionContractual = "contractual";
         $DBContractual = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionContractual);
         $conexionSICA = "sicapital";

@@ -29,6 +29,17 @@ class RegistradorContrato {
 
     function procesarFormulario() {
 
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         $SQLs = [];
@@ -90,7 +101,7 @@ class RegistradorContrato {
         $cargo = $esteRecursoDB->ejecutarAcceso($SqlCargoSupervisor, "busqueda");
       
         $arreglo_contrato_general = array('vigencia' => (int) date('Y'),
-            'id_orden_contrato' => null,
+            'id_orden_contrato' => 0,
             'tipo_contrato' => $_REQUEST['clase_contrato'],
             'unidad_ejecutura' => $unidad_ejecutura,
             'objeto_contrato' => $_REQUEST ['objeto_contrato'],
@@ -149,7 +160,7 @@ class RegistradorContrato {
         $SqlContrato = $this->miSql->getCadenaSql('registrar_contrato', $arreglo_contrato);
         array_push($SQLs, $SqlContrato);
         
-            
+
         $trans_Registro_contrato = $esteRecursoDB->transaccion($SQLs);
         $sqlNumeroContrato = $this->miSql->getCadenaSql('obtenerInfoOrden');
         $resultado = $esteRecursoDB->ejecutarAcceso($sqlNumeroContrato, "busqueda");

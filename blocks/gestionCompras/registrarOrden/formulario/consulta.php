@@ -43,6 +43,7 @@ class registrarForm {
         $_REQUEST ['tiempo'] = time();
         //-----Esto es una Actualizacion del repositorio 
         // -------------------------------------------------------------------------------------------------
+             
         $conexionContractual = "contractual";
         $DBContractual = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionContractual);
 

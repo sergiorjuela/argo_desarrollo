@@ -29,7 +29,7 @@ class RegistradorOrden {
 
     function procesarFormulario() {
 
-
+       
         $SQLs = [];
         $fechaActual = date('Y-m-d');
 
@@ -66,7 +66,7 @@ class RegistradorOrden {
 
 
         $datosContratoGeneral = array('vigencia' => (int) date('Y'),
-            'id_orden_contrato' => null,
+            'id_orden_contrato' => 0,
             'tipo_contrato' => 98,
             'unidad_ejecutura' => $unidad_ejecutura,
             'objeto_contrato' => $_REQUEST ['objeto_contrato'],
@@ -94,7 +94,6 @@ class RegistradorOrden {
             'numero_contrato' => "currval('numero_unico_contrato_seq')",
             'vigencia' => (int) date('Y'),
             'fecha' => date('Y-m-d'),
-            
         );
 
         $PolizasOrden = array('numero_contrato' => "curval('id_orden_seq')",
@@ -126,7 +125,10 @@ class RegistradorOrden {
             array_push($SQLs, $sqlPoliza);
         }
 
+
+
         $trans_Registro_Orden = $esteRecursoDB->transaccion($SQLs);
+
         $sqlNumeroContrato = $this->miSql->getCadenaSql('obtenerInfoOrden');
         $resultado = $esteRecursoDB->ejecutarAcceso($sqlNumeroContrato, "busqueda");
         $identificadorOrden = $resultado[0];
