@@ -496,7 +496,7 @@ class registrarForm {
                             ' '
                         )
                     );
-                    $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+                    $matrizItems = $DBSICA->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
                     $atributos ['matrizItems'] = $matrizItems;
                     // $atributos['miniRegistro']=;
                     $atributos ['baseDatos'] = "inventarios";

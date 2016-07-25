@@ -47,6 +47,8 @@ class registrarForm {
         // -------------------------------------------------------------------------------------------------
         $conexionContractual = "contractual";
         $DBContractual = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionContractual);
+        $conexionSICA = "sicapital";
+        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
         $conexionFrameWork = "estructura";
         $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
         $datosOrden = array('vigencia' => $_REQUEST['vigencia'], 'numerocontrato' => $_REQUEST['numerocontrato']);
@@ -510,7 +512,7 @@ class registrarForm {
                             ' '
                         )
                     );
-                    $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+                    $matrizItems = $DBSICA->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
 
                     $atributos ['matrizItems'] = $matrizItems;
                     // $atributos['miniRegistro']=;

@@ -291,13 +291,15 @@ class Sql extends \Sql {
                 $cadenaSql .= " and p.id_parametro = 202 ;";
 
                 break;
-            case "funcionarios" :
+             
+            
+           case "funcionarios" :
 
-                $cadenaSql = "SELECT identificacion, identificacion ||' - '|| nombre_cp ";
-                $cadenaSql .= "FROM \"SICapital\".\"funcionario\" ";
-                $cadenaSql .= "WHERE estado='A' ";
-
+                $cadenaSql = " SELECT  FUN_IDENTIFICACION , FUN_IDENTIFICACION ";
+                $cadenaSql .= " ||' '|| FUN_NOMBRE  FROM SICAARKA.FUNCIONARIOS  WHERE FUN_ESTADO='A' ";
+               
                 break;
+
 
             case "ConsultarInformacionOrden" :
                 $cadenaSql = "SELECT DISTINCT ";
