@@ -128,7 +128,7 @@ class Sql extends \Sql {
 
                 $cadenaSql = " SELECT DISTINCT cg.vigencia, cg.numero_contrato, cg.contratista ||' - '||cg.nombre_contratista as contratista,  ";
                 $cadenaSql .= " pr.descripcion, cg.numero_solicitud_necesidad, cg.numero_cdp, sede.\"ESF_SEDE\" ,  ";
-                $cadenaSql .= " dependencia.\"ESF_DEP_ENCARGADA\" FROM ";
+                $cadenaSql .= " dependencia.\"ESF_DEP_ENCARGADA\", cg.supervisor FROM ";
                 $cadenaSql .= " contractual.contrato_general cg, contractual.parametros pr, \"SICapital\".\"sedes_SIC\" sede, ";
                 $cadenaSql .= " \"SICapital\".\"dependencia_SIC\" dependencia ";
                 $cadenaSql .= " WHERE cg.unidad_ejecutora = CAST(pr.id_parametro as text) and ";
@@ -161,13 +161,13 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM parametros WHERE rel_parametro=21; ";
 
                 break;
-            
+
             case "tipo_anulacion" :
                 $cadenaSql = " SELECT id_parametro, descripcion  ";
                 $cadenaSql .= " FROM parametros WHERE rel_parametro=33; ";
 
                 break;
-            
+
             case "tipo_cambio_supervisor" :
                 $cadenaSql = " SELECT id_parametro, descripcion  ";
                 $cadenaSql .= " FROM parametros WHERE rel_parametro=34; ";
@@ -334,6 +334,12 @@ class Sql extends \Sql {
                 $cadenaSql .= " ||' '|| FUN_NOMBRE  FROM SICAARKA.FUNCIONARIOS  WHERE FUN_ESTADO='A' ";
 
                 break;
+            case "consultaSupervisor" :
+
+                $cadenaSql = " SELECT  FUN_IDENTIFICACION ";
+                $cadenaSql .= " ||' -- '|| FUN_NOMBRE  FROM SICAARKA.FUNCIONARIOS  WHERE FUN_IDENTIFICACION = $variable ";
+
+                break;
 
 
             case "ConsultarInformacionOrden" :
@@ -376,20 +382,18 @@ class Sql extends \Sql {
 
                 break;
 
+            case "registroNovedadContractual" :
+                $cadenaSql = " INSERT INTO novedad_contractual( ";
+                $cadenaSql .= " tipo_novedad, numero_contrato, vigencia,estado, fecha_registro,";
+                $cadenaSql .= "  usuario, acto_administrativo, documento, descripcion ) ";
+                $cadenaSql .= " VALUES ($variable[0], '$variable[1]', $variable[2], '$variable[2]',";
+                $cadenaSql .= " '$variable[4]', '$variable[5]', '$variable[6]', '$variable[7]');";
 
-
+                break;
 
 
 
             //------------------------------------------------SQLs SIN DDEFINIR USO-----------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
             case "sedeConsulta" :
                 $cadenaSql = "SELECT DISTINCT  ESF_ID_SEDE  ";
                 $cadenaSql .= " FROM ESPACIOS_FISICOS ";

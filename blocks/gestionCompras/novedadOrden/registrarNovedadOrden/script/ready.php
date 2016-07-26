@@ -3,7 +3,7 @@ $_REQUEST ['tiempo'] = time();
 ?>
 
 
-$('#<?php echo $this->campoSeguro('fecha_novedad') ?>').datepicker({
+$('#<?php echo $this->campoSeguro('fecha_inicio_cesion') ?>').datepicker({
 dateFormat: 'yy-mm-dd',
 changeYear: true,
 changeMonth: true,
@@ -31,6 +31,9 @@ $("#<?php echo $this->campoSeguro('vigencia_novedad')?>").select2();
              
 $("#<?php echo $this->campoSeguro('unidad_tiempo_ejecucion')?>").width(200);  
 $("#<?php echo $this->campoSeguro('unidad_tiempo_ejecucion')?>").select2();                 
+
+$("#<?php echo $this->campoSeguro('unidad_tiempo_ejecucion_suspencion')?>").width(200);  
+$("#<?php echo $this->campoSeguro('unidad_tiempo_ejecucion_suspencion')?>").select2();                 
              
 $("#<?php echo $this->campoSeguro('tipo_anulacion')?>").width(200);  
 $("#<?php echo $this->campoSeguro('tipo_anulacion')?>").select2();                 

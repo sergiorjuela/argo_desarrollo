@@ -119,4 +119,20 @@ if ($_REQUEST ['funcion'] == 'Infodisponibilidades') {
 
     echo $resultado;
 }
+if ($_REQUEST ['funcion'] == 'consultaProveedor') {
+
+    $parametro = $_REQUEST ['proveedor'];
+    $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+    $url = "http://10.20.2.38/agora/index.php?";
+    $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&parametro1=$parametro";
+    $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar_url($data, $enlace);
+    $cliente = curl_init();
+    curl_setopt($cliente, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($cliente, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($cliente, CURLOPT_URL, $url_servicio);
+    $repuestaWeb = curl_exec($cliente);
+    curl_close($cliente);
+    $repuestaWeb = explode("<json>", $repuestaWeb);
+    echo $repuestaWeb[1];
+}
 ?>

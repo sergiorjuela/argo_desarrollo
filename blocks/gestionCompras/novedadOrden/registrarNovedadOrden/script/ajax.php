@@ -149,7 +149,7 @@ $urlFinalCdps = $url . $cadenaACodificarCdps;
 $cadenaACodificarInfoDisponibilidades = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
 $cadenaACodificarInfoDisponibilidades .= "&procesarAjax=true";
 $cadenaACodificarInfoDisponibilidades .= "&action=index.php";
-$cadenaACodificarInfoDisponibilidades .= "&bloqueNombre=" . $esteBloque ["nombre"]; 
+$cadenaACodificarInfoDisponibilidades .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificarInfoDisponibilidades .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificarInfoDisponibilidades .= "&funcion=Infodisponibilidades";
 $cadenaACodificarInfoDisponibilidades .= "&tiempo=" . $_REQUEST ['tiempo'];
@@ -160,6 +160,25 @@ $cadenaACodificarInfoDisponibilidades = $this->miConfigurador->fabricaConexiones
 
 // URL definitiva
 $urlFinalInfoDisponibilidades = $url . $cadenaACodificarInfoDisponibilidades;
+
+
+// Variables
+$cadenaACodificarProveedor = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarProveedor .= "&procesarAjax=true";
+$cadenaACodificarProveedor .= "&action=index.php";
+$cadenaACodificarProveedor .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarProveedor .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarProveedor .= "&funcion=consultaProveedor";
+$cadenaACodificarProveedor .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarProveedor, $enlace);
+
+// URL definitiva
+$urlFinalProveedor = $url . $cadena;
 ?>
 <script type='text/javascript'>
 
@@ -474,7 +493,7 @@ $urlFinalInfoDisponibilidades = $url . $cadenaACodificarInfoDisponibilidades;
 
                 if (data[0] != "null") {
                     $("#<?php echo $this->campoSeguro('valor_adicion_presupuesto') ?>").val(data[1]);
-                   
+
 
 
                 }
@@ -485,6 +504,52 @@ $urlFinalInfoDisponibilidades = $url . $cadenaACodificarInfoDisponibilidades;
             }
 
         });
+    }
+    ;
+
+
+
+
+    function consultarContratistas(elem, request, response) {
+
+        if ($("#<?php echo $this->campoSeguro('selec_proveedor') ?>").val() != "") {
+
+
+            $.ajax({
+                url: "<?php echo $urlFinalProveedor ?>",
+                dataType: "json",
+                data: {proveedor: $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").val()},
+                success: function (data) {
+
+                    if (data.datos != 'null') {
+                        if (data.status == 200) {
+
+                            $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(data.datos.tipo_persona);
+
+                            if (data.datos.tipo_persona != 'NATURAL') {
+                                $("#<?php echo $this->campoSeguro('nuevoContratista') ?>").val(data.datos.num_nit_empresa + '-' + data.datos.nom_empresa);
+
+                            } else {
+
+                               $("#<?php echo $this->campoSeguro('nuevoContratista') ?>").val(data.datos.num_documento_persona_natural+'-'+data.datos.primer_nombre_persona_natural +
+                                        ' ' + data.datos.segundo_nombre_persona_natural + ' ' + data.datos.primer_apellido_persona_natural + ' ' +
+                                        data.datos.segundo_nombre_persona_natural);
+                            }
+
+                        } else {
+                            alert("Sin Cocincidencias en la Busqueda.");
+                        }
+                    } else {
+                        alert("Servidor de Proveedores No Disponible.");
+
+                    }
+
+                }
+
+            });
+        } else {
+            alert("Ingrese la Identificacion o el nombre del proveedor");
+        }
     }
     ;
 

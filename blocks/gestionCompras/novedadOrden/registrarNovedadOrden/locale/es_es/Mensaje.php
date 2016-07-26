@@ -29,6 +29,13 @@ $this->idioma ["tipoCambioSupervisorTitulo"] = "Seleccione el tipo de cambio del
 $this->idioma ["nuevoSupervisor"] = "Nuevo Supervisor: ";
 $this->idioma ["nuevoSupervisorTitulo"] = "Seleccione el nuevo supervisor. ";
 
+$this->idioma ["supervisor_actual"] = "Supervisor Actual: ";
+$this->idioma ["supervisor_actualTitulo"] = "Supervisor Actual del contrato";
+
+$this->idioma ["selec_proveedor"] = "Buscar Contratista: ";
+$this->idioma ["selec_proveedorTitulo"] = "Digite la Cedula del Contratista y de clic en el boton.";
+
+
 $this->idioma ["tipo_adicion"] = "Tipo Adicion: ";
 $this->idioma ["tipo_adicionTitulo"] = "Seleccione el tipo de adicion. ";
 
@@ -119,6 +126,7 @@ $this->idioma ["fecha_final_subTitulo"] = "Seleccione Fecha Final";
 
 //------------------------
 $this->idioma ["botonAceptar"] = "Registrar";
+$this->idioma ["botonContratista"] = "Buscar Contratista";
 $this->idioma ["botonRegresar"] = "Regresar";
 $this->idioma ["botonConsultar"] = "Consultar";
 $this->idioma ["registrarNovedadOrden"] = "Registrar Novedad a Orden de Compra";
