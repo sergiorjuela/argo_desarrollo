@@ -18,6 +18,12 @@ $this->idioma ["observacionesTitulo"] = "Registre las observaciones o comentario
 $this->idioma ["fecha_inicio_cesion"] = "Fecha de Inicio de Cesión: ";
 $this->idioma ["fecha_inicio_cesionTitulo"] = "Seleccione la fecha de inicio de la cesión. ";
 
+$this->idioma ["fecha_inicio_suspension"] = "Fecha de Inicio de Suspensión: ";
+$this->idioma ["fecha_inicio_suspensionTitulo"] = "Seleccione la fecha de inicio de la suspension. ";
+
+$this->idioma ["fecha_fin_suspension"] = "Fecha Final de Suspensión: ";
+$this->idioma ["fecha_fin_suspensionTitulo"] = "Seleccione la fecha final de la suspension. ";
+
 
 $this->idioma ["tipo_anulacion"] = "Tipo de Anulación: ";
 $this->idioma ["tipo_anulacionTitulo"] = "Seleccione el tipo de anulación. ";
@@ -25,6 +31,9 @@ $this->idioma ["tipo_anulacionTitulo"] = "Seleccione el tipo de anulación. ";
 
 $this->idioma ["tipoCambioSupervisor"] = "Tipo de Cambio de Supervisor: ";
 $this->idioma ["tipoCambioSupervisorTitulo"] = "Seleccione el tipo de cambio del supervisor. ";
+
+$this->idioma ["fecha_oficial_cambio"] = "Fecha Ofical de Cambio: ";
+$this->idioma ["fecha_oficial_cambioTitulo"] = "Seleccione la fecha oficial del cambio del supervisor. ";
 
 $this->idioma ["nuevoSupervisor"] = "Nuevo Supervisor: ";
 $this->idioma ["nuevoSupervisorTitulo"] = "Seleccione el nuevo supervisor. ";
@@ -129,6 +138,7 @@ $this->idioma ["botonAceptar"] = "Registrar";
 $this->idioma ["botonContratista"] = "Buscar Contratista";
 $this->idioma ["botonRegresar"] = "Regresar";
 $this->idioma ["botonConsultar"] = "Consultar";
+$this->idioma ["botonContinuar"] = "Continuar";
 $this->idioma ["registrarNovedadOrden"] = "Registrar Novedad a Orden de Compra";
 
 

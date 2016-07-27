@@ -96,7 +96,7 @@ class RegistradorOrden {
             'fecha' => date('Y-m-d'),
         );
 
-        $PolizasOrden = array('numero_contrato' => "curval('id_orden_seq')",
+        $PolizasOrden = array('numero_contrato' => "currval('id_orden_seq')",
             'poliza' => "curval('numero_unico_contrato_seq')",
             'numero_contrato' => "currval('numero_unico_contrato_seq')");
 

@@ -15,7 +15,50 @@ dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
 dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
 
 });
+$('#<?php echo $this->campoSeguro('fecha_oficial_cambio') ?>').datepicker({
+dateFormat: 'yy-mm-dd',
+changeYear: true,
+changeMonth: true,
+monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
 
+});
+
+var dates0 = $("#<?php echo $this->campoSeguro('fecha_inicio_suspension') ?>").datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+        onSelect: function (selectedDate) {
+            var option = this.id == "from" ? "maxDate" : "minDate",
+                    instance = $(this).data("datepicker"),
+                    date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+            dates0.not(this).datepicker("option", option, date);
+        }
+    });
+    var inidate0 = new Date($('#<?php echo $this->campoSeguro('fecha_inicio_suspension') ?>').datepicker('getDate'));
+    var dates0 = $("#<?php echo $this->campoSeguro('fecha_fin_suspension') ?>").datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        minDate: inidate0,
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa']
+
+    });
 
 
 
@@ -216,4 +259,5 @@ $("#<?php echo $this->campoSeguro('tipo_adicion') ?>").change(function() {
 			  }
 			
 	   });
-	   
+           
+    

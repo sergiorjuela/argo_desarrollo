@@ -438,6 +438,7 @@ $urlFinalProveedor = $url . $cadena;
             data: {numsol: $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").val(),
                 vigencia: $("#<?php echo $this->campoSeguro('vigencia_novedad') ?>").val(),
                 unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val(),
+                cdpsNovedades: $("#<?php echo $this->campoSeguro('cdpRegistradasNovedades') ?>").val(),
                 cdps: $("#<?php echo $this->campoSeguro('cdpRegistradas') ?>").val()},
             success: function (data) {
 

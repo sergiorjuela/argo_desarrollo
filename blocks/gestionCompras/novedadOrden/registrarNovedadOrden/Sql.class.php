@@ -182,6 +182,13 @@ class Sql extends \Sql {
                 $cadenaSql .= "WHERE rl.descripcion ='tipo_adicion' and pr.estado_registro = 't' order by pr.descripcion ASC ; ";
                 break;
 
+            case "consultarTipoNovedad" :
+
+                $cadenaSql = " SELECT pr.descripcion ";
+                $cadenaSql .= " FROM parametros pr ";
+                $cadenaSql .= " WHERE pr.id_parametro = $variable ; ";
+                break;
+
             case "vigencias_sica_disponibilidades" :
                 $cadenaSql = " SELECT DISTINCT SN.VIGENCIA AS valor, SN.VIGENCIA AS informacion  FROM CO.CO_SOLICITUD_ADQ SN ";
                 $cadenaSql .= " ORDER BY SN.VIGENCIA DESC ";
@@ -206,7 +213,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= " . $variable [0] . " ";
                 $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = '0$variable[2]' and SN.NUM_SOL_ADQ = " . $variable [1] . " ";
                 $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
-                $cadenaSql .= " and CDP.NUMERO_DISPONIBILIDAD NOT IN ($variable[3]) ";
+                $cadenaSql .= " and CDP.NUMERO_DISPONIBILIDAD NOT IN ($variable[3]) and CDP.NUMERO_DISPONIBILIDAD NOT IN ($variable[4]) ";
                 $cadenaSql .= " ORDER BY CDP.NUMERO_DISPONIBILIDAD ";
 
                 break;
@@ -227,6 +234,13 @@ class Sql extends \Sql {
 
                 $cadenaSql = " select string_agg(cast(numero_cdp as text),',' ";
                 $cadenaSql.=" order by numero_cdp) from contrato_general;";
+
+                break;
+
+            case "cdpRegistradasNovedades" :
+
+                $cadenaSql = " select string_agg(cast(numero_cdp as text),',' ";
+                $cadenaSql.=" order by numero_cdp) from adicion;";
 
                 break;
 
@@ -384,16 +398,156 @@ class Sql extends \Sql {
 
             case "registroNovedadContractual" :
                 $cadenaSql = " INSERT INTO novedad_contractual( ";
-                $cadenaSql .= " tipo_novedad, numero_contrato, vigencia,estado, fecha_registro,";
+                $cadenaSql .= " tipo_novedad, numero_contrato, vigencia, fecha_registro,";
                 $cadenaSql .= "  usuario, acto_administrativo, documento, descripcion ) ";
-                $cadenaSql .= " VALUES ($variable[0], '$variable[1]', $variable[2], '$variable[2]',";
+                $cadenaSql .= " VALUES ($variable[0], '$variable[1]', $variable[2], '$variable[3]',";
                 $cadenaSql .= " '$variable[4]', '$variable[5]', '$variable[6]', '$variable[7]');";
 
                 break;
 
+            case "registroNovedadAdicionPresupuesto" :
+                $cadenaSql = " INSERT INTO adicion( ";
+                $cadenaSql .= " id, tipo_adicion, numero_solicitud, numero_cdp, valor_presupuesto) ";
+                $cadenaSql .= " VALUES ( ";
+                $cadenaSql .= " $variable[0],";
+                $cadenaSql .= " $variable[1],";
+                $cadenaSql .= " $variable[2],";
+                $cadenaSql .= " $variable[3],";
+                $cadenaSql .= " $variable[4]";
+                $cadenaSql .= " ); ";
+
+                break;
+
+            case "registroNovedadAdicionTiempo" :
+                $cadenaSql = " INSERT INTO adicion( ";
+                $cadenaSql .= " id, tipo_adicion, unidad_tiempo_ejecucion, valor_tiempo) ";
+                $cadenaSql .= " VALUES ( ";
+                $cadenaSql .= " $variable[0],";
+                $cadenaSql .= " $variable[1],";
+                $cadenaSql .= " $variable[2],";
+                $cadenaSql .= " $variable[3]";
+                $cadenaSql .= " ); ";
+
+                break;
+
+            case "registroNovedadAnulacion" :
+                $cadenaSql = " INSERT INTO anulacion( ";
+                $cadenaSql .= " id, tipo_anulacion ) ";
+                $cadenaSql .= " VALUES ( ";
+                $cadenaSql .= " $variable[0],";
+                $cadenaSql .= " $variable[1]";
+                $cadenaSql .= " ); ";
+
+                break;
+
+            case "registroNovedadCambioSupervisor" :
+                $cadenaSql = " INSERT INTO cambio_supervisor( ";
+                $cadenaSql .= " id, tipo_cambio,supervisor_antiguo,supervisor_nuevo,fecha_cambio) ";
+                $cadenaSql .= " VALUES ( ";
+                $cadenaSql .= " $variable[0],";
+                $cadenaSql .= " $variable[1],";
+                $cadenaSql .= " '$variable[2]',";
+                $cadenaSql .= " '$variable[3]',";
+                $cadenaSql .= " '$variable[4]'";
+                $cadenaSql .= " ); ";
+
+                break;
+
+            case "registroNovedadCesion" :
+                $cadenaSql = " INSERT INTO cesion( ";
+                $cadenaSql .= " id,nuevo_contratista,antiguo_contratista,fecha_cesion) ";
+                $cadenaSql .= " VALUES ( ";
+                $cadenaSql .= " $variable[0],";
+                $cadenaSql .= " $variable[1],";
+                $cadenaSql .= " $variable[2],";
+                $cadenaSql .= " '$variable[3]'";
+                $cadenaSql .= " ); ";
+
+                break;
+
+            case "registroNovedadSuspension" :
+                $cadenaSql = " INSERT INTO suspension( ";
+                $cadenaSql .= " id,fecha_inicio ,fecha_fin) ";
+                $cadenaSql .= " VALUES ( ";
+                $cadenaSql .= " $variable[0],";
+                $cadenaSql .= " '$variable[1]',";
+                $cadenaSql .= " '$variable[2]'";
+                $cadenaSql .= " ); ";
+
+                break;
+            case "actualizarSupervisor" :
+                $cadenaSql = "  UPDATE contrato_general ";
+                $cadenaSql .= " SET ";
+                $cadenaSql .= " supervisor = $variable[0] ";
+                $cadenaSql .= " WHERE numero_contrato = $variable[1] and vigencia = $variable[2]; ";
+                break;
+
+            case "actualizarContratista" :
+                $cadenaSql = "  UPDATE contrato_general ";
+                $cadenaSql .= " SET ";
+                $cadenaSql .= " contratista = $variable[0] , ";
+                $cadenaSql .= " nombre_contratista = '$variable[1]' ";
+                $cadenaSql .= " WHERE numero_contrato = $variable[2] and vigencia = $variable[3];";
+                break;
+
+            case "acumuladoAdiciones" :
+                $cadenaSql = "  SELECT SUM(valor_presupuesto) as acumulado  ";
+                $cadenaSql .= " FROM adicion a , novedad_contractual nc  ";
+                $cadenaSql .= " WHERE a.id = nc.id AND numero_contrato = '$variable[0]' AND vigencia = $variable[1];";
+                break;
 
 
-            //------------------------------------------------SQLs SIN DDEFINIR USO-----------------------------------------------------------------------------------
+
+            case "consultarAdcionesPresupuesto" :
+                $cadenaSql = "  SELECT nc.*, a.numero_solicitud, a.numero_cdp, a.valor_presupuesto ";
+                $cadenaSql .= " FROM adicion a , novedad_contractual nc    ";
+                $cadenaSql .= " WHERE a.id = nc.id AND numero_contrato = '$variable[0]' AND vigencia = $variable[1] ";
+                $cadenaSql .= " AND tipo_adicion = 248;";
+                break;
+
+
+            case "consultarAdcionesTiempo" :
+                $cadenaSql = "  SELECT nc.*, a.unidad_tiempo_ejecucion, a.valor_tiempo  ";
+                $cadenaSql .= " FROM adicion a , novedad_contractual nc    ";
+                $cadenaSql .= " WHERE a.id = nc.id AND numero_contrato = '$variable[0]' AND vigencia = $variable[1] ";
+                $cadenaSql .= " AND tipo_adicion = 249;";
+                break;
+
+            case "consultarAnulaciones" :
+                $cadenaSql = "  SELECT nc.*, pr.descripcion  ";
+                $cadenaSql .= " FROM anulacion n , novedad_contractual nc, parametros pr    ";
+                $cadenaSql .= " WHERE n.id = nc.id AND numero_contrato = '$variable[0]' AND vigencia = $variable[1] ";
+                $cadenaSql .= " AND pr.id_parametro= n.tipo_anulacion;";
+                break;
+
+            case "consultarSuspensiones" :
+                $cadenaSql = "  SELECT nc.*, s.*  ";
+                $cadenaSql .= " FROM suspension s , novedad_contractual nc   ";
+                $cadenaSql .= " WHERE s.id = nc.id AND numero_contrato = '$variable[0]' AND vigencia = $variable[1]; ";
+                break;
+
+            case "consultaCesiones" :
+                $cadenaSql = "  SELECT nc.*, c.*  ";
+                $cadenaSql .= " FROM cesion c , novedad_contractual nc   ";
+                $cadenaSql .= " WHERE c.id = nc.id AND numero_contrato = '$variable[0]' AND vigencia = $variable[1]; ";
+                break;
+
+            case "ConsultacambioSupervisor" :
+                $cadenaSql = "  SELECT nc.*, cs.supervisor_antiguo, cs.supervisor_nuevo, cs.fecha_cambio, pr.descripcion  ";
+                $cadenaSql .= " FROM cambio_supervisor cs , novedad_contractual nc, parametros pr   ";
+                $cadenaSql .= " WHERE cs.id = nc.id AND numero_contrato = '$variable[0]' AND vigencia = $variable[1] ";
+                $cadenaSql .= " AND cs.tipo_cambio = pr.id_parametro;";
+                break;
+
+            case "ConsultaOtras" :
+                $cadenaSql = "  SELECT nc.numero_contrato,nc.vigencia,nc.estado,nc.fecha_registro,nc.usuario,nc.acto_administrativo, ";
+                $cadenaSql .= "  nc.documento, nc.descripcion, pr.descripcion ";
+                $cadenaSql .= " FROM novedad_contractual nc, parametros pr  ";
+                $cadenaSql .= " WHERE numero_contrato = '$variable[0]' AND vigencia = $variable[1] AND pr.id_parametro = nc.tipo_novedad ";
+                $cadenaSql .= " AND ( nc.tipo_novedad = 217 or nc.tipo_novedad = 218 ) ; ";
+                break;
+
+//------------------------------------------------SQLs SIN DDEFINIR USO-----------------------------------------------------------------------------------
             case "sedeConsulta" :
                 $cadenaSql = "SELECT DISTINCT  ESF_ID_SEDE  ";
                 $cadenaSql .= " FROM ESPACIOS_FISICOS ";

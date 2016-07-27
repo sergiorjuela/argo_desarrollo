@@ -27,7 +27,7 @@ class registrarForm {
     function miForm() {
 
 
-        // Rescatar los datos de este bloque
+       // Rescatar los datos de este bloque
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
         $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
 
@@ -112,12 +112,18 @@ class registrarForm {
         $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
+
+        if (isset($numero_orden[1])) {
+            $vigencia = $numero_orden[1];
+        } else {
+            $vigencia = "";
+        }
         if ($unidadEjecutora[0]['unidad_ejecutora'] == 1) {
             $unidadEjecutora = 209;
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,
                 'numero_contrato' => $numero_orden[0],
-                'vigencia' => $numero_orden[1],
+                'vigencia' => $vigencia,
                 'nit' => $nit,
                 'fecha_inicial' => $fecha_inicio,
                 'fecha_final' => $fecha_final,
@@ -134,7 +140,7 @@ class registrarForm {
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,
                 'numero_contrato' => $numero_orden[0],
-                'vigencia' => $numero_orden[1],
+                'vigencia' => $vigencia,
                 'nit' => $nit,
                 'fecha_inicial' => $fecha_inicio,
                 'fecha_final' => $fecha_final,
@@ -147,8 +153,8 @@ class registrarForm {
 
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         }
+        $arreglo = serialize($arreglo);
 
-        $arreglo = base64_encode(serialize($arreglo));
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
         $esteCampo = $esteBloque ['nombre'];
         $atributos ['id'] = $esteCampo;
@@ -214,15 +220,11 @@ class registrarForm {
                                 <th>Sede-Dependencia</th>
                                 <th>Fecha de Registro</th>
                                 <th>Registrar Novedad a la Orden</th>
+                                <th>Consultar Novedades</th>
                         	
                              </tr>
                           </thead>
-                          
-                          
-                          
-
-
-                          <tbody>";
+                    <tbody>";
 
             for ($i = 0; $i < count($Orden); $i ++) {
                 $variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
@@ -235,6 +237,18 @@ class registrarForm {
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
                 $variable .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "  VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
                 $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
+                
+                
+                $variableConsultaNoveades = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+                $variableConsultaNoveades .= "&opcion=consultanovedades";
+                $variableConsultaNoveades .= "&numero_contrato=" . $Orden [$i] ['numero_contrato'];
+                $variableConsultaNoveades .= "&id_orden=" . $Orden [$i] ['id_orden'];
+                $variableConsultaNoveades .= "&vigencia=" . $Orden [$i] ['vigencia'];
+                $variableConsultaNoveades .= "&id_contratista=" . $Orden [$i] ['proveedor'];
+                $variableConsultaNoveades .= "&arreglo=" . $arreglo;
+                $variableConsultaNoveades .= "&usuario=" . $_REQUEST ['usuario'];
+                $variableConsultaNoveades .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "  VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
+                $variableConsultaNoveades = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableConsultaNoveades, $directorio);
 
                 $mostrarHtml = "<tr>
                                 <td><center>" . $Orden [$i] ['descripcion'] . "</center></td>
@@ -248,6 +262,11 @@ class registrarForm {
                                 <td><center>
                                     <a href='" . $variable . "'>
                                         <img src='" . $rutaBloque . "/css/images/novedad.png' width='15px'>
+                                    </a>
+                                </center> </td>
+                                <td><center>
+                                    <a href='" . $variableConsultaNoveades . "'>
+                                        <img src='" . $rutaBloque . "/css/images/consulta.png' width='15px'>
                                     </a>
                                 </center> </td>
                 		     		
