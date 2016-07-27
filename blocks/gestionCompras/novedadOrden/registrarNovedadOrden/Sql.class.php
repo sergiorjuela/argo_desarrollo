@@ -507,33 +507,33 @@ class Sql extends \Sql {
 
 
             case "consultarAdcionesTiempo" :
-                $cadenaSql = "  SELECT nc.*, a.unidad_tiempo_ejecucion, a.valor_tiempo  ";
-                $cadenaSql .= " FROM adicion a , novedad_contractual nc    ";
-                $cadenaSql .= " WHERE a.id = nc.id AND numero_contrato = '$variable[0]' AND vigencia = $variable[1] ";
-                $cadenaSql .= " AND tipo_adicion = 249;";
+                $cadenaSql = "  SELECT nc.*, pr.descripcion as unidad_tiempo_ejecucion, a.valor_tiempo  ";
+                $cadenaSql .= " FROM adicion a , novedad_contractual nc, parametros pr    ";
+                $cadenaSql .= " WHERE a.id = nc.id AND a.unidad_tiempo_ejecucion = pr.id_parametro ";
+                $cadenaSql .= " AND tipo_adicion = 249 AND numero_contrato = '$variable[0]' AND vigencia = $variable[1] ;";
                 break;
 
             case "consultarAnulaciones" :
-                $cadenaSql = "  SELECT nc.*, pr.descripcion  ";
+                $cadenaSql = "  SELECT nc.*, pr.descripcion as parametro_anulacion  ";
                 $cadenaSql .= " FROM anulacion n , novedad_contractual nc, parametros pr    ";
                 $cadenaSql .= " WHERE n.id = nc.id AND numero_contrato = '$variable[0]' AND vigencia = $variable[1] ";
                 $cadenaSql .= " AND pr.id_parametro= n.tipo_anulacion;";
                 break;
 
             case "consultarSuspensiones" :
-                $cadenaSql = "  SELECT nc.*, s.*  ";
+                $cadenaSql = "  SELECT nc.*, s.fecha_inicio, s.fecha_fin ";
                 $cadenaSql .= " FROM suspension s , novedad_contractual nc   ";
                 $cadenaSql .= " WHERE s.id = nc.id AND numero_contrato = '$variable[0]' AND vigencia = $variable[1]; ";
                 break;
 
             case "consultaCesiones" :
-                $cadenaSql = "  SELECT nc.*, c.*  ";
+                $cadenaSql = "  SELECT nc.*, c.nuevo_contratista, c.antiguo_contratista, c.fecha_cesion  ";
                 $cadenaSql .= " FROM cesion c , novedad_contractual nc   ";
                 $cadenaSql .= " WHERE c.id = nc.id AND numero_contrato = '$variable[0]' AND vigencia = $variable[1]; ";
                 break;
 
             case "ConsultacambioSupervisor" :
-                $cadenaSql = "  SELECT nc.*, cs.supervisor_antiguo, cs.supervisor_nuevo, cs.fecha_cambio, pr.descripcion  ";
+                $cadenaSql = "  SELECT nc.*, cs.supervisor_antiguo, cs.supervisor_nuevo, cs.fecha_cambio, pr.descripcion as tipoCambio_parametro ";
                 $cadenaSql .= " FROM cambio_supervisor cs , novedad_contractual nc, parametros pr   ";
                 $cadenaSql .= " WHERE cs.id = nc.id AND numero_contrato = '$variable[0]' AND vigencia = $variable[1] ";
                 $cadenaSql .= " AND cs.tipo_cambio = pr.id_parametro;";
@@ -541,11 +541,18 @@ class Sql extends \Sql {
 
             case "ConsultaOtras" :
                 $cadenaSql = "  SELECT nc.numero_contrato,nc.vigencia,nc.estado,nc.fecha_registro,nc.usuario,nc.acto_administrativo, ";
-                $cadenaSql .= "  nc.documento, nc.descripcion, pr.descripcion ";
+                $cadenaSql .= "  nc.documento, nc.descripcion, pr.descripcion as parametro_descripcion ";
                 $cadenaSql .= " FROM novedad_contractual nc, parametros pr  ";
                 $cadenaSql .= " WHERE numero_contrato = '$variable[0]' AND vigencia = $variable[1] AND pr.id_parametro = nc.tipo_novedad ";
                 $cadenaSql .= " AND ( nc.tipo_novedad = 217 or nc.tipo_novedad = 218 ) ; ";
                 break;
+
+            case "ConsultaSupervisorNovedad" :
+                $cadenaSql = "   SELECT FUN_IDENTIFICACION ||' - '|| FUN_NOMBRE ";
+                $cadenaSql .= "  FROM SICAARKA.FUNCIONARIOS WHERE FUN_IDENTIFICACION = $variable ";
+                break;
+
+
 
 //------------------------------------------------SQLs SIN DDEFINIR USO-----------------------------------------------------------------------------------
             case "sedeConsulta" :

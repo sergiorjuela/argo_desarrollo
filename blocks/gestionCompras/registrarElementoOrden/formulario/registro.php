@@ -174,7 +174,8 @@ class registrarForm {
                     $atributos ['leyenda'] = "Cargue Masivo de Elementos";
                     echo $this->miFormulario->agrupacion('inicio', $atributos);
                     {
-
+                        
+                  
                         $mensaje = "- El Archivo Tiene que Ser Tipo Excel.
 								<br>- Solo Se Cargaran de forma Correcta de Acuerdo al Plantilla Preedeterminada.
 								<br>- Para Verificar El Cargue Masivo Consulte los Elementos en el Modulo \"Consultar Y Modificar Orden\".

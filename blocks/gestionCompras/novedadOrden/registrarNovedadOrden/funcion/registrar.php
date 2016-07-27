@@ -85,7 +85,7 @@ class RegistradorContrato {
                     3 => date("Y-m-d"),
                     4 => $_REQUEST['usuario'],
                     5 => $_REQUEST['numero_acto'],
-                    6 => $destino1,
+                    6 =>  $prefijo . "_" . $archivo1,
                     7 => $_REQUEST['observaciones'],
                 );
 

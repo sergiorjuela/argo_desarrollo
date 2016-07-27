@@ -64,10 +64,10 @@ $urlFinal = $url . $cadena;
 <script type='text/javascript'>
 
     $(function () {
-      
+
 
         $('#tablaTitulos').ready(function () {
-            
+
 
             var table = $('#tablaTitulos').dataTable({
                 "language": {
@@ -105,7 +105,7 @@ $urlFinal = $url . $cadena;
                     {sWidth: "10%"},
                     {sWidth: "15%"},
                     {sWidth: "15%"}
-                   
+
                 ]
 
             });
@@ -115,8 +115,377 @@ $urlFinal = $url . $cadena;
         });
 
     });
-    
- 
+
+    $(function () {
+
+
+        $('#tablaAdicionPresupuesto').ready(function () {
+
+
+            var table = $('#tablaAdicionPresupuesto').dataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sSearch": "Buscar:",
+                    "sLoadingRecords": "Cargando...",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Ãšltimo",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    }
+                },
+                processing: true,
+                searching: true,
+                info: true,
+                "scrollY": "200px",
+                "scrollCollapse": false,
+                "bLengthChange": false,
+                "bPaginate": false,
+                "aoColumns": [
+                    {sWidth: "5%"},
+                    {sWidth: "10%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "10%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "10%"},
+                    {sWidth: "20%"},
+                    {sWidth: "20%"}
+
+                ]
+
+            });
+
+
+
+        });
+
+    });
+    $(function () {
+
+
+        $('#tablaAdicionTiempo').ready(function () {
+
+
+            var table = $('#tablaAdicionTiempo').dataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sSearch": "Buscar:",
+                    "sLoadingRecords": "Cargando...",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Ãšltimo",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    }
+                },
+                processing: true,
+                searching: true,
+                info: true,
+                "scrollY": "200px",
+                "scrollCollapse": false,
+                "bLengthChange": false,
+                "bPaginate": false,
+                "aoColumns": [
+                    {sWidth: "5%"},
+                    {sWidth: "10%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "10%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "20%"},
+                    {sWidth: "20%"}
+
+                ]
+
+            });
+
+
+
+        });
+
+    });
+
+
+    $(function () {
+
+
+        $('#tablaAnulaciones').ready(function () {
+
+
+            var table = $('#tablaAnulaciones').dataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sSearch": "Buscar:",
+                    "sLoadingRecords": "Cargando...",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Ãšltimo",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    }
+                },
+                processing: true,
+                searching: true,
+                info: true,
+                "scrollY": "200px",
+                "scrollCollapse": false,
+                "bLengthChange": false,
+                "bPaginate": false,
+                "aoColumns": [
+                    {sWidth: "5%"},
+                    {sWidth: "15%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "20%"},
+                    {sWidth: "20%"}
+
+                ]
+
+            });
+
+
+
+        });
+
+    });
+    $(function () {
+
+
+        $('#tablacesiones').ready(function () {
+
+
+            var table = $('#tablacesiones').dataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sSearch": "Buscar:",
+                    "sLoadingRecords": "Cargando...",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Ãšltimo",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    }
+                },
+                processing: true,
+                searching: true,
+                info: true,
+                "scrollY": "200px",
+                "scrollCollapse": false,
+                "bLengthChange": false,
+                "bPaginate": false,
+                "aoColumns": [
+                    {sWidth: "5%"},
+                    {sWidth: "15%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "15%"},
+                    {sWidth: "15%"}
+
+                ]
+
+            });
+
+
+
+        });
+
+    });
+    $(function () {
+
+
+        $('#tablacambioSupervisor').ready(function () {
+
+
+            var table = $('#tablacambioSupervisor').dataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sSearch": "Buscar:",
+                    "sLoadingRecords": "Cargando...",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Ãšltimo",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    }
+                },
+                processing: true,
+                searching: true,
+                info: true,
+                "scrollY": "200px",
+                "scrollCollapse": false,
+                "bLengthChange": false,
+                "bPaginate": false,
+                "aoColumns": [
+                    {sWidth: "5%"},
+                    {sWidth: "15%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "12.5%"},
+                    {sWidth: "12.5%"}
+
+                ]
+
+            });
+
+
+
+        });
+
+    });
+    $(function () {
+
+
+        $('#tablasuspension').ready(function () {
+
+
+            var table = $('#tablasuspension').dataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sSearch": "Buscar:",
+                    "sLoadingRecords": "Cargando...",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Ãšltimo",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    }
+                },
+                processing: true,
+                searching: true,
+                info: true,
+                "scrollY": "200px",
+                "scrollCollapse": false,
+                "bLengthChange": false,
+                "bPaginate": false,
+                "aoColumns": [
+                    {sWidth: "5%"},
+                    {sWidth: "15%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "12.5%"},
+                    {sWidth: "12.5%"}
+
+                ]
+
+            });
+
+
+
+        });
+
+    });
+    $(function () {
+
+
+        $('#tablaotras').ready(function () {
+
+
+            var table = $('#tablaotras').dataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sSearch": "Buscar:",
+                    "sLoadingRecords": "Cargando...",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Ãšltimo",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    }
+                },
+                processing: true,
+                searching: true,
+                info: true,
+                "scrollY": "200px",
+                "scrollCollapse": false,
+                "bLengthChange": false,
+                "bPaginate": false,
+                "aoColumns": [
+                    {sWidth: "5%"},
+                    {sWidth: "15%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "5%"},
+                    {sWidth: "12.5%"},
+                    {sWidth: "12.5%"}
+
+                ]
+
+            });
+
+
+
+        });
+
+    });
+
+
 
 
 

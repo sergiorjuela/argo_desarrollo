@@ -963,7 +963,7 @@ $urlProveedorFiltro = $url . $cadenaACodificarProveedorFiltro;
 
                                 $("#<?php echo $this->campoSeguro('nombre_razon_proveedor') ?>").val(data.datos.primer_nombre_persona_natural +
                                         ' ' + data.datos.segundo_nombre_persona_natural + ' ' + data.datos.primer_apellido_persona_natural + ' ' +
-                                        data.datos.segundo_nombre_persona_natural);
+                                        data.datos.primer_apellido_persona_natural);
                                 $("#<?php echo $this->campoSeguro('identifcacion_proveedor') ?>").val(data.datos.num_documento_persona_natural);
                                 $("#<?php echo $this->campoSeguro('digito_verificacion') ?>").val(data.datos.digito_verificacion_persona_natural);
                                 $("#<?php echo $this->campoSeguro('telefono_proveedor') ?>").val(data.datos.telefono_persona_natural + ' - ' + data.datos.movil_persona_natural);
