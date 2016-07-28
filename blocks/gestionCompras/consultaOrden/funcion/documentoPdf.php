@@ -311,6 +311,9 @@ class RegistradorOrden {
 
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexionSICA = "sicapital";
+        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
 
         $directorio = $this->miConfigurador->getVariableConfiguracion('rutaUrlBloque');
 
@@ -337,9 +340,9 @@ class RegistradorOrden {
 
         //-------------- Se accede al Servicio de Agora para Consultar el Proveedor de la Orden de Compra -------------------------------------------------------------------
 
-     
+
         $parametro = $orden ['contratista'];
-     
+
         $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
         $url = "http://10.20.2.38/agora/index.php?";
         $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&parametro1=$parametro";
@@ -356,15 +359,15 @@ class RegistradorOrden {
         $proveedor = (array) $proveedor['datos'];
 
         if ($proveedor['tipo_persona'] == 'NATURAL') {
-            $identificacionProveedor = utf8_decode($proveedor['tipo_documento_persona_natural']).": ".$proveedor['num_documento_persona_natural'];
-            $nombreProveedor = "Nombre Proveedor: ".$proveedor['primer_nombre_persona_natural'] . " " . $proveedor['segundo_nombre_persona_natural'] . " " .
+            $identificacionProveedor = utf8_decode($proveedor['tipo_documento_persona_natural']) . ": " . $proveedor['num_documento_persona_natural'];
+            $nombreProveedor = "Nombre Proveedor: " . $proveedor['primer_nombre_persona_natural'] . " " . $proveedor['segundo_nombre_persona_natural'] . " " .
                     $proveedor['primer_apellido_persona_natural'] . " " . $proveedor['segundo_nombre_persona_natural'];
 
             $telefonosProveedor = $proveedor['telefono_persona_natural'] . "-" . $proveedor['movil_persona_natural'];
             $cargoProveedor = $proveedor['cargo_persona_natural'];
         } else {
-            $identificacionProveedor = "NIT: ".$proveedor['num_nit_empresa'];
-            $nombreProveedor = "Razon Social: ".$proveedor['nom_empresa'];
+            $identificacionProveedor = "NIT: " . $proveedor['num_nit_empresa'];
+            $nombreProveedor = "Razon Social: " . $proveedor['nom_empresa'];
             $telefonosProveedor = $proveedor['telefono_empresa'] . "-" . $proveedor['movil_empresa'];
             $cargoProveedor = "N/A";
         }
@@ -401,7 +404,36 @@ class RegistradorOrden {
             $dependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
             $dependencia = $dependencia[0][0];
         }
-      
+
+
+        $datosContrato = array(
+            0 => $orden ['numero_contrato'],
+            1 => $orden ['vigencia']
+        );
+
+        $sqlAdicionesPresupuesto = $this->miSql->getCadenaSql('consultarAdcionesPresupuesto', $datosContrato);
+        $adicionesPresupuesto = $esteRecursoDB->ejecutarAcceso($sqlAdicionesPresupuesto, "busqueda");
+
+
+        $sqlAdicionesTiempo = $this->miSql->getCadenaSql('consultarAdcionesTiempo', $datosContrato);
+        $adicionesTiempo = $esteRecursoDB->ejecutarAcceso($sqlAdicionesTiempo, "busqueda");
+
+        $sqlAdicionesAnulaciones = $this->miSql->getCadenaSql('consultarAnulaciones', $datosContrato);
+        $anulaciones = $esteRecursoDB->ejecutarAcceso($sqlAdicionesAnulaciones, "busqueda");
+
+        $sqlAdicionesSuspension = $this->miSql->getCadenaSql('consultarSuspensiones', $datosContrato);
+        $suspensiones = $esteRecursoDB->ejecutarAcceso($sqlAdicionesSuspension, "busqueda");
+
+        $sqlCesiones = $this->miSql->getCadenaSql('consultaCesiones', $datosContrato);
+        $cesiones = $esteRecursoDB->ejecutarAcceso($sqlCesiones, "busqueda");
+
+        $sqlCambiosSupervisor = $this->miSql->getCadenaSql('ConsultacambioSupervisor', $datosContrato);
+        $cambioSupervisor = $esteRecursoDB->ejecutarAcceso($sqlCambiosSupervisor, "busqueda");
+
+        $sqlOtras = $this->miSql->getCadenaSql('ConsultaOtras', $datosContrato);
+        $otras = $esteRecursoDB->ejecutarAcceso($sqlOtras, "busqueda");
+
+
         $contenidoPagina = "
 <style type=\"text/css\">
     table { 
@@ -652,7 +684,7 @@ class RegistradorOrden {
 		<tr>
 		
 		<td style='width:75%;text-align=left;'><b>TOTAL IVA  : </b></td>
-		<td style='width:25%;text-align=center;'><b>$" . number_format($sumatoriaIva, 2, ",", ".")  . "</b></td>
+		<td style='width:25%;text-align=center;'><b>$" . number_format($sumatoriaIva, 2, ",", ".") . "</b></td>
 		</tr>			
 				
 		<tr>
@@ -764,6 +796,409 @@ class RegistradorOrden {
                 $contenidoPagina .= "</table>";
             }
         }
+
+
+
+        if ($adicionesPresupuesto) {
+            $contenidoPagina .= "<br><table style='width:100%;'>
+                                    <tr>
+                                        <td style='width:100%;text-align=center;'><h6>OTRO SI: PRESUPUESTO</h6></td>
+                                    </tr>
+                                </table>";
+            $contenidoPagina .= "<table style='width:100%;' >
+                              <tr>
+                                <td style='width:5%;text-align=center;'>#</td>
+                                <td style='width:10%;text-align=center;'>#Contrato Vigencia</td>
+                              	<td style='width:7%;text-align=center;'>Estado</td>            
+            			<td style='width:10%;text-align=center;'>Fecha de Registro</td>
+            			<td style='width:10%;text-align=center;'>Usuario</td>
+                                <td style='width:12%;text-align=center;'># Acto Administrativo</td>
+                                <td style='width:8%;text-align=center;'># Solicitud</td>
+                                <td style='width:5%;text-align=center;'># CDP</td>
+                                <td style='width:15%;text-align=center;'>Valor Adición</td>
+                                <td style='width:18%;text-align=center;'>Descripcion</td>
+                                
+                                                    	
+                             </tr>
+                          </table>
+                    <table style='width:100%;'>";
+            $totalAddicionPresupuesto = 0;
+            for ($i = 0; $i < count($adicionesPresupuesto); $i ++) {
+                $numerador = $i + 1;
+                if ($adicionesPresupuesto [$i] ['estado'] == 't') {
+                    $estado = "Activa";
+                } else {
+                    $estado = "Inactiva";
+                }
+
+                $totalAddicionPresupuesto += $adicionesPresupuesto [$i] ['valor_presupuesto'];
+
+                $contenidoPagina .= "<tr>
+                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
+                                <td style='width:10%;text-align=center;'>" . $adicionesPresupuesto [$i] ['numero_contrato'] . " - " . $adicionesPresupuesto [$i] ['vigencia'] . "</td>		
+                                <td style='width:7%;text-align=center;'>" . $estado . "</td>		
+                                <td style='width:10%;text-align=center;'>" . $adicionesPresupuesto [$i] ['fecha_registro'] . "</td>
+                                <td style='width:10%;text-align=center;'>" . $adicionesPresupuesto [$i] ['usuario'] . "</td>
+                                <td style='width:12%;text-align=center;'>" . $adicionesPresupuesto [$i] ['acto_administrativo'] . "</td>
+                                <td style='width:8%;text-align=center;'>" . $adicionesPresupuesto [$i] ['numero_solicitud'] . "</td>
+                                <td style='width:5%;text-align=center;'>" . $adicionesPresupuesto [$i] ['numero_cdp'] . "</td>
+                                <td style='width:15%;text-align=center;'>" . number_format($adicionesPresupuesto [$i] ['valor_presupuesto'], 2, ",", ".") . "</td>
+                                <td style='width:18%;text-align=center;'>" . $adicionesPresupuesto [$i] ['descripcion'] . "</td>
+                              
+                                </tr>";
+            }
+
+            $contenidoPagina .= "</table>";
+            $contenidoPagina .="<table style='width:100%;'>"
+                    . "<tr>"
+                    . "<td style='width:25%;text-align=left;' ><b>TOTAL ADICIONES :  </b></td>";
+            $contenidoPagina .="<td style='width:75%;text-align=left;' ><b>$" . number_format($totalAddicionPresupuesto, 2, ",", ".") . "</b></td></tr></table>";
+            $funcionLetras = new EnLetras ();
+
+            $Letras = $funcionLetras->ValorEnLetras($totalAddicionPresupuesto, ' Pesos ');
+
+            $contenidoPagina .= "<table style='width:100%;'>			
+		<tr>
+		
+		<td style='width:100%;text-align=center;text-transform:uppercase;'><b>" . $Letras . "</b></td>
+		</tr>		
+		
+		</table>";
+        }
+
+        if ($adicionesTiempo) {
+            $contenidoPagina .= "<br><table style='width:100%;'>
+                                    <tr>
+                                        <td style='width:100%;text-align=center;'><h6>OTRO SI: TIEMPO</h6></td>
+                                    </tr>
+                                </table>";
+            $contenidoPagina .= "<table style='width:100%;' >
+                              <tr>
+                                <td style='width:5%;text-align=center;'>#</td>
+                                <td style='width:15%;text-align=center;'>#Contrato Vigencia</td>
+                              	<td style='width:7%;text-align=center;'>Estado</td>            
+            			<td style='width:10%;text-align=center;'>Fecha de Registro</td>
+            			<td style='width:10%;text-align=center;'>Usuario</td>
+                                <td style='width:12%;text-align=center;'># Acto Administrativo</td>
+                                <td style='width:12%;text-align=center;'>Unidad de Tiempo</td>
+                                <td style='width:8%;text-align=center;'>Valor de Tiempo</td>
+                                <td style='width:21%;text-align=center;'>Descripcion</td>
+                                
+                                                    	
+                             </tr>
+                          </table>
+                    <table style='width:100%;'>";
+            for ($i = 0; $i < count($adicionesTiempo); $i ++) {
+                $numerador = $i + 1;
+                if ($adicionesTiempo [$i] ['estado'] == 't') {
+                    $estado = "Activa";
+                } else {
+                    $estado = "Inactiva";
+                }
+
+
+                $contenidoPagina .= "<tr>
+                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
+                                <td style='width:15%;text-align=center;'>" . $adicionesTiempo [$i] ['numero_contrato'] . " - " . $adicionesTiempo [$i] ['vigencia'] . "</td>		
+                                <td style='width:7%;text-align=center;'>" . $estado . "</td>		
+                                <td style='width:10%;text-align=center;'>" . $adicionesTiempo [$i] ['fecha_registro'] . "</td>
+                                <td style='width:10%;text-align=center;'>" . $adicionesTiempo [$i] ['usuario'] . "</td>
+                                <td style='width:12%;text-align=center;'>" . $adicionesTiempo [$i] ['acto_administrativo'] . "</td>
+                                <td style='width:12%;text-align=center;'>" . $adicionesTiempo [$i] ['unidad_tiempo_ejecucion'] . "</td>
+                                <td style='width:8%;text-align=center;'>" . $adicionesTiempo [$i] ['valor_tiempo'] . "</td>
+                                <td style='width:21%;text-align=center;'>" . $adicionesTiempo [$i] ['descripcion'] . "</td>
+                              
+                                </tr>";
+            }
+
+            $contenidoPagina .= "</table>";
+        }
+        if ($anulaciones) {
+            $contenidoPagina .= "<br><table style='width:100%;'>
+                                    <tr>
+                                        <td style='width:100%;text-align=center;'><h6>NOVEDADES DE ANULACIÓN</h6></td>
+                                    </tr>
+                                </table>";
+            $contenidoPagina .= "<table style='width:100%;' >
+                              <tr>
+                                <td style='width:5%;text-align=center;'>#</td>
+                                <td style='width:15%;text-align=center;'>#Contrato Vigencia</td>
+                              	<td style='width:7%;text-align=center;'>Estado</td>            
+            			<td style='width:10%;text-align=center;'>Fecha de Registro</td>
+            			<td style='width:10%;text-align=center;'>Usuario</td>
+                                <td style='width:12%;text-align=center;'># Acto Administrativo</td>
+                                <td style='width:15%;text-align=center;'>Tipo de Anulación</td>
+                                <td style='width:26%;text-align=center;'>Descripcion</td>
+                                
+                                                    	
+                             </tr>
+                          </table>
+                    <table style='width:100%;'>";
+            for ($i = 0; $i < count($anulaciones); $i ++) {
+                $numerador = $i + 1;
+                if ($anulaciones [$i] ['estado'] == 't') {
+                    $estado = "Activa";
+                } else {
+                    $estado = "Inactiva";
+                }
+
+
+                $contenidoPagina .= "<tr>
+                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
+                                <td style='width:15%;text-align=center;'>" . $anulaciones [$i] ['numero_contrato'] . " - " . $anulaciones [$i] ['vigencia'] . "</td>		
+                                <td style='width:7%;text-align=center;'>" . $estado . "</td>		
+                                <td style='width:10%;text-align=center;'>" . $anulaciones [$i] ['fecha_registro'] . "</td>
+                                <td style='width:10%;text-align=center;'>" . $anulaciones [$i] ['usuario'] . "</td>
+                                <td style='width:12%;text-align=center;'>" . $anulaciones [$i] ['acto_administrativo'] . "</td>
+                                <td style='width:15%;text-align=center;'>" . $anulaciones [$i] ['parametro_anulacion'] . "</td>
+                                <td style='width:26%;text-align=center;'>" . $anulaciones [$i] ['descripcion'] . "</td>
+                              
+                                </tr>";
+            }
+
+            $contenidoPagina .= "</table>";
+        }
+        if ($cesiones) {
+            $contenidoPagina .= "<br><table style='width:100%;'>
+                                    <tr>
+                                        <td style='width:100%;text-align=center;'><h6>NOVEDADES DE CESIÓN</h6></td>
+                                    </tr>
+                                </table>";
+            $contenidoPagina .= "<table style='width:100%;' >
+                              <tr>
+                                <td style='width:5%;text-align=center;'>#</td>
+                                <td style='width:7%;text-align=center;'>#Contrato Vigencia</td>
+                              	<td style='width:7%;text-align=center;'>Estado</td>            
+            			<td style='width:8%;text-align=center;'>Fecha de Registro</td>
+            			<td style='width:10%;text-align=center;'>Usuario</td>
+                                <td style='width:10%;text-align=center;'># Acto Administrativo</td>
+                                <td style='width:15%;text-align=center;'>Contratista Actual</td>
+                                <td style='width:15%;text-align=center;'>Contratista Anterior</td>
+                                <td style='width:8%;text-align=center;'>Fecha Cesión</td>
+                                <td style='width:15%;text-align=center;'>Descripcion</td>
+                                
+                                                    	
+                             </tr>
+                          </table>
+                    <table style='width:100%;'>";
+            for ($i = 0; $i < count($cesiones); $i ++) {
+                $numerador = $i + 1;
+                if ($cesiones [$i] ['estado'] == 't') {
+                    $estado = "Activa";
+                } else {
+                    $estado = "Inactiva";
+                }
+
+                $parametro1 = $cesiones [$i] ['nuevo_contratista'];
+                $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+                $url = "http://10.20.2.38/agora/index.php?";
+                $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&parametro1=$parametro1";
+                $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar_url($data, $enlace);
+                $cliente = curl_init();
+                curl_setopt($cliente, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($cliente, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($cliente, CURLOPT_URL, $url_servicio);
+                $repuestaWeb = curl_exec($cliente);
+                curl_close($cliente);
+                $repuestaWeb = explode("<json>", $repuestaWeb);
+                $proveedor = json_decode($repuestaWeb[1]);
+                $proveedor = (array) $proveedor;
+                $proveedor = (array) $proveedor['datos'];
+
+                if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                    $nuevo_contratista = $proveedor['num_nit_empresa'] . " - " . $proveedor['nom_empresa'];
+                } else {
+                    $nuevo_contratista = $proveedor['num_documento_persona_natural'] . " - " . $proveedor['primer_nombre_persona_natural'] . " "
+                            . " " . $proveedor['segundo_nombre_persona_natural'] . "  " . $proveedor['primer_apellido_persona_natural'] . " " .
+                            $proveedor['primer_apellido_persona_natural'];
+                }
+                unset($proveedor);
+
+                $parametro2 = $cesiones [$i] ['antiguo_contratista'];
+                $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+                $url = "http://10.20.2.38/agora/index.php?";
+                $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&parametro1=$parametro2";
+                $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar_url($data, $enlace);
+                $cliente = curl_init();
+                curl_setopt($cliente, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($cliente, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($cliente, CURLOPT_URL, $url_servicio);
+                $repuestaWeb = curl_exec($cliente);
+                curl_close($cliente);
+                $repuestaWeb = explode("<json>", $repuestaWeb);
+                $proveedor = json_decode($repuestaWeb[1]);
+                $proveedor = (array) $proveedor;
+                $proveedor = (array) $proveedor['datos'];
+
+                if ($proveedor['tipo_persona'] == 'JURIDICA') {
+                    $antiguo_contratista = $proveedor['num_nit_empresa'] . " - " . $proveedor['nom_empresa'];
+                } else {
+                    $antiguo_contratista = $proveedor['num_documento_persona_natural'] . " - " . $proveedor['primer_nombre_persona_natural'] . " "
+                            . " " . $proveedor['segundo_nombre_persona_natural'] . "  " . $proveedor['primer_apellido_persona_natural'] . " " .
+                            $proveedor['primer_apellido_persona_natural'];
+                }
+
+
+
+                $contenidoPagina .= "<tr>
+                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
+                                <td style='width:7%;text-align=center;'>" . $cesiones [$i] ['numero_contrato'] . " - " . $cesiones [$i] ['vigencia'] . "</td>		
+                                <td style='width:7%;text-align=center;'>" . $estado . "</td>		
+                                <td style='width:8%;text-align=center;'>" . $cesiones [$i] ['fecha_registro'] . "</td>
+                                <td style='width:10%;text-align=center;'>" . $cesiones [$i] ['usuario'] . "</td>
+                                <td style='width:10%;text-align=center;'>" . $cesiones [$i] ['acto_administrativo'] . "</td>
+                                <td style='width:15%;text-align=center;'>" . $nuevo_contratista . "</td>
+                                <td style='width:15%;text-align=center;'>" . $antiguo_contratista . "</td>
+                                <td style='width:8%;text-align=center;'>" . $cesiones [$i] ['fecha_cesion'] . "</td>
+                                <td style='width:15%;text-align=center;'>" . $cesiones [$i] ['descripcion'] . "</td>
+                              
+                                </tr>";
+            }
+
+            $contenidoPagina .= "</table>";
+        }
+        
+        $contenidoPagina .= " </page><page backtop='5mm' backbottom='5mm' backleft='10mm' backright='10mm'>";
+        if ($cambioSupervisor) {
+            $contenidoPagina .= "<br><table style='width:100%;'>
+                                    <tr>
+                                        <td style='width:100%;text-align=center;'><h6>NOVEDADES CAMBIO DE SUPERVISOR</h6></td>
+                                    </tr>
+                                </table>";
+            $contenidoPagina .= "<table style='width:100%;' >
+                              <tr>
+                                <td style='width:5%;text-align=center;'>#</td>
+                                <td style='width:7%;text-align=center;'>#Contrato Vigencia</td>
+                              	<td style='width:5%;text-align=center;'>Estado</td>            
+            			<td style='width:8%;text-align=center;'>Fecha de Registro</td>
+            			<td style='width:10%;text-align=center;'>Usuario</td>
+                                <td style='width:8%;text-align=center;'># Acto Administrativo</td>
+                                <td style='width:9%;text-align=center;'>Tipo Cambio</td>
+                                <td style='width:15%;text-align=center;'>Supervisor Actual</td>
+                                <td style='width:15%;text-align=center;'>Supervisor Anterior</td>
+                                <td style='width:8%;text-align=center;'>Fecha Cambio</td>
+                                <td style='width:10%;text-align=center;'>Descripcion</td>
+                                   	
+                             </tr>
+                          </table>
+                    <table style='width:100%;'>";
+            for ($i = 0; $i < count($cambioSupervisor); $i ++) {
+                $numerador = $i + 1;
+                if ($cambioSupervisor [$i] ['estado'] == 't') {
+                    $estado = "Activa";
+                } else {
+                    $estado = "Inactiva";
+                }
+                $consultaSuperNuevo = $this->miSql->getCadenaSql('ConsultaSupervisorNovedad', $cambioSupervisor [$i] ['supervisor_nuevo']);
+                $consultaSuperAntiguo = $this->miSql->getCadenaSql('ConsultaSupervisorNovedad', $cambioSupervisor [$i] ['supervisor_antiguo']);
+
+                $supervisorNuevo = $DBSICA->ejecutarAcceso($consultaSuperNuevo, "busqueda");
+                $supervisorAntiguo = $DBSICA->ejecutarAcceso($consultaSuperAntiguo, "busqueda");
+
+
+                $contenidoPagina .= "<tr>
+                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
+                                <td style='width:7%;text-align=center;'>" . $cambioSupervisor [$i] ['numero_contrato'] . " - " . $cambioSupervisor [$i] ['vigencia'] . "</td>		
+                                <td style='width:5%;text-align=center;'>" . $estado . "</td>		
+                                <td style='width:8%;text-align=center;'>" . $cambioSupervisor [$i] ['fecha_registro'] . "</td>
+                                <td style='width:10%;text-align=center;'>" . $cambioSupervisor [$i] ['usuario'] . "</td>
+                                <td style='width:8%;text-align=center;'>" . $cambioSupervisor [$i] ['acto_administrativo'] . "</td>
+                                <td style='width:9%;text-align=center;'>" . $cambioSupervisor [$i] ['tipocambio_parametro'] . "</td>
+                                <td style='width:15%;text-align=center;'>" . $supervisorNuevo[0][0] . "</td>
+                                <td style='width:15%;text-align=center;'>" . $supervisorAntiguo[0][0] . "</td>
+                                <td style='width:8%;text-align=center;'>" . $cambioSupervisor [$i] ['fecha_cambio'] . "</td>
+                                <td style='width:10%;text-align=center;'>" . $cambioSupervisor [$i] ['descripcion'] . "</td>
+                                </tr>";
+            }
+
+            $contenidoPagina .= "</table>";
+        }
+        
+         if ($suspensiones) {
+            $contenidoPagina .= "<br><table style='width:100%;'>
+                                    <tr>
+                                        <td style='width:100%;text-align=center;'><h6>NOVEDADES DE SUSPENSIÓN</h6></td>
+                                    </tr>
+                                </table>";
+            $contenidoPagina .= "<table style='width:100%;' >
+                              <tr>
+                                <td style='width:5%;text-align=center;'>#</td>
+                                <td style='width:15%;text-align=center;'>#Contrato Vigencia</td>
+                              	<td style='width:8%;text-align=center;'>Estado</td>            
+            			<td style='width:8%;text-align=center;'>Fecha de Registro</td>
+            			<td style='width:10%;text-align=center;'>Usuario</td>
+                                <td style='width:10%;text-align=center;'># Acto Administrativo</td>
+                                <td style='width:12%;text-align=center;'>Fecha Inicio</td>
+                                <td style='width:12%;text-align=center;'>Fecha Fin</td>
+                                <td style='width:20%;text-align=center;'>Descripcion</td>
+                                   	
+                             </tr>
+                          </table>
+                    <table style='width:100%;'>";
+            for ($i = 0; $i < count($suspensiones); $i ++) {
+                $numerador = $i + 1;
+                if ($suspensiones [$i] ['estado'] == 't') {
+                    $estado = "Activa";
+                } else {
+                    $estado = "Inactiva";
+                }
+                $contenidoPagina .= "<tr>
+                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
+                                <td style='width:15%;text-align=center;'>" . $suspensiones [$i] ['numero_contrato'] . " - " . $suspensiones [$i] ['vigencia'] . "</td>		
+                                <td style='width:8%;text-align=center;'>" . $estado . "</td>		
+                                <td style='width:8%;text-align=center;'>" . $suspensiones [$i] ['fecha_registro'] . "</td>
+                                <td style='width:10%;text-align=center;'>" . $suspensiones [$i] ['usuario'] . "</td>
+                                <td style='width:10%;text-align=center;'>" . $suspensiones [$i] ['acto_administrativo'] . "</td>
+                                <td style='width:12%;text-align=center;'>" . $suspensiones [$i] ['fecha_inicio'] . "</td>
+                                <td style='width:12%;text-align=center;'>" . $suspensiones [$i] ['fecha_fin'] . "</td>
+                                <td style='width:20%;text-align=center;'>" . $suspensiones [$i] ['descripcion'] . "</td>
+                                </tr>";
+            }
+
+            $contenidoPagina .= "</table>";
+        }
+         if ($otras) {
+            $contenidoPagina .= "<br><table style='width:100%;'>
+                                    <tr>
+                                        <td style='width:100%;text-align=center;'><h6>OTRAS NOVEDADES</h6></td>
+                                    </tr>
+                                </table>";
+            $contenidoPagina .= "<table style='width:100%;' >
+                              <tr>
+                                <td style='width:5%;text-align=center;'>#</td>
+                                <td style='width:15%;text-align=center;'>#Contrato Vigencia</td>
+                                <td style='width:12%;text-align=center;'>Novedad</td>
+                              	<td style='width:10%;text-align=center;'>Estado</td>            
+            			<td style='width:10%;text-align=center;'>Fecha de Registro</td>
+            			<td style='width:12%;text-align=center;'>Usuario</td>
+                                <td style='width:12%;text-align=center;'># Acto Administrativo</td>
+                                <td style='width:24%;text-align=center;'>Descripcion</td>
+                                   	
+                             </tr>
+                          </table>
+                    <table style='width:100%;'>";
+            for ($i = 0; $i < count($otras); $i ++) {
+                $numerador = $i + 1;
+                if ($otras [$i] ['estado'] == 't') {
+                    $estado = "Activa";
+                } else {
+                    $estado = "Inactiva";
+                }
+                $contenidoPagina .= "<tr>
+                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
+                                <td style='width:15%;text-align=center;'>" . $otras [$i] ['numero_contrato'] . " - " . $otras [$i] ['vigencia'] . "</td>		
+                                <td style='width:12%;text-align=center;'>" . $otras [$i] ['parametro_descripcion'] . "</td>		
+                                <td style='width:10%;text-align=center;'>" . $estado . "</td>		
+                                <td style='width:10%;text-align=center;'>" . $otras [$i] ['fecha_registro'] . "</td>
+                                <td style='width:12%;text-align=center;'>" . $otras [$i] ['usuario'] . "</td>
+                                <td style='width:12%;text-align=center;'>" . $otras [$i] ['acto_administrativo'] . "</td>
+                                <td style='width:24%;text-align=center;'>" . $otras [$i] ['descripcion'] . "</td>
+                                </tr>";
+            }
+
+            $contenidoPagina .= "</table>";
+        }
+
 
         $contenidoPagina .= "<page_footer  backleft='10mm' backright='10mm'>
 				
