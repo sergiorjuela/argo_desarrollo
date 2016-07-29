@@ -171,6 +171,7 @@ class registrarForm {
         $atributos ['redirLugar'] = true;
         echo $this->miFormulario->enlace($atributos);
         unset($atributos);
+        
         if ($solicitudesCDPs) {
 
             echo "<table id='tablaCDPs'>";
@@ -196,6 +197,7 @@ class registrarForm {
                 $variable .= "&numeroCdp=" . $solicitudesCDPs [$i] ['NUMERO_DISPONIBILIDAD'];
                 $variable .= "&vigencia=" . $solicitudesCDPs [$i] ['VIGENCIA'];
                 $variable .= "&objetoCDP=" . $solicitudesCDPs [$i] ['OBJETO'];
+                $variable .= "&valorContrato=" . $solicitudesCDPs [$i] ['VALOR_CONTRATACION'];
                 $variable .= "&arreglo=" . $arreglo_consulta;
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
                 $variable .= "&mensaje_titulo= Numero Solicitud: " . $solicitudesCDPs [$i] ['NUM_SOL_ADQ'] . " | Numero CDP: " . $solicitudesCDPs [$i] ['NUMERO_DISPONIBILIDAD'] . " | VIGENCIA: " . $solicitudesCDPs [$i] ['VIGENCIA'];

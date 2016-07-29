@@ -29,17 +29,6 @@ class RegistradorContrato {
 
     function procesarFormulario() {
 
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         $SQLs = [];
@@ -116,6 +105,7 @@ class RegistradorContrato {
             'numero_cdp' => $_REQUEST ['numero_cdp'],
             'contratista' => $_REQUEST ['numero_identificacion'],
             'nombre_contratista' => $_REQUEST ['nombre_Razon_Social'],
+            "valor_contrato" => $_REQUEST ['valor_contrato'],
             "unidad_ejecucion_tiempo" => $_REQUEST ['unidad_ejecucion_tiempo'],
             'forma_pago' => $_REQUEST ['formaPago']);
         
@@ -139,8 +129,7 @@ class RegistradorContrato {
             "modalidad_seleccion" => $_REQUEST ['modalidad_seleccion'],
             "procedimiento" => $_REQUEST ['procedimiento'],
             "regimen_contratación" => $_REQUEST ['regimen_contratación'],
-            "tipo_moneda" => $_REQUEST ['tipo_moneda'],
-            "valor_contrato" => $_REQUEST ['valor_contrato'],
+            "tipo_moneda" => $_REQUEST ['tipo_moneda'],            
             "tipo_gasto" => $_REQUEST ['tipo_gasto'],
             "origen_recursos" => $_REQUEST ['origen_recursos'],
             "origen_presupuesto" => $_REQUEST ['origen_presupuesto'],

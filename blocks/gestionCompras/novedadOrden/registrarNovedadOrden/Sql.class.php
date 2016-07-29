@@ -134,7 +134,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " WHERE cg.unidad_ejecutora = CAST(pr.id_parametro as text) and ";
                 $cadenaSql .= " sede.\"ESF_ID_SEDE\" = cg.sede_solicitante  and ";
                 $cadenaSql .= " dependencia.\"ESF_CODIGO_DEP\" = cg.dependencia_solicitante  and ";
-                $cadenaSql .= " cg.numero_contrato=" . $variable['numero_contrato'] . " and ";
+                $cadenaSql .= " cg.numero_contrato='" . $variable['numero_contrato'] . "' and ";
                 $cadenaSql .= " cg.vigencia = " . $variable['vigencia'] . " ; ";
 
                 break;
@@ -373,7 +373,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "WHERE ";
                 $cadenaSql .= "cg.numero_contrato=o.numero_contrato and  ";
                 $cadenaSql .= "cg.vigencia=o.vigencia and ";
-                $cadenaSql .= "cg.numero_contrato =" . $variable['numerocontrato'] . " and ";
+                $cadenaSql .= "cg.numero_contrato ='" . $variable['numerocontrato'] . "' and ";
                 $cadenaSql .= "cg.vigencia =" . $variable['vigencia'] . "; ";
 
                 break;

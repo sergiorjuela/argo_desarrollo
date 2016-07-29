@@ -332,11 +332,11 @@ class RegistradorOrden {
         //$cadenaSql = $this->miSql->getCadenaSql('consultarInformaciónRegistro', $_REQUEST ['id_orden']);
         //$inRegistro = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         $inRegistro = false;
-        $cadenaSql = $this->miSql->getCadenaSql('consultarSupervisor', $orden ['supervisor']);
+        $cadenaSql = $this->miSql->getCadenaSql('consultarSupervisorDocumento', $orden ['supervisor']);
 
-        $supervisor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        $supervisor = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
         $supervisor = $supervisor [0];
-
+     
 
         //-------------- Se accede al Servicio de Agora para Consultar el Proveedor de la Orden de Compra -------------------------------------------------------------------
 
@@ -533,8 +533,8 @@ class RegistradorOrden {
 
 			<table style='width:100%;'>		
 			<tr> 
-			<td style='width:50%;'>Nombre : " . $supervisor ['nombre_cp'] . " </td>
-			<td style='width:50%;'>Cargo : " . $supervisor ['cargo'] . " </td>
+			<td style='width:50%;'>Nombre : " . $supervisor ['FUN_NOMBRE'] . " </td>
+			<td style='width:50%;'>Cargo : " . $supervisor ['FUN_CARGO'] . " </td>
 			</tr>
 			</table>
 					

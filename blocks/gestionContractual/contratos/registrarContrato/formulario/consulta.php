@@ -243,7 +243,6 @@ class registrarForm {
 //        $atributos = array_merge($atributos, $atributosGlobales);
 //        echo $this->miFormulario->campoCuadroLista($atributos);
 //        unset($atributos);
-
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 
         $esteCampo = 'fecha_inicial';
@@ -275,7 +274,7 @@ class registrarForm {
         // Aplica atributos globales al control
         $atributos = array_merge($atributos, $atributosGlobales);
         echo $this->miFormulario->campoCuadroTexto($atributos);
-         unset($atributos);
+        unset($atributos);
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 
         $esteCampo = 'fecha_final';
@@ -307,12 +306,14 @@ class registrarForm {
         // Aplica atributos globales al control
         $atributos = array_merge($atributos, $atributosGlobales);
         echo $this->miFormulario->campoCuadroTexto($atributos);
-         unset($atributos);
+        unset($atributos);
 
         $sqlConsultaSolicitudRegistradas = $this->miSql->getCadenaSql("cdpRegistradas");
         $resultado = $DBContractual->ejecutarAcceso($sqlConsultaSolicitudRegistradas, "busqueda");
 
-
+        if ($resultado[0][0] == null) {
+            $resultado[0][0] = "0";
+        }
         $esteCampo = 'cdpRegistradas';
         $atributos ['id'] = $esteCampo;
         $atributos ['nombre'] = $esteCampo;

@@ -29,7 +29,7 @@ class RegistradorOrden {
 
     function procesarFormulario() {
 
-       
+
         $SQLs = [];
         $fechaActual = date('Y-m-d');
 
@@ -86,6 +86,7 @@ class RegistradorOrden {
             'numero_cdp' => $_REQUEST ['numero_cdp'],
             'nombre_proveedor' => $_REQUEST['nombre_razon_proveedor'],
             'proveedor' => $_REQUEST ['identifcacion_proveedor'],
+            'valor_contrato' => $_REQUEST ['valor_contrato'],
             'unidad_ejecucion' => $_REQUEST['unidad_ejecucion'],
         );
 

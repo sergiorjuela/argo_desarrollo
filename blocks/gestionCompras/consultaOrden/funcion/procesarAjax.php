@@ -406,7 +406,7 @@ if ($_REQUEST ['funcion'] == 'consultarCargoSuper') {
 
     $cadenaSql = $this->sql->getCadenaSql('cargoSuper', $_REQUEST ['valor']);
 
-    $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+    $resultado = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
 
     $resultado = json_encode($resultado [0]);
 

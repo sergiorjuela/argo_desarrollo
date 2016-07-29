@@ -27,6 +27,9 @@ $this->idioma ["sedeTitulo"] = "Seleccione el convenio";
 $this->idioma ["nombre_convenio_solicitante"] = "Nombre Convenio : ";
 $this->idioma ["nombre_convenio_solicitanteTitulo"] = "Nombre del Convenio Seleccionado";
 
+$this->idioma ["valor_contrato"] = "Valor de la Orden : ";
+$this->idioma ["valor_contratoTitulo"] = "Ajuste el valor de la orden";
+
 $this->idioma ["vigencia_convenio"] = "Vigencia del Convenio : ";
 $this->idioma ["vigencia_convenioTitulo"] = "Seleccione la vigencia";
 

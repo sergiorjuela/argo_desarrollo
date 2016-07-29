@@ -61,7 +61,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " JOIN  \"SICapital\".\"espaciosfisicos_SIC\" ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
                 $cadenaSql .= " JOIN  \"SICapital\".\"sedes_SIC\" sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
                 $cadenaSql .= " WHERE sa.\"ESF_ID_SEDE\"='" . $variable . "' ";
-                $cadenaSql .= " AND  ad.\"ESF_ESTADO\"='A'";
+                $cadenaSql .= " AND  ad.\"ESF_ESTADO\"='A';";
                 break;
 
             case "dependenciasElemetos" :
@@ -301,6 +301,22 @@ class Sql extends \Sql {
                 break;
 
 
+
+            case "obtenerCargoSuper" :
+
+                $cadenaSql = " SELECT  FUN_CARGO ";
+                $cadenaSql .= " FROM SICAARKA.FUNCIONARIOS ";
+                $cadenaSql .= " WHERE FUN_IDENTIFICACION = $variable ";
+
+                break;
+
+            case "cargos_existentes" :
+                $cadenaSql = " SELECT  DISTINCT FUN_CARGO";
+                $cadenaSql .= " FROM SICAARKA.FUNCIONARIOS ORDER BY FUN_CARGO ASC";
+                break;
+
+
+
             case "ConsultarInformacionOrden" :
                 $cadenaSql = "SELECT DISTINCT ";
                 $cadenaSql .= "cg.numero_contrato,cg.vigencia, ";
@@ -311,14 +327,14 @@ class Sql extends \Sql {
                 $cadenaSql .= "cg.supervisor,cg.clausula_registro_presupuestal, ";
                 $cadenaSql .= "cg.sede_supervisor,cg.dependencia_supervisor,cg.cargo_supervisor, ";
                 $cadenaSql .= "cg.sede_solicitante,cg.dependencia_solicitante, ";
-                $cadenaSql .= "cg.contratista,o.tipo_orden,o.id_orden, cg.unidad_ejecucion ";
+                $cadenaSql .= "cg.contratista,cg.valor_contrato,o.tipo_orden,o.id_orden, cg.unidad_ejecucion ";
                 $cadenaSql .= "FROM ";
                 $cadenaSql .= "contractual.contrato_general cg, contractual.orden o, ";
                 $cadenaSql .= "\"SICapital\".\"funcionario\" f ";
                 $cadenaSql .= "WHERE ";
                 $cadenaSql .= "cg.numero_contrato=o.numero_contrato and  ";
                 $cadenaSql .= "cg.vigencia=o.vigencia and ";
-                $cadenaSql .= "cg.numero_contrato =" . $variable['numerocontrato'] . " and ";
+                $cadenaSql .= "cg.numero_contrato ='" . $variable['numerocontrato'] . "' and ";
                 $cadenaSql .= "cg.vigencia =" . $variable['vigencia'] . "; ";
 
                 break;
@@ -329,13 +345,7 @@ class Sql extends \Sql {
 
                 break;
 
-            case "obtenerCargoSuper" :
 
-                $cadenaSql = "SELECT f.\"cargo\" ";
-                $cadenaSql .= "FROM \"SICapital\".\"funcionario\" f  ";
-                $cadenaSql .= "WHERE f.\"identificacion\"='$variable' ";
-
-                break;
 
             case "informacion_ordenador" :
                 $cadenaSql = " 	SELECT  \"ORG_NOMBRE\",  \"ORG_IDENTIFICACION\",  \"ORG_IDENTIFICADOR\"  ";
@@ -421,11 +431,12 @@ class Sql extends \Sql {
                 $cadenaSql .= "dependencia_supervisor= '" . $variable['dependencia_supervisor'] . "', ";
                 $cadenaSql .= "sede_solicitante= '" . $variable['sede_solicitante'] . "', ";
                 $cadenaSql .= " contratista = " . $variable['proveedor'] . ", ";
+                $cadenaSql .= " valor_contrato = " . $variable['valor_contrato'] . ", ";
                 $cadenaSql .= " nombre_contratista = '" . $variable['nombre_proveedor'] . "', ";
                 $cadenaSql .= "dependencia_solicitante= '" . $variable['dependencia_solicitante'] . "', ";
                 $cadenaSql .= "cargo_supervisor= '" . $variable['cargo_supervisor'] . "', ";
                 $cadenaSql .= " unidad_ejecucion = " . $variable['unidad_ejecucion'] . " ";
-                $cadenaSql .= "WHERE numero_contrato=" . $variable['numero_contrato'] . " and ";
+                $cadenaSql .= "WHERE numero_contrato='" . $variable['numero_contrato'] . "' and ";
                 $cadenaSql .= "vigencia=" . $variable['vigencia'] . "; ";
 
                 break;
@@ -445,24 +456,18 @@ class Sql extends \Sql {
 
                 break;
 
-            case "cargos_existentes" :
-                $cadenaSql = " SELECT ";
-                $cadenaSql .= " distinct cargo ";
-                $cadenaSql .= " FROM \"SICapital\".\"funcionario\"; ";
-
-                break;
 
 
             case "updateEstadoAprobacion" :
                 $cadenaSql = " UPDATE contrato_general SET estado_aprobacion='t' ";
-                $cadenaSql.=" WHERE numero_contrato= " . $variable['numero_contrato'] . " and vigencia = " . $variable['vigencia'] . ";";
+                $cadenaSql.=" WHERE numero_contrato= '" . $variable['numero_contrato'] . "' and vigencia = " . $variable['vigencia'] . ";";
 
                 break;
 
             case "aprobarContrato" :
                 $cadenaSql = " INSERT INTO contrato_aprobado( ";
                 $cadenaSql.=" numero_contrato, vigencia, fecha_aprobacion, usuario)";
-                $cadenaSql.=" VALUES (" . $variable['numero_contrato'] . ", " . $variable['vigencia'] . ", ";
+                $cadenaSql.=" VALUES ('" . $variable['numero_contrato'] . "', " . $variable['vigencia'] . ", ";
                 $cadenaSql.=" '" . $variable['fecha_aprobacion'] . "', '" . $variable['usuario'] . "');";
 
                 break;
@@ -795,6 +800,11 @@ class Sql extends \Sql {
             case "consultarSupervisor" :
                 $cadenaSql = " SELECT p.descripcion,f.* FROM \"SICapital\".funcionario f, contractual.parametros p ";
                 $cadenaSql .= " WHERE p.id_parametro = f.tipo_documento and identificacion='$variable';  ";
+                break;
+
+            case "consultarSupervisorDocumento" :
+                $cadenaSql = " SELECT * FROM SICAARKA.FUNCIONARIOS  ";
+                $cadenaSql .= " WHERE FUN_IDENTIFICACION = $variable  ";
                 break;
 
 

@@ -310,7 +310,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "WHERE ";
                 $cadenaSql .= "cg.numero_contrato=o.numero_contrato and  ";
                 $cadenaSql .= "cg.vigencia=o.vigencia and ";
-                $cadenaSql .= "cg.numero_contrato =" . $variable['numerocontrato'] . " and ";
+                $cadenaSql .= "cg.numero_contrato ='" . $variable['numerocontrato'] . "' and ";
                 $cadenaSql .= "cg.vigencia =" . $variable['vigencia'] . "; ";
 
                 break;
@@ -416,7 +416,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "sede_solicitante= '" . $variable['sede_solicitante'] . "', ";
                 $cadenaSql .= "dependencia_solicitante= '" . $variable['dependencia_solicitante'] . "', ";
                 $cadenaSql .= "cargo_supervisor= '" . $variable['cargo_supervisor'] . "' ";
-                $cadenaSql .= "WHERE numero_contrato=" . $variable['numero_contrato'] . " and ";
+                $cadenaSql .= "WHERE numero_contrato='" . $variable['numero_contrato'] . "' and ";
                 $cadenaSql .= "vigencia=" . $variable['vigencia'] . "; ";
 
                 break;
@@ -443,14 +443,14 @@ class Sql extends \Sql {
 
             case "updateEstadoAprobacion" :
                 $cadenaSql = " UPDATE contrato_general SET estado_aprobacion='t' ";
-                $cadenaSql.=" WHERE numero_contrato= " . $variable['numero_contrato'] . " and vigencia = " . $variable['vigencia'] . ";";
+                $cadenaSql.=" WHERE numero_contrato= '" . $variable['numero_contrato'] . "' and vigencia = " . $variable['vigencia'] . ";";
 
                 break;
 
             case "aprobarContrato" :
                 $cadenaSql = " INSERT INTO contrato_aprobado( ";
                 $cadenaSql.=" numero_contrato, vigencia, fecha_aprobacion, usuario)";
-                $cadenaSql.=" VALUES (" . $variable['numero_contrato'] . ", " . $variable['vigencia'] . ", ";
+                $cadenaSql.=" VALUES ('" . $variable['numero_contrato'] . "', " . $variable['vigencia'] . ", ";
                 $cadenaSql.=" '" . $variable['fecha_aprobacion'] . "', '" . $variable['usuario'] . "');";
 
                 break;

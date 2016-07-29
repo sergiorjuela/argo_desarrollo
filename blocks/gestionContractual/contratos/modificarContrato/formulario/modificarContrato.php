@@ -52,8 +52,8 @@ class registrarForm {
 
 
 
-        $miSesion = Sesion::singleton();
-        $id_usuario = $miSesion->idUsuario();
+ 
+        $id_usuario = $_REQUEST['usuario'];
         $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidad = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
@@ -144,7 +144,7 @@ class registrarForm {
                     "formaPago" => $contrato ['forma_pago'],
                     "clausula_presupuesto" => $contrato ['clausula_registro_presupuestal'],
                     "objeto_contrato" => $contrato ['objeto_contrato'],
-                    "valor_contrato" => $contrato ['valor_contrato'],
+                    "valor_contrato" => $contrato ['vcontrato'],
                     "ordenador_gasto" => $contrato ['ordenador_gasto'],
                 );
 
@@ -2243,7 +2243,7 @@ class registrarForm {
 
                         // $atributos ['matrizItems'] = $matrizItems;
                         // Utilizar lo siguiente cuando no se pase un arreglo:
-                        $atributos ['baseDatos'] = 'contractual';
+                        $atributos ['baseDatos'] = 'sicapital';
                         $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("funcionarios");
                         $tab ++;
                         $atributos = array_merge($atributos, $atributosGlobales);

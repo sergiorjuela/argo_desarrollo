@@ -86,6 +86,7 @@ class RegistradorOrden {
             'sede_solicitante' => $sede_solicitante,
             'dependencia_solicitante' => $dependencia_solicitante,
             'forma_pago' => $_REQUEST ['formaPago'],
+            'valor_contrato' => $_REQUEST ['valor_contrato'],
             'nombre_proveedor' => $_REQUEST ['nombre_razon_proveedor'],
             'proveedor' => $_REQUEST ['identifcacion_proveedor'],
             'unidad_ejecucion' => $_REQUEST ['unidad_ejecucion']);

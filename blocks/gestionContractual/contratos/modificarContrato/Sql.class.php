@@ -54,11 +54,11 @@ class Sql extends \Sql {
 
             case "funcionarios" :
 
-                $cadenaSql = "SELECT identificacion, identificacion ||' - '|| nombre_cp ";
-                $cadenaSql .= "FROM \"SICapital\".\"funcionario\" ";
-                $cadenaSql .= "WHERE estado='A' ";
+                $cadenaSql = " SELECT  FUN_IDENTIFICACION , FUN_IDENTIFICACION ";
+                $cadenaSql .= " ||' '|| FUN_NOMBRE  FROM SICAARKA.FUNCIONARIOS WHERE FUN_ESTADO='A' ";
 
                 break;
+
 
             case "dependenciasConsultadas" :
                 $cadenaSql = "SELECT DISTINCT  id_dependencia , \"ESF_DEP_ENCARGADA\" ";
@@ -113,7 +113,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "WHERE u.id_usuario='" . $variable . "' ";
                 break;
 
-               case "ordenadorGasto" :
+            case "ordenadorGasto" :
 
                 $cadenaSql = " 	select \"ORG_IDENTIFICADOR_UNICO\", \"ORG_ORDENADOR_GASTO\"   from argo_ordenadores ";
                 $cadenaSql .= " where \"ORG_ESTADO\" = 'A' and \"ORG_ORDENADOR_GASTO\" <> 'DIRECTOR IDEXUD'; ";
@@ -605,12 +605,13 @@ class Sql extends \Sql {
                 $cadenaSql .= "forma_pago=" . $variable ['forma_pago'] . ",";
                 $cadenaSql .= "ordenador_gasto=" . "'" . $variable ['ordenador_gasto'] . "',";
                 $cadenaSql .= "supervisor=" . "'" . $variable ['supervisor'] . "',";
+                $cadenaSql .= "valor_contrato=" . $variable ['valor_contrato'] . ",";
                 $cadenaSql .= "clausula_registro_presupuestal=" . $variable ['clausula_presupuesto'] . ",";
                 $cadenaSql .= "unidad_ejecucion=" . $variable ['unidad_ejecucion_tiempo'] . ",";
                 $cadenaSql .= "contratista=" . $variable ['contratista'] . ",";
                 $cadenaSql .= "nombre_contratista='" . $variable ['nombre_contratista'] . "',";
                 $cadenaSql .= "cargo_supervisor=" . "'" . $variable ['cargo_supervisor'] . "' ";
-                $cadenaSql .= "WHERE numero_contrato=" . $variable ['numero_contrato'] . " and ";
+                $cadenaSql .= "WHERE numero_contrato='" . $variable ['numero_contrato'] . "' and ";
                 $cadenaSql .= "vigencia=" . $variable ['vigencia'] . " ; ";
 
                 break;
@@ -709,7 +710,6 @@ class Sql extends \Sql {
                 $cadenaSql .= "porcentaje_clase_contratista=" . $variable ['porcentaje_clase_contratista'] . ",";
                 $cadenaSql .= "numero_convenio=" . $variable ['numero_convenio'] . ",";
                 $cadenaSql .= "vigencia_convenio=" . $variable ['vigencia_convenio'] . ",";
-                $cadenaSql .= "valor_contrato=" . $variable ['valor_contrato'] . ",";
                 $cadenaSql .= "digito_verificacion_supervisor='" . $variable ['digito_supervisor'] . "' ";
                 $cadenaSql .= "WHERE id_contrato_normal=" . $variable ['id_contrato_normal'] . ";";
 
@@ -722,12 +722,12 @@ class Sql extends \Sql {
                 $cadenaSql .= " c.*,cg.tipo_contrato,cg.objeto_contrato,cg.fecha_inicio, ";
                 $cadenaSql .= " cg.fecha_final,cg.plazo_ejecucion,cg.forma_pago,cg.ordenador_gasto, ";
                 $cadenaSql .= " cg.supervisor,cg.clausula_registro_presupuestal,cg.cargo_supervisor, ";
-                $cadenaSql .= " cg.numero_solicitud_necesidad,cg.numero_cdp,cg.contratista,cg.unidad_ejecucion ";
+                $cadenaSql .= " cg.numero_solicitud_necesidad,cg.numero_cdp,cg.contratista,cg.unidad_ejecucion, cg.valor_contrato as vcontrato ";
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " contractual.contrato c,contractual.contrato_general cg ";
                 $cadenaSql .= " WHERE ";
                 $cadenaSql .= " c.numero_contrato=cg.numero_contrato and ";
-                $cadenaSql .= " c.vigencia = cg.vigencia and cg.numero_contrato= $variable[0] and ";
+                $cadenaSql .= " c.vigencia = cg.vigencia and cg.numero_contrato= '$variable[0]' and ";
                 $cadenaSql .= " c.vigencia = $variable[1] ; ";
 
                 break;

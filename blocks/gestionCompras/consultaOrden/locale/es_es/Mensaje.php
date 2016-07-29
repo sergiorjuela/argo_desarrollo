@@ -25,6 +25,10 @@ $this->idioma ["vigencia_convenioTitulo"] = "Seleccione la vigencia";
 $this->idioma ["placa"] = "Placa :";
 $this->idioma ["placaTitulo"] = "Ingrese Placa ";
 
+$this->idioma ["valor_contrato"] = "Valor de la Orden : ";
+$this->idioma ["valor_contratoTitulo"] = "Ajuste el valor de la orden";
+
+
 $this->idioma ["sede_idexud"] = "Sede : ";
 $this->idioma ["sede_idexud"] = "Sede: Idexud";
 

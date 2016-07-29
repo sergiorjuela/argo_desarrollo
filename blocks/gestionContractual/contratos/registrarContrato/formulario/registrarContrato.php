@@ -2113,7 +2113,7 @@ class registrarForm {
 
                         // $atributos ['matrizItems'] = $matrizItems;
                         // Utilizar lo siguiente cuando no se pase un arreglo:
-                        $atributos ['baseDatos'] = 'contractual';
+                        $atributos ['baseDatos'] = 'sicapital';
                         $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("funcionarios");
                         $tab ++;
                         $atributos = array_merge($atributos, $atributosGlobales);

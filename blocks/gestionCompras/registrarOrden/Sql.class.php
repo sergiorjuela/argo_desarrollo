@@ -127,19 +127,9 @@ class Sql extends \Sql {
 
                 break;
 
-            case "funcionarios" :
 
-                $cadenaSql = " SELECT  FUN_IDENTIFICACION , FUN_IDENTIFICACION ";
-                $cadenaSql .= " ||' '|| FUN_NOMBRE  FROM SICAARKA.FUNCIONARIOS WHERE FUN_ESTADO='A' ";
-               
-                break;
 
-            case "cargos_existentes" :
-                $cadenaSql = " SELECT ";
-                $cadenaSql .= " distinct cargo ";
-                $cadenaSql .= " FROM \"SICapital\".\"funcionario\"; ";
 
-                break;
 
             case "tipo_unidad_ejecucion" :
                 $cadenaSql = " SELECT id_parametro, descripcion  ";
@@ -179,16 +169,28 @@ class Sql extends \Sql {
 
                 break;
 
+            case "funcionarios" :
 
+                $cadenaSql = " SELECT  FUN_IDENTIFICACION , FUN_IDENTIFICACION ";
+                $cadenaSql .= " ||' '|| FUN_NOMBRE  FROM SICAARKA.FUNCIONARIOS WHERE FUN_ESTADO='A' ";
+
+                break;
 
 
             case "cargoSuper" :
 
-                $cadenaSql = "SELECT f.\"cargo\" ";
-                $cadenaSql .= "FROM \"SICapital\".\"funcionario\" f  ";
-                $cadenaSql .= "WHERE f.\"identificacion\"='$variable' ";
+                $cadenaSql = " SELECT  FUN_CARGO ";
+                $cadenaSql .= " FROM SICAARKA.FUNCIONARIOS ";
+                $cadenaSql .= " WHERE FUN_IDENTIFICACION = $variable ";
 
                 break;
+
+            case "cargos_existentes" :
+                $cadenaSql = " SELECT  DISTINCT FUN_CARGO";
+                $cadenaSql .= " FROM SICAARKA.FUNCIONARIOS ORDER BY FUN_CARGO ASC";
+                break;
+
+
             case "cdpRegistradas" :
 
                 $cadenaSql = " select string_agg(cast(numero_cdp as text),',' ";
@@ -258,7 +260,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " objeto_contrato,fecha_inicio,fecha_final,plazo_ejecucion, ";
                 $cadenaSql .= " forma_pago,unidad_ejecucion,ordenador_gasto,supervisor,clausula_registro_presupuestal, ";
                 $cadenaSql .= " sede_supervisor,dependencia_supervisor,sede_solicitante,dependencia_solicitante,cargo_supervisor, ";
-                $cadenaSql .= " contratista, nombre_contratista, numero_solicitud_necesidad,numero_cdp) ";
+                $cadenaSql .= " contratista, nombre_contratista,valor_contrato, numero_solicitud_necesidad,numero_cdp) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['vigencia'] . ",";
                 $cadenaSql .= $variable ['id_orden_contrato'] . ",";
@@ -278,8 +280,9 @@ class Sql extends \Sql {
                 $cadenaSql .= "'" . $variable ['sede_solicitante'] . "',";
                 $cadenaSql .= "'" . $variable ['dependencia_solicitante'] . "',";
                 $cadenaSql .= "'" . $variable ['cargo_supervisor'] . "',";
-                $cadenaSql .=  $variable ['proveedor'] . ",";
+                $cadenaSql .= $variable ['proveedor'] . ",";
                 $cadenaSql .= "'" . $variable ['nombre_proveedor'] . "',";
+                $cadenaSql .= $variable ['valor_contrato'] . ", ";
                 $cadenaSql .= $variable ['numero_solicitud'] . ", ";
                 $cadenaSql .= $variable ['numero_cdp'] . ");";
 
@@ -292,7 +295,7 @@ class Sql extends \Sql {
                 $cadenaSql .= $variable ['numero_contrato'] . ",";
                 $cadenaSql .= $variable ['vigencia'] . ",";
                 $cadenaSql .= "'" . $variable ['fecha'] . "');";
-          
+
                 break;
 
             case "insertarPoliza" :

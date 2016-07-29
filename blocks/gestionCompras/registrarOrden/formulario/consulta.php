@@ -313,8 +313,11 @@ class registrarForm {
 
         $sqlConsultaSolicitudRegistradas = $this->miSql->getCadenaSql("cdpRegistradas");
         $resultado = $DBContractual->ejecutarAcceso($sqlConsultaSolicitudRegistradas, "busqueda");
-
-
+        if($resultado[0][0]==null){
+            $resultado[0][0]="0";
+        }
+      
+        
         $esteCampo = 'cdpRegistradas';
         $atributos ['id'] = $esteCampo;
         $atributos ['nombre'] = $esteCampo;

@@ -33,9 +33,9 @@ class RegistradorContrato {
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
-      
-         //Validacion campos nulos de tipo compromiso y clase contratista
-        
+
+        //Validacion campos nulos de tipo compromiso y clase contratista
+
         if ($_REQUEST ['tipo_compromiso'] != '34') {
             $numero_convenio = 0;
             $vigencia_convenio = 0;
@@ -71,7 +71,7 @@ class RegistradorContrato {
         } else {
             $tasa_cambio = 0;
         }
-         // Determinar la Unidad Ejecutora
+        // Determinar la Unidad Ejecutora
         $unidad_ejecutura = strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD');
         if ($unidad_ejecutura == false) {
             $unidad_ejecutura = 209;
@@ -85,8 +85,7 @@ class RegistradorContrato {
             $clausula_presupuesto = 'false';
         }
 
-        $SqlCargoSupervisor = $this->miSql->getCadenaSql('obtener_cargo_supervisro', 
-                $_REQUEST ['supervisor']);
+        $SqlCargoSupervisor = $this->miSql->getCadenaSql('obtener_cargo_supervisro', $_REQUEST ['supervisor']);
         $cargo = $esteRecursoDB->ejecutarAcceso($SqlCargoSupervisor, "busqueda");
 
 
@@ -94,11 +93,12 @@ class RegistradorContrato {
             'tipo_contrato' => $_REQUEST['clase_contrato'],
             'unidad_ejecutura' => $unidad_ejecutura,
             'objeto_contrato' => $_REQUEST ['objeto_contrato'],
-            'fecha_inicio' =>$fecha_inicio_poliza,
+            'fecha_inicio' => $fecha_inicio_poliza,
             'fecha_fin' => $fecha_final_poliza,
             'plazo_ejecucion' => $_REQUEST ['plazo_ejecucion'],
             'clausula_presupuesto' => $clausula_presupuesto,
             'ordenador_gasto' => $_REQUEST ['ordenador_gasto'],
+            'valor_contrato' => $_REQUEST ['valor_contrato'],
             'supervisor' => $_REQUEST ['supervisor'],
             'cargo_supervisor' => $cargo[0]['cargo'],
             'forma_pago' => $_REQUEST ['formaPago'],
@@ -107,13 +107,13 @@ class RegistradorContrato {
             'nombre_contratista' => $_REQUEST ['nombre_Razon_Social'],
             "unidad_ejecucion_tiempo" => $_REQUEST ['unidad_ejecucion_tiempo'],
             'vigencia' => $_REQUEST ['vigencia']);
-       
-        
+
+
         $SqlcontratoGeneral = $this->miSql->getCadenaSql('actualizarContratoGeneral', $arreglo_contrato_general);
         array_push($SQLs, $SqlcontratoGeneral);
-     
+
         $arreglo_contrato = array(
-            "tipo_configuracion" =>0,
+            "tipo_configuracion" => 0,
             "clase_contratista" => $_REQUEST ['clase_contratista'],
             "identificacion_clase_contratista" => $_REQUEST ['identificacion_clase_contratista'],
             "digito_verificacion_clase_contratista" => $_REQUEST ['digito_verificacion_clase_contratista'],
@@ -121,7 +121,7 @@ class RegistradorContrato {
             "tipo_compromiso" => $_REQUEST ['tipo_compromiso'],
             "numero_convenio" => $numero_convenio,
             "vigencia_convenio" => $vigencia_convenio,
-            "fecha_subcripcion" => $_REQUEST ['fecha_subcripcion'],            
+            "fecha_subcripcion" => $_REQUEST ['fecha_subcripcion'],
             "dependencia" => $_REQUEST ['dependencia'],
             "tipologia_especifica" => $_REQUEST ['tipologia_especifica'],
             "numero_constancia" => $_REQUEST ['numero_constancia'],
@@ -129,7 +129,6 @@ class RegistradorContrato {
             "procedimiento" => $_REQUEST ['procedimiento'],
             "regimen_contratación" => $_REQUEST ['regimen_contratación'],
             "tipo_moneda" => $_REQUEST ['tipo_moneda'],
-            "valor_contrato" => $_REQUEST ['valor_contrato'],
             "tipo_gasto" => $_REQUEST ['tipo_gasto'],
             "origen_recursos" => $_REQUEST ['origen_recursos'],
             "origen_presupuesto" => $_REQUEST ['origen_presupuesto'],
@@ -145,15 +144,15 @@ class RegistradorContrato {
             "fecha_registro" => date('Y-m-d'),
             'id_contrato_normal' => $_REQUEST ['id_contrato_normal']
         );
-        
+
         $SqlContrato = $this->miSql->getCadenaSql('Actualizar_Contrato', $arreglo_contrato);
         array_push($SQLs, $SqlContrato);
-       
+
         $trans_Editar_contrato = $esteRecursoDB->transaccion($SQLs);
-        
-        $datos= array("numero_contrato"=> $_REQUEST['numero_contrato'],
-            "vigencia"=> $_REQUEST['vigencia']);
- 
+
+        $datos = array("numero_contrato" => $_REQUEST['numero_contrato'],
+            "vigencia" => $_REQUEST['vigencia']);
+
         if ($trans_Editar_contrato != false) {
             $cadenaVerificarTemp = $this->miSql->getCadenaSql('obtenerInfoTemporal', $_REQUEST["atributosContratoTempHidden"]);
             $infoTemp = $esteRecursoDB->ejecutarAcceso($cadenaVerificarTemp, "busqueda");
@@ -165,7 +164,7 @@ class RegistradorContrato {
 
             exit();
         } else {
-            redireccion::redireccionar("NoActualizo",$datos);
+            redireccion::redireccionar("NoActualizo", $datos);
 
             exit();
         }
