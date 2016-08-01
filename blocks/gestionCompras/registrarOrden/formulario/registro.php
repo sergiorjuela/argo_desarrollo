@@ -1687,6 +1687,16 @@ class registrarForm {
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroTexto($atributos);
                     unset($atributos);
+                    
+                    $atributos ["id"] = "numero_unidad_ejecutora"; // No cambiar este nombre
+                    $atributos ["tipo"] = "hidden";
+                    $atributos ['estilo'] = '';
+                    $atributos ["obligatorio"] = false;
+                    $atributos ['valor'] = $unidadEjecutora[0]['unidad_ejecutora'];
+                    $atributos ['marco'] = true;
+                    $atributos = array_merge($atributos, $atributosGlobales);
+                    echo $this->miFormulario->campoCuadroTexto($atributos);
+                    unset($atributos);
                 }
 
                 echo $this->miFormulario->agrupacion('fin');

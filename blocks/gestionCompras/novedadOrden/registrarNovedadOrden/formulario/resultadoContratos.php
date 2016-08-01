@@ -145,6 +145,7 @@ class registrarForm {
                 'fecha_inicial' => $fecha_inicio,
                 'fecha_final' => $fecha_final,
                 'unidad_ejecutora' => $unidadEjecutora,
+                'sede' => $sede,
                 'dependencia' => $convenio,
             );
 

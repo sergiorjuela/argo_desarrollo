@@ -84,7 +84,7 @@ $this->idioma ["dependenciaConsulta"] = "Dependencia : ";
 $this->idioma ["dependenciaConsultaTitulo"] = "Seleccione Dependencia";
 
 $this->idioma ["sede_idexud"] = "Sede : ";
-$this->idioma ["sede_idexud"] = "Sede: Idexud";
+$this->idioma ["sede_idexudTitulo"] = "Sede: Idexud";
 
 $this->idioma ["convenio_solicitante"] = "Convenio : ";
 $this->idioma ["sedeTitulo"] = "Seleccione el convenio";

@@ -168,6 +168,8 @@ class registrarForm {
                 $atributos = array_merge($atributos, $atributosGlobales);
                 echo $this->miFormulario->campoCuadroLista($atributos);
                 unset($atributos);
+                
+           
 
 
                 // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------

@@ -75,6 +75,9 @@ $("#<?php echo $this->campoSeguro('vigencia_novedad')?>").select2();
 $("#<?php echo $this->campoSeguro('unidad_tiempo_ejecucion')?>").width(200);  
 $("#<?php echo $this->campoSeguro('unidad_tiempo_ejecucion')?>").select2();                 
 
+$("#<?php echo $this->campoSeguro('convenio_solicitante')?>").width(200);  
+$("#<?php echo $this->campoSeguro('convenio_solicitante')?>").select2();                 
+
 $("#<?php echo $this->campoSeguro('unidad_tiempo_ejecucion_suspencion')?>").width(200);  
 $("#<?php echo $this->campoSeguro('unidad_tiempo_ejecucion_suspencion')?>").select2();                 
              

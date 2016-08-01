@@ -183,7 +183,7 @@ class Sql extends \Sql {
                         . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia , cg.numero_solicitud_necesidad,cg.numero_cdp  ";
                 $cadenaSql .= "FROM orden o, parametros p,  contrato_general cg, convenio conv ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
-                $cadenaSql .= "AND conv.\"NUMERO_PRO\"  = cg.dependencia_solicitante ";
+                $cadenaSql .= "AND conv.\"NUMERO_PRO\"  = cg.convenio_solicitante ";
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
                 $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
@@ -316,7 +316,6 @@ class Sql extends \Sql {
                 break;
 
 
-
             case "ConsultarInformacionOrden" :
                 $cadenaSql = "SELECT DISTINCT ";
                 $cadenaSql .= "cg.numero_contrato,cg.vigencia, ";
@@ -329,8 +328,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "cg.sede_solicitante,cg.dependencia_solicitante, ";
                 $cadenaSql .= "cg.contratista,cg.valor_contrato,o.tipo_orden,o.id_orden, cg.unidad_ejecucion ";
                 $cadenaSql .= "FROM ";
-                $cadenaSql .= "contractual.contrato_general cg, contractual.orden o, ";
-                $cadenaSql .= "\"SICapital\".\"funcionario\" f ";
+                $cadenaSql .= "contractual.contrato_general cg, contractual.orden o ";
                 $cadenaSql .= "WHERE ";
                 $cadenaSql .= "cg.numero_contrato=o.numero_contrato and  ";
                 $cadenaSql .= "cg.vigencia=o.vigencia and ";
@@ -418,6 +416,12 @@ class Sql extends \Sql {
 
             case "updateContratoGeneral":
 
+                if ($variable['unidad_ejecutura'] == 209) {
+                    $campo = " dependencia_solicitante ";
+                } else {
+                    $campo = " convenio_solicitante ";
+                }
+
                 $cadenaSql = "UPDATE contrato_general SET ";
                 $cadenaSql .= "objeto_contrato='" . $variable['objeto_contrato'] . "', ";
                 $cadenaSql .= "fecha_inicio= " . $variable['fecha_inicio'] . ", ";
@@ -433,7 +437,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " contratista = " . $variable['proveedor'] . ", ";
                 $cadenaSql .= " valor_contrato = " . $variable['valor_contrato'] . ", ";
                 $cadenaSql .= " nombre_contratista = '" . $variable['nombre_proveedor'] . "', ";
-                $cadenaSql .= "dependencia_solicitante= '" . $variable['dependencia_solicitante'] . "', ";
+                $cadenaSql .= " $campo = '" . $variable['dependencia_solicitante'] . "', ";
                 $cadenaSql .= "cargo_supervisor= '" . $variable['cargo_supervisor'] . "', ";
                 $cadenaSql .= " unidad_ejecucion = " . $variable['unidad_ejecucion'] . " ";
                 $cadenaSql .= "WHERE numero_contrato='" . $variable['numero_contrato'] . "' and ";

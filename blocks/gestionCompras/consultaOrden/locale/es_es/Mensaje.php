@@ -364,8 +364,8 @@ $this->idioma ["contratista"] = "Contratista";
 $this->idioma ["formaPago"] = "Forma de Pago: ";
 $this->idioma ["formaPagoTitulo"] = "Seleccione la forma de pago.";
 
-$this->idioma ["plazo_ejecucion"] = "Ingrese el Plazo de Ejecución (N° dias): ";
-$this->idioma ["plazo_ejecucionTitulo"] = "Ingrese el Plazo de Ejecución (N° dias).";
+$this->idioma ["plazo_ejecucion"] = "Ingrese el Plazo de Ejecución: ";
+$this->idioma ["plazo_ejecucionTitulo"] = "Ingrese el Plazo de Ejecución.";
 
 $this->idioma ["correo_proveedor"] = "Correo Electronico:  ";
 $this->idioma ["correo_proveedorTitulo"] = "Ingrese el correo del proveedor.";

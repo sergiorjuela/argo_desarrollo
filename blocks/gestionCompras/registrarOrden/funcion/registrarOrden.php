@@ -29,17 +29,14 @@ class RegistradorOrden {
 
     function procesarFormulario() {
 
-
+  
         $SQLs = [];
         $fechaActual = date('Y-m-d');
 
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
-
-        $unidad_ejecutura = strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD - IDEXUD');
-
-        if (!is_int($unidad_ejecutura)) {
+        if ($_REQUEST ['numero_unidad_ejecutora']=='1') {
             $unidad_ejecutura = 209;
             $sede_solicitante = $_REQUEST ['sede'];
             $dependencia_solicitante = $_REQUEST ['dependencia_solicitante'];

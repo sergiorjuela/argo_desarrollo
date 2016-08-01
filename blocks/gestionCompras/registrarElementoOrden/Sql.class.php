@@ -193,7 +193,7 @@ class Sql extends \Sql {
                         . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia ";
                 $cadenaSql .= "FROM orden o, parametros p, contrato_general cg, convenio conv ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
-                $cadenaSql .= "AND conv.\"NUMERO_PRO\"  = cg.dependencia_solicitante ";
+                $cadenaSql .= "AND conv.\"NUMERO_PRO\"  = cg.convenio_solicitante ";
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
                 $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";

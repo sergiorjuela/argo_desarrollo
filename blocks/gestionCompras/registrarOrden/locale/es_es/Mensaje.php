@@ -176,8 +176,8 @@ $this->idioma ["formapagoTitulo"] = "Seleccione la forma de pago  del Contrato";
 $this->idioma ["duracion"] = "Duración (en Dias) :";
 $this->idioma ["duracionTitulo"] = "Ingrese Duración Dependencia";
 
-$this->idioma ["plazo_ejecucion"] = "Plazo de Ejecución (N° dias):";
-$this->idioma ["plazo_ejecucion"] = "Ingrese el Plazo de Ejecución (N° dias)";
+$this->idioma ["plazo_ejecucion"] = "Plazo de Ejecución:";
+$this->idioma ["plazo_ejecucion"] = "Ingrese el Plazo de Ejecución";
 
 $this->idioma ["fecha_inicio_pago"] = "Fecha de Inicio :";
 $this->idioma ["fecha_inicio_pagoTitulo"] = "Seleccione Fecha de Inicio";

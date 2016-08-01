@@ -255,11 +255,18 @@ class Sql extends \Sql {
                 break;
 
             case "insertarContratoGeneral" :
+
+
+                if ($variable['unidad_ejecutura'] == 209) {
+                    $campo = " dependencia_solicitante ";
+                } else {
+                    $campo = " convenio_solicitante ";
+                }
                 $cadenaSql = " INSERT INTO contrato_general(";
                 $cadenaSql .= " vigencia,id_orden_contrato, tipo_contrato,unidad_ejecutora, ";
                 $cadenaSql .= " objeto_contrato,fecha_inicio,fecha_final,plazo_ejecucion, ";
                 $cadenaSql .= " forma_pago,unidad_ejecucion,ordenador_gasto,supervisor,clausula_registro_presupuestal, ";
-                $cadenaSql .= " sede_supervisor,dependencia_supervisor,sede_solicitante,dependencia_solicitante,cargo_supervisor, ";
+                $cadenaSql .= " sede_supervisor,dependencia_supervisor,sede_solicitante,$campo,cargo_supervisor, ";
                 $cadenaSql .= " contratista, nombre_contratista,valor_contrato, numero_solicitud_necesidad,numero_cdp) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['vigencia'] . ",";
