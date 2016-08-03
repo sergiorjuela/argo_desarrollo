@@ -44,16 +44,26 @@ class RegistradorOrden {
                     'numero_contrato' => $datos[$i]['numero_contrato'],
                     'vigencia' => $datos[$i]['vigencia'],
                     'fecha_aprobacion' => date("Y-m-d"),
-                    'usuario' => $_REQUEST['usuario']
+                    'usuario' => $_REQUEST['usuario'],
+                    'estado' => 3
+                );
+                $datosestado = array(
+                    'numero_contrato' => $datos[$i]['numero_contrato'],
+                    'vigencia' => $datos[$i]['vigencia'],
+                    'fecha_aprobacion' => date('Y-m-d H:i:s'),
+                    'usuario' => $_REQUEST['usuario'],
+                    'estado' => 3
                 );
                 $SQLAprobarContrato = $this->miSql->getCadenaSql('aprobarContrato', $datosAprobacion);
                 array_push($SQLs, $SQLAprobarContrato);
+
+                $SQLEstadoContrato = $this->miSql->getCadenaSql('cambioEstadoAprobarContrato', $datosestado);
+                array_push($SQLs, $SQLEstadoContrato);
             }
             $trans_aprobar_contratos = $esteRecursoDB->transaccion($SQLs);
 
             if ($trans_aprobar_contratos != false) {
-                redireccion::redireccionar('aproboContratos',$datos);
-                
+                redireccion::redireccionar('aproboContratos', $datos);
             } else {
                 redireccion::redireccionar('noAproboContratos', $datos);
             }
@@ -76,9 +86,22 @@ class RegistradorOrden {
                 'usuario' => $_REQUEST['usuario']
             );
 
+
             $SQLAprobarContrato = $this->miSql->getCadenaSql('aprobarContrato', $datosAprobacion);
 
             array_push($SQLs, $SQLAprobarContrato);
+
+            $datosEstadoContrato = array(
+                'numero_contrato' => $_REQUEST['numero_contrato'],
+                'vigencia' => $_REQUEST['vigencia'],
+                'fecha_aprobacion' => date('Y-m-d H:i:s'),
+                'usuario' => $_REQUEST['usuario'],
+                'estado' => 3
+            );
+
+            $SQLEstadoContrato = $this->miSql->getCadenaSql('cambioEstadoAprobarContrato', $datosEstadoContrato);
+            array_push($SQLs, $SQLEstadoContrato);
+
             $trans_aprobar_contrato = $esteRecursoDB->transaccion($SQLs);
 
             if ($trans_aprobar_contrato != false) {

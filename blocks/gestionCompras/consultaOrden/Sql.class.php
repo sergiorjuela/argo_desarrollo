@@ -138,10 +138,13 @@ class Sql extends \Sql {
             case "consultarOrdenGeneral" :
 
                 $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,"
-                        . " se.\"ESF_SEDE\" ||'-'|| dep.\"ESF_DEP_ENCARGADA\" as SedeDependencia, cg.numero_solicitud_necesidad,cg.numero_cdp ";
-                $cadenaSql .= "FROM orden o, parametros p, contrato_general cg, \"SICapital\".\"sedes_SIC\" se, \"SICapital\".\"dependencia_SIC\" dep ";
+                        . " se.\"ESF_SEDE\" ||'-'|| dep.\"ESF_DEP_ENCARGADA\" as SedeDependencia, cg.numero_solicitud_necesidad,cg.numero_cdp, ec.nombre_estado, ce.fecha_registro as fecha_registro_estado ";
+                $cadenaSql .= "FROM orden o, parametros p, contrato_general cg, \"SICapital\".\"sedes_SIC\" se, \"SICapital\".\"dependencia_SIC\" dep, ";
+                $cadenaSql .= "contrato_estado ce, estado_contrato ec  ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
                 $cadenaSql .= "AND se.\"ESF_ID_SEDE\" = cg.sede_solicitante ";
+                $cadenaSql .= "AND cg.numero_contrato = ce.numero_contrato and cg.vigencia = ce.vigencia and ce.estado = ec.id ";
+                $cadenaSql .= "AND ce.fecha_registro = (SELECT MAX(cee.fecha_registro) from contrato_estado cee where o.numero_contrato = cee.numero_contrato and  o.vigencia = cee.vigencia) ";
                 $cadenaSql .= "AND dep.\"ESF_CODIGO_DEP\" = cg.dependencia_solicitante ";
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
@@ -180,10 +183,13 @@ class Sql extends \Sql {
             case "consultarOrdenIdexud" :
 
                 $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,"
-                        . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia , cg.numero_solicitud_necesidad,cg.numero_cdp  ";
-                $cadenaSql .= "FROM orden o, parametros p,  contrato_general cg, convenio conv ";
+                        . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia , cg.numero_solicitud_necesidad,cg.numero_cdp, ec.nombre_estado, ce.fecha_registro as fecha_registro_estado ";
+                $cadenaSql .= "FROM orden o, parametros p,  contrato_general cg, convenio conv, ";
+                $cadenaSql .= "contrato_estado ce, estado_contrato ec  ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
                 $cadenaSql .= "AND conv.\"NUMERO_PRO\"  = cg.convenio_solicitante ";
+                $cadenaSql .= "AND cg.numero_contrato = ce.numero_contrato and cg.vigencia = ce.vigencia and ce.estado = ec.id ";
+                $cadenaSql .= "AND ce.fecha_registro = (SELECT MAX(cee.fecha_registro) from contrato_estado cee where o.numero_contrato = cee.numero_contrato and  o.vigencia = cee.vigencia) ";
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
                 $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
@@ -222,6 +228,21 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " poliza; ";
                 break;
+
+
+            case "cambioEstadoAprobarContrato" :
+                $cadenaSql = " INSERT INTO contrato_estado(";
+                $cadenaSql .= " numero_contrato, vigencia,fecha_registro,usuario,estado ) ";
+                $cadenaSql .= " VALUES (";
+                $cadenaSql .= "'".$variable ['numero_contrato'] . "',";
+                $cadenaSql .= $variable ['vigencia'] . ",";
+                $cadenaSql .= "'" . $variable ['fecha_aprobacion'] . "',";
+                $cadenaSql .= "'" . $variable ['usuario'] . "',";
+                $cadenaSql .= $variable ['estado'] . ");";
+
+                break;
+            
+        
 
             case "polizasDocumento" :
                 $cadenaSql = " SELECT p.descripcion_poliza, p.id_poliza, op.fecha_inicio, op.fecha_final FROM poliza p , orden o, orden_poliza op ";

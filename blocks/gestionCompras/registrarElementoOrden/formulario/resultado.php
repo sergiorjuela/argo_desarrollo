@@ -210,6 +210,7 @@ class registrarForm {
             			<th>Identificación<br>Nombre Contratista</th>
                                 <th>Vigencia</th>
                                 <th>Sede-Dependencia o Convenio</th>
+                                <th>Estado</th>
                                 <th>Cargar Elementos</th>
                                 
                              </tr>
@@ -235,6 +236,7 @@ class registrarForm {
                     <td><center>" . $Orden [$i] ['proveedor'] . "</center></td>
                     <td><center>" . $Orden [$i] ['vigencia'] . "</center></td>
                     <td><center>" . $Orden [$i] ['sededependencia'] . "</center></td>
+                    <td><center>" . $Orden [$i] ['nombre_estado'] . "</center></td>
                     <td><center>
                     	<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/item.png' width='15px'>

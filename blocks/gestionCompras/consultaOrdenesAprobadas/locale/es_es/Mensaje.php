@@ -237,6 +237,12 @@ $this->idioma ["fecha_inicioTitulo"] = "Seleccione Fecha Inicial";
 $this->idioma ["fecha_final"] = "Fecha Final : ";
 $this->idioma ["fecha_finalTitulo"] = "Seleccione Fecha Final";
 
+$this->idioma ["fecha_inicio_acta"] = "Fecha Inicial : ";
+$this->idioma ["fecha_inicio_actaTitulo"] = "Seleccione Fecha Inicial";
+
+$this->idioma ["fecha_final_acta"] = "Fecha Final : ";
+$this->idioma ["fecha_final_actaTitulo"] = "Seleccione Fecha Final";
+
 $this->idioma ["numero_orden"] = "Vigencia y/o Número Orden :";
 $this->idioma ["numero_ordenTitulo"] = "Seleccione Vigencia y/o Número Orden";
 
@@ -367,5 +373,12 @@ $this->idioma ["restablecerCargo"] = "Reestablecer Cargo";
 
 
 $this->idioma ["division1Titulo"] = "Seleccione Fecha Disponibilidad Presupuestal";
+
+$this->idioma ["observaciones"] = "Observaciones:  ";
+$this->idioma ["observacionesTitulo"] = "Registre las observaciones del acta de inicio.";
+
+$this->idioma ["botonRegistrar"] = "Registrar";
+
+
 
 ?>

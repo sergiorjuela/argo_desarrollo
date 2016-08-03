@@ -27,7 +27,7 @@ class registrarForm {
     function miForm() {
 
 
-       // Rescatar los datos de este bloque
+        // Rescatar los datos de este bloque
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
         $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
 
@@ -220,6 +220,8 @@ class registrarForm {
             			<th>Identificación<br>Nombre Contratista</th>
                                 <th>Sede-Dependencia</th>
                                 <th>Fecha de Registro</th>
+                                <th>Estado</th>
+                                <th>Documento Otros SI</th>
                                 <th>Registrar Novedad a la Orden</th>
                                 <th>Consultar Novedades</th>
                         	
@@ -238,8 +240,22 @@ class registrarForm {
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
                 $variable .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "  VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
                 $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
-                
-                
+
+
+                $variable_documento = "action=" . $esteBloque ["nombre"];
+                $variable_documento .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion('pagina');
+                $variable_documento .= "&bloque=" . $esteBloque ['nombre'];
+                $variable_documento .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+                $variable_documento .= "&opcion=generarDocumentoOtrosSI";
+                $variable_documento .= "&id_orden=" . $Orden [$i] ['id_orden'];
+                $variable_documento .= "&numero_contrato=" . $Orden [$i] ['numero_contrato'];
+                $variable_documento .= "&vigencia=" . $Orden [$i] ['vigencia'];
+                $variable_documento .= "&usuario=" . $_REQUEST ['usuario'];
+                $variable_documento .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
+                $variable_documento = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable_documento, $directorio);
+
+
+
                 $variableConsultaNoveades = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
                 $variableConsultaNoveades .= "&opcion=consultanovedades";
                 $variableConsultaNoveades .= "&numero_contrato=" . $Orden [$i] ['numero_contrato'];
@@ -260,6 +276,12 @@ class registrarForm {
                                 <td><center>" . $Orden [$i] ['proveedor'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['sededependencia'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['fecha_registro'] . "</center></td>
+                                <td><center>" . $Orden [$i] ['nombre_estado'] . "</center></td>
+                                <td><center>
+                                    <a href='" . $variable_documento . "'>
+                                        <img src='" . $rutaBloque . "/css/images/documento.png' width='15px'>
+                                    </a>
+                                </center> </td>
                                 <td><center>
                                     <a href='" . $variable . "'>
                                         <img src='" . $rutaBloque . "/css/images/novedad.png' width='15px'>

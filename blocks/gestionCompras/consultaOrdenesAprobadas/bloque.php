@@ -1,6 +1,6 @@
 <?php
 
-namespace gestionCompras\consultaOrden;
+namespace gestionCompras\consultaOrdenesAprobadas;
 
 // Evitar un acceso directo a este archivo
 if (! isset ( $GLOBALS ["autorizado"] )) {
@@ -31,7 +31,7 @@ include_once ("Lenguaje.class.php");
 
 include_once ('funcion/redireccionar.php');
 
-use gestionCompras\consultaOrden\funcion\redireccion;
+use gestionCompras\consultaOrdenesAprobadas\funcion\redireccion;
 // ------------------
 
 // Esta clase actua como control del bloque en un patron FCE

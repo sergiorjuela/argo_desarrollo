@@ -1,6 +1,6 @@
 <?php
 
-namespace gestionCompras\consultaOrden;
+namespace gestionCompras\consultaOrdenesAprobadas;
 
 if (!isset($GLOBALS ["autorizado"])) {
     include ("../index.php");
@@ -68,6 +68,11 @@ class Frontera {
                 
                 case "consultarOrdenDetalle" :
                     include_once ($this->ruta . "/formulario/consultarOrden.php");
+                    break;
+                
+                case "actainicio" :
+                  
+                    include_once ($this->ruta . "/formulario/registroActa.php");
                     break;
  }
         } else {

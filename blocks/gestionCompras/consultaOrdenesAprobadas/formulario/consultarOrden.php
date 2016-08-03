@@ -48,6 +48,8 @@ class registrarForm {
         $tiempo = $_REQUEST ['tiempo'];
 
         // -------------------------------------------------------------------------------------------------
+        $conexionSICA = "sicapital";
+        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
         $conexionContractual = "contractual";
         $DBContractual = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionContractual);
         $conexionFrameWork = "estructura";
@@ -56,8 +58,9 @@ class registrarForm {
         $cadenaSql = $this->miSql->getCadenaSql('ConsultarInformacionOrden', $datosOrden);
         $Orden = $DBContractual->ejecutarAcceso($cadenaSql, "busqueda");
         $Orden = $Orden [0];
-      
-
+     
+        
+  
         $arreglo = array(
             'tipo_orden' => $Orden ['tipo_orden'],
             'sede_solicitante' => $Orden ['sede_solicitante'],
@@ -250,67 +253,9 @@ class registrarForm {
                         echo $this->miFormulario->campoCuadroTexto($atributos);
                         unset($atributos);
 
-                        $esteCampo = 'vigencia_convenio';
-                        $atributos ['columnas'] = 2;
-                        $atributos ['nombre'] = $esteCampo;
-                        $atributos ['id'] = $esteCampo;
-                        $atributos ['evento'] = '';
-                        $atributos ['deshabilitado'] = true;
-                        $atributos ["etiquetaObligatorio"] = true;
-                        $atributos ['tab'] = $tab;
-                        $atributos ['tamanno'] = 1;
-                        $atributos ['estilo'] = 'jqueryui';
-                        $atributos ['validar'] = '';
-                        $atributos ['limitar'] = true;
-                        $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                        $atributos ['anchoEtiqueta'] = 170;
+                                        
 
-                        if (isset($_REQUEST [$esteCampo])) {
-                            $atributos ['seleccion'] = $_REQUEST [$esteCampo];
-                        } else {
-                            $atributos ['seleccion'] = - 1;
-                        }
-
-                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("vigencia_convenios");
-                        $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
-                        $atributos ['matrizItems'] = $matrizItems;
-                        $tab ++;
-                        $atributos = array_merge($atributos, $atributosGlobales);
-                        echo $this->miFormulario->campoCuadroLista($atributos);
-                        unset($atributos);
-
-                        $esteCampo = "convenio_solicitante";
-                        $atributos ['columnas'] = 2;
-                        $atributos ['nombre'] = $esteCampo;
-                        $atributos ['id'] = $esteCampo;
-                        $atributos ['evento'] = '';
-                        $atributos ['deshabilitado'] = true;
-                        $atributos ["etiquetaObligatorio"] = true;
-                        $atributos ['tab'] = $tab;
-                        $atributos ['tamanno'] = 1;
-                        $atributos ['estilo'] = 'jqueryui';
-                        $atributos ['validar'] = 'required';
-                        $atributos ['limitar'] = true;
-                        $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                        $atributos ['anchoEtiqueta'] = 115;
-                        if (isset($Orden['dependencia_solicitante'])) {
-                            $atributos ['seleccion'] = $Orden['dependencia_solicitante'];
-                        } else {
-                            $atributos ['seleccion'] = - 1;
-                        }
-                        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("convenios");
-                        $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
-                        $atributos ['matrizItems'] = $matrizItems;
-                        $atributos ['validar'] = 'required';
-                        // Utilizar lo siguiente cuando no se pase un arreglo:
-                        // $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
-                        // $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
-                        $tab ++;
-                        $atributos = array_merge($atributos, $atributosGlobales);
-                        echo $this->miFormulario->campoCuadroLista($atributos);
-                        unset($atributos);
-
-                        $sqlNombreConvenio = $this->miSql->getCadenaSql("buscar_nombre_convenio", $Orden['dependencia_solicitante']);
+                        $sqlNombreConvenio = $this->miSql->getCadenaSql("buscar_nombre_convenio", $Orden['convenio_solicitante']);
                         $nombreConvenio = $DBContractual->ejecutarAcceso($sqlNombreConvenio, "busqueda");
                         $esteCampo = 'nombre_convenio_solicitante';
                         $atributos ['id'] = $esteCampo;
@@ -516,7 +461,7 @@ class registrarForm {
                             ' '
                         )
                     );
-                    $matrizItems = $DBContractual->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+                    $matrizItems = $DBSICA->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
 
                     $atributos ['matrizItems'] = $matrizItems;
                     // $atributos['miniRegistro']=;

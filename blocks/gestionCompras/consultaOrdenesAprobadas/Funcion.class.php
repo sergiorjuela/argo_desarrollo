@@ -1,8 +1,8 @@
 <?php
 
-namespace gestionCompras\consultaOrden;
+namespace gestionCompras\consultaOrdenesAprobadas;
 
-use gestionCompras\consultaOrden\funcion\redireccion;
+use gestionCompras\consultaOrdenesAprobadas\funcion\redireccion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
@@ -52,6 +52,9 @@ class Funcion {
 	function ConsultarOrden() {
 		include_once ($this->ruta . "funcion/ConsultarOrden.php");
 	}
+	function RegistrarActaInicio() {
+		include_once ($this->ruta . "funcion/registrarActaInicio.php");
+	}
 
 	function action() {
             
@@ -76,6 +79,10 @@ class Funcion {
 				
 				case 'modificarOrden' :
 					$this->modificarOrden ();
+					break;
+				
+				case 'registrarActaInicio' :
+					$this->RegistrarActaInicio ();
 					break;
 				
                           

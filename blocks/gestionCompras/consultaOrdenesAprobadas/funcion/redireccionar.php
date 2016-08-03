@@ -1,6 +1,6 @@
 <?php
 
-namespace gestionCompras\consultaOrden\funcion;
+namespace gestionCompras\consultaOrdenesAprobadas\funcion;
 
 if (!isset($GLOBALS ["autorizado"])) {
     include ("index.php");
@@ -15,104 +15,25 @@ class redireccion {
 
         switch ($opcion) {
 
-            case "ActualizoElemento" :
+
+            case "registroActa" :
                 $variable = "pagina=" . $miPaginaActual;
                 $variable .= "&opcion=mensaje";
-                $variable .= "&mensaje=ActualizoElemento";
-                $variable .= "&id_orden=" . $valor[0];
-                $variable .= "&mensaje_titulo=" . $valor[1];
-                $variable .= "&arreglo=" . $valor[2];
-                $variable .= "&id_elemento_acta=" . $valor[3];
-
+                $variable .= "&mensaje=registroActa";
+                $variable .= "&numero_contrato=" . $valor ['numero_contrato'];
+                $variable .= "&vigencia=" . $valor ['vigencia'];
+                $variable .= "&usuario=" . $valor ['usuario'];
                 break;
-            case "actualizoOrden" :
 
+            case "noRegistroActa" :
                 $variable = "pagina=" . $miPaginaActual;
                 $variable .= "&opcion=mensaje";
-                $variable .= "&mensaje=actualizoOrden";
-                $variable .= "&numero_contrao=" . $valor['numero_contrato'];
-                $variable .= "&vigencia=" . $valor['vigencia'];
-
-                break;
-            case "noActualizo" :
-
-                $variable = "pagina=" . $miPaginaActual;
-                $variable .= "&opcion=mensaje";
-                $variable .= "&mensaje=noactualizoOrden";
-                $variable .= "&numero_contrao=" . $valor['numero_contrato'];
-                $variable .= "&vigencia=" . $valor['vigencia'];
-
+                $variable .= "&mensaje=noRegistroActa";
+                $variable .= "&numero_contrato=" . $valor ['numero_contrato'];
+                $variable .= "&vigencia=" . $valor ['vigencia'];
+                $variable .= "&usuario=" . $valor ['usuario'];
                 break;
 
-            case "aproboContrato" :
-
-                $variable = "pagina=" . $miPaginaActual;
-                $variable .= "&opcion=mensaje";
-                $variable .= "&mensaje=aproboContrato";
-                $variable .= "&numero_contrato=" . $valor['numero_contrato'];
-                $variable .= "&vigencia=" . $valor['vigencia'];
-                $variable .= "&fecha_aprobacion=" . $valor['fecha_aprobacion'];
-                $variable .= "&usuario=" . $valor['usuario'];
-                $variable .= "&consecutivo_contrato=" . $valor[0];
-
-         
-
-                break;
-
-            case "noAproboContrato" :
-                $variable = "pagina=" . $miPaginaActual;
-                $variable .= "&opcion=mensaje";
-                $variable .= "&mensaje=noAproboContrato";
-                $variable .= "&numero_contrato=" . $valor['numero_contrato'];
-                $variable .= "&vigencia=" . $valor['vigencia'];
-
-
-                break;
-            
-            case "noActualizoElemento" :
-                $variable = "pagina=" . $miPaginaActual;
-                $variable .= "&opcion=mensaje";
-                $variable .= "&mensaje=noActualizoElemento";
-
-                break;
-
-            case "eliminoElemento" :
-                $variable = "pagina=" . $miPaginaActual;
-                $variable .= "&opcion=mensaje";
-                $variable .= "&mensaje=eliminoElemento";
-
-                break;
-
-            case "noeliminoElemento" :
-                $variable = "pagina=" . $miPaginaActual;
-                $variable .= "&opcion=mensaje";
-                $variable .= "&mensaje=noeliminoElemento";
-
-                break;
-
-            case "inserto" :
-                $variable = "pagina=" . $miPaginaActual;
-                $variable .= "&opcion=mensaje";
-                $variable .= "&mensaje=actualizo";
-                $variable .= "&numero_orden=" . $valor [0];
-                $variable .= "&mensaje_titulo=" . $valor [1];
-                $variable .= "&arreglo=" . $valor [2];
-                break;
-
-            case "noInserto" :
-                $variable = "pagina=" . $miPaginaActual;
-                $variable .= "&opcion=mensaje";
-                $variable .= "&mensaje=error";
-
-                break;
-
-            case "notextos" :
-                $variable = "pagina=" . $miPaginaActual;
-                $variable .= "&opcion=mensaje";
-                $variable .= "&mensaje=otros";
-                $variable .= "&errores=notextos";
-
-                break;
 
             case "regresar" :
                 $variable = "pagina=" . $miPaginaActual;

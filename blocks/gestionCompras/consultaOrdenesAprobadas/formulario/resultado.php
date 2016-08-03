@@ -213,8 +213,10 @@ class registrarForm {
             			<th>Identificación<br>Nombre Contratista</th>
                                 <th>Sede-Dependencia</th>
                                 <th>Fecha de Registro</th>
+                                <th>Estado</th>   
                                 <th>Consultar Orden</th>
                                 <th>Documento Orden</th>
+                                <th>Acta de Inicio</th>
 				
                              </tr>
                           </thead>
@@ -242,6 +244,19 @@ class registrarForm {
                 $variable_documento = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable_documento, $directorio);
 
                 $documento = "<a href='" . $variable_documento . "'><img src='" . $rutaBloque . "/css/images/documento.png' width='15px'></a>";
+                
+                $variable_acta_inicio = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+                $variable_acta_inicio .= "&opcion=actainicio";
+                $variable_acta_inicio .= "&numerocontrato=" . $Orden [$i] ['numero_contrato'];
+                $variable_acta_inicio .= "&id_orden=" . $Orden [$i] ['id_orden'];
+                $variable_acta_inicio .= "&vigencia=" . $Orden [$i] ['vigencia'];
+                $variable_acta_inicio .= "&arreglo=" . $arreglo;
+                $variable_acta_inicio .= "&usuario=" . $_REQUEST ['usuario'];
+                $variable_acta_inicio .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "  VIGENCIA: ".$Orden [$i] ['vigencia']." | NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
+              
+                $variable_acta_inicio = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable_acta_inicio, $directorio);
+
+                $acta_inicio = "<a href='" . $variable_acta_inicio . "'><img src='" . $rutaBloque . "/css/images/acta_inicio.png' width='15px'></a>";
 
 
 
@@ -254,12 +269,14 @@ class registrarForm {
                                 <td><center>" . $Orden [$i] ['proveedor'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['sededependencia'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['fecha_registro'] . "</center></td>
+                                <td><center>" . $Orden [$i] ['nombre_estado'] . "</center></td>
                                 <td><center>
                                     <a href='" . $variableConsulta . "'>
                                         <img src='" . $rutaBloque . "/css/images/consulta.png' width='15px'>
                                     </a>
                                 </center> </td>
                 		<td><center>" . $documento . "</center> </td>         		
+                		<td><center>" . $acta_inicio . "</center> </td>         		
                               		
                                 </tr>";
                 echo $mostrarHtml;

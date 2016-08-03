@@ -305,6 +305,18 @@ class Sql extends \Sql {
 
                 break;
 
+            case "insertarEstadoContratoGeneral" :
+                $cadenaSql = " INSERT INTO contrato_estado(";
+                $cadenaSql .= " numero_contrato, vigencia,fecha_registro,usuario,estado ) ";
+                $cadenaSql .= " VALUES (";
+                $cadenaSql .= $variable ['numero_contrato'] . ",";
+                $cadenaSql .= $variable ['vigencia'] . ",";
+                $cadenaSql .= "'" . $variable ['fecha'] . "',";
+                $cadenaSql .= "'" . $variable ['usuario'] . "',";
+                $cadenaSql .= $variable ['estado'] . ");";
+
+                break;
+
             case "insertarPoliza" :
                 $cadenaSql = " INSERT INTO orden_poliza(";
                 $cadenaSql .= " orden, poliza, fecha_inicio,fecha_final) ";

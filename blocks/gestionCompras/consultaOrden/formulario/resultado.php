@@ -107,7 +107,7 @@ class registrarForm {
 
 
 
-       
+
         $id_usuario = $_REQUEST['usuario'];
         $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
@@ -147,6 +147,7 @@ class registrarForm {
 
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         }
+        
 
         $arreglo = base64_encode(serialize($arreglo));
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -228,6 +229,7 @@ class registrarForm {
                                 <th>Número Orden</th>
                                 <th>Numero CDP</th>
                     		<th>Vigencia</th>            
+                    		<th>Estado</th>            
             			<th><center>Seleccione</center></th>
                              </tr>
                           </thead>
@@ -261,6 +263,7 @@ class registrarForm {
                                 <td><center>" . $Orden [$i] ['numero_contrato'] . "</center></td>		
                                 <td><center>" . $Orden [$i] ['numero_cdp'] . "</center></td>		
                                 <td><center>" . $Orden [$i] ['vigencia'] . "</center></td>
+                                <td><center>" . $Orden [$i] ['nombre_estado'] . "</center></td>
                                 <td><center>" . $this->miFormulario->campoCuadroSeleccion($atributos) . " </center></td>         		
                                 </tr>";
                 echo $mostrarHtml;
@@ -320,6 +323,7 @@ class registrarForm {
             			<th>Identificación<br>Nombre Contratista</th>
                                 <th>Sede-Dependencia</th>
                                 <th>Fecha de Registro</th>
+                                <th>Estado</th>
                                 <th>Modificar Orden</th>
                         	<th>Modificar Elementos</th>
 				<th>Documento Orden</th>
@@ -396,6 +400,7 @@ class registrarForm {
                                 <td><center>" . $Orden [$i] ['proveedor'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['sededependencia'] . "</center></td>
                                 <td><center>" . $Orden [$i] ['fecha_registro'] . "</center></td>
+                                <td><center> " . $Orden [$i] ['nombre_estado'] . "</center></td>
                                 <td><center>
                                     <a href='" . $variable . "'>
                                         <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>

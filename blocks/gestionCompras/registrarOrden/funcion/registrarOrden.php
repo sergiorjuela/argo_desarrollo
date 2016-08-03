@@ -29,14 +29,14 @@ class RegistradorOrden {
 
     function procesarFormulario() {
 
-  
+
         $SQLs = [];
         $fechaActual = date('Y-m-d');
 
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
-        if ($_REQUEST ['numero_unidad_ejecutora']=='1') {
+        if ($_REQUEST ['numero_unidad_ejecutora'] == '1') {
             $unidad_ejecutura = 209;
             $sede_solicitante = $_REQUEST ['sede'];
             $dependencia_solicitante = $_REQUEST ['dependencia_solicitante'];
@@ -87,6 +87,14 @@ class RegistradorOrden {
             'unidad_ejecucion' => $_REQUEST['unidad_ejecucion'],
         );
 
+        $datosEstado = array(
+            'numero_contrato' => "currval('numero_unico_contrato_seq')",
+            'vigencia' => (int) date('Y'),
+            'fecha' => date('Y-m-d H:i:s'),
+            'usuario' => $_REQUEST['usuario'],
+            'estado' =>  1
+        );
+
 
         $datosOrden = array('tipo_orden' => $_REQUEST ['tipo_orden'],
             'numero_contrato' => "currval('numero_unico_contrato_seq')",
@@ -108,6 +116,10 @@ class RegistradorOrden {
         // Registro Contrato General
         $SQLsContratoGeneral = $this->miSql->getCadenaSql('insertarContratoGeneral', $datosContratoGeneral);
         array_push($SQLs, $SQLsContratoGeneral);
+        
+        // Registro Estado Contrato General
+        $SQLsEstadoContratoGeneral = $this->miSql->getCadenaSql('insertarEstadoContratoGeneral', $datosEstado);
+        array_push($SQLs, $SQLsEstadoContratoGeneral);
 
         // Registro Orden
         $SQLsOrden = $this->miSql->getCadenaSql('insertarOrden', $datosOrden);

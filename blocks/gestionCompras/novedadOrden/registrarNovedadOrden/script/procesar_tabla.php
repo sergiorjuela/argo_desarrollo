@@ -100,9 +100,11 @@ $urlFinal = $url . $cadena;
                     {sWidth: "5%"},
                     {sWidth: "10%"},
                     {sWidth: "10%"},
-                    {sWidth: "20%"},
-                    {sWidth: "20%"},
+                    {sWidth: "15%"},
+                    {sWidth: "15%"},
                     {sWidth: "10%"},
+                    {sWidth: "10%"},
+                    {sWidth: "15%"},
                     {sWidth: "15%"},
                     {sWidth: "15%"}
 

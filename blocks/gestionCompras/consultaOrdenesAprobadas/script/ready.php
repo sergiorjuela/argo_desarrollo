@@ -3,7 +3,7 @@
 ?>
 
 // Asociar el widget de validación al formulario
-              $("#consultaOrden").validationEngine({
+              $("#consultaOrdenesAprobadas").validationEngine({
             promptPosition : "centerRight", 
             scroll: false,
             autoHidePrompt: true,
@@ -13,7 +13,7 @@
         
         $(function() {
             $("#consultaOrden").submit(function() {
-                $resultado=$("#consultaOrden").validationEngine("validate");
+                $resultado=$("#consultaOrdenesAprobadas").validationEngine("validate");
                 if ($resultado) {
                 
                     return true;
@@ -25,7 +25,8 @@
                      $('#tablaTitulos').dataTable( {
                 "sPaginationType": "full_numbers"
                  } );
-
+                 
+                 
 $('#<?php echo $this->campoSeguro('dependencia_solicitante')?>').width(350);
 $("#<?php echo $this->campoSeguro('dependencia_solicitante')?>").select2(); 
 
@@ -60,60 +61,11 @@ $('#<?php echo $this->campoSeguro('nombre_supervisor')?>').width(300);
 			   	 minimumInputLength: 3,
 			       });
 			   
-
-
-$("#<?php echo $this->campoSeguro('rubro')?>").select2({
-             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
-              	 minimumInputLength: 3,
-              	 });                             
-                             
-                             
-                            
-                             
-                             
-                             
- 		$("#<?php echo $this->campoSeguro('nivel')?>").select2();
- 		$("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2(); 
- 		$("#<?php echo $this->campoSeguro('iva')?>").select2();
- 		
- 		
-
- 		
- 		
- 		     $( "#<?php echo $this->campoSeguro('tipo_poliza')?>" ).change(function() {
-            switch($("#<?php echo $this->campoSeguro('tipo_poliza')?>").val())
-            {
-                case '0':
-                    $("#<?php echo $this->campoSeguro('fechas_polizas')?>").css('display','none');
-                break;
-               case '1':
-                  $("#<?php echo $this->campoSeguro('fechas_polizas')?>").css('display','block');
-                break;
-				default:
-                $("#<?php echo $this->campoSeguro('fechas_polizas')?>").css('display','none');
-                  break;
-             }
-          });  
- 		
- 		
-          
- 		
- 		
- 		
- 		
- 		
-        $("#<?php echo $this->campoSeguro('tipo_orden')?>").select2();
-		$("#<?php echo $this->campoSeguro('numero_orden')?>").select2();
-		                     
-		                                          
-        $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2();
-		$("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2();
-		                     
-                     
-                     
-        
-                     
-        $("#<?php echo $this->campoSeguro('proveedorContratista')?>").select2();
+ $("#<?php echo $this->campoSeguro('tipo_orden')?>").select2();
+ $("#<?php echo $this->campoSeguro('numero_orden')?>").select2();
+ $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2();
+ $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2();
+  $("#<?php echo $this->campoSeguro('proveedorContratista')?>").select2();
 		$("#<?php echo $this->campoSeguro('sede')?>").select2();
 		                     
 		$('#<?php echo $this->campoSeguro('orden_consulta')?>').select2();
@@ -388,5 +340,39 @@ $("#<?php echo $this->campoSeguro('rubro')?>").select2({
                 }
             
           });  
+          
+          
+   var dates0 = $("#<?php echo $this->campoSeguro('fecha_inicio_acta') ?>").datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+        onSelect: function (selectedDate) {
+            var option = this.id == "from" ? "maxDate" : "minDate",
+                    instance = $(this).data("datepicker"),
+                    date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+            dates0.not(this).datepicker("option", option, date);
+        }
+    });
+    var inidate0 = new Date($('#<?php echo $this->campoSeguro('fecha_inicio_acta') ?>').datepicker('getDate'));
+    var dates0 = $("#<?php echo $this->campoSeguro('fecha_final_acta') ?>").datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        minDate: inidate0,
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa']
+
+    });
+          
           
           

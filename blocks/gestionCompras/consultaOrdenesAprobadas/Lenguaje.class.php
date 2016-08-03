@@ -1,5 +1,5 @@
 <?php
-namespace gestionCompras\consultaOrden;
+namespace gestionCompras\consultaOrdenesAprobadas;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
     include ("../index.php");
