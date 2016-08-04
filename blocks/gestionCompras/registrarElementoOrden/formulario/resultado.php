@@ -144,7 +144,7 @@ class registrarForm {
             $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenIdexud', $arreglo);
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
             $arreglo = serialize($arreglo);
-            echo $arreglo;
+            
         }
 
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
