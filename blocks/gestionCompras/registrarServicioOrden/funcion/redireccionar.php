@@ -31,12 +31,14 @@ class redireccion {
 				break;
 			
 			case "inserto" :
-				
+          
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=cargarElemento";
 				$variable .= "&mensaje=registro";
 				$variable .= "&mensaje_titulo=" . $valor [0];
 				$variable .= "&id_orden=" . $valor [1];
+				$variable .= "&numero_contrato=" . $valor ['numero_contrato'];
+				$variable .= "&vigencia=" . $valor ['vigencia'];
 				$variable .= "&fecha_orden=" . $valor [2];
 				if ($valor [3] == '\'true\'') {
 					$variable .= "&registroOrden=true";

@@ -223,11 +223,9 @@ class registrarForm {
                 $variable .= "&id_orden=" . $Orden [$i] ['id_orden'];
                 $variable .= "&arreglo=" . $arreglo;
                 $variable .= "&numero_contrato=" . $Orden [$i] ['numero_contrato'];
-                ;
                 $variable .= "&vigencia=" . $Orden [$i] ['vigencia'];
-                ;
                 $variable .= "&usuario=" . $_REQUEST['usuario'];
-                $variable .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . " <br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'] . " -- " . $Orden [$i] ['vigencia'];
+                $variable .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . " <br>NUMERO DE CONTRATO y VIGENCIA : " . $Orden [$i] ['numero_contrato'] . " -- " . $Orden [$i] ['vigencia'];
                 $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
 
                 $mostrarHtml = "<tr>

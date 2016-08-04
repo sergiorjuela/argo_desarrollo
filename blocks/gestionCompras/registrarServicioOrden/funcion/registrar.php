@@ -40,148 +40,30 @@ class RegistradorOrden {
 
             case '1' :
 
-                foreach ($_FILES as $key => $values) {
-
-                    $archivo [] = $_FILES [$key];
-                }
-
-                $archivoImagen = $archivo [1];
-
-                if ($archivoImagen ['error'] == 0) {
-
-                    if ($archivoImagen ['type'] != 'image/jpeg') {
-
-                        redireccion::redireccionar('noFormatoImagen');
-                        exit();
-                    }
-                }
-
-                $cadenaSql = $this->miSql->getCadenaSql('consultar_iva', $_REQUEST ['iva']);
-
-                $valor_iva = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-                $valor_iva = $valor_iva [0] [0];
-
-
-                if ($_REQUEST ['id_tipo_bien'] == 1) {
-
-                    $arreglo = array(
-                        $fechaActual,
-                        $_REQUEST ['nivel'],
-                        $_REQUEST ['id_tipo_bien'],
-                        $_REQUEST ['descripcion'],
-                        $_REQUEST ['cantidad'],
-                        $_REQUEST ['unidad'],
-                        $_REQUEST ['valor'],
-                        $_REQUEST ['iva'],
-                        $_REQUEST ['subtotal_sin_iva'],
-                        $_REQUEST ['total_iva'],
-                        $_REQUEST ['total_iva_con'],
-                        ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : null,
-                        ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
-                        $_REQUEST ['id_orden'],
-                        (isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
-                        (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
-                        ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null,
-                        (isset($_REQUEST ['dependencia_solicitante'])) ? $_REQUEST ['dependencia_solicitante'] : null,
-                        (isset($_REQUEST ['funcionario'])) ? $_REQUEST ['funcionario'] : null
-                    );
-
-                    $cadenaSql = $this->miSql->getCadenaSql('ingresar_elemento_tipo_1', $arreglo);
-
-                    $elemento = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $arreglo, 'ingresar_elemento_tipo_1');
-                } else if ($_REQUEST ['id_tipo_bien'] == 2) {
-
-                    $arreglo = array(
-                        $fechaActual,
-                        $_REQUEST ['nivel'],
-                        $_REQUEST ['id_tipo_bien'],
-                        $_REQUEST ['descripcion'],
-                        $_REQUEST ['cantidad'] = 1,
-                        $_REQUEST ['unidad'],
-                        $_REQUEST ['valor'],
-                        $_REQUEST ['iva'],
-                        $_REQUEST ['subtotal_sin_iva'],
-                        $_REQUEST ['total_iva'],
-                        $_REQUEST ['total_iva_con'],
-                        ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : null,
-                        ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
-                        $_REQUEST ['id_orden'],
-                        (isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
-                        (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
-                        ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null,
-                        (isset($_REQUEST ['dependencia_solicitante'])) ? $_REQUEST ['dependencia_solicitante'] : null,
-                        (isset($_REQUEST ['funcionario'])) ? $_REQUEST ['funcionario'] : null
-                    );
-
-                    $cadenaSql = $this->miSql->getCadenaSql('ingresar_elemento_tipo_1', $arreglo);
-
-                    $elemento = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $arreglo, 'ingresar_elemento_tipo_1');
-                } else if ($_REQUEST ['id_tipo_bien'] == 3) {
-
-
-                    $arreglo = array(
-                        $fechaActual,
-                        $_REQUEST ['nivel'],
-                        $_REQUEST ['id_tipo_bien'],
-                        $_REQUEST ['descripcion'],
-                        $_REQUEST ['cantidad'] = 1,
-                        $_REQUEST ['unidad'],
-                        $_REQUEST ['valor'],
-                        $_REQUEST ['iva'],
-                        $_REQUEST ['subtotal_sin_iva'],
-                        $_REQUEST ['total_iva'],
-                        $_REQUEST ['total_iva_con'],
-                        0,
-                        NULL,
-                        NULL,
-                        ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
-                        ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : NULL,
-                        $_REQUEST ['id_orden'],
-                        (isset($_REQUEST ['referencia'])) ? $_REQUEST ['referencia'] : null,
-                        (isset($_REQUEST ['placa'])) ? $_REQUEST ['placa'] : null,
-                        ($_REQUEST ['observaciones'] != '') ? $_REQUEST ['observaciones'] : null,
-                        (isset($_REQUEST ['dependencia_solicitante'])) ? $_REQUEST ['dependencia_solicitante'] : null,
-                        (isset($_REQUEST ['funcionario'])) ? $_REQUEST ['funcionario'] : null
-                    );
-
-                    $cadenaSql = $this->miSql->getCadenaSql('ingresar_elemento_tipo_2', $arreglo);
-
-                    $elemento = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $arreglo, 'ingresar_elemento_tipo_2');
-                }
+                $datosServicio = array(
+                    'codigo_ciiu' => $_REQUEST['codigo_ciiu'],
+                    'resumen_servicio' => $_REQUEST['resumen_servicio'],
+                    'descripcion' => $_REQUEST['descripcion'],
+                    'fecha' => date("Y-m-d"),
+                    'usuario' => $_REQUEST['usuario'],
+                    'numero_contrato' => $_REQUEST['numero_contrato'],
+                    'vigencia' => $_REQUEST['vigencia']
+                );
 
                 $datos = array(
                     $_REQUEST ['mensaje_titulo'],
                     $_REQUEST ['id_orden'],
-                    $fechaActual,
+                    date("Y-d-m"),
                     (!isset($_REQUEST ['registroOrden'])) ? $_REQUEST ['arreglo'] : $_REQUEST ['registroOrden'],
-                    $_REQUEST ['usuario']
+                    $_REQUEST ['usuario'],
+                    'numero_contrato' => $_REQUEST['numero_contrato'],
+                    'vigencia' => $_REQUEST['vigencia']
                 );
+                $cadenaSql = $this->miSql->getCadenaSql('registrarServicio', $datosServicio);
+            
+                $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
 
-                //
-                foreach ($_FILES as $key) {
-
-                    $archivo [] = $key;
-                }
-
-                $archivo = $archivo [1];
-
-                if ($archivo ['type'] == 'image/jpeg') {
-
-                    $data = base64_encode(file_get_contents($archivo ['tmp_name']));
-
-                    $arreglo = array(
-                        "elemento" => $elemento [0] [0],
-                        "imagen" => $data
-                    );
-
-                    $cadenaSql = $this->miSql->getCadenaSql('ElementoImagen', $arreglo);
-
-                    $imagen = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $arreglo, 'ElementoImagen');
-                }
-
-
-                if ($elemento) {
+                if ($resultado) {
                     $this->miConfigurador->setVariableConfiguracion("cache", true);
 
                     redireccion::redireccionar("inserto", $datos);
