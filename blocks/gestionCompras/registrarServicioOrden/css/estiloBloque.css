@@ -1,0 +1,10 @@
+#Mensaje {
+    width: 778px;
+    position: fixed;
+    z-index: 1;
+    top: 145px;
+    left: 295px;
+	border-style: hidden;
+}
+
+	
