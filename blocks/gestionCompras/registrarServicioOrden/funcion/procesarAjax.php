@@ -2,6 +2,9 @@
 
 $conexion = "contractual";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+$conexionAgora = "agora";
+$esteRecursoDBAgora = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionAgora);
+
 
 
 
@@ -17,6 +20,14 @@ if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 
     $cadenaSql = $this->sql->getCadenaSql('dependenciasConsultadas', $_REQUEST ['valor']);
     $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+    $resultado = json_encode($resultado);
+
+    echo $resultado;
+}
+if ($_REQUEST ['funcion'] == 'consultarServicios') {
+
+    $cadenaSql = $this->sql->getCadenaSql('serviciosPorClase', $_REQUEST ['valor']);
+    $resultado = $esteRecursoDBAgora->ejecutarAcceso($cadenaSql, "busqueda");
     $resultado = json_encode($resultado);
 
     echo $resultado;

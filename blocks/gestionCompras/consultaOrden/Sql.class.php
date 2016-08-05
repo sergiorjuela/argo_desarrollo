@@ -268,6 +268,15 @@ class Sql extends \Sql {
                 $cadenaSql .= " AND ";
                 $cadenaSql .= " rel_parametro=29;  ";
                 break;
+            
+            case "consultarServiciosOrden" :
+                $cadenaSql = " SELECT so.*, sbc.nombre as nombre_tipo_servicio 	";
+                $cadenaSql .= " FROM servicio_orden so, agora.ciiu_subclase sbc  ";
+                $cadenaSql .= " WHERE so.codigo_ciiu = sbc.id_subclase ";
+                $cadenaSql .= " AND so.numero_contrato='$variable[0]' ";
+                $cadenaSql .= " AND so.vigencia=$variable[1]; ";
+           
+                break;
 
             case "obtenerInfoUsuario" :
                 $cadenaSql = "SELECT u.dependencia_especifica ||' - '|| u.dependencia as nombre, unidad_ejecutora ";
@@ -1074,11 +1083,10 @@ class Sql extends \Sql {
 
             case "consultarElementosOrden" :
                 $cadenaSql = "SELECT DISTINCT ela.*, ct.elemento_nombre nivel_nombre, tb.descripcion nombre_tipo, iv.descripcion nombre_iva,elemento_nombre,  ";
-                $cadenaSql .= " f.nombre_cp, dep.\"ESF_DEP_ENCARGADA\"   ";
+                $cadenaSql .= " dep.\"ESF_DEP_ENCARGADA\"   ";
                 $cadenaSql .= "FROM elemento_acta_recibido ela ";
                 $cadenaSql .= "JOIN  inventarios.catalogo_elemento ct ON ct.elemento_id=ela.nivel ";
                 $cadenaSql .= "JOIN \"SICapital\".\"dependencia_SIC\" dep ON dep.\"ESF_CODIGO_DEP\"=ela.codigo_dependencia ";
-                $cadenaSql .= "JOIN \"SICapital\".\"funcionario\" f ON f.\"identificacion\"=ela.funcionario ";
                 $cadenaSql .= "JOIN  inventarios.tipo_bienes tb ON tb.id_tipo_bienes=ela.tipo_bien ";
                 $cadenaSql .= "JOIN  inventarios.aplicacion_iva iv ON iv.id_iva=ela.iva  ";
                 $cadenaSql .= "WHERE id_orden ='" . $variable . "'  ";

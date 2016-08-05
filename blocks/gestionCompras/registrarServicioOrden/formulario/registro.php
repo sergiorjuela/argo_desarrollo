@@ -49,11 +49,9 @@ class registrarForm {
 
         // lineas para conectar base de d atos-------------------------------------------------------------------------------------------------
         $conexion = "contractual";
-
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
         $conexionAgora = "agora";
-
         $esteRecursoDBAgora = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionAgora);
 
 
@@ -104,7 +102,7 @@ class registrarForm {
                 $variable .= $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
             }
 
-            echo $variable;
+
             $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
 
 
@@ -238,9 +236,9 @@ class registrarForm {
                             $atributos ['limitar'] = false;
                             $atributos ['anchoCaja'] = 60;
                             $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                            $atributos ['anchoEtiqueta'] = 330;
+                            $atributos ['anchoEtiqueta'] = 200;
 
-                            $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("consultar_nivel_inventario");
+                            $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("tipoServicio");
                             $matrizItems = $esteRecursoDBAgora->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
                             $atributos ['matrizItems'] = $matrizItems;
 
@@ -251,31 +249,45 @@ class registrarForm {
                             unset($atributos);
 
                             $esteCampo = 'codigo_ciiu';
+                            $atributos ['columnas'] = 1;
                             $atributos ['nombre'] = $esteCampo;
                             $atributos ['id'] = $esteCampo;
-                            $atributos ['seleccion'] = - 1;
+
                             $atributos ['evento'] = '';
-                            $atributos ['deshabilitado'] = false;
-                            $atributos ["etiquetaObligatorio"] = true;
+                            $atributos ['deshabilitado'] = true;
+                            $atributos ["etiquetaObligatorio"] = false;
                             $atributos ['tab'] = $tab;
                             $atributos ['tamanno'] = 1;
-                            $atributos ['columnas'] = 1;
                             $atributos ['estilo'] = 'jqueryui';
-                            $atributos ['validar'] = 'required';
-                            $atributos ['limitar'] = false;
-                            $atributos ['anchoCaja'] = 60;
+                            $atributos ['validar'] = '';
+                            $atributos ['limitar'] = true;
                             $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                             $atributos ['anchoEtiqueta'] = 330;
+                            if (isset($_REQUEST [$esteCampo])) {
+                                $atributos ['seleccion'] = $_REQUEST [$esteCampo];
+                            } else {
+                                $atributos ['seleccion'] = - 1;
+                            }
+                            $atributos ['cadena_sql'] = '';
 
-                            $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("consultar_nivel_inventario");
-                            $matrizItems = $esteRecursoDBAgora->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+
+                            $arreglo = array(
+                                array(
+                                    '',
+                                    'Sin Dependencias'
+                                )
+                            );
+
+                            $matrizItems = $arreglo;
                             $atributos ['matrizItems'] = $matrizItems;
 
+                            // Utilizar lo siguiente cuando no se pase un arreglo:
+                            // $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
+                            // $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
                             $tab ++;
                             $atributos = array_merge($atributos, $atributosGlobales);
                             echo $this->miFormulario->campoCuadroLista($atributos);
                             unset($atributos);
-
 
 
                             $esteCampo = 'resumen_servicio';
@@ -301,7 +313,7 @@ class registrarForm {
                             $atributos ["etiquetaObligatorio"] = true;
                             $atributos ['tamanno'] = 40;
                             $atributos ['maximoTamanno'] = '';
-                            $atributos ['anchoEtiqueta'] = 250;
+                            $atributos ['anchoEtiqueta'] = 300;
                             $tab ++;
 
                             // Aplica atributos globales al control
@@ -538,94 +550,11 @@ class registrarForm {
                     $atributos ["estilo"] = "marcoBotones";
                     echo $this->miFormulario->division("inicio", $atributos);
 
-                    $esteCampo = 'desicion';
-                    $atributos ['id'] = $esteCampo;
-                    $atributos ['nombre'] = $esteCampo;
-                    $atributos ['tipo'] = 'text';
-                    $atributos ['estilo'] = 'textoCentrar';
-                    $atributos ['marco'] = true;
-                    $atributos ['estiloMarco'] = '';
-                    $atributos ['texto'] = $this->lenguaje->getCadena($esteCampo);
-                    $atributos ["etiquetaObligatorio"] = false;
-                    $atributos ['columnas'] = 1;
-                    $atributos ['dobleLinea'] = 0;
-                    $atributos ['tabIndex'] = $tab;
-                    $atributos ['validar'] = '';
-                    // $atributos ['etiqueta'] =$this->lenguaje->getCadena ( $esteCampo."Nota" );
-                    if (isset($_REQUEST [$esteCampo])) {
-                        $atributos ['valor'] = $_REQUEST [$esteCampo];
-                    } else {
-                        $atributos ['valor'] = '';
-                    }
-                    $atributos ['titulo'] = '';
-                    $atributos ['deshabilitado'] = true;
-                    $atributos ['tamanno'] = 10;
-                    $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 10;
-                    $tab ++;
-
-                    // Aplica atributos globales al control
-                    $atributos = array_merge($atributos, $atributosGlobales);
-                    echo $this->miFormulario->campoTexto($atributos);
-                    unset($atributos);
+                   
 
                     echo "<br><br><br>";
 
-                    $directorio = $this->miConfigurador->getVariableConfiguracion("host");
-                    $directorio .= $this->miConfigurador->getVariableConfiguracion("site") . "/index.php?";
-                    $directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");
-
-                    $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
-                    $variable = "pagina=indexAlana";
-
-                    $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
-
-                    // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-                    $esteCampo = 'botonSalir';
-                    $atributos ['id'] = $esteCampo;
-                    $atributos ['enlace'] = $variable;
-                    $atributos ['tabIndex'] = 1;
-                    $atributos ['estilo'] = 'textoSubtitulo';
-                    $atributos ['enlaceTexto'] = "<< Salir >>";
-                    $atributos ['ancho'] = '10%';
-                    $atributos ['alto'] = '10%';
-                    $atributos ['redirLugar'] = true;
-                    echo $this->miFormulario->enlace($atributos);
-                    unset($atributos);
-
-                    $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
-
-                    $variable = "pagina=gestionInformacionPresupuestal";
-                    $variable .= "&opcion=cargarDisponibilidad";
-                    $variable .= "&id_orden=" . $_REQUEST ['id_orden'];
-                    ;
-                    $variable .= "&arreglo=" . "";
-                    $variable .= "&usuario=" . $_REQUEST ['usuario'];
-                    $variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
-                    $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
-
-                    // $variable = "action=consultaOrdenServicios";
-                    // $variable .= "&pagina=consultaOrdenServicios";
-                    // $variable .= "&bloque=consultaOrdenServicios";
-                    // $variable .= "&bloqueGrupo=inventarios/gestionCompras/";
-                    // $variable .= "&opcion=generarDocumento";
-                    // $variable .= "&id_orden=" . $_REQUEST ['id_orden'];
-                    // $variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
-                    // $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-
-                    echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
-                    // -----------------CONTROL: Botón ----------------------------------------------------------------
-                    $esteCampo = 'botonSalida';
-                    $atributos ['id'] = $esteCampo;
-                    $atributos ['enlace'] = $variable;
-                    $atributos ['tabIndex'] = 1;
-                    $atributos ['estilo'] = 'textoSubtitulo';
-                    $atributos ['enlaceTexto'] = "<< Registrar Información Presupuestal >>";
-                    $atributos ['ancho'] = '10%';
-                    $atributos ['alto'] = '10%';
-                    $atributos ['redirLugar'] = true;
-                    echo $this->miFormulario->enlace($atributos);
-                    unset($atributos);
+              
 
                     // -----------------FIN CONTROL: Botón -----------------------------------------------------------
                     // ---------------- FIN SECCION: División ----------------------------------------------------------

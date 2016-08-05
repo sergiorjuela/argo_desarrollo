@@ -106,6 +106,22 @@ $cadenaDependencia = $this->miConfigurador->fabricaConexiones->crypto->codificar
 // URL definitiva
 $urlFinalDependencia = $url . $cadenaDependencia;
 
+// Variables
+$cadenaACodificarServicio = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarServicio .= "&procesarAjax=true";
+$cadenaACodificarServicio .= "&action=index.php";
+$cadenaACodificarServicio .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarServicio .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarServicio .= $cadenaACodificarServicio . "&funcion=consultarServicios";
+$cadenaACodificarServicio .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadenaServicio = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarServicio, $enlace);
+
+// URL definitiva
+$urlFinalServicio = $url . $cadenaServicio;
+
 
 ?>
 <script type='text/javascript'>
@@ -159,6 +175,55 @@ $urlFinalDependencia = $url . $cadenaDependencia;
     ;
 
     //--------------Fin JavaScript y Ajax Sede y Dependencia elemento --------------------------------------------------------------------------------------------------   
+
+//--------------Inicio JavaScript y Ajax Clase servicio y servicio---------------------------------------------------------------------------------------------    
+
+   $("#<?php echo $this->campoSeguro('tipo_servicio') ?>").change(function () {
+
+        if ($("#<?php echo $this->campoSeguro('tipo_servicio') ?>").val() != '') {
+            consultarServicios();
+        } else {
+            $("#<?php echo $this->campoSeguro('codigo_ciiu') ?>").attr('disabled', '');
+        }
+
+    });
+
+    function consultarServicios(elem, request, response) {
+        $.ajax({
+            url: "<?php echo $urlFinalServicio ?>",
+            dataType: "json",
+            data: {valor: $("#<?php echo $this->campoSeguro('tipo_servicio') ?>").val()},
+            success: function (data) {
+
+
+
+                if (data[0] != " ") {
+
+                    $("#<?php echo $this->campoSeguro('codigo_ciiu') ?>").html('');
+                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('codigo_ciiu') ?>");
+                    $.each(data, function (indice, valor) {
+
+                        $("<option value='" + data[ indice ].id_subclase + "'>" + data[ indice ].nombre + "</option>").appendTo("#<?php echo $this->campoSeguro('codigo_ciiu') ?>");
+
+                    });
+
+                    $("#<?php echo $this->campoSeguro('codigo_ciiu') ?>").removeAttr('disabled');
+
+                    $('#<?php echo $this->campoSeguro('codigo_ciiu') ?>').width(350);
+                    $("#<?php echo $this->campoSeguro('codigo_ciiu') ?>").select2();
+
+
+
+                }
+
+
+            }
+
+        });
+    }
+    ;
+
+    //--------------Fin JavaScript y Ajax Clase Servicio y servicio --------------------------------------------------------------------------------------------------   
 
 
 

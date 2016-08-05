@@ -49,9 +49,10 @@ class registrarForm {
 
         // lineas para conectar base de d atos-------------------------------------------------------------------------------------------------
         $conexion = "contractual";
-
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
+        $conexionSICA = "sicapital";
+        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
 
 
         $seccion ['tiempo'] = $tiempo;
@@ -75,8 +76,7 @@ class registrarForm {
         // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
         // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
         $atributos ['tipoEtiqueta'] = 'inicio';
-        echo $this->miFormulario->formulario($atributos);
-        {
+        echo $this->miFormulario->formulario($atributos); {
 
             // ---------------- SECCION: Controles del Formulario -----------------------------------------------
             $directorio = $this->miConfigurador->getVariableConfiguracion("host");
@@ -111,8 +111,7 @@ class registrarForm {
             $atributos ['tipoEtiqueta'] = 'inicio';
             $atributos ["leyenda"] = $_REQUEST ['mensaje_titulo'];
             echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
-            unset($atributos);
-            {
+            unset($atributos); {
 
 
 
@@ -156,15 +155,13 @@ class registrarForm {
                 $atributos ["estiloEnLinea"] = "display:none";
                 $atributos = array_merge($atributos, $atributosGlobales);
                 echo $this->miFormulario->division("inicio", $atributos);
-                unset($atributos);
-                {
+                unset($atributos); {
                     $esteCampo = "AgrupacionInformacion";
                     $atributos ['id'] = $esteCampo;
                     $atributos ['leyenda'] = "Cargue Masivo de Elementos";
-                    echo $this->miFormulario->agrupacion('inicio', $atributos);
-                    {
-                        
-                  
+                    echo $this->miFormulario->agrupacion('inicio', $atributos); {
+
+
                         $mensaje = "- El Archivo Tiene que Ser Tipo Excel.
 								<br>- Solo Se Cargaran de forma Correcta de Acuerdo al Plantilla Preedeterminada.
 								<br>- Para Verificar El Cargue Masivo Consulte los Elementos en el Modulo \"Consultar Y Modificar Orden\".
@@ -209,14 +206,12 @@ class registrarForm {
                 $atributos ["estiloEnLinea"] = "display:block";
                 $atributos = array_merge($atributos, $atributosGlobales);
                 echo $this->miFormulario->division("inicio", $atributos);
-                unset($atributos);
-                {
+                unset($atributos); {
 
                     $esteCampo = "AgrupacionInformacion";
                     $atributos ['id'] = $esteCampo;
                     $atributos ['leyenda'] = "Información Respecto al Elemento";
-                    echo $this->miFormulario->agrupacion('inicio', $atributos);
-                    {
+                    echo $this->miFormulario->agrupacion('inicio', $atributos); {
 
                         // ---------------- CONTROL: Cuadro Lista --------------------------------------------------------
 
@@ -298,8 +293,7 @@ class registrarForm {
                         $atributos ['leyenda'] = "Detalle";
                         echo $this->miFormulario->agrupacion('inicio', $atributos);
 
-                        unset($atributos);
-                        {
+                        unset($atributos); {
 
                             $esteCampo = 'serie';
                             $atributos ['id'] = $esteCampo;
@@ -426,8 +420,7 @@ class registrarForm {
                         $atributos ["estiloEnLinea"] = "display:none";
                         $atributos = array_merge($atributos, $atributosGlobales);
                         echo $this->miFormulario->division("inicio", $atributos);
-                        unset($atributos);
-                        {
+                        unset($atributos); {
                             
                         }
                         echo $this->miFormulario->division("fin");
@@ -768,7 +761,7 @@ class registrarForm {
                         } else {
                             $atributos ['seleccion'] = - 1;
                         }
-                    
+
                         $matrizItems = array(
                             array(
                                 ' ',
@@ -814,9 +807,9 @@ class registrarForm {
                                 ' '
                             )
                         );
-                        $matrizItems = $esteRecursoDB->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+                        $matrizItems = $DBSICA->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
                         $atributos ['matrizItems'] = $matrizItems;
-                        
+
                         $atributos = array_merge($atributos, $atributosGlobales);
                         echo $this->miFormulario->campoCuadroLista($atributos);
                         unset($atributos);
@@ -975,16 +968,14 @@ class registrarForm {
             // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
             // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
             $atributos ['tipoEtiqueta'] = 'inicio';
-            echo $this->miFormulario->formulario($atributos);
-            {
+            echo $this->miFormulario->formulario($atributos); {
 
                 $esteCampo = "marcoDatosBasicosMensaje";
                 $atributos ['id'] = $esteCampo;
                 $atributos ["estilo"] = "jqueryui";
                 $atributos ['tipoEtiqueta'] = 'inicio';
 
-                echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
-                {
+                echo $this->miFormulario->marcoAgrupacion('inicio', $atributos); {
 
                     if ($_REQUEST ['mensaje'] == 'registro') {
                         $atributos ['mensaje'] = "<center>SE CARGO ELEMENTO " . $_REQUEST ['mensaje_titulo'] . "<br>Fecha : " . date('Y-m-d') . "</center>";

@@ -325,7 +325,7 @@ class registrarForm {
                                 <th>Fecha de Registro</th>
                                 <th>Estado</th>
                                 <th>Modificar Orden</th>
-                        	<th>Modificar Elementos</th>
+                        	<th>Modificar Elementos <br>o Servicios</th>
 				<th>Documento Orden</th>
 				<th>Revisar<br>Aprobar Contrato</th>
                              </tr>
@@ -346,7 +346,7 @@ class registrarForm {
                 $variable .= "&id_contratista=" . $Orden [$i] ['proveedor'];
                 $variable .= "&arreglo=" . $arreglo;
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
-                $variable .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "  VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
+                $variable .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "   --> VIGENCIA: " . $Orden [$i] ['vigencia'] . " NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
                 $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
 
                 $variable_elementos = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
@@ -357,7 +357,7 @@ class registrarForm {
                 $variable_elementos .= "&id_contratista=" . $Orden [$i] ['proveedor'];
                 $variable_elementos .= "&arreglo=" . $arreglo;
                 $variable_elementos .= "&usuario=" . $_REQUEST ['usuario'];
-                $variable_elementos .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "  VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
+                $variable_elementos .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "  --> VIGENCIA: " . $Orden [$i] ['vigencia'] . " NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
                 $variable_elementos = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable_elementos, $directorio);
 
 
@@ -368,7 +368,7 @@ class registrarForm {
                 $variable_documento .= "&opcion=generarDocumento";
                 $variable_documento .= "&id_orden=" . $Orden [$i] ['id_orden'];
                 $variable_documento .= "&usuario=" . $_REQUEST ['usuario'];
-                $variable_documento .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
+                $variable_documento .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . " --> VIGENCIA: " . $Orden [$i] ['vigencia'] . " NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
                 $variable_documento = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable_documento, $directorio);
 
 

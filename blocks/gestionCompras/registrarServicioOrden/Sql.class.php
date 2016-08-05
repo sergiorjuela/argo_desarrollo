@@ -201,11 +201,19 @@ class Sql extends \Sql {
                 $cadenaSql.= "'" . $variable['fecha'] . "',";
                 $cadenaSql.= "'" . $variable['numero_contrato'] . "',";
                 $cadenaSql.= $variable['vigencia'] . ",";
-                $cadenaSql.= $variable['codigo_ciiu'] . ",";
+                $cadenaSql.= "'" .$variable['codigo_ciiu'] . "',";
                 $cadenaSql.= "'" . $variable['usuario'] . "'";
 
                 $cadenaSql.= " );";
 
+                break;
+            
+            case "tipoServicio" :
+                $cadenaSql = "SELECT id_clase, nombre FROM agora.ciiu_clase;";
+                break;
+            
+            case "serviciosPorClase" :
+                $cadenaSql = "SELECT id_subclase, nombre FROM agora.ciiu_subclase WHERE clase = '$variable';";
                 break;
 
 

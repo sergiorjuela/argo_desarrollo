@@ -90,6 +90,10 @@ $("#<?php echo $this->campoSeguro('codigo_ciiu')?>").select2();
 			
  $('#<?php echo $this->campoSeguro('funcionario')?>').width(300);
 $("#<?php echo $this->campoSeguro('funcionario')?>").select2();
+ 
+
+$('#<?php echo $this->campoSeguro('tipo_servicio')?>').width(300);
+$("#<?php echo $this->campoSeguro('tipo_servicio')?>").select2();
 			
 $("#<?php echo $this->campoSeguro('clase')?>").select2();
 $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
