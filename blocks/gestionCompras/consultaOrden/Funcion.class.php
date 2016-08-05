@@ -67,6 +67,9 @@ class Funcion {
 	function documentoPdf() {
 		include_once ($this->ruta . "funcion/documentoPdf.php");
 	}
+	function documentoPdfIdexud() {
+		include_once ($this->ruta . "funcion/documentoIdexudPdf.php");
+	}
 	function action() {
             
                            
@@ -107,6 +110,10 @@ class Funcion {
 				
 				case 'generarDocumento' :
 					$this->documentoPdf ();
+					break;
+				
+                                case 'generarDocumentoIdexud' :
+					$this->documentoPdfIdexud ();
 					break;
 			}
 			

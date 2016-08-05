@@ -147,7 +147,7 @@ class registrarForm {
 
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         }
-        
+
 
         $arreglo = base64_encode(serialize($arreglo));
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -365,7 +365,11 @@ class registrarForm {
                 $variable_documento .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion('pagina');
                 $variable_documento .= "&bloque=" . $esteBloque ['nombre'];
                 $variable_documento .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-                $variable_documento .= "&opcion=generarDocumento";
+                if ($Orden [$i] ['descripcion'] == 246) {
+                    $variable_documento .= "&opcion=generarDocumento";
+                } else {
+                    $variable_documento .= "&opcion=generarDocumentoIdexud";
+                }
                 $variable_documento .= "&id_orden=" . $Orden [$i] ['id_orden'];
                 $variable_documento .= "&usuario=" . $_REQUEST ['usuario'];
                 $variable_documento .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . " --> VIGENCIA: " . $Orden [$i] ['vigencia'] . " NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
