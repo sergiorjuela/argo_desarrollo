@@ -57,8 +57,8 @@ class registrarForm {
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         $conexionFrameWork = "estructura";
         $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
-        $conexionSICA = "sicapital";
-        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
+//        $conexionSICA = "sicapital";
+//        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
 
 
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -550,8 +550,8 @@ class registrarForm {
                         $consultaSuperNuevo = $this->miSql->getCadenaSql('ConsultaSupervisorNovedad', $cambioSupervisor [$i] ['supervisor_nuevo']);
                         $consultaSuperAntiguo = $this->miSql->getCadenaSql('ConsultaSupervisorNovedad', $cambioSupervisor [$i] ['supervisor_antiguo']);
 
-                        $supervisorNuevo = $DBSICA->ejecutarAcceso($consultaSuperNuevo, "busqueda");
-                        $supervisorAntiguo = $DBSICA->ejecutarAcceso($consultaSuperAntiguo, "busqueda");
+//                        $supervisorNuevo = $DBSICA->ejecutarAcceso($consultaSuperNuevo, "busqueda");
+//                        $supervisorAntiguo = $DBSICA->ejecutarAcceso($consultaSuperAntiguo, "busqueda");
 
                         $mostrarHtml = "<tr>
                                 <td><center>" . $numerador . "</center></td>

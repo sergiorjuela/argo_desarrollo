@@ -312,8 +312,8 @@ class RegistradorOrden {
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
-        $conexionSICA = "sicapital";
-        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
+//        $conexionSICA = "sicapital";
+//        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
 
         $directorio = $this->miConfigurador->getVariableConfiguracion('rutaUrlBloque');
 
@@ -334,10 +334,8 @@ class RegistradorOrden {
         $inRegistro = false;
         $cadenaSql = $this->miSql->getCadenaSql('consultarSupervisorDocumento', $orden ['supervisor']);
 
-        $supervisor = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
-        $supervisor = $supervisor [0];
-
-
+//        $supervisor = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
+//        $supervisor = $supervisor [0];
         //-------------- Se accede al Servicio de Agora para Consultar el Proveedor de la Orden de Compra -------------------------------------------------------------------
 
 
@@ -385,6 +383,15 @@ class RegistradorOrden {
 
         $cadenaSql = $this->miSql->getCadenaSql('consultarElementosOrden', $_REQUEST ['id_orden']);
         $ElementosOrden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+        $datos = array(
+            $orden['numero_contrato'],
+            $orden['vigencia']
+        );
+
+        $cadenaSql = $this->miSql->getCadenaSql('consultarServiciosOrden', $datos);
+        $ServiciosOrden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
 
 
         $cadenaSql = $this->miSql->getCadenaSql('consultarFormadePago', $orden ['forma_pago']);
@@ -444,7 +451,7 @@ class RegistradorOrden {
     }
 
     td, th { 
-        border: 1px solid #CCC; 
+        border: 1px solid #585858; 
         height: 13px;
     } /* Make cells a bit taller */
 
@@ -492,6 +499,12 @@ class RegistradorOrden {
     td.especial6 {
          border-bottom: 0px;
          border-left: 0px;
+    }
+    td.especial7 {
+         border-bottom: 0px;
+         border-left: 0px;
+         border-right: 0px;
+         border-top: 0px;
     }
 
 
@@ -541,15 +554,15 @@ class RegistradorOrden {
 
 		    <table style='width:100%;'>
 			<tr> 
-			<td align='center' style='width:60%;'></td>
+			<td align='center' style='width:60%;'> Numero de Orden: " . $orden['numero_contrato'] . " Vigencia: " . $orden['vigencia'] . "</td>
 			<td align='center' style='width:10%;'>Fecha</td>
-			<td align='center' style='width:30%;'></td>
+			<td align='center' style='width:30%;'>" . date("Y-m-d") . "</td>
 			</tr>
 	           </table>			
 		    <table style='width:100%;'>
 			<tr> 
 			<td align='center' style='width:30%;'>Convenio Solicitante</td>
-			<td align='center' style='width:70%;'></td>
+			<td align='center' style='width:70%;'>" . $dependencia . "</td>
 			</tr>
 	           </table>			
 		    <table style='width:100%;'>
@@ -579,7 +592,7 @@ class RegistradorOrden {
 			<td align='center' style='width:30%;'>Nombre del Supervisor</td>
 			<td align='center' style='width:30%;'></td>
 			<td align='center' style='width:20%;'>Cedula N°</td>
-			<td align='center' style='width:20%;'></td>
+			<td align='center' style='width:20%;'>" . $orden['supervisor'] . "</td>
 			</tr>
          	    </table>
 		    <table style='width:100%;'>
@@ -602,7 +615,7 @@ class RegistradorOrden {
 			<td align='center' bgcolor='#BDBDBD'  style='width:100%;'>OBJETO DE LA COMPRA Y/0 SERVICIO</td>
 			</tr>
 			<tr> 
-			<td align='center' style='width:100%; height:10%;'></td>
+			<td align='justify' style='width:100%; height:10%;'>" . $orden['objeto_contrato'] . "</td>
 			</tr>
 	           </table>
                    
@@ -612,6 +625,135 @@ class RegistradorOrden {
 			</tr>
 			<tr> 
 			<td align='center' bgcolor='#BDBDBD' style='width:100%;'>1. JUSTIFICACIÓN DE LA COMPRA (Diligenciar este espacio en todos los casos)</td>
+			</tr>
+			<tr> 
+			<td align='center' style='width:100%; height:10%;'></td>
+			</tr>
+	           </table>
+                   
+                   <table style='width:100%;'>
+			<tr> 
+			<td align='center' style='width:40%;'>2. VALOR PRESUPUESTADO PARA ESTA COMPRA</td>
+			<td align='center' style='width:60%;'>$ " . number_format($orden['valor_contrato'], 2, ",", ".") . "</td>
+			</tr>
+         	    </table>
+                   ";
+
+        $funcionLetras = new EnLetras ();
+
+        $ValorLetras = $funcionLetras->ValorEnLetras($orden['valor_contrato'], ' Pesos ');
+
+        $contenidoPagina .= "<table style='width:100%;'>
+			<tr> 
+			<td align='center' style='width:30%;'> ( EN LETRAS)</td>
+			<td align='center' style='width:70%;'>$ValorLetras</td>
+			</tr>
+         	    </table>
+                   <table style='width:100%;'>
+			<tr> 
+			<td align='center' style='width:100%;'> 3. DETALLE DE BIENES O ELEMENTOS A ADQUIRIR</td>
+			</tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' bgcolor='#BDBDBD'  style='width:10%;'>ITEM</td>
+			<td align='center' bgcolor='#BDBDBD'  style='width:20%;'> U/ MEDIDA*</td>
+			<td align='center' bgcolor='#BDBDBD'  style='width:10%;'> CANT.</td>
+			<td align='center' bgcolor='#BDBDBD'  style='width:30%;'> DESCRIPCIÓN DEL ARTICULO</td>
+			<td align='center' bgcolor='#BDBDBD'  style='width:30%;'> RUBRO PRESUPUESTAL AFECTADO</td>
+			</tr>
+         	    </table>";
+                   
+
+        if ($ElementosOrden) {
+            
+             $contenidoPagina .= "<table style='width:100%;'>";
+             $j = 1;
+            foreach ($ElementosOrden as $valor => $it) {
+                $contenidoPagina .= "<tr>";
+                $contenidoPagina .= "<td align='center'   style='width:10%;'>" . $j . "</td>";
+                $contenidoPagina .= "<td align='center'   style='width:20%;'>" . $it ['unidad'] . "</td>";
+                $contenidoPagina .= "<td align='center'   style='width:10%;'>" . $it ['cantidad'] . "</td>";
+                $contenidoPagina .= "<td align='center'   style='width:30%;'>" . $it ['descripcion'] . "</td>";
+                $contenidoPagina .= "<td align='center'   style='width:30%;'></td>";
+                $contenidoPagina .= "</tr>";
+
+//                $sumatoriaTotal = $sumatoriaTotal + $it ['total_iva_con'];
+//                $sumatoriaSubtotal = $sumatoriaSubtotal + $it ['subtotal_sin_iva'];
+//                $sumatoriaIva = $sumatoriaIva + $it ['total_iva'];
+                $j ++;
+            }
+            $contenidoPagina .="
+			    	    </table>   ";
+        }
+
+        $contenidoPagina .="	    	                     
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' style='width:100%;'>*EJEMPLLO: GALON, RESMA, PAQUETEX.., CAJA, UNIDAD, ETC.</td>
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' style='width:100%; height:7%;' >PARA SOLICITAR EQUIPOS DE 
+                        OFICINA SOLICITAMOS CONSULTAR LAS ESPECIFICACIONES TECNICAS REQUERIDAS POR EL 
+                        COMITÉ DE INFORMATICA: PAGINA PRINCIPAL DE LA UNIVERSIDAD DISTRITAL-VICERRECTORIA 
+                        ADMINISTRATIVA Y FINANCIERA-COMITÉS-VERSION ACTUALIZADA DE LA PROPUESTA DE CONFIGURACION 
+                        DE EQUIPOS VIGENCIA 2010</td>
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' style='width:100%; height:5%;' >PERSONA A CARGO DE LOS BIENES DEVOLUTIVOS ( Diligencie solamente si se adquieren bienes 
+                        devolutivos: ej: equipos de computo, scaner,impresoras, muebles de oficina.)</td>
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' style='width:50%;' >Persona a cargo de los bienes (Funcionario de planta)</td>
+			<td align='center' style='width:50%;' ></td>
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' style='width:20%;' >Area</td>
+			<td align='center' style='width:80%;' ></td>
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' style='width:20%;' >Cargo</td>
+			<td align='center' style='width:40%;' ></td>
+			<td align='center' style='width:20%;' >Cédula N°</td>
+			<td align='center' style='width:20%;' ></td>
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' style='width:20%;' >Teléfono Fijo</td>
+			<td align='center' style='width:30%;' ></td>
+			<td align='center' style='width:20%;' >Telefóno móvil</td>
+			<td align='center' style='width:30%;' ></td>
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' style='width:50%;' >E-Mail</td>
+			<td align='center' style='width:50%;' ></td>
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' style='width:40%;' >Ubicación de los bienes devolutivos</td>
+			<td align='center' style='width:60%;' ></td>
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' bgcolor='#6E6E6E'  style='width:100%;'>SERVICIOS</td>
+			</tr>
+			<tr> 
+			<td align='center' bgcolor='#BDBDBD' style='width:100%;'>1. JUSTIFICACION DEL SERVICIO (Diligenciar este espacio en todos los casos)</td>
 			</tr>
 			<tr> 
 			<td align='center' style='width:100%; height:10%;'></td>
@@ -633,724 +775,130 @@ class RegistradorOrden {
          	    </table>
                    <table style='width:100%;'>
 			<tr> 
-			<td align='center' style='width:100%;'> 3. DETALLE DE BIENES O ELEMENTOS A ADQUIRIR</td>
+			<td align='center' style='width:100%;'> 3. DETALLE DE SERVICIOS A ADQUIRIR</td>
 			</tr>
-         	    </table>
-                   
+         	    </table>";
 
+        if ($ServiciosOrden) {
 
+            $contenidoPagina .="<table style='width:100%;'>";
 
-		    <table style='width:100%;'>
-			<tr> 
-			<td style='width:50%;'>Dependencia / Convenio : " . $dependencia . " </td>
-			<td style='width:50%;'>Sede : " . $sede . " </td>
-			</tr>
-	           </table>	
-		  
-
-			<table style='width:100%;'>
-			<tr> 
-			<td style='width:100%;'><b>Datos Supervisor</b></td>
-			</tr>
-         	</table>
-
-			<table style='width:100%;'>		
-			<tr> 
-			<td style='width:50%;'>Nombre : " . $supervisor ['FUN_NOMBRE'] . " </td>
-			<td style='width:50%;'>Cargo : " . $supervisor ['FUN_CARGO'] . " </td>
-			</tr>
-			</table>
-					
-		   	<table style='width:100%;'>
-			<tr> 
-			<td style='width:100%;'><b>Información Contratista</b></td>
-			</tr>
-         	</table>	
-
-            <table style='width:100%;'>
-			<tr> 
-			<td style='width:50%;'>" . $nombreProveedor . " </td>
-			<td style='width:50%;'>" . $identificacionProveedor . " </td>
-			</tr>
-			<tr> 
-			<td style='width:50%;'>Dirección : " . $direccionProveedor . " </td>
-			<td style='width:50%;'>Telefonos : " . $telefonosProveedor . " </td>
-			</tr>		
-			</table>
-					
-  			
-			<table style='width:100%;'>
-			<tr> 
-			<td style='width:100%;'>Cargo : " . $cargoProveedor . "</td>
-			</tr>
-         	</table>			
-					
-			<table style='width:100%;'>
-			<tr> 
-			<td style='width:100%;'><b>Información Contrato</b></td>
-			</tr>
-         	</table>	
-
-			<table style='width:100%;'>
-			<tr> 
-			<td style='width:100%;text-align:justify;font-size: 8px;font-size-adjust: 0.3;'>" . $orden ['objeto_contrato'] . " </td>
-			</tr>		
-			</table>";
-
-        if ($polizas != false) {
-            $contenidoPagina .= "<table style='width:100%;'>";
-            for ($i = 0; $i < count($polizas); $i++) {
-                $contenidoPagina.=
-                        "<tr> 
-			<td style='width:60%;text-align:left;'>" . $polizas [$i][0] . "</td>	
-			<td style='width:20%;text-align:left;'>Fecha Inicial: " . $polizas [$i][2] . "</td>	
-			<td style='width:20%;text-align:left;'>Fecha Final: " . $polizas [$i][3] . "</td>	
-			</tr>";
-            }
-            $contenidoPagina .= "</table>";
-        }
-
-
-        $contenidoPagina .= "
-			<table style='width:100%;'>
-			<tr> 
-			<td style='width:100%;'><b>Información Referente Pago</b></td>
-			</tr>
-         	</table>	             		
-
-		    <table style='width:100%;'>
-			<tr> 
-			<td style='width:33.31%;'>Fecha Inicio:  " . $orden ['fecha_inicio'] . "</td>
-			<td style='width:33.31%;'>Fecha Final:  " . $orden ['fecha_final'] . "</td>
-			<td style='width:33.31%;'>Duración (en Dias):  " . $orden ['plazo_ejecucion'] . "</td>		
-			</tr>
-         	</table>	 
-
-            <table style='width:100%;'>
-			<tr> 
-			<td style='width:100%;text-align:justify;'>Forma de Pago :  " . $formaPago . "</td>
-			</tr>
-         	</table>
-
-
-		
-			
-					
-<page_footer  backleft='10mm' backright='10mm'>
-			<table style='width:100%;'>		
-			<tr>
-			<td style='width:100%;text-align:justify;'><font size='1px'>Observaciones: para el respectivo pago la factura y/o cuenta de cobro debe coincidir en valores, cantidades y razón social, con la presente orden de servicio. igualmente se debe anexar el recibido a satisfacción del servicio, pago de aportes parafiscal y/o seguridad social del mes de facturación y certificación bancaria con el numero de cuenta para realizar la transferencia bancaria.</font></td>	
-			</tr>
-			</table>
-		
-</page_footer> 
-					
-						</page>
-				";
-
-        $contenidoPagina .= "<page backtop='5mm' backbottom='5mm' backleft='10mm' backright='10mm'>";
-
-        $contenidoPagina .= "
-		<table style='width:100%;'>
-		<tr>
-		<td style='width:100%;text-align=center;'>Elementos Orden</td>
-		</tr>
-		</table>
-		<table style='width:100%;'>
-		<tr>
-		<td style='width:10%;text-align=center;'>Item</td>
-		<td style='width:15%;text-align=center;'>Unidad/Medida</td>
-		<td style='width:10%;text-align=center;'>Cantidad</td>
-		<td style='width:25%;text-align=center;'>Descripción</td>
-		<td style='width:15.8%;text-align=center;'>Valor Unitario($)</td>
-		<td style='width:8.3%;text-align=center;'>Iva</td>
-		<td style='width:15.8%;text-align=center;'>Total</td>
-		</tr>
-		</table>
-		<table style='width:100%;'>";
-
-        $sumatoriaTotal = 0;
-
-        $sumatoriaIva = 0;
-        $sumatoriaSubtotal = 0;
-        $j = 1;
-
-        // var_dump ( $ElementosOrden );
-        // exit ();
-
-        if ($ElementosOrden) {
-            foreach ($ElementosOrden as $valor => $it) {
+            $j = 1;
+            foreach ($ServiciosOrden as $valor => $it) {
                 $contenidoPagina .= "<tr>";
-                $contenidoPagina .= "<td style='width:10%;text-align=center;'>" . $j . "</td>";
-                $contenidoPagina .= "<td style='width:15%;text-align=center;'>" . $it ['unidad'] . "</td>";
-                $contenidoPagina .= "<td style='width:10%;text-align=center;'>" . $it ['cantidad'] . "</td>";
-                $contenidoPagina .= "<td style='width:25%;text-align=justify;'>" . $it ['descripcion'] . "</td>";
-                $contenidoPagina .= "<td style='width:15.8%;text-align=center;'>$ " . number_format($it ['valor'], 2, ",", ".") . "</td>";
-                $contenidoPagina .= "<td style='width:8.3%;text-align=center;'>" . $it ['nombre_iva'] . "</td>";
-                $contenidoPagina .= "<td style='width:15.8%;text-align=center;'>$ " . number_format($it ['total_iva_con'], 2, ",", ".") . "</td>";
+                $contenidoPagina .= "<td align='center'  style='width:10%;'>" . $j . "</td>";
+                $contenidoPagina .= "<td align='center'  style='width:20%;'> N/A</td>";
+                $contenidoPagina .= "<td align='center'  style='width:10%;'>N/A</td>";
+                $contenidoPagina .= "<td align='center'   style='width:30%;'>" . $it ['descripcion'] . " (Tipo Servicio: " . $it ['nombre_tipo_servicio'] . ")</td>";
+                $contenidoPagina .= "<td align='center'  style='width:30%;'></td>";
                 $contenidoPagina .= "</tr>";
 
-                $sumatoriaTotal = $sumatoriaTotal + $it ['total_iva_con'];
-                $sumatoriaSubtotal = $sumatoriaSubtotal + $it ['subtotal_sin_iva'];
-                $sumatoriaIva = $sumatoriaIva + $it ['total_iva'];
+//                $sumatoriaTotal = $sumatoriaTotal + $it ['total_iva_con'];
+//                $sumatoriaSubtotal = $sumatoriaSubtotal + $it ['subtotal_sin_iva'];
+//                $sumatoriaIva = $sumatoriaIva + $it ['total_iva'];
                 $j ++;
             }
+            $contenidoPagina .= "</table> ";
         }
-        $contenidoPagina .= "</table>";
 
-        $contenidoPagina .= "		<table style='width:100%;'>
-		<tr>
-		
-		<td style='width:75%;text-align=left;'><b>SUBTOTAL  : </b></td>
-		<td style='width:25%;text-align=center;'><b>$" . number_format($sumatoriaSubtotal, 2, ",", ".") . "</b></td>
-		</tr>
-		<tr>
-		
-		<td style='width:75%;text-align=left;'><b>TOTAL IVA  : </b></td>
-		<td style='width:25%;text-align=center;'><b>$" . number_format($sumatoriaIva, 2, ",", ".") . "</b></td>
-		</tr>			
-				
-		<tr>
-		
-		<td style='width:75%;text-align=left;'><b>TOTAL  : </b></td>
-		<td style='width:25%;text-align=center;'><b>$" . number_format($sumatoriaTotal, 2, ",", ".") . "</b></td>
-		</tr>
-				
-				
-	</table>			
-				";
-
-        $funcionLetras = new EnLetras ();
-
-        $Letras = $funcionLetras->ValorEnLetras($sumatoriaTotal, ' Pesos ');
-
-        $contenidoPagina .= "<table style='width:100%;'>			
-		<tr>
-		
-		<td style='width:100%;text-align=center;text-transform:uppercase;'><b>" . $Letras . "</b></td>
-		</tr>		
-		
-		</table>";
-
-        if ($infDisponibilidad) {
-
-            $contenidoPagina .= "
-			<BR>
-			<BR>
-			<BR>		
-			<table style='width:100%;'>
-			<tr>
-			<td style='width:100%;'><b>INFORMACIÓN PRESUPUESTAL</b></td>
+        $contenidoPagina .= "<table style='width:100%;'>
+			<tr> 
+			<td align='center' style='width:10%;'> </td>
+			<td align='center' style='width:20%;'> </td>
+			<td align='center' style='width:10%;'> </td>
+			<td align='center' style='width:30%;'> </td>
+			<td align='center' style='width:30%;'> </td>
 			</tr>
-         	</table>";
-
-            $contenidoPagina .= "
-			<table style='width:100%;'>
-			<tr>
-			<td style='width:100%;'><b>Disponibilidades Presupuestales</b></td>
-			</tr>
-         	</table>		
-				
-					
-					
-			<table style='width:100%;'>
-			<tr>
-			<td style='width:6.5%;text-align=center;'>Vigencia</td>
-			<td style='width:6.5%;text-align=center;'>Unidad Ejecutora</td>
-			<td style='width:10%;text-align=center;'>Número<br>Solicitud</td>
-			<td style='width:10%;text-align=center;'>Número<br>Disponibilidad</td>
-			<td style='width:30%;text-align=center;'>Rubro</td>
-			<td style='width:15%;text-align=center;'>Valor<br>Solicitado($)</td>
-			<td style='width:22%;text-align=center;'>Valor Letras</td>
-			</tr>
-			</table>			
-			<table style='width:100%;'>		
-         ";
-
-            foreach ($infDisponibilidad as $valor) {
-
-                $contenidoPagina .= "<tr>";
-                $contenidoPagina .= "<td style='width:6.5%;text-align=center;'>" . $valor ['vigencia'] . "</td>";
-                $contenidoPagina .= "<td style='width:6.5%;text-align=center;'>" . $valor ['unidad_ejecutora'] . "</td>";
-                $contenidoPagina .= "<td style='width:10%;text-align=center;'>" . $valor ['numero_solicitud'] . "</td>";
-                $contenidoPagina .= "<td style='width:10%;text-align=center;'>" . $valor ['numero_diponibilidad'] . "</td>";
-                $contenidoPagina .= "<td style='width:30%;text-align=justify;'>" . $valor ['id_rubro'] . "- " . $valor ['descripcion_rubro'] . "</td>";
-                $contenidoPagina .= "<td style='width:15%;text-align=center;'>$ " . number_format($valor ['valor_solicitado'], 2, ",", ".") . "</td>";
-                $contenidoPagina .= "<td style='width:22%;text-align=center;'>" . $valor ['valor_letras_solicitud'] . "</td>";
-                $contenidoPagina .= "</tr>";
-            }
-
-            $contenidoPagina .= "</table>";
-
-            if ($inRegistro) {
-
-                $contenidoPagina .= "<br>
-			<table style='width:100%;'>
-			<tr>
-			<td style='width:100%;'><b>Registros Presupuestales</b></td>
-			</tr>
-         	</table>
-				
+         	    </table>    
+                    
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' bgcolor='#BDBDBD' style='width:100%;'>DURACION DEL SERVICIO</td>
 			
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center'  style='width:100%;'>Explique de manera clara, detallada y concisa la duración</td>
+		        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center'  style='width:100%; height:7%;'></td>
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' bgcolor='#BDBDBD' style='width:100%;'>FORMA DE PAGO PARA COMPRAS O SERVICIOS</td>
 			
-			<table style='width:100%;'>
-			<tr>
-			<td style='width:15%;text-align=center;'>Vigencia</td>
-			<td style='width:30%;text-align=center;'>Rubro</td>
-			<td style='width:15%;text-align=center;'>Unidad Ejecutora</td>
-			<td style='width:20%;text-align=center;'>Número Registro</td>
-			<td style='width:20%;text-align=center;'>Valor<br>Solicitado($)</td>
-			</tr>
-			</table>
-			<table style='width:100%;'>
-         ";
-
-                foreach ($inRegistro as $valor) {
-
-                    $contenidoPagina .= "<tr>";
-                    $contenidoPagina .= "<td style='width:15%;text-align=center;'>" . $valor ['vigencia'] . "</td>";
-                    $contenidoPagina .= "<td style='width:30%;text-align=center;'>" . $valor ['id_rubro'] . " " . $valor ['descr_rubro'] . "</td>";
-                    $contenidoPagina .= "<td style='width:15%;text-align=center;'>" . $valor ['unidad_ejecutora'] . "</td>";
-                    $contenidoPagina .= "<td style='width:20%;text-align=center;'>" . $valor ['numero_registro'] . "</td>";
-                    $contenidoPagina .= "<td style='width:20%;text-align=center;'>$ " . number_format($valor ['valor_registro'], 2, ",", ".") . "</td>";
-                    $contenidoPagina .= "</tr>";
-                }
-
-                $contenidoPagina .= "</table>";
-            }
-        }
-
-
-
-        if ($adicionesPresupuesto) {
-            $contenidoPagina .= "<br><table style='width:100%;'>
-                                    <tr>
-                                        <td style='width:100%;text-align=center;'><h6>OTRO SI: PRESUPUESTO</h6></td>
-                                    </tr>
-                                </table>";
-            $contenidoPagina .= "<table style='width:100%;' >
-                              <tr>
-                                <td style='width:5%;text-align=center;'>#</td>
-                                <td style='width:10%;text-align=center;'>#Contrato Vigencia</td>
-                              	<td style='width:7%;text-align=center;'>Estado</td>            
-            			<td style='width:10%;text-align=center;'>Fecha de Registro</td>
-            			<td style='width:10%;text-align=center;'>Usuario</td>
-                                <td style='width:12%;text-align=center;'># Acto Administrativo</td>
-                                <td style='width:8%;text-align=center;'># Solicitud</td>
-                                <td style='width:5%;text-align=center;'># CDP</td>
-                                <td style='width:15%;text-align=center;'>Valor Adición</td>
-                                <td style='width:18%;text-align=center;'>Descripcion</td>
-                                
-                                                    	
-                             </tr>
-                          </table>
-                    <table style='width:100%;'>";
-            $totalAddicionPresupuesto = 0;
-            for ($i = 0; $i < count($adicionesPresupuesto); $i ++) {
-                $numerador = $i + 1;
-                if ($adicionesPresupuesto [$i] ['estado'] == 't') {
-                    $estado = "Activa";
-                } else {
-                    $estado = "Inactiva";
-                }
-
-                $totalAddicionPresupuesto += $adicionesPresupuesto [$i] ['valor_presupuesto'];
-
-                $contenidoPagina .= "<tr>
-                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
-                                <td style='width:10%;text-align=center;'>" . $adicionesPresupuesto [$i] ['numero_contrato'] . " - " . $adicionesPresupuesto [$i] ['vigencia'] . "</td>		
-                                <td style='width:7%;text-align=center;'>" . $estado . "</td>		
-                                <td style='width:10%;text-align=center;'>" . $adicionesPresupuesto [$i] ['fecha_registro'] . "</td>
-                                <td style='width:10%;text-align=center;'>" . $adicionesPresupuesto [$i] ['usuario'] . "</td>
-                                <td style='width:12%;text-align=center;'>" . $adicionesPresupuesto [$i] ['acto_administrativo'] . "</td>
-                                <td style='width:8%;text-align=center;'>" . $adicionesPresupuesto [$i] ['numero_solicitud'] . "</td>
-                                <td style='width:5%;text-align=center;'>" . $adicionesPresupuesto [$i] ['numero_cdp'] . "</td>
-                                <td style='width:15%;text-align=center;'>" . number_format($adicionesPresupuesto [$i] ['valor_presupuesto'], 2, ",", ".") . "</td>
-                                <td style='width:18%;text-align=center;'>" . $adicionesPresupuesto [$i] ['descripcion'] . "</td>
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center'  style='width:100%;'>Explique de manera clara, detallada y concisa la forma de pago</td>
+		        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center'  style='width:100%; height:7%;'></td>
+                        </tr>
+         	    </table>
                               
-                                </tr>";
-            }
 
-            $contenidoPagina .= "</table>";
-            $contenidoPagina .="<table style='width:100%;'>"
-                    . "<tr>"
-                    . "<td style='width:25%;text-align=left;' ><b>TOTAL ADICIONES :  </b></td>";
-            $contenidoPagina .="<td style='width:75%;text-align=left;' ><b>$" . number_format($totalAddicionPresupuesto, 2, ",", ".") . "</b></td></tr></table>";
-            $funcionLetras = new EnLetras ();
-
-            $Letras = $funcionLetras->ValorEnLetras($totalAddicionPresupuesto, ' Pesos ');
-
-            $contenidoPagina .= "<table style='width:100%;'>			
-		<tr>
-		
-		<td style='width:100%;text-align=center;text-transform:uppercase;'><b>" . $Letras . "</b></td>
-		</tr>		
-		
-		</table>";
-        }
-
-        if ($adicionesTiempo) {
-            $contenidoPagina .= "<br><table style='width:100%;'>
-                                    <tr>
-                                        <td style='width:100%;text-align=center;'><h6>OTRO SI: TIEMPO</h6></td>
-                                    </tr>
-                                </table>";
-            $contenidoPagina .= "<table style='width:100%;' >
-                              <tr>
-                                <td style='width:5%;text-align=center;'>#</td>
-                                <td style='width:15%;text-align=center;'>#Contrato Vigencia</td>
-                              	<td style='width:7%;text-align=center;'>Estado</td>            
-            			<td style='width:10%;text-align=center;'>Fecha de Registro</td>
-            			<td style='width:10%;text-align=center;'>Usuario</td>
-                                <td style='width:12%;text-align=center;'># Acto Administrativo</td>
-                                <td style='width:12%;text-align=center;'>Unidad de Tiempo</td>
-                                <td style='width:8%;text-align=center;'>Valor de Tiempo</td>
-                                <td style='width:21%;text-align=center;'>Descripcion</td>
-                                
-                                                    	
-                             </tr>
-                          </table>
-                    <table style='width:100%;'>";
-            for ($i = 0; $i < count($adicionesTiempo); $i ++) {
-                $numerador = $i + 1;
-                if ($adicionesTiempo [$i] ['estado'] == 't') {
-                    $estado = "Activa";
-                } else {
-                    $estado = "Inactiva";
-                }
+                    <br><br>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center'  style='width:20%; height:5%;'>FIRMA</td>
+			<td align='center'  style='width:30%;'></td>
+			<td align='center'  style='width:20%; height:5%;'>FIRMA</td>
+			<td align='center'  style='width:30%;'></td>
+                        </tr>
+			
+         	    </table>
+                    
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center'  style='width:20%; '>Nombre Completo</td>
+			<td align='center'  style='width:30%;'></td>
+			<td align='center'  style='width:20%; '>Nombre Completo</td>
+			<td align='center'  style='width:30%;'></td>
+                        </tr>
+			
+         	    </table>
+                    
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center'  style='width:20%; '>N° Cedula</td>
+			<td align='center'  style='width:30%;'></td>
+			<td align='center'  style='width:20%; '>N° Cedula</td>
+			<td align='center'  style='width:30%;'>" . $orden['supervisor'] . "</td>
+                        </tr>
+			
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' bgcolor='#BDBDBD'  style='width:50%;'>FIRMA DEL DIRECTOR DEL CONVENIO</td>
+			<td align='center' bgcolor='#BDBDBD'  style='width:50%;'>FIRMA DEL SUPERVISOR</td>
+                        </tr>
+			
+         	    </table>";
 
 
-                $contenidoPagina .= "<tr>
-                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
-                                <td style='width:15%;text-align=center;'>" . $adicionesTiempo [$i] ['numero_contrato'] . " - " . $adicionesTiempo [$i] ['vigencia'] . "</td>		
-                                <td style='width:7%;text-align=center;'>" . $estado . "</td>		
-                                <td style='width:10%;text-align=center;'>" . $adicionesTiempo [$i] ['fecha_registro'] . "</td>
-                                <td style='width:10%;text-align=center;'>" . $adicionesTiempo [$i] ['usuario'] . "</td>
-                                <td style='width:12%;text-align=center;'>" . $adicionesTiempo [$i] ['acto_administrativo'] . "</td>
-                                <td style='width:12%;text-align=center;'>" . $adicionesTiempo [$i] ['unidad_tiempo_ejecucion'] . "</td>
-                                <td style='width:8%;text-align=center;'>" . $adicionesTiempo [$i] ['valor_tiempo'] . "</td>
-                                <td style='width:21%;text-align=center;'>" . $adicionesTiempo [$i] ['descripcion'] . "</td>
-                              
-                                </tr>";
-            }
-
-            $contenidoPagina .= "</table>";
-        }
-        if ($anulaciones) {
-            $contenidoPagina .= "<br><table style='width:100%;'>
-                                    <tr>
-                                        <td style='width:100%;text-align=center;'><h6>NOVEDADES DE ANULACIÓN</h6></td>
-                                    </tr>
-                                </table>";
-            $contenidoPagina .= "<table style='width:100%;' >
-                              <tr>
-                                <td style='width:5%;text-align=center;'>#</td>
-                                <td style='width:15%;text-align=center;'>#Contrato Vigencia</td>
-                              	<td style='width:7%;text-align=center;'>Estado</td>            
-            			<td style='width:10%;text-align=center;'>Fecha de Registro</td>
-            			<td style='width:10%;text-align=center;'>Usuario</td>
-                                <td style='width:12%;text-align=center;'># Acto Administrativo</td>
-                                <td style='width:15%;text-align=center;'>Tipo de Anulación</td>
-                                <td style='width:26%;text-align=center;'>Descripcion</td>
-                                
-                                                    	
-                             </tr>
-                          </table>
-                    <table style='width:100%;'>";
-            for ($i = 0; $i < count($anulaciones); $i ++) {
-                $numerador = $i + 1;
-                if ($anulaciones [$i] ['estado'] == 't') {
-                    $estado = "Activa";
-                } else {
-                    $estado = "Inactiva";
-                }
-
-
-                $contenidoPagina .= "<tr>
-                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
-                                <td style='width:15%;text-align=center;'>" . $anulaciones [$i] ['numero_contrato'] . " - " . $anulaciones [$i] ['vigencia'] . "</td>		
-                                <td style='width:7%;text-align=center;'>" . $estado . "</td>		
-                                <td style='width:10%;text-align=center;'>" . $anulaciones [$i] ['fecha_registro'] . "</td>
-                                <td style='width:10%;text-align=center;'>" . $anulaciones [$i] ['usuario'] . "</td>
-                                <td style='width:12%;text-align=center;'>" . $anulaciones [$i] ['acto_administrativo'] . "</td>
-                                <td style='width:15%;text-align=center;'>" . $anulaciones [$i] ['parametro_anulacion'] . "</td>
-                                <td style='width:26%;text-align=center;'>" . $anulaciones [$i] ['descripcion'] . "</td>
-                              
-                                </tr>";
-            }
-
-            $contenidoPagina .= "</table>";
-        }
-        if ($cesiones) {
-            $contenidoPagina .= "<br><table style='width:100%;'>
-                                    <tr>
-                                        <td style='width:100%;text-align=center;'><h6>NOVEDADES DE CESIÓN</h6></td>
-                                    </tr>
-                                </table>";
-            $contenidoPagina .= "<table style='width:100%;' >
-                              <tr>
-                                <td style='width:5%;text-align=center;'>#</td>
-                                <td style='width:7%;text-align=center;'>#Contrato Vigencia</td>
-                              	<td style='width:7%;text-align=center;'>Estado</td>            
-            			<td style='width:8%;text-align=center;'>Fecha de Registro</td>
-            			<td style='width:10%;text-align=center;'>Usuario</td>
-                                <td style='width:10%;text-align=center;'># Acto Administrativo</td>
-                                <td style='width:15%;text-align=center;'>Contratista Actual</td>
-                                <td style='width:15%;text-align=center;'>Contratista Anterior</td>
-                                <td style='width:8%;text-align=center;'>Fecha Cesión</td>
-                                <td style='width:15%;text-align=center;'>Descripcion</td>
-                                
-                                                    	
-                             </tr>
-                          </table>
-                    <table style='width:100%;'>";
-            for ($i = 0; $i < count($cesiones); $i ++) {
-                $numerador = $i + 1;
-                if ($cesiones [$i] ['estado'] == 't') {
-                    $estado = "Activa";
-                } else {
-                    $estado = "Inactiva";
-                }
-
-                $parametro1 = $cesiones [$i] ['nuevo_contratista'];
-                $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
-                $url = "http://10.20.2.38/agora/index.php?";
-                $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&parametro1=$parametro1";
-                $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar_url($data, $enlace);
-                $cliente = curl_init();
-                curl_setopt($cliente, CURLOPT_SSL_VERIFYPEER, false);
-                curl_setopt($cliente, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($cliente, CURLOPT_URL, $url_servicio);
-                $repuestaWeb = curl_exec($cliente);
-                curl_close($cliente);
-                $repuestaWeb = explode("<json>", $repuestaWeb);
-                $proveedor = json_decode($repuestaWeb[1]);
-                $proveedor = (array) $proveedor;
-                $proveedor = (array) $proveedor['datos'];
-
-                if ($proveedor['tipo_persona'] == 'JURIDICA') {
-                    $nuevo_contratista = $proveedor['num_nit_empresa'] . " - " . $proveedor['nom_empresa'];
-                } else {
-                    $nuevo_contratista = $proveedor['num_documento_persona_natural'] . " - " . $proveedor['primer_nombre_persona_natural'] . " "
-                            . " " . $proveedor['segundo_nombre_persona_natural'] . "  " . $proveedor['primer_apellido_persona_natural'] . " " .
-                            $proveedor['primer_apellido_persona_natural'];
-                }
-                unset($proveedor);
-
-                $parametro2 = $cesiones [$i] ['antiguo_contratista'];
-                $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
-                $url = "http://10.20.2.38/agora/index.php?";
-                $data = "pagina=servicio&servicios=true&servicio=servicioArgoProveedor&parametro1=$parametro2";
-                $url_servicio = $url . $this->miConfigurador->fabricaConexiones->crypto->codificar_url($data, $enlace);
-                $cliente = curl_init();
-                curl_setopt($cliente, CURLOPT_SSL_VERIFYPEER, false);
-                curl_setopt($cliente, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($cliente, CURLOPT_URL, $url_servicio);
-                $repuestaWeb = curl_exec($cliente);
-                curl_close($cliente);
-                $repuestaWeb = explode("<json>", $repuestaWeb);
-                $proveedor = json_decode($repuestaWeb[1]);
-                $proveedor = (array) $proveedor;
-                $proveedor = (array) $proveedor['datos'];
-
-                if ($proveedor['tipo_persona'] == 'JURIDICA') {
-                    $antiguo_contratista = $proveedor['num_nit_empresa'] . " - " . $proveedor['nom_empresa'];
-                } else {
-                    $antiguo_contratista = $proveedor['num_documento_persona_natural'] . " - " . $proveedor['primer_nombre_persona_natural'] . " "
-                            . " " . $proveedor['segundo_nombre_persona_natural'] . "  " . $proveedor['primer_apellido_persona_natural'] . " " .
-                            $proveedor['primer_apellido_persona_natural'];
-                }
-
-
-
-                $contenidoPagina .= "<tr>
-                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
-                                <td style='width:7%;text-align=center;'>" . $cesiones [$i] ['numero_contrato'] . " - " . $cesiones [$i] ['vigencia'] . "</td>		
-                                <td style='width:7%;text-align=center;'>" . $estado . "</td>		
-                                <td style='width:8%;text-align=center;'>" . $cesiones [$i] ['fecha_registro'] . "</td>
-                                <td style='width:10%;text-align=center;'>" . $cesiones [$i] ['usuario'] . "</td>
-                                <td style='width:10%;text-align=center;'>" . $cesiones [$i] ['acto_administrativo'] . "</td>
-                                <td style='width:15%;text-align=center;'>" . $nuevo_contratista . "</td>
-                                <td style='width:15%;text-align=center;'>" . $antiguo_contratista . "</td>
-                                <td style='width:8%;text-align=center;'>" . $cesiones [$i] ['fecha_cesion'] . "</td>
-                                <td style='width:15%;text-align=center;'>" . $cesiones [$i] ['descripcion'] . "</td>
-                              
-                                </tr>";
-            }
-
-            $contenidoPagina .= "</table>";
-        }
-
-        $contenidoPagina .= " </page><page backtop='5mm' backbottom='5mm' backleft='10mm' backright='10mm'>";
-        if ($cambioSupervisor) {
-            $contenidoPagina .= "<br><table style='width:100%;'>
-                                    <tr>
-                                        <td style='width:100%;text-align=center;'><h6>NOVEDADES CAMBIO DE SUPERVISOR</h6></td>
-                                    </tr>
-                                </table>";
-            $contenidoPagina .= "<table style='width:100%;' >
-                              <tr>
-                                <td style='width:5%;text-align=center;'>#</td>
-                                <td style='width:7%;text-align=center;'>#Contrato Vigencia</td>
-                              	<td style='width:5%;text-align=center;'>Estado</td>            
-            			<td style='width:8%;text-align=center;'>Fecha de Registro</td>
-            			<td style='width:10%;text-align=center;'>Usuario</td>
-                                <td style='width:8%;text-align=center;'># Acto Administrativo</td>
-                                <td style='width:9%;text-align=center;'>Tipo Cambio</td>
-                                <td style='width:15%;text-align=center;'>Supervisor Actual</td>
-                                <td style='width:15%;text-align=center;'>Supervisor Anterior</td>
-                                <td style='width:8%;text-align=center;'>Fecha Cambio</td>
-                                <td style='width:10%;text-align=center;'>Descripcion</td>
-                                   	
-                             </tr>
-                          </table>
-                    <table style='width:100%;'>";
-            for ($i = 0; $i < count($cambioSupervisor); $i ++) {
-                $numerador = $i + 1;
-                if ($cambioSupervisor [$i] ['estado'] == 't') {
-                    $estado = "Activa";
-                } else {
-                    $estado = "Inactiva";
-                }
-                $consultaSuperNuevo = $this->miSql->getCadenaSql('ConsultaSupervisorNovedad', $cambioSupervisor [$i] ['supervisor_nuevo']);
-                $consultaSuperAntiguo = $this->miSql->getCadenaSql('ConsultaSupervisorNovedad', $cambioSupervisor [$i] ['supervisor_antiguo']);
-
-                $supervisorNuevo = $DBSICA->ejecutarAcceso($consultaSuperNuevo, "busqueda");
-                $supervisorAntiguo = $DBSICA->ejecutarAcceso($consultaSuperAntiguo, "busqueda");
-
-
-                $contenidoPagina .= "<tr>
-                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
-                                <td style='width:7%;text-align=center;'>" . $cambioSupervisor [$i] ['numero_contrato'] . " - " . $cambioSupervisor [$i] ['vigencia'] . "</td>		
-                                <td style='width:5%;text-align=center;'>" . $estado . "</td>		
-                                <td style='width:8%;text-align=center;'>" . $cambioSupervisor [$i] ['fecha_registro'] . "</td>
-                                <td style='width:10%;text-align=center;'>" . $cambioSupervisor [$i] ['usuario'] . "</td>
-                                <td style='width:8%;text-align=center;'>" . $cambioSupervisor [$i] ['acto_administrativo'] . "</td>
-                                <td style='width:9%;text-align=center;'>" . $cambioSupervisor [$i] ['tipocambio_parametro'] . "</td>
-                                <td style='width:15%;text-align=center;'>" . $supervisorNuevo[0][0] . "</td>
-                                <td style='width:15%;text-align=center;'>" . $supervisorAntiguo[0][0] . "</td>
-                                <td style='width:8%;text-align=center;'>" . $cambioSupervisor [$i] ['fecha_cambio'] . "</td>
-                                <td style='width:10%;text-align=center;'>" . $cambioSupervisor [$i] ['descripcion'] . "</td>
-                                </tr>";
-            }
-
-            $contenidoPagina .= "</table>";
-        }
-
-        if ($suspensiones) {
-            $contenidoPagina .= "<br><table style='width:100%;'>
-                                    <tr>
-                                        <td style='width:100%;text-align=center;'><h6>NOVEDADES DE SUSPENSIÓN</h6></td>
-                                    </tr>
-                                </table>";
-            $contenidoPagina .= "<table style='width:100%;' >
-                              <tr>
-                                <td style='width:5%;text-align=center;'>#</td>
-                                <td style='width:15%;text-align=center;'>#Contrato Vigencia</td>
-                              	<td style='width:8%;text-align=center;'>Estado</td>            
-            			<td style='width:8%;text-align=center;'>Fecha de Registro</td>
-            			<td style='width:10%;text-align=center;'>Usuario</td>
-                                <td style='width:10%;text-align=center;'># Acto Administrativo</td>
-                                <td style='width:12%;text-align=center;'>Fecha Inicio</td>
-                                <td style='width:12%;text-align=center;'>Fecha Fin</td>
-                                <td style='width:20%;text-align=center;'>Descripcion</td>
-                                   	
-                             </tr>
-                          </table>
-                    <table style='width:100%;'>";
-            for ($i = 0; $i < count($suspensiones); $i ++) {
-                $numerador = $i + 1;
-                if ($suspensiones [$i] ['estado'] == 't') {
-                    $estado = "Activa";
-                } else {
-                    $estado = "Inactiva";
-                }
-                $contenidoPagina .= "<tr>
-                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
-                                <td style='width:15%;text-align=center;'>" . $suspensiones [$i] ['numero_contrato'] . " - " . $suspensiones [$i] ['vigencia'] . "</td>		
-                                <td style='width:8%;text-align=center;'>" . $estado . "</td>		
-                                <td style='width:8%;text-align=center;'>" . $suspensiones [$i] ['fecha_registro'] . "</td>
-                                <td style='width:10%;text-align=center;'>" . $suspensiones [$i] ['usuario'] . "</td>
-                                <td style='width:10%;text-align=center;'>" . $suspensiones [$i] ['acto_administrativo'] . "</td>
-                                <td style='width:12%;text-align=center;'>" . $suspensiones [$i] ['fecha_inicio'] . "</td>
-                                <td style='width:12%;text-align=center;'>" . $suspensiones [$i] ['fecha_fin'] . "</td>
-                                <td style='width:20%;text-align=center;'>" . $suspensiones [$i] ['descripcion'] . "</td>
-                                </tr>";
-            }
-
-            $contenidoPagina .= "</table>";
-        }
-        if ($otras) {
-            $contenidoPagina .= "<br><table style='width:100%;'>
-                                    <tr>
-                                        <td style='width:100%;text-align=center;'><h6>OTRAS NOVEDADES</h6></td>
-                                    </tr>
-                                </table>";
-            $contenidoPagina .= "<table style='width:100%;' >
-                              <tr>
-                                <td style='width:5%;text-align=center;'>#</td>
-                                <td style='width:15%;text-align=center;'>#Contrato Vigencia</td>
-                                <td style='width:12%;text-align=center;'>Novedad</td>
-                              	<td style='width:10%;text-align=center;'>Estado</td>            
-            			<td style='width:10%;text-align=center;'>Fecha de Registro</td>
-            			<td style='width:12%;text-align=center;'>Usuario</td>
-                                <td style='width:12%;text-align=center;'># Acto Administrativo</td>
-                                <td style='width:24%;text-align=center;'>Descripcion</td>
-                                   	
-                             </tr>
-                          </table>
-                    <table style='width:100%;'>";
-            for ($i = 0; $i < count($otras); $i ++) {
-                $numerador = $i + 1;
-                if ($otras [$i] ['estado'] == 't') {
-                    $estado = "Activa";
-                } else {
-                    $estado = "Inactiva";
-                }
-                $contenidoPagina .= "<tr>
-                                <td style='width:5%;text-align=center;'>" . $numerador . "</td>
-                                <td style='width:15%;text-align=center;'>" . $otras [$i] ['numero_contrato'] . " - " . $otras [$i] ['vigencia'] . "</td>		
-                                <td style='width:12%;text-align=center;'>" . $otras [$i] ['parametro_descripcion'] . "</td>		
-                                <td style='width:10%;text-align=center;'>" . $estado . "</td>		
-                                <td style='width:10%;text-align=center;'>" . $otras [$i] ['fecha_registro'] . "</td>
-                                <td style='width:12%;text-align=center;'>" . $otras [$i] ['usuario'] . "</td>
-                                <td style='width:12%;text-align=center;'>" . $otras [$i] ['acto_administrativo'] . "</td>
-                                <td style='width:24%;text-align=center;'>" . $otras [$i] ['descripcion'] . "</td>
-                                </tr>";
-            }
-
-            $contenidoPagina .= "</table>";
-        }
 
 
         $contenidoPagina .= "<page_footer  backleft='10mm' backright='10mm'>
 				
 				
-						<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
+		    <table style='width:100%;'>
 			<tr>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>_______________________________</td>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>_______________________________</td>
+			  <td class='especial7' align='center' style='width:100%;'  >
+                            <img src='" . $directorio . "/css/images/escudopieIdexud.png'  width='200' height='80'>
+                          </td>
 			</tr>
-			<tr>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>FIRMA CONTRATISTA</td>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>" . $ordenador ['ordenador'] . "</td>
-			</tr>
-			<tr>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'> " . $nombreProveedor . "</td>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>ORDENADOR GASTO</td>
-			</tr>
-			<tr>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $identificacionProveedor . "</td>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $ordenador ['identificacion'] . "-" . $ordenador['nombre'] . "</td>
-			</tr>
-			</table>
+			
+		    </table>
 							
 				
-												<table style='width:100%;'>		
-												<tr>
-												<td style='width:100%;text-align:justify;'><font size='1px'>Observaciones: para el respectivo pago la factura y/o cuenta de cobro debe coincidir en valores, cantidades y razón social, con la presente orden de servicio. igualmente se debe anexar el recibido a satisfacción del servicio, pago de aportes parafiscal y/o seguridad social del mes de facturación y certificación bancaria con el numero de cuenta para realizar la transferencia bancaria.</font></td>	
-												</tr>
-												</table>
 											</page_footer> 
 				</page>";
 

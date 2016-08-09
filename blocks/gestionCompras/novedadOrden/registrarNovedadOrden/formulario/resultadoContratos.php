@@ -155,8 +155,8 @@ class registrarForm {
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         }
         $arreglo = serialize($arreglo);
-
-        // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
+        
+    // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
         $esteCampo = $esteBloque ['nombre'];
         $atributos ['id'] = $esteCampo;
         $atributos ['nombre'] = $esteCampo;
