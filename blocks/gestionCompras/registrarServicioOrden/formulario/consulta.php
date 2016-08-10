@@ -150,8 +150,16 @@ class registrarForm {
 
         $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscar_numero_orden" ,$unidadEjecutora);
         $matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+        if($matrizItems != false){
         $atributos ['matrizItems'] = $matrizItems;
-
+        }else{
+        $atributos ['matrizItems'] = $arreglo = array(
+                array(
+                    '',
+                    'Sin Ordenes de Servicio'
+                )
+            );
+        }
         $tab ++;
         $atributos = array_merge($atributos, $atributosGlobales);
         echo $this->miFormulario->campoCuadroLista($atributos);

@@ -25,8 +25,8 @@ class registrarForm {
     }
 
     function miForm() {
-        
-    
+
+
 
         // Rescatar los datos de este bloque
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
@@ -57,8 +57,8 @@ class registrarForm {
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         $conexionFrameWork = "estructura";
         $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
-//        $conexionSICA = "sicapital";
-//        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
+        $conexionSICA = "sicapital";
+        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
 
 
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -117,7 +117,7 @@ class registrarForm {
 
         $sqlAdicionesPresupuesto = $this->miSql->getCadenaSql('consultarAdcionesPresupuesto', $datosContrato);
         $adicionesPresupuesto = $esteRecursoDB->ejecutarAcceso($sqlAdicionesPresupuesto, "busqueda");
-
+      
         $sqlAdicionesTiempo = $this->miSql->getCadenaSql('consultarAdcionesTiempo', $datosContrato);
         $adicionesTiempo = $esteRecursoDB->ejecutarAcceso($sqlAdicionesTiempo, "busqueda");
 
@@ -147,7 +147,8 @@ class registrarForm {
         $atributos ["estilo"] = "jqueryui";
         $atributos ['tipoEtiqueta'] = 'inicio';
         $atributos ["leyenda"] = "Consulta de Ordenes";
-        echo $this->miFormulario->marcoAgrupacion('inicio', $atributos); {
+        echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
+        {
 
 //         var_dump($adicionesTiempo);
             // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -169,13 +170,13 @@ class registrarForm {
 
             $atributos ["id"] = "ventanaA";
             echo $this->miFormulario->division("inicio", $atributos);
-            unset($atributos);
-            {
+            unset($atributos); {
                 echo "<h3>Adiciones</h3><section>";
 
                 echo "<center><h4>ADICIONES EN PRESUPUESTO</h4></center>";
-
+               
                 if ($adicionesPresupuesto) {
+                    
 
                     echo "<table id='tablaAdicionPresupuesto'>";
                     echo "<thead>
@@ -191,6 +192,7 @@ class registrarForm {
                                 <th>Valor Adición</th>
                                 <th>Descripcion</th>
                                 <th>Documento</th>
+                                <th>Modificar</th>
                                                     	
                              </tr>
                           </thead>
@@ -206,6 +208,18 @@ class registrarForm {
 
                         $totalAddicionPresupuesto += $adicionesPresupuesto [$i] ['valor_presupuesto'];
 
+                        $variableModificar = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+                        $variableModificar .= "&opcion=modificarNovedad";
+                        $variableModificar .= "&id_novedad=" . $adicionesPresupuesto [$i] ['id'];
+                        $variableModificar .= "&tipo_novedad=" . $adicionesPresupuesto [$i] ['tipo_novedad'];
+                        $variableModificar .= "&numero_contrato=" . $adicionesPresupuesto [$i] ['numero_contrato'];
+                        $variableModificar .= "&vigencia=" . $adicionesPresupuesto [$i] ['vigencia'];
+                        $variableModificar .= "&tipo_adicion=" . $adicionesPresupuesto [$i] ['tipo_adicion'];
+                        $variableModificar .= "&arreglo=" . $_REQUEST ['arreglo'];
+                        $variableModificar .= "&usuario=" . $_REQUEST['usuario'];
+                        $variableModificar .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+                        $variableModificar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableModificar, $directorio);
+
                         $mostrarHtml = "<tr>
                                 <td><center>" . $numerador . "</center></td>
                                 <td><center>" . $adicionesPresupuesto [$i] ['numero_contrato'] . " - " . $adicionesPresupuesto [$i] ['vigencia'] . "</center></td>		
@@ -218,10 +232,15 @@ class registrarForm {
                                 <td><center>" . number_format($adicionesPresupuesto [$i] ['valor_presupuesto'], 2, ",", ".") . "</center></td>
                                 <td><center>" . $adicionesPresupuesto [$i] ['descripcion'] . "</center></td>
                                 <td><center><a href='" . $host . $adicionesPresupuesto [$i] ['documento'] . "' TARGET='_blank' >" . $adicionesPresupuesto [$i] ['documento'] . "</a></center></td>
+                                <td><center>
+                                <a href='" . $variableModificar . "'>
+                                    <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>
+                                </a>
+                          	</center> </td>
                                 </tr>";
                         echo $mostrarHtml;
                         unset($mostrarHtml);
-                        unset($variable);
+                        unset($variableModificar);
                     }
 
                     echo "</tbody>";
@@ -266,6 +285,7 @@ class registrarForm {
                                 <th>Valor Tiempo</th>
                                 <th>Descripcion</th>
                                 <th>Documento</th>
+                                <th>Modificar</th>
                                                     	
                              </tr>
                           </thead>
@@ -278,6 +298,19 @@ class registrarForm {
                             $estado = "Inactiva";
                         }
 
+
+                        $variableModificar = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+                        $variableModificar .= "&opcion=modificarNovedad";
+                        $variableModificar .= "&id_novedad=" . $adicionesTiempo [$i] ['id'];
+                        $variableModificar .= "&tipo_novedad=" . $adicionesTiempo [$i] ['tipo_novedad'];
+                        $variableModificar .= "&numero_contrato=" . $adicionesTiempo [$i] ['numero_contrato'];
+                        $variableModificar .= "&vigencia=" . $adicionesTiempo [$i] ['vigencia'];
+                        $variableModificar .= "&tipo_adicion=" . $adicionesTiempo [$i] ['tipo_adicion'];
+                        $variableModificar .= "&arreglo=" . $_REQUEST ['arreglo'];
+                        $variableModificar .= "&usuario=" . $_REQUEST['usuario'];
+                        $variableModificar .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+                        $variableModificar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableModificar, $directorio);
+
                         $mostrarHtml = "<tr>
                                 <td><center>" . $numerador . "</center></td>
                                 <td><center>" . $adicionesTiempo [$i] ['numero_contrato'] . " - " . $adicionesTiempo [$i] ['vigencia'] . "</center></td>		
@@ -288,11 +321,16 @@ class registrarForm {
                                 <td><center>" . $adicionesTiempo [$i] ['unidad_tiempo_ejecucion'] . "</center></td>
                                 <td><center>" . $adicionesTiempo [$i] ['valor_tiempo'] . "</center></td>
                                 <td><center>" . $adicionesTiempo [$i] ['descripcion'] . "</center></td>
-                                 <td><center><a href='" . $host . $adicionesTiempo [$i] ['documento'] . "' TARGET='_blank' >" . $adicionesTiempo [$i] ['documento'] . "</a></center></td>
+                                <td><center><a href='" . $host . $adicionesTiempo [$i] ['documento'] . "' TARGET='_blank' >" . $adicionesTiempo [$i] ['documento'] . "</a></center></td>
+                               <td><center>
+                                <a href='" . $variableModificar . "'>
+                                    <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>
+                                </a>
+                          	</center> </td>
                                 </tr>";
                         echo $mostrarHtml;
                         unset($mostrarHtml);
-                        unset($variable);
+                        unset($variableModificar);
                     }
 
                     echo "</tbody>";
@@ -337,6 +375,7 @@ class registrarForm {
                                 <th>Tipo de Anulación</th>
                                 <th>Descripcion</th>
                                 <th>Documento</th>
+                                <th>Modificar</th>
                                                     	
                              </tr>
                           </thead>
@@ -349,6 +388,17 @@ class registrarForm {
                             $estado = "Inactiva";
                         }
 
+                        $variableModificar = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+                        $variableModificar .= "&opcion=modificarNovedad";
+                        $variableModificar .= "&id_novedad=" . $anulaciones [$i] ['id'];
+                        $variableModificar .= "&tipo_novedad=" . $anulaciones [$i] ['tipo_novedad'];
+                        $variableModificar .= "&numero_contrato=" . $anulaciones [$i] ['numero_contrato'];
+                        $variableModificar .= "&vigencia=" . $anulaciones [$i] ['vigencia'];
+                        $variableModificar .= "&arreglo=" . $_REQUEST ['arreglo'];
+                        $variableModificar .= "&usuario=" . $_REQUEST['usuario'];
+                        $variableModificar .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+                        $variableModificar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableModificar, $directorio);
+
                         $mostrarHtml = "<tr>
                                 <td><center>" . $numerador . "</center></td>
                                 <td><center>" . $anulaciones [$i] ['numero_contrato'] . " - " . $anulaciones [$i] ['vigencia'] . "</center></td>		
@@ -359,10 +409,15 @@ class registrarForm {
                                 <td><center>" . $anulaciones [$i] ['parametro_anulacion'] . "</center></td>
                                 <td><center>" . $anulaciones [$i] ['descripcion'] . "</center></td>
                                  <td><center><a href='" . $host . $anulaciones [$i] ['documento'] . "' TARGET='_blank' >" . $anulaciones [$i] ['documento'] . "</a></center></td>
+                                      <td><center>
+                                <a href='" . $variableModificar . "'>
+                                    <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>
+                                </a>
+                          	</center> </td>
                                 </tr>";
                         echo $mostrarHtml;
                         unset($mostrarHtml);
-                        unset($variable);
+                        unset($variableModificar);
                     }
 
                     echo "</tbody>";
@@ -410,6 +465,7 @@ class registrarForm {
                                 <th>Fecha Oficial de Cesión</th>
                                 <th>Descripcion</th>
                                 <th>Documento</th>
+                                <th>Modificar</th>
                                                     	
                              </tr>
                           </thead>
@@ -471,6 +527,17 @@ class registrarForm {
                                     $proveedor['primer_apellido_persona_natural'];
                         }
 
+                        $variableModificar = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+                        $variableModificar .= "&opcion=modificarNovedad";
+                        $variableModificar .= "&id_novedad=" . $cesiones [$i] ['id'];
+                        $variableModificar .= "&tipo_novedad=" . $cesiones [$i] ['tipo_novedad'];
+                        $variableModificar .= "&numero_contrato=" . $cesiones [$i] ['numero_contrato'];
+                        $variableModificar .= "&vigencia=" . $cesiones [$i] ['vigencia'];
+                        $variableModificar .= "&arreglo=" . $_REQUEST ['arreglo'];
+                        $variableModificar .= "&usuario=" . $_REQUEST['usuario'];
+                        $variableModificar .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+                        $variableModificar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableModificar, $directorio);
+
 
                         $mostrarHtml = "<tr>
                                 <td><center>" . $numerador . "</center></td>
@@ -484,10 +551,15 @@ class registrarForm {
                                 <td><center>" . $cesiones [$i] ['fecha_cesion'] . "</center></td>
                                 <td><center>" . $cesiones [$i] ['descripcion'] . "</center></td>
                                  <td><center><a href='" . $host . $cesiones [$i] ['documento'] . "' TARGET='_blank' >" . $cesiones [$i] ['documento'] . "</a></center></td>
+                                  <td><center>
+                                <a href='" . $variableModificar . "'>
+                                    <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>
+                                </a>
+                          	</center> </td>   
                                 </tr>";
                         echo $mostrarHtml;
                         unset($mostrarHtml);
-                        unset($variable);
+                        unset($variableModificar);
                     }
 
                     echo "</tbody>";
@@ -535,6 +607,7 @@ class registrarForm {
                                 <th>Fecha Oficial de Cambio</th>
                                 <th>Descripcion</th>
                                 <th>Documento</th>
+                                <th>Modificar</th>
                                                     	
                              </tr>
                           </thead>
@@ -550,8 +623,19 @@ class registrarForm {
                         $consultaSuperNuevo = $this->miSql->getCadenaSql('ConsultaSupervisorNovedad', $cambioSupervisor [$i] ['supervisor_nuevo']);
                         $consultaSuperAntiguo = $this->miSql->getCadenaSql('ConsultaSupervisorNovedad', $cambioSupervisor [$i] ['supervisor_antiguo']);
 
-//                        $supervisorNuevo = $DBSICA->ejecutarAcceso($consultaSuperNuevo, "busqueda");
-//                        $supervisorAntiguo = $DBSICA->ejecutarAcceso($consultaSuperAntiguo, "busqueda");
+                        $supervisorNuevo = $DBSICA->ejecutarAcceso($consultaSuperNuevo, "busqueda");
+                        $supervisorAntiguo = $DBSICA->ejecutarAcceso($consultaSuperAntiguo, "busqueda");
+
+                        $variableModificar = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+                        $variableModificar .= "&opcion=modificarNovedad";
+                        $variableModificar .= "&id_novedad=" . $cambioSupervisor [$i] ['id'];
+                        $variableModificar .= "&tipo_novedad=" . $cambioSupervisor [$i] ['tipo_novedad'];
+                        $variableModificar .= "&numero_contrato=" . $cambioSupervisor [$i] ['numero_contrato'];
+                        $variableModificar .= "&vigencia=" . $cambioSupervisor [$i] ['vigencia'];
+                        $variableModificar .= "&arreglo=" . $_REQUEST ['arreglo'];
+                        $variableModificar .= "&usuario=" . $_REQUEST['usuario'];
+                        $variableModificar .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+                        $variableModificar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableModificar, $directorio);
 
                         $mostrarHtml = "<tr>
                                 <td><center>" . $numerador . "</center></td>
@@ -566,10 +650,15 @@ class registrarForm {
                                 <td><center>" . $cambioSupervisor [$i] ['fecha_cambio'] . "</center></td>
                                 <td><center>" . $cambioSupervisor [$i] ['descripcion'] . "</center></td>
                                 <td><center><a href='" . $host . $cambioSupervisor [$i] ['documento'] . "' TARGET='_blank' >" . $cambioSupervisor [$i] ['documento'] . "</a></center></td>
+                                    <td><center>
+                                <a href='" . $variableModificar . "'>
+                                    <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>
+                                </a>
+                          	</center> </td>
                                 </tr>";
                         echo $mostrarHtml;
                         unset($mostrarHtml);
-                        unset($variable);
+                        unset($variableModificar);
                     }
 
                     echo "</tbody>";
@@ -617,6 +706,7 @@ class registrarForm {
                                 <th>Fecha Fin Suspensión</th>
                                 <th>Descripcion</th>
                                 <th>Documento</th>
+                                <th>Modificar</th>
                                                     	
                              </tr>
                           </thead>
@@ -629,6 +719,17 @@ class registrarForm {
                             $estado = "Inactiva";
                         }
 
+                        $variableModificar = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+                        $variableModificar .= "&opcion=modificarNovedad";
+                        $variableModificar .= "&id_novedad=" . $suspensiones [$i] ['id'];
+                        $variableModificar .= "&tipo_novedad=" . $suspensiones [$i] ['tipo_novedad'];
+                        $variableModificar .= "&numero_contrato=" . $suspensiones [$i] ['numero_contrato'];
+                        $variableModificar .= "&vigencia=" . $suspensiones [$i] ['vigencia'];
+                        $variableModificar .= "&arreglo=" . $_REQUEST ['arreglo'];
+                        $variableModificar .= "&usuario=" . $_REQUEST['usuario'];
+                        $variableModificar .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+                        $variableModificar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableModificar, $directorio);
+
                         $mostrarHtml = "<tr>
                                 <td><center>" . $numerador . "</center></td>
                                 <td><center>" . $suspensiones [$i] ['numero_contrato'] . " - " . $suspensiones [$i] ['vigencia'] . "</center></td>		
@@ -639,11 +740,16 @@ class registrarForm {
                                 <td><center>" . $suspensiones [$i] ['fecha_inicio'] . "</center></td>
                                 <td><center>" . $suspensiones [$i] ['fecha_fin'] . "</center></td>
                                 <td><center>" . $suspensiones [$i] ['descripcion'] . "</center></td>
-                                 <td><center><a href='" . $host . $suspensiones [$i] ['documento'] . "' TARGET='_blank' >" . $suspensiones [$i] ['documento'] . "</a></center></td>
+                                <td><center><a href='" . $host . $suspensiones [$i] ['documento'] . "' TARGET='_blank' >" . $suspensiones [$i] ['documento'] . "</a></center></td>
+                                <td><center>
+                                <a href='" . $variableModificar . "'>
+                                    <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>
+                                </a>
+                          	</center> </td> 
                                 </tr>";
                         echo $mostrarHtml;
                         unset($mostrarHtml);
-                        unset($variable);
+                        unset($variableModificar);
                     }
 
                     echo "</tbody>";
@@ -674,6 +780,7 @@ class registrarForm {
 
                 if ($otras) {
 
+
                     echo "<center><h4>Otras Novedades</h4></center>";
 
                     echo "<table id='tablaotras'>";
@@ -688,6 +795,7 @@ class registrarForm {
                                 <th>Numero Acto Administrativo</th>
                                 <th>Descripcion</th>
                                 <th>Documento</th>
+                                <th>Modificar</th>
                                                     	
                              </tr>
                           </thead>
@@ -700,6 +808,17 @@ class registrarForm {
                             $estado = "Inactiva";
                         }
 
+                        $variableModificar = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+                        $variableModificar .= "&opcion=modificarNovedad";
+                        $variableModificar .= "&id_novedad=" . $otras [$i] ['id'];
+                        $variableModificar .= "&tipo_novedad=" . $otras [$i] ['tipo_novedad'];
+                        $variableModificar .= "&numero_contrato=" . $otras [$i] ['numero_contrato'];
+                        $variableModificar .= "&vigencia=" . $otras [$i] ['vigencia'];
+                        $variableModificar .= "&arreglo=" . $_REQUEST ['arreglo'];
+                        $variableModificar .= "&usuario=" . $_REQUEST['usuario'];
+                        $variableModificar .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+                        $variableModificar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableModificar, $directorio);
+
                         $mostrarHtml = "<tr>
                                 <td><center>" . $numerador . "</center></td>
                                 <td><center>" . $otras [$i] ['numero_contrato'] . " - " . $otras [$i] ['vigencia'] . "</center></td>		
@@ -709,11 +828,16 @@ class registrarForm {
                                 <td><center>" . $otras [$i] ['usuario'] . "</center></td>
                                 <td><center>" . $otras [$i] ['acto_administrativo'] . "</center></td>
                                 <td><center>" . $otras [$i] ['descripcion'] . "</center></td>
-                                 <td><center><a href='" . $host . $otras [$i] ['documento'] . "' TARGET='_blank' >" . $otras [$i] ['documento'] . "</a></center></td>
+                                <td><center><a href='" . $host . $otras [$i] ['documento'] . "' TARGET='_blank' >" . $otras [$i] ['documento'] . "</a></center></td>
+                                <td><center>
+                                <a href='" . $variableModificar . "'>
+                                    <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>
+                                </a>
+                          	</center> </td>
                                 </tr>";
                         echo $mostrarHtml;
                         unset($mostrarHtml);
-                        unset($variable);
+                        unset($variableModificar);
                     }
 
                     echo "</tbody>";

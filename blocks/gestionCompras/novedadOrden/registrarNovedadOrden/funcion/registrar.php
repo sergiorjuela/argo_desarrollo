@@ -102,7 +102,8 @@ class RegistradorContrato {
                         $cadenaAcumulado = $cadenaSqlParticular = $this->miSql->getCadenaSql('acumuladoAdiciones', array(0 => $_REQUEST['numero_contrato'],
                             1 => $_REQUEST['vigencia']));
                         $acumulado = $esteRecursoDB->ejecutarAcceso($cadenaAcumulado, "busqueda");
-                        if($acumulado == false){
+                      
+                        if( $acumulado[0][0] == null){
                             $acumulado[0][0]=0;
                         }                        
                         $valorTope = $_REQUEST['valor_contrato'] * 0.5;
@@ -119,7 +120,8 @@ class RegistradorContrato {
                                 'vigencia' => $_REQUEST['vigencia'],
                                 'valor_contrado' => $_REQUEST['valor_contrato']
                             );
-                    
+                           
+                           
                             redireccion::redireccionar("rebasaOtroSi", $datosRebasaOtroSi);
                         } else {
 
@@ -202,7 +204,7 @@ class RegistradorContrato {
                     $cadenaSqlParticular = $this->miSql->getCadenaSql('registroNovedadSuspension', $arreglo_novedad_particular);
                     array_push($SQls, $cadenaSqlParticular);
                 }
-           
+              
                 $trans_Registro_Novedad = $esteRecursoDB->transaccion($SQls);
             }
         }

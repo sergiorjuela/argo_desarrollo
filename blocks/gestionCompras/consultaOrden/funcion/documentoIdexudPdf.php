@@ -312,8 +312,8 @@ class RegistradorOrden {
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
-//        $conexionSICA = "sicapital";
-//        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
+        $conexionSICA = "sicapital";
+        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
 
         $directorio = $this->miConfigurador->getVariableConfiguracion('rutaUrlBloque');
 
@@ -334,8 +334,8 @@ class RegistradorOrden {
         $inRegistro = false;
         $cadenaSql = $this->miSql->getCadenaSql('consultarSupervisorDocumento', $orden ['supervisor']);
 
-//        $supervisor = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
-//        $supervisor = $supervisor [0];
+        $supervisor = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
+        $supervisor = $supervisor [0];
         //-------------- Se accede al Servicio de Agora para Consultar el Proveedor de la Orden de Compra -------------------------------------------------------------------
 
 

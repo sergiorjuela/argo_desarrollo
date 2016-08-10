@@ -59,6 +59,8 @@ var dates0 = $("#<?php echo $this->campoSeguro('fecha_inicio_suspension') ?>").d
         dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa']
 
     });
+    
+    
 
 
 
@@ -67,6 +69,8 @@ $('#<?php echo $this->campoSeguro('tipo_orden')?>').width(350);
 $("#<?php echo $this->campoSeguro('tipo_orden')?>").select2();                 
 $('#<?php echo $this->campoSeguro('sedeConsulta')?>').width(350);
 $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2(); 
+$("#<?php echo $this->campoSeguro('tipo_adicion_modificacion')?>").width(200);  
+$("#<?php echo $this->campoSeguro('tipo_adicion_modificacion')?>").select2();                 
 $("#<?php echo $this->campoSeguro('tipo_adicion')?>").width(200);  
 $("#<?php echo $this->campoSeguro('tipo_adicion')?>").select2();                 
 $("#<?php echo $this->campoSeguro('vigencia_novedad')?>").width(200);  

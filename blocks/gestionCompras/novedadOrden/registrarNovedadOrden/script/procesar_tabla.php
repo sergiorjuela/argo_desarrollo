@@ -107,6 +107,7 @@ $urlFinal = $url . $cadena;
                     {sWidth: "15%"},
                     {sWidth: "15%"},
                     {sWidth: "15%"}
+                  
 
                 ]
 
@@ -160,7 +161,8 @@ $urlFinal = $url . $cadena;
                     {sWidth: "5%"},
                     {sWidth: "10%"},
                     {sWidth: "20%"},
-                    {sWidth: "20%"}
+                    {sWidth: "15%"},
+                    {sWidth: "5%"}
 
                 ]
 
@@ -212,7 +214,8 @@ $urlFinal = $url . $cadena;
                     {sWidth: "5%"},
                     {sWidth: "5%"},
                     {sWidth: "20%"},
-                    {sWidth: "20%"}
+                    {sWidth: "15%"},
+                    {sWidth: "5%"}
 
                 ]
 
@@ -265,7 +268,8 @@ $urlFinal = $url . $cadena;
                     {sWidth: "5%"},
                     {sWidth: "5%"},
                     {sWidth: "20%"},
-                    {sWidth: "20%"}
+                    {sWidth: "15%"},
+                    {sWidth: "5%"}
 
                 ]
 
@@ -318,7 +322,8 @@ $urlFinal = $url . $cadena;
                     {sWidth: "5%"},
                     {sWidth: "5%"},
                     {sWidth: "15%"},
-                    {sWidth: "15%"}
+                    {sWidth: "10%"},
+                    {sWidth: "5%"}
 
                 ]
 
@@ -362,7 +367,7 @@ $urlFinal = $url . $cadena;
                 "bPaginate": false,
                 "aoColumns": [
                     {sWidth: "5%"},
-                    {sWidth: "15%"},
+                    {sWidth: "10%"},
                     {sWidth: "5%"},
                     {sWidth: "5%"},
                     {sWidth: "5%"},
@@ -372,7 +377,8 @@ $urlFinal = $url . $cadena;
                     {sWidth: "5%"},
                     {sWidth: "5%"},
                     {sWidth: "12.5%"},
-                    {sWidth: "12.5%"}
+                    {sWidth: "12.5%"},
+                    {sWidth: "5%"}
 
                 ]
 
@@ -416,7 +422,7 @@ $urlFinal = $url . $cadena;
                 "bPaginate": false,
                 "aoColumns": [
                     {sWidth: "5%"},
-                    {sWidth: "15%"},
+                    {sWidth: "10%"},
                     {sWidth: "5%"},
                     {sWidth: "5%"},
                     {sWidth: "5%"},
@@ -424,7 +430,8 @@ $urlFinal = $url . $cadena;
                     {sWidth: "5%"},
                     {sWidth: "5%"},
                     {sWidth: "12.5%"},
-                    {sWidth: "12.5%"}
+                    {sWidth: "12.5%"},
+                    {sWidth: "5%"}
 
                 ]
 
@@ -468,14 +475,15 @@ $urlFinal = $url . $cadena;
                 "bPaginate": false,
                 "aoColumns": [
                     {sWidth: "5%"},
-                    {sWidth: "15%"},
+                    {sWidth: "10%"},
                     {sWidth: "5%"},
                     {sWidth: "5%"},
                     {sWidth: "5%"},
                     {sWidth: "5%"},
                     {sWidth: "5%"},
                     {sWidth: "12.5%"},
-                    {sWidth: "12.5%"}
+                    {sWidth: "12.5%"},
+                    {sWidth: "5%"}
 
                 ]
 

@@ -183,111 +183,6 @@ $urlFinalProveedor = $url . $cadena;
 <script type='text/javascript'>
 
 
-    $("#ventanaA").steps({
-        headerTag: "h3",
-        bodyTag: "section",
-        enableAllSteps: true,
-        enablePagination: true,
-        transitionEffect: "slideLeft",
-        onStepChanging: function (event, currentIndex, newIndex) {
-            $resultado = $("#registrarContrato").validationEngine("validate");
-            if ($resultado) {
-
-                return true;
-            }
-            return false;
-
-        },
-        onFinished: function (event, currentIndex) {
-
-            $("#registrarContrato").submit();
-
-        },
-        labels: {
-            cancel: "Cancelar",
-            current: "Paso Siguiente :",
-            pagination: "Paginación",
-            finish: "Guardar Información",
-            next: "Siquiente",
-            previous: "Atras",
-            loading: "Cargando ..."
-        }
-
-    });
-
-
-
-    function NumeroSolicitud(elem, request, response) {
-        $.ajax({
-            url: "<?php echo $urlVigencia ?>",
-            dataType: "json",
-            data: {valor: $("#<?php echo $this->campoSeguro('vigencia') ?>").val()},
-            success: function (data) {
-
-
-
-
-                if (data[0] != " ") {
-
-                    $("#<?php echo $this->campoSeguro('num_solicitud') ?>").html('');
-                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('num_solicitud') ?>");
-                    $.each(data, function (indice, valor) {
-
-                        $("<option value='" + data[ indice ].id + "'>" + data[ indice ].descripcion + "</option>").appendTo("#<?php echo $this->campoSeguro('num_solicitud') ?>");
-
-                    });
-
-
-                    $('#<?php echo $this->campoSeguro('num_solicitud') ?>').width(150);
-                    $("#<?php echo $this->campoSeguro('num_solicitud') ?>").select2();
-                    $("#<?php echo $this->campoSeguro('num_solicitud') ?>").removeAttr('disabled');
-
-
-
-                }
-
-
-            }
-
-        });
-    }
-    ;
-
-    $(function () {
-
-        $("#<?php echo $this->campoSeguro('vigencia_contrato') ?>").keyup(function () {
-            $('#<?php echo $this->campoSeguro('vigencia_contrato') ?>').val($('#<?php echo $this->campoSeguro('vigencia_contrato') ?>').val().toUpperCase());
-
-        });
-
-        $("#<?php echo $this->campoSeguro('vigencia_contrato') ?>").autocomplete({
-            minChars: 2,
-            serviceUrl: '<?php echo $urlVigenciaContrato; ?>',
-            onSelect: function (suggestion) {
-
-                $("#<?php echo $this->campoSeguro('id_contrato') ?>").val(suggestion.data);
-            }
-
-        });
-
-
-
-        $("#<?php echo $this->campoSeguro('contratista') ?>").autocomplete({
-            minChars: 3,
-            serviceUrl: '<?php echo $urlContratista; ?>',
-            onSelect: function (suggestion) {
-
-                $("#<?php echo $this->campoSeguro('id_contratista') ?>").val(suggestion.data);
-            }
-
-        });
-
-
-
-    });
-
-
-
     //-------------------Inicio JavaScript y Ajax numero de orden de acuerdo al tipo de orden ------------------------------------------------------------------
 
     $("#<?php echo $this->campoSeguro('tipo_orden') ?>").change(function () {
@@ -332,6 +227,7 @@ $urlFinalProveedor = $url . $cadena;
     }
     ;
 //-------------------Fin JavaScript y Ajax numero de orden de acuerdo al tipo de orden ------------------------------------------------------------------
+//-----------------------consulta proveedor--------------------------------------------------------------------------------------------------------------
 
     $("#<?php echo $this->campoSeguro('nitproveedor') ?>").keyup(function () {
 
@@ -354,8 +250,9 @@ $urlFinalProveedor = $url . $cadena;
 
     });
 
+//-----------------------fin consulta proveedor-------------------------------------------------------------------------------------------------------------
 
-    //-------------------Inicio JavaScript y Ajax Sede Dependencia ------------------------------------------------------------------
+//-------------------Inicio JavaScript y Ajax Sede Dependencia ------------------------------------------------------------------
 
     $("#<?php echo $this->campoSeguro('sedeConsulta') ?>").change(function () {
         if ($("#<?php echo $this->campoSeguro('sedeConsulta') ?>").val() != '') {
@@ -367,6 +264,7 @@ $urlFinalProveedor = $url . $cadena;
     });
 
     function consultarDependenciaConsultada(elem, request, response) {
+
         $.ajax({
             url: "<?php echo $urlFinalConsultaDependencia ?>",
             dataType: "json",
@@ -400,192 +298,17 @@ $urlFinalProveedor = $url . $cadena;
 
 //-------------------Fin JavaScript y Ajax Sede Dependencia ------------------------------------------------------------------
 
-    //--------------Inicio JavaScript y Ajax Vigencia y Numero solicitud ---------------------------------------------------------------------------------------------    
-
-    $("#<?php echo $this->campoSeguro('vigencia_novedad') ?>").change(function () {
+   
+    $("#<?php echo $this->campoSeguro('tipo_novedad') ?>").change(function () {
        
-        if ($("#<?php echo $this->campoSeguro('vigencia_novedad') ?>").val() != '') {
-
-            consultarSoliditudyCdp();
-        } else {
-            $("#<?php echo $this->campoSeguro('vigencia_novedad') ?>").attr('disabled', '');
-        }
-
+       alert ("tipo_adicion");
+       
     });
+   
+   
 
-    function consultarSoliditudyCdp(elem, request, response) {
-        
-        $.ajax({
-            url: "<?php echo $urlFinalSolCdp ?>",
-            dataType: "json",
-            data: {vigencia: $("#<?php echo $this->campoSeguro('vigencia_novedad') ?>").val(),
-                unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val()
-            },
-            success: function (data) {
 
-
-                if (data[0] != " ") {
-
-                    $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").html('');
-                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_solicitud') ?>");
-                    $.each(data, function (indice, valor) {
-
-                        $("<option value='" + data[ indice ].VALOR + "'>" + data[ indice ].INFORMACION + "</option>").appendTo("#<?php echo $this->campoSeguro('numero_solicitud') ?>");
-
-                    });
-
-                    $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").removeAttr('disabled');
-
-                    $('#<?php echo $this->campoSeguro('numero_solicitud') ?>').width(200);
-                    $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").select2();
-
-
-
-                }
-
-
-            }
-
-        });
-    }
-    ;
-
-    //--------------Fin JavaScript y Ajax SVigencia y Numero solicitud --------------------------------------------------------------------------------------------------   
-//--------------Inicio JavaScript y Ajax CDP x Solicitud ---------------------------------------------------------------------------------------------    
-
-    $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").change(function () {
-
-        if ($("#<?php echo $this->campoSeguro('numero_solicitud') ?>").val() != '') {
-            consultarCDPs();
-        } else {
-            $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").attr('disabled', '');
-        }
-
-    });
-
-    function consultarCDPs(elem, request, response) {
-
-        $.ajax({
-            url: "<?php echo $urlFinalCdps ?>",
-            dataType: "json",
-            data: {numsol: $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").val(),
-                vigencia: $("#<?php echo $this->campoSeguro('vigencia_novedad') ?>").val(),
-                unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val(),
-                cdpsNovedades: $("#<?php echo $this->campoSeguro('cdpRegistradasNovedades') ?>").val(),
-                cdps: $("#<?php echo $this->campoSeguro('cdpRegistradas') ?>").val()},
-            success: function (data) {
-
-
-                if (data[0] != " ") {
-
-                    $("#<?php echo $this->campoSeguro('numero_cdp') ?>").html('');
-                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_cdp') ?>");
-                    $.each(data, function (indice, valor) {
-
-                        $("<option value='" + data[ indice ].VALOR + "'>" + data[ indice ].INFORMACION + "</option>").appendTo("#<?php echo $this->campoSeguro('numero_cdp') ?>");
-
-                    });
-
-                    $("#<?php echo $this->campoSeguro('numero_cdp') ?>").removeAttr('disabled');
-
-                    $('#<?php echo $this->campoSeguro('numero_cdp') ?>').width(200);
-                    $("#<?php echo $this->campoSeguro('numero_cdp') ?>").select2();
-
-
-
-                }
-
-
-            }
-
-        });
-    }
-    ;
-
-    //--------------Fin JavaScript y Ajax CDP x Solicitud --------------------------------------------------------------------------------------------------   
-    $("#<?php echo $this->campoSeguro('numero_cdp') ?>").change(function () {
-
-        if ($("#<?php echo $this->campoSeguro('numero_cdp') ?>").val() != '') {
-
-            infodisponibilidades();
-
-
-        }
-
-
-    });
-
-    function infodisponibilidades(elem, request, response) {
-        $.ajax({
-            url: "<?php echo $urlFinalInfoDisponibilidades ?>",
-            dataType: "json",
-            data: {vigencia: $("#<?php echo $this->campoSeguro('vigencia_novedad') ?>").val(),
-                disponibilidad: $("#<?php echo $this->campoSeguro('numero_cdp') ?>").val(),
-                unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val(),
-                numsolicitud: $("#<?php echo $this->campoSeguro('numero_solicitud') ?>").val()},
-            success: function (data) {
-
-                if (data[0] != "null") {
-                    $("#<?php echo $this->campoSeguro('valor_adicion_presupuesto') ?>").val(data[1]);
-
-
-
-                }
-
-
-
-
-            }
-
-        });
-    }
-    ;
-
-
-
-
-    function consultarContratistas(elem, request, response) {
-
-        if ($("#<?php echo $this->campoSeguro('selec_proveedor') ?>").val() != "") {
-
-
-            $.ajax({
-                url: "<?php echo $urlFinalProveedor ?>",
-                dataType: "json",
-                data: {proveedor: $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").val()},
-                success: function (data) {
-
-                    if (data.datos != 'null') {
-                        if (data.status == 200) {
-
-                            $("#<?php echo $this->campoSeguro('tipo_persona') ?>").val(data.datos.tipo_persona);
-
-                            if (data.datos.tipo_persona != 'NATURAL') {
-                                $("#<?php echo $this->campoSeguro('nuevoContratista') ?>").val(data.datos.num_nit_empresa + '-' + data.datos.nom_empresa);
-
-                            } else {
-
-                                $("#<?php echo $this->campoSeguro('nuevoContratista') ?>").val(data.datos.num_documento_persona_natural + '-' + data.datos.primer_nombre_persona_natural +
-                                        ' ' + data.datos.segundo_nombre_persona_natural + ' ' + data.datos.primer_apellido_persona_natural + ' ' +
-                                        data.datos.segundo_nombre_persona_natural);
-                            }
-
-                        } else {
-                            alert("Sin Cocincidencias en la Busqueda.");
-                        }
-                    } else {
-                        alert("Servidor de Proveedores No Disponible.");
-
-                    }
-
-                }
-
-            });
-        } else {
-            alert("Ingrese la Identificacion o el nombre del proveedor");
-        }
-    }
-    ;
 
 
 </script>
+

@@ -47,6 +47,11 @@ $this->idioma ["selec_proveedorTitulo"] = "Digite la Cedula del Contratista y de
 
 $this->idioma ["tipo_adicion"] = "Tipo Adicion: ";
 $this->idioma ["tipo_adicionTitulo"] = "Seleccione el tipo de adicion. ";
+$this->idioma ["selec_proveedorTitulo"] = "Digite la Cedula del Contratista y de clic en el boton.";
+
+
+$this->idioma ["tipo_adicion_modificacion"] = "Tipo Adicion: ";
+$this->idioma ["tipo_adicion_modificacionTitulo"] = "Seleccione el tipo de adicion. ";
 
 
 $this->idioma ["vigencia_novedad"] = "Vigencia: ";
