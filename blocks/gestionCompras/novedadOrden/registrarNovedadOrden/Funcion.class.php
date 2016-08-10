@@ -40,6 +40,9 @@ class Funcion {
     function registrar() {
         include_once ($this->ruta . "funcion/registrar.php");
     }
+    function editar() {
+        include_once ($this->ruta . "funcion/editar.php");
+    }
 
     function documentoPdf() {
         include_once ($this->ruta . "funcion/documentoPdf.php");
@@ -66,6 +69,10 @@ class Funcion {
 
                 case "registrarNovedad" :
                     $this->registrar();
+                    break;
+               
+                case "modificarNovedad" :
+                    $this->editar();
                     break;
 
 

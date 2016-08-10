@@ -229,6 +229,17 @@ class Sql extends \Sql {
                 $cadenaSql .= " ORDER BY CDP.NUMERO_DISPONIBILIDAD ";
 
                 break;
+            case "obtener_cdp_numerosol_editar" :
+                $cadenaSql = " SELECT DISTINCT CDP.NUMERO_DISPONIBILIDAD as valor , CDP.NUMERO_DISPONIBILIDAD as informacion  ";
+                $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
+                $cadenaSql .= " CO.CO_DEPENDENCIAS DP where SN.NUM_SOL_ADQ =  CDP.NUM_SOL_ADQ ";
+                $cadenaSql .= " and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.VIGENCIA= " . $variable [0] . " ";
+                $cadenaSql .= " and SN.CODIGO_UNIDAD_EJECUTORA = '0$variable[2]' and SN.NUM_SOL_ADQ = " . $variable [1] . " ";
+                $cadenaSql .= " and SN.ESTADO = 'APROBADA' and CDP.ESTADO = 'VIGENTE' ";
+                $cadenaSql .= " and CDP.NUMERO_DISPONIBILIDAD NOT IN ($variable[3])  ";
+                $cadenaSql .= " ORDER BY CDP.NUMERO_DISPONIBILIDAD ";
+
+                break;
             case "info_disponibilidad" :
                 $cadenaSql = " SELECT CDP.FECHA_REGISTRO AS FECHA , SN.VALOR_CONTRATACION AS VALOR  ";
                 $cadenaSql .= " from CO.CO_SOLICITUD_ADQ SN, PR.PR_DISPONIBILIDADES CDP, ";
@@ -564,7 +575,7 @@ class Sql extends \Sql {
                 $cadenaSql = "  SELECT nc.*, a.numero_solicitud, a.numero_cdp, a.valor_presupuesto, a.tipo_adicion ";
                 $cadenaSql .= " FROM adicion a , novedad_contractual nc    ";
                 $cadenaSql .= " WHERE a.id = nc.id AND nc.id = $variable; ";
-             
+
                 break;
 
 
@@ -611,6 +622,62 @@ class Sql extends \Sql {
                 $cadenaSql = "   SELECT FUN_IDENTIFICACION ||' - '|| FUN_NOMBRE ";
                 $cadenaSql .= "  FROM SICAARKA.FUNCIONARIOS WHERE FUN_IDENTIFICACION = $variable ";
                 break;
+
+
+            case "updateNovedadContractualconArchivo" :
+                $cadenaSql = " UPDATE novedad_contractual";
+                $cadenaSql.=" SET acto_administrativo= '$variable[5]', documento='$variable[6]', ";
+                $cadenaSql.=" descripcion='$variable[7]'";
+                $cadenaSql.=" WHERE id=$variable[0];";
+                break;
+
+            case "updateNovedadContractualsinArchivo" :
+                $cadenaSql = " UPDATE novedad_contractual";
+                $cadenaSql.=" SET acto_administrativo= '$variable[5]', ";
+                $cadenaSql.=" descripcion='$variable[7]'";
+                $cadenaSql.=" WHERE id=$variable[0];";
+                break;
+
+            case "updateNovedadAdicionPresupuesto" :
+                $cadenaSql = " UPDATE adicion ";
+                $cadenaSql.=" SET  numero_solicitud=$variable[2], ";
+                $cadenaSql.=" numero_cdp=$variable[3], valor_presupuesto=$variable[4] ";
+                $cadenaSql.=" WHERE id= $variable[0];";
+                break;
+            case "updateNovedadAdicionTiempo" :
+                $cadenaSql = " UPDATE adicion ";
+                $cadenaSql.=" SET  unidad_tiempo_ejecucion=$variable[2], ";
+                $cadenaSql.=" valor_tiempo=$variable[3] ";
+                $cadenaSql.=" WHERE id= $variable[0];";
+                break;
+
+            case "updateNovedadAnulacion" :
+                $cadenaSql = " UPDATE anulacion ";
+                $cadenaSql.=" SET  tipo_anulacion=$variable[1] ";
+                $cadenaSql.=" WHERE id= $variable[0];";
+                break;
+
+            case "updateNovedadCambioSupervisor" :
+                $cadenaSql = " UPDATE cambio_supervisor";
+                $cadenaSql.=" SET  tipo_cambio=$variable[1], supervisor_antiguo='$variable[2]', ";
+                $cadenaSql.=" supervisor_nuevo='$variable[3]', fecha_cambio='$variable[4]'";
+                $cadenaSql.=" WHERE id=$variable[0] ;";
+                break;
+
+            case "updateNovedadCesion" :
+                $cadenaSql = " UPDATE cesion";
+                $cadenaSql.=" SET  nuevo_contratista=$variable[1],";
+                $cadenaSql.=" antiguo_contratista=$variable[2], fecha_cesion='$variable[3]'";
+                $cadenaSql.=" WHERE id=$variable[0];";
+                break;
+            
+            case "updateNovedadSuspension" :
+                $cadenaSql = " UPDATE suspension";
+                $cadenaSql.=" SET fecha_inicio='$variable[1]', fecha_fin='$variable[2]'";
+                $cadenaSql.=" WHERE id=$variable[0];";
+                break;
+
+
 
 
 

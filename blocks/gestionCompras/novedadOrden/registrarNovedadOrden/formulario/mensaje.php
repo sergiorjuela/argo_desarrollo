@@ -125,6 +125,26 @@ class registrarForm {
                                 . "<br> Novedad: " . $Novedad[0][0] . "."
                                 . "<br> Usuario: " . $_REQUEST ['usuario'] . ".</h4>";
                         break;
+                    case "actualizo" :
+
+                        $atributos ['tipo'] = 'success';
+                        $atributos ['mensaje'] = "<h2>SE ACTUALIZO LA NOVEDAD CON EXITO: </h2> "
+                                . "<h4><br> Contrato Numero:" . $_REQUEST ['numero_contrato'] . ". "
+                                . "<br> Vigencia: " . $_REQUEST ['vigencia'] . "."
+                                . "<br> Novedad: " . $Novedad[0][0] . "."
+                                . "<br> Numero de Acto Administrativo: " . $_REQUEST ['acto_administrativo'] . "."
+                                . "<br> Usuario: " . $_REQUEST ['usuario'] . ".</h4>";
+
+                        break;
+
+                    case "ErrorActualizo" :
+                        $atributos ['tipo'] = 'error';
+                        $atributos ['mensaje'] = "<h2> Error al Actualizar la Novedad.<br>Verifique los Datos.</h2> "
+                                . "<h4><br> Contrato Numero:" . $_REQUEST ['numero_contrato'] . ". "
+                                . "<br> Vigencia: " . $_REQUEST ['vigencia'] . "."
+                                . "<br> Novedad: " . $Novedad[0][0] . "."
+                                . "<br> Usuario: " . $_REQUEST ['usuario'] . ".</h4>";
+                        break;
                     
                     case "rebasaOtroSI" :
                         

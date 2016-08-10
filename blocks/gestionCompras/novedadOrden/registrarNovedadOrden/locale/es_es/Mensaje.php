@@ -140,6 +140,7 @@ $this->idioma ["fecha_final_subTitulo"] = "Seleccione Fecha Final";
 
 //------------------------
 $this->idioma ["botonAceptar"] = "Registrar";
+$this->idioma ["botonModificar"] = "Modificar";
 $this->idioma ["botonContratista"] = "Buscar Contratista";
 $this->idioma ["botonRegresar"] = "Regresar";
 $this->idioma ["botonConsultar"] = "Consultar";

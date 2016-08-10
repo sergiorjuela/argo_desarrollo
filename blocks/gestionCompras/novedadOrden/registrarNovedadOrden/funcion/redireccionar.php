@@ -41,6 +41,34 @@ class redireccion {
                 $variable .= "&mensaje=noInserto";
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
                 break;
+            case "actualizo" :
+
+                $variable = "pagina=" . $miPaginaActual;
+                $variable .= "&bloque=" . $_REQUEST ['bloque'];
+                $variable .= "&bloqueGrupo=" . $_REQUEST ["bloqueGrupo"];
+                $variable .= "&opcion=mensaje";
+                $variable .= "&mensaje=actualizo";
+                $variable .= "&numero_contrato=" . $valor['numero_contrato'];
+                $variable .= "&vigencia=" . $valor['vigencia'];
+                $variable .= "&tipo_novedad=" . $valor['tipo_novedad'];
+                $variable .= "&acto_administrativo=" . $valor['acto_administrativo'];
+                $variable .= "&usuario=" . $_REQUEST ['usuario'];
+                exit;
+
+                break;
+
+            case "ErrorActualizo" :
+                $variable = "pagina=" . $miPaginaActual;
+                $variable .= "&bloque=" . $_REQUEST ['bloque'];
+                $variable .= "&bloqueGrupo=" . $_REQUEST ["bloqueGrupo"];
+                $variable .= "&opcion=noActualizo";
+                $variable .= "&numero_contrato=" . $valor['numero_contrato'];
+                $variable .= "&vigencia=" . $valor['vigencia'];
+                $variable .= "&tipo_novedad=" . $valor['tipo_novedad'];
+                $variable .= "&acto_administrativo=" . $valor['acto_administrativo'];
+                $variable .= "&mensaje=noInserto";
+                $variable .= "&usuario=" . $_REQUEST ['usuario'];
+                break;
 
             case "rebasaOtroSi" :
                 $variable = "pagina=" . $miPaginaActual;
