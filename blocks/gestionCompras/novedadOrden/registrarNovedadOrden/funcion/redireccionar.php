@@ -53,7 +53,7 @@ class redireccion {
                 $variable .= "&tipo_novedad=" . $valor['tipo_novedad'];
                 $variable .= "&acto_administrativo=" . $valor['acto_administrativo'];
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
-                exit;
+               
 
                 break;
 
