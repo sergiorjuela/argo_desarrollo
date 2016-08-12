@@ -167,11 +167,20 @@ $this->idioma ["cargosExistentes"] = "Cargos Existentes :";
 $this->idioma ["cargosExistentesTitulo"] = "Seleccione un Cargo";
 
 
-$this->idioma ["objeto_contrato"] = "";
+$this->idioma ["objeto_contrato"] = "Objeto del Contrato:";
 $this->idioma ["objeto_contratoTitulo"] = "Modifique o Ingrese Objeto General del Contrato";
 
-$this->idioma ["formaPago"] = "Forma de Pago: ";
-$this->idioma ["formapagoTitulo"] = "Seleccione la forma de pago  del Contrato";
+$this->idioma ["justificacion"] = "Justificación:";
+$this->idioma ["justificacionTitulo"] = "Modifique o Ingrese la justificación del Contrato";
+
+$this->idioma ["condiciones"] = "Condiciones:";
+$this->idioma ["condicionesTitulo"] = "Modifique o Ingrese las condiones del Contrato";
+
+$this->idioma ["descripcion_forma_pago"] = "Modo de Pago:";
+$this->idioma ["descripcion_forma_pagoTitulo"] = "Ingrese la Descripcion de la forma de pago.";
+
+$this->idioma ["formaPago"] = "Medio de Pago: ";
+$this->idioma ["formapagoTitulo"] = "Seleccione el medio de pago  del Contrato";
 
 $this->idioma ["duracion"] = "Duración (en Dias) :";
 $this->idioma ["duracionTitulo"] = "Ingrese Duración Dependencia";

@@ -107,7 +107,7 @@ class RegistradorContrato {
 
 
         array_push($SQls, $cadenaSqlUpdateNovedad);
-       
+
 
         if ($_REQUEST['tipo_novedad'] == '220') {
             if ($_REQUEST['tipo_adicion'] == '248') {
@@ -136,6 +136,16 @@ class RegistradorContrato {
 
 
                     redireccion::redireccionar("rebasaOtroSi", $datosRebasaOtroSi);
+                } elseif ($_REQUEST['vigencia_novedad'] != date("Y")) {
+                    
+                     $datosVigenciaError = array(
+                        'numero_contrato' => $_REQUEST['numero_contrato'],
+                        'vigencia' => $_REQUEST['vigencia'],
+                        'vigencia_novedad' => $_REQUEST['vigencia_novedad'],
+                         'tipo_novedad' => $_REQUEST['tipo_novedad'],
+                         
+                    );
+                    redireccion::redireccionar("errorVigencia", $datosVigenciaError);
                 } else {
 
                     $arreglo_novedad_particular = array(
@@ -217,15 +227,15 @@ class RegistradorContrato {
             $cadenaSqlParticular = $this->miSql->getCadenaSql('updateNovedadSuspension', $arreglo_novedad_particular);
             array_push($SQls, $cadenaSqlParticular);
         }
-        
-       $trans_actualizacion_Novedad = $esteRecursoDB->transaccion($SQls);
+
+        $trans_actualizacion_Novedad = $esteRecursoDB->transaccion($SQls);
 
 
 
         $datosContrato = array('numero_contrato' => $_REQUEST['numero_contrato'],
-            'vigencia' => $_REQUEST['vigencia'], 'tipo_novedad' => $_REQUEST['tipo_novedad'], 
-            'acto_administrativo' => $_REQUEST['numero_acto'], 'id_novedad'=> $_REQUEST['id_novedad']);
-        
+            'vigencia' => $_REQUEST['vigencia'], 'tipo_novedad' => $_REQUEST['tipo_novedad'],
+            'acto_administrativo' => $_REQUEST['numero_acto'], 'id_novedad' => $_REQUEST['id_novedad']);
+
 
         if (isset($trans_actualizacion_Novedad) && $trans_actualizacion_Novedad != false) {
             redireccion::redireccionar("actualizo", $datosContrato);

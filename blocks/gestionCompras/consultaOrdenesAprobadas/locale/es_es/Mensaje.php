@@ -3,8 +3,8 @@
 //-- Eliminar Elementos
 
 
-$this->idioma ["unidad_ejecutora"] ="Unidad Ejecutoria: ";
-$this->idioma ["unidad_ejecutoraTitulo"] ="Seleccione Unidad Ejecutoria ";
+$this->idioma ["unidad_ejecutora"] = "Unidad Ejecutoria: ";
+$this->idioma ["unidad_ejecutoraTitulo"] = "Seleccione Unidad Ejecutoria ";
 
 
 // -- Modificar Elementos
@@ -285,6 +285,19 @@ $this->idioma ["cargo_contratistaTitulo"] = "Ingrese Cargo del Contratista";
 $this->idioma ["objeto_contrato"] = "Objeto General :";
 $this->idioma ["objeto_contratoTitulo"] = "Modifique o Ingrese Objeto General del Contrato";
 
+$this->idioma ["justificacion"] = "Justificación:";
+$this->idioma ["justificacionTitulo"] = "Modifique o Ingrese la justificación del Contrato";
+
+$this->idioma ["condiciones"] = "Condiciones:";
+$this->idioma ["condicionesTitulo"] = "Modifique o Ingrese las condiones del Contrato";
+
+$this->idioma ["descripcion_forma_pago"] = "Modo de Pago:";
+$this->idioma ["descripcion_forma_pagoTitulo"] = "Ingrese la Descripcion de la forma de pago.";
+
+$this->idioma ["valor_contrato"] = "Valor de la Orden : ";
+$this->idioma ["valor_contratoTitulo"] = "Ajuste el valor de la orden";
+
+
 $this->idioma ["duracion"] = "Duración (en Dias) :";
 $this->idioma ["duracionTitulo"] = "Ingrese Duración Dependencia";
 
@@ -378,7 +391,4 @@ $this->idioma ["observaciones"] = "Observaciones:  ";
 $this->idioma ["observacionesTitulo"] = "Registre las observaciones del acta de inicio.";
 
 $this->idioma ["botonRegistrar"] = "Registrar";
-
-
-
 ?>

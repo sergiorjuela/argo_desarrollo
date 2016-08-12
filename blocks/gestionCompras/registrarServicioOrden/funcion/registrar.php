@@ -43,6 +43,7 @@ class RegistradorOrden {
                 $datosServicio = array(
                     'codigo_ciiu' => $_REQUEST['codigo_ciiu'],
                     'resumen_servicio' => $_REQUEST['resumen_servicio'],
+                    'valor_servicio' => $_REQUEST['valor_servicio'],
                     'descripcion' => $_REQUEST['descripcion'],
                     'fecha' => date("Y-m-d"),
                     'usuario' => $_REQUEST['usuario'],

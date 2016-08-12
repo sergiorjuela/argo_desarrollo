@@ -294,8 +294,17 @@ $this->idioma ["cargo_contratistaTitulo"] = "Ingrese Cargo del Contratista";
 $this->idioma ["objeto_contrato"] = "Objeto General :";
 $this->idioma ["objeto_contratoTitulo"] = "Modifique o Ingrese Objeto General del Contrato";
 
-$this->idioma ["duracion"] = "Duración (en Dias) :";
-$this->idioma ["duracionTitulo"] = "Ingrese Duración Dependencia";
+$this->idioma ["justificacion"] = "Justificación:";
+$this->idioma ["justificacionTitulo"] = "Modifique o Ingrese la justificación del Contrato";
+
+$this->idioma ["condiciones"] = "Condiciones:";
+$this->idioma ["condicionesTitulo"] = "Modifique o Ingrese las condiones del Contrato";
+
+$this->idioma ["descripcion_forma_pago"] = "Modo de Pago:";
+$this->idioma ["descripcion_forma_pagoTitulo"] = "Ingrese la Descripcion de la forma de pago.";
+
+$this->idioma ["duracion"] = "Duración :";
+$this->idioma ["duracionTitulo"] = "Ingrese Duración ";
 
 $this->idioma ["fecha_inicio_pago"] = "Fecha de Inicio :";
 $this->idioma ["fecha_inicio_pagoTitulo"] = "Seleccione Fecha de Inicio";

@@ -146,6 +146,16 @@ class registrarForm {
                                 . "<br> Usuario: " . $_REQUEST ['usuario'] . ".</h4>";
                         break;
                     
+                    case "errorVigencia" :
+                        $atributos ['tipo'] = 'error';
+                        $atributos ['mensaje'] = "<h2> Error al Actualizar la Novedad.<br>La Vigencia del CDP Asociado al OTRO SI de Presupuesto"
+                                . "<br> debe ser del año en curso y la vigecia seleccionara es: ".$_REQUEST['vigencia_novedad'].".</h2> "
+                                . "<h4><br> Contrato Numero:" . $_REQUEST ['numero_contrato'] . ". "
+                                . "<br> Vigencia: " . $_REQUEST ['vigencia'] . "."
+                                . "<br> Novedad: " . $Novedad[0][0] . "."
+                                . "<br> Usuario: " . $_REQUEST ['usuario'] . ".</h4>";
+                        break;
+                    
                     case "rebasaOtroSI" :
                         
                         $valorTotal = $_REQUEST ['valor_adicion'] + $_REQUEST ['acumulado'];

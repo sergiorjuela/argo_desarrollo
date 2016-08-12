@@ -267,6 +267,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " objeto_contrato,fecha_inicio,fecha_final,plazo_ejecucion, ";
                 $cadenaSql .= " forma_pago,unidad_ejecucion,ordenador_gasto,supervisor,clausula_registro_presupuestal, ";
                 $cadenaSql .= " sede_supervisor,dependencia_supervisor,sede_solicitante,$campo,cargo_supervisor, ";
+                $cadenaSql .= " justificacion,descripcion_forma_pago,condiciones, ";
                 $cadenaSql .= " contratista, nombre_contratista,valor_contrato, numero_solicitud_necesidad,numero_cdp) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= $variable ['vigencia'] . ",";
@@ -287,6 +288,9 @@ class Sql extends \Sql {
                 $cadenaSql .= "'" . $variable ['sede_solicitante'] . "',";
                 $cadenaSql .= "'" . $variable ['dependencia_solicitante'] . "',";
                 $cadenaSql .= "'" . $variable ['cargo_supervisor'] . "',";
+                $cadenaSql .= "'" . $variable ['justificacion'] . "',";
+                $cadenaSql .= "'" . $variable ['descripcion_forma_pago'] . "',";
+                $cadenaSql .= "'" . $variable ['condiciones'] . "',";
                 $cadenaSql .= $variable ['proveedor'] . ",";
                 $cadenaSql .= "'" . $variable ['nombre_proveedor'] . "',";
                 $cadenaSql .= $variable ['valor_contrato'] . ", ";

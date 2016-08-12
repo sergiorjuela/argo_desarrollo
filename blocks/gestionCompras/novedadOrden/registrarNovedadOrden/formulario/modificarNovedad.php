@@ -162,7 +162,8 @@ class registrarForm {
                                     'tipo_adicion_modificacion' => $infoNovedad['tipo_adicion'],
                                     'numero_solicitud' => $infoNovedad['numero_solicitud'],
                                     'numero_cdp' => $infoNovedad['numero_cdp'],
-                                    'valor_adicion_presupuesto' => $infoNovedad['valor_presupuesto']
+                                    'valor_adicion_presupuesto' => $infoNovedad['valor_presupuesto'],
+                                    'vigencia_novedad' => date('Y')
                                 );
                                 $_REQUEST = array_merge($_REQUEST, $datos);
                             } else {
@@ -233,8 +234,8 @@ class registrarForm {
                     $datos = array(
                         'numero_acto' => $infoNovedad['acto_administrativo'],
                         'observaciones' => $infoNovedad['descripcion'],
-                        'documentoSoporte' => $infoNovedad['documento'],
-                        'vigencia_novedad' => '2016'
+                        'documentoSoporte' => $infoNovedad['documento']
+                      
                     );
 
                     $_REQUEST = array_merge($_REQUEST, $datos);
@@ -833,7 +834,7 @@ class registrarForm {
                                 $atributos ['id'] = $esteCampo;
                                 $atributos ['seleccion'] = - 1;
                                 $atributos ['evento'] = '';
-                                $atributos ['deshabilitado'] = true;
+                                $atributos ['deshabilitado'] = false;
                                 $atributos ["etiquetaObligatorio"] = true;
                                 $atributos ['tab'] = $tab;
                                 $atributos ['tamanno'] = 1;
@@ -862,7 +863,7 @@ class registrarForm {
                                 $atributos ['id'] = $esteCampo;
                                 $atributos ['seleccion'] = - 1;
                                 $atributos ['evento'] = '';
-                                $atributos ['deshabilitado'] = true;
+                                $atributos ['deshabilitado'] = false;
                                 $atributos ["etiquetaObligatorio"] = true;
                                 $atributos ['tab'] = $tab;
                                 $atributos ['tamanno'] = 1;

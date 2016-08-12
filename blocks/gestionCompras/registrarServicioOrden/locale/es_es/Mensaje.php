@@ -47,6 +47,9 @@ $this->idioma ["tipo_ordenTitulo"] = "Seleccion Tipo Orden" ;
 $this->idioma ["codigo_ciiu"] = "Servicio -- Codigo de Clasificación de la DIAN : ";
 $this->idioma ["codigo_ciiuTitulo"] = "Seleccione Codigo de Clasificación de la DIAN" ;
 
+$this->idioma ["valor_servicio"] = "Valor del Servicio : ";
+$this->idioma ["valor_servicio"] = "Ingrese el valor del Servicio" ;
+
 
 
 

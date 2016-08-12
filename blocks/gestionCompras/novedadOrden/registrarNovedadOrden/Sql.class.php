@@ -67,9 +67,11 @@ class Sql extends \Sql {
             case "buscar_numero_orden" :
 
                 $cadenaSql = " 	SELECT 	o.numero_contrato ||'-'|| o.vigencia as value, o.numero_contrato ||'-'||o.vigencia as orden ";
-                $cadenaSql .= " FROM orden o, contrato_general cg ";
+                $cadenaSql .= " FROM orden o, contrato_general cg, contrato_estado ce, estado_contrato ec  ";
                 $cadenaSql .= " WHERE o.numero_contrato = cg.numero_contrato and o.vigencia = cg.vigencia and  cg.unidad_ejecutora ='" . $variable['unidad'] . "' ";
-                $cadenaSql .= " and tipo_orden ='" . $variable['tipo_orden'] . "' and cg.estado_aprobacion = 'f' ;";
+                $cadenaSql .= " AND cg.numero_contrato = ce.numero_contrato and cg.vigencia = ce.vigencia and ce.estado = ec.id ";
+                $cadenaSql .= " AND ce.fecha_registro = (SELECT MAX(cee.fecha_registro) from contrato_estado cee where o.numero_contrato = cee.numero_contrato and  o.vigencia = cee.vigencia) ";
+                $cadenaSql .= " and tipo_orden ='" . $variable['tipo_orden'] . "' and cg.estado_aprobacion = 't' AND ec.id = 4 ;";
 
                 break;
 
@@ -670,7 +672,7 @@ class Sql extends \Sql {
                 $cadenaSql.=" antiguo_contratista=$variable[2], fecha_cesion='$variable[3]'";
                 $cadenaSql.=" WHERE id=$variable[0];";
                 break;
-            
+
             case "updateNovedadSuspension" :
                 $cadenaSql = " UPDATE suspension";
                 $cadenaSql.=" SET fecha_inicio='$variable[1]', fecha_fin='$variable[2]'";

@@ -87,6 +87,10 @@ $("#<?php echo $this->campoSeguro('unidad_tiempo_ejecucion_suspencion')?>").sele
              
 $("#<?php echo $this->campoSeguro('tipo_anulacion')?>").width(200);  
 $("#<?php echo $this->campoSeguro('tipo_anulacion')?>").select2();                 
+$("#<?php echo $this->campoSeguro('numero_solicitud')?>").width(200);  
+$("#<?php echo $this->campoSeguro('numero_solicitud')?>").select2();                 
+$("#<?php echo $this->campoSeguro('numero_cdp')?>").width(200);  
+$("#<?php echo $this->campoSeguro('numero_cdp')?>").select2();                 
              
 $("#<?php echo $this->campoSeguro('tipoCambioSupervisor')?>").width(200);  
 $("#<?php echo $this->campoSeguro('tipoCambioSupervisor')?>").select2();                 

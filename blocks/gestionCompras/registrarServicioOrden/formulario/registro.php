@@ -320,6 +320,37 @@ class registrarForm {
                             $atributos = array_merge($atributos, $atributosGlobales);
                             echo $this->miFormulario->campoCuadroTexto($atributos);
                             unset($atributos);
+                            
+                            $esteCampo = 'valor_servicio';
+                            $atributos ['id'] = $esteCampo;
+                            $atributos ['nombre'] = $esteCampo;
+                            $atributos ['tipo'] = 'text';
+                            $atributos ['estilo'] = 'jqueryui';
+                            $atributos ['marco'] = true;
+                            $atributos ['estiloMarco'] = '';
+                            $atributos ['columnas'] = 2;
+                            $atributos ['dobleLinea'] = 0;
+                            $atributos ['tabIndex'] = $tab;
+                            $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+                            $atributos ['validar'] = 'required, custom[onlyNumberSp]';
+
+                            if (isset($_REQUEST [$esteCampo])) {
+                                $atributos ['valor'] = $_REQUEST [$esteCampo];
+                            } else {
+                                $atributos ['valor'] = '';
+                            }
+                            $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+                            $atributos ['deshabilitado'] = false;
+                            $atributos ["etiquetaObligatorio"] = true;
+                            $atributos ['tamanno'] = 40;
+                            $atributos ['maximoTamanno'] = '';
+                            $atributos ['anchoEtiqueta'] = 300;
+                            $tab ++;
+
+                            // Aplica atributos globales al control
+                            $atributos = array_merge($atributos, $atributosGlobales);
+                            echo $this->miFormulario->campoCuadroTexto($atributos);
+                            unset($atributos);
                         }
                         echo $this->miFormulario->agrupacion("fin");
                         unset($atributos);

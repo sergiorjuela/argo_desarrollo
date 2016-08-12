@@ -321,21 +321,25 @@ class RegistradorOrden {
 
 
         $orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-        // var_dump ( $orden );
+       
         $orden = $orden [0];
+       
 
         $cadenaSql = $this->miSql->getCadenaSql('consultarInformaciónDisponibilidad', $_REQUEST ['id_orden']);
 
         $infDisponibilidad = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
+        
+        $sqlParametorUnidadTiempo=$this->miSql->getCadenaSql('consultarParametroUnidadTiempoEjecucion', $orden['unidad_ejecucion']);
+        $parametorUnidadTiempo = $esteRecursoDB->ejecutarAcceso($sqlParametorUnidadTiempo, "busqueda");
 
         //$cadenaSql = $this->miSql->getCadenaSql('consultarInformaciónRegistro', $_REQUEST ['id_orden']);
         //$inRegistro = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         $inRegistro = false;
         $cadenaSql = $this->miSql->getCadenaSql('consultarSupervisorDocumento', $orden ['supervisor']);
-
         $supervisor = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
         $supervisor = $supervisor [0];
+        
+
         //-------------- Se accede al Servicio de Agora para Consultar el Proveedor de la Orden de Compra -------------------------------------------------------------------
 
 
@@ -440,7 +444,7 @@ class RegistradorOrden {
         $sqlOtras = $this->miSql->getCadenaSql('ConsultaOtras', $datosContrato);
         $otras = $esteRecursoDB->ejecutarAcceso($sqlOtras, "busqueda");
 
-
+        
         $contenidoPagina = "
 <style type=\"text/css\">
     table { 
@@ -590,9 +594,9 @@ class RegistradorOrden {
 		    <table style='width:100%;'>
 			<tr> 
 			<td align='center' style='width:30%;'>Nombre del Supervisor</td>
-			<td align='center' style='width:30%;'></td>
+			<td align='center' style='width:30%;'>".$supervisor['FUN_NOMBRE']."</td>
 			<td align='center' style='width:20%;'>Cedula N°</td>
-			<td align='center' style='width:20%;'>" . $orden['supervisor'] . "</td>
+			<td align='center' style='width:20%;'>".$supervisor['FUN_IDENTIFICACION']."</td>
 			</tr>
          	    </table>
 		    <table style='width:100%;'>
@@ -617,19 +621,24 @@ class RegistradorOrden {
 			<tr> 
 			<td align='justify' style='width:100%; height:10%;'>" . $orden['objeto_contrato'] . "</td>
 			</tr>
-	           </table>
-                   
-                   <table style='width:100%;'>
+                        <tr> 
+			<td align='center' bgcolor='#BDBDBD' style='width:100%;'>1. JUSTIFICACIÓN DE LA COMPRA (Diligenciar este espacio en todos los casos)</td>
+			</tr>
+                        <tr> 
+			<td align='center' style='width:100%; height:10%;'>".$orden['justificacion']."</td>
+			</tr>
+	           </table>";
+
+
+
+        
+        if ($ElementosOrden) {
+
+            $contenidoPagina .= "<table style='width:100%;'>
 			<tr> 
 			<td align='center' bgcolor='#6E6E6E'  style='width:100%;'>COMPRAS</td>
 			</tr>
-			<tr> 
-			<td align='center' bgcolor='#BDBDBD' style='width:100%;'>1. JUSTIFICACIÓN DE LA COMPRA (Diligenciar este espacio en todos los casos)</td>
-			</tr>
-			<tr> 
-			<td align='center' style='width:100%; height:10%;'></td>
-			</tr>
-	           </table>
+		</table>
                    
                    <table style='width:100%;'>
 			<tr> 
@@ -639,11 +648,11 @@ class RegistradorOrden {
          	    </table>
                    ";
 
-        $funcionLetras = new EnLetras ();
+            $funcionLetras = new EnLetras ();
 
-        $ValorLetras = $funcionLetras->ValorEnLetras($orden['valor_contrato'], ' Pesos ');
+            $ValorLetras = $funcionLetras->ValorEnLetras($orden['valor_contrato'], ' Pesos ');
 
-        $contenidoPagina .= "<table style='width:100%;'>
+            $contenidoPagina .= "<table style='width:100%;'>
 			<tr> 
 			<td align='center' style='width:30%;'> ( EN LETRAS)</td>
 			<td align='center' style='width:70%;'>$ValorLetras</td>
@@ -663,12 +672,10 @@ class RegistradorOrden {
 			<td align='center' bgcolor='#BDBDBD'  style='width:30%;'> RUBRO PRESUPUESTAL AFECTADO</td>
 			</tr>
          	    </table>";
-                   
 
-        if ($ElementosOrden) {
-            
-             $contenidoPagina .= "<table style='width:100%;'>";
-             $j = 1;
+
+            $contenidoPagina .= "<table style='width:100%;'>";
+            $j = 1;
             foreach ($ElementosOrden as $valor => $it) {
                 $contenidoPagina .= "<tr>";
                 $contenidoPagina .= "<td align='center'   style='width:10%;'>" . $j . "</td>";
@@ -685,9 +692,8 @@ class RegistradorOrden {
             }
             $contenidoPagina .="
 			    	    </table>   ";
-        }
 
-        $contenidoPagina .="	    	                     
+            $contenidoPagina .="	    	                     
                     <table style='width:100%;'>
 			<tr> 
 			<td align='center' style='width:100%;'>*EJEMPLLO: GALON, RESMA, PAQUETEX.., CAJA, UNIDAD, ETC.</td>
@@ -747,18 +753,19 @@ class RegistradorOrden {
 			<td align='center' style='width:40%;' >Ubicación de los bienes devolutivos</td>
 			<td align='center' style='width:60%;' ></td>
                         </tr>
-         	    </table>
-                    <table style='width:100%;'>
+         	    </table>";
+        }
+
+
+
+
+        if ($ServiciosOrden) {
+
+            $contenidoPagina .= "<table style='width:100%;'>
 			<tr> 
 			<td align='center' bgcolor='#6E6E6E'  style='width:100%;'>SERVICIOS</td>
 			</tr>
-			<tr> 
-			<td align='center' bgcolor='#BDBDBD' style='width:100%;'>1. JUSTIFICACION DEL SERVICIO (Diligenciar este espacio en todos los casos)</td>
-			</tr>
-			<tr> 
-			<td align='center' style='width:100%; height:10%;'></td>
-			</tr>
-	           </table>
+			</table>
                    
                    <table style='width:100%;'>
 			<tr> 
@@ -777,10 +784,16 @@ class RegistradorOrden {
 			<tr> 
 			<td align='center' style='width:100%;'> 3. DETALLE DE SERVICIOS A ADQUIRIR</td>
 			</tr>
+         	    </table>
+                     <table style='width:100%;'>
+			<tr> 
+			<td align='center' bgcolor='#BDBDBD'  style='width:10%;'>ITEM</td>
+			<td align='center' bgcolor='#BDBDBD'  style='width:20%;'> U/ MEDIDA*</td>
+			<td align='center' bgcolor='#BDBDBD'  style='width:10%;'> CANT.</td>
+			<td align='center' bgcolor='#BDBDBD'  style='width:30%;'> DESCRIPCIÓN DEL ARTICULO</td>
+			<td align='center' bgcolor='#BDBDBD'  style='width:30%;'> RUBRO PRESUPUESTAL AFECTADO</td>
+			</tr>
          	    </table>";
-
-        if ($ServiciosOrden) {
-
             $contenidoPagina .="<table style='width:100%;'>";
 
             $j = 1;
@@ -788,7 +801,7 @@ class RegistradorOrden {
                 $contenidoPagina .= "<tr>";
                 $contenidoPagina .= "<td align='center'  style='width:10%;'>" . $j . "</td>";
                 $contenidoPagina .= "<td align='center'  style='width:20%;'> N/A</td>";
-                $contenidoPagina .= "<td align='center'  style='width:10%;'>N/A</td>";
+                $contenidoPagina .= "<td align='center'  style='width:10%;'>1</td>";
                 $contenidoPagina .= "<td align='center'   style='width:30%;'>" . $it ['descripcion'] . " (Tipo Servicio: " . $it ['nombre_tipo_servicio'] . ")</td>";
                 $contenidoPagina .= "<td align='center'  style='width:30%;'></td>";
                 $contenidoPagina .= "</tr>";
@@ -801,19 +814,27 @@ class RegistradorOrden {
             $contenidoPagina .= "</table> ";
         }
 
-        $contenidoPagina .= "<table style='width:100%;'>
-			<tr> 
-			<td align='center' style='width:10%;'> </td>
-			<td align='center' style='width:20%;'> </td>
-			<td align='center' style='width:10%;'> </td>
-			<td align='center' style='width:30%;'> </td>
-			<td align='center' style='width:30%;'> </td>
-			</tr>
-         	    </table>    
+        $contenidoPagina .= "
                     
                     <table style='width:100%;'>
 			<tr> 
-			<td align='center' bgcolor='#BDBDBD' style='width:100%;'>DURACION DEL SERVICIO</td>
+			<td align='center' bgcolor='#BDBDBD' style='width:100%;'>CONDICIONES DE LA COMPRA O SERVICIO</td>
+			
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center'  style='width:100%;'>Explique de manera clara, detallada y concisa las condiciones</td>
+		        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center'  style='width:100%; height:7%;'> La duracion del contrato es: ".$orden['condiciones']."</td>
+                        </tr>
+         	    </table>
+                    <table style='width:100%;'>
+			<tr> 
+			<td align='center' bgcolor='#BDBDBD' style='width:100%;'>DURACION DE LA COMPRA SERVICIO</td>
 			
                         </tr>
          	    </table>
@@ -824,7 +845,7 @@ class RegistradorOrden {
          	    </table>
                     <table style='width:100%;'>
 			<tr> 
-			<td align='center'  style='width:100%; height:7%;'></td>
+			<td align='center'  style='width:100%; height:7%;'> La duracion del contrato es: ".$orden['plazo_ejecucion']." ".$parametorUnidadTiempo[0][0]."</td>
                         </tr>
          	    </table>
                     <table style='width:100%;'>
@@ -840,12 +861,12 @@ class RegistradorOrden {
          	    </table>
                     <table style='width:100%;'>
 			<tr> 
-			<td align='center'  style='width:100%; height:7%;'></td>
+			<td align='center'  style='width:100%; height:7%;'>".$orden['descripcion_forma_pago']."</td>
                         </tr>
          	    </table>
                               
 
-                    <br><br>
+                    <br>
                     <table style='width:100%;'>
 			<tr> 
 			<td align='center'  style='width:20%; height:5%;'>FIRMA</td>
@@ -861,7 +882,7 @@ class RegistradorOrden {
 			<td align='center'  style='width:20%; '>Nombre Completo</td>
 			<td align='center'  style='width:30%;'></td>
 			<td align='center'  style='width:20%; '>Nombre Completo</td>
-			<td align='center'  style='width:30%;'></td>
+			<td align='center'  style='width:30%;'>".$supervisor['FUN_NOMBRE']."</td>
                         </tr>
 			
          	    </table>
@@ -871,7 +892,7 @@ class RegistradorOrden {
 			<td align='center'  style='width:20%; '>N° Cedula</td>
 			<td align='center'  style='width:30%;'></td>
 			<td align='center'  style='width:20%; '>N° Cedula</td>
-			<td align='center'  style='width:30%;'>" . $orden['supervisor'] . "</td>
+			<td align='center'  style='width:30%;'>" . $supervisor['FUN_IDENTIFICACION'] . "</td>
                         </tr>
 			
          	    </table>

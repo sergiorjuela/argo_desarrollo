@@ -85,7 +85,7 @@ class RegistradorContrato {
                     3 => date("Y-m-d"),
                     4 => $_REQUEST['usuario'],
                     5 => $_REQUEST['numero_acto'],
-                    6 =>  $prefijo . "_" . $archivo1,
+                    6 => $prefijo . "_" . $archivo1,
                     7 => $_REQUEST['observaciones'],
                 );
 
@@ -102,10 +102,10 @@ class RegistradorContrato {
                         $cadenaAcumulado = $cadenaSqlParticular = $this->miSql->getCadenaSql('acumuladoAdiciones', array(0 => $_REQUEST['numero_contrato'],
                             1 => $_REQUEST['vigencia']));
                         $acumulado = $esteRecursoDB->ejecutarAcceso($cadenaAcumulado, "busqueda");
-                      
-                        if( $acumulado[0][0] == null){
-                            $acumulado[0][0]=0;
-                        }                        
+
+                        if ($acumulado[0][0] == null) {
+                            $acumulado[0][0] = 0;
+                        }
                         $valorTope = $_REQUEST['valor_contrato'] * 0.5;
                         $valorOtrosSi = $acumulado[0][0] + $_REQUEST['valor_adicion_presupuesto'];
 
@@ -120,9 +120,18 @@ class RegistradorContrato {
                                 'vigencia' => $_REQUEST['vigencia'],
                                 'valor_contrado' => $_REQUEST['valor_contrato']
                             );
-                           
-                           
+
+
                             redireccion::redireccionar("rebasaOtroSi", $datosRebasaOtroSi);
+                        } elseif ($_REQUEST['vigencia_novedad'] != date("Y")) {
+
+                            $datosVigenciaError = array(
+                                'numero_contrato' => $_REQUEST['numero_contrato'],
+                                'vigencia' => $_REQUEST['vigencia'],
+                                'vigencia_novedad' => $_REQUEST['vigencia_novedad'],
+                                'tipo_novedad' => $_REQUEST['tipo_novedad'],
+                            );
+                            redireccion::redireccionar("errorVigencia", $datosVigenciaError);
                         } else {
 
                             $arreglo_novedad_particular = array(
@@ -204,7 +213,7 @@ class RegistradorContrato {
                     $cadenaSqlParticular = $this->miSql->getCadenaSql('registroNovedadSuspension', $arreglo_novedad_particular);
                     array_push($SQls, $cadenaSqlParticular);
                 }
-              
+
                 $trans_Registro_Novedad = $esteRecursoDB->transaccion($SQls);
             }
         }

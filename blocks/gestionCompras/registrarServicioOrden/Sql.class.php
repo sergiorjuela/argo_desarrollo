@@ -53,12 +53,16 @@ class Sql extends \Sql {
                 break;
 
 
-            case "buscar_numero_orden" :
+         
+            
+               case "buscar_numero_orden" :
 
                 $cadenaSql = " 	SELECT 	o.numero_contrato ||'-'|| o.vigencia as value, o.numero_contrato ||'-'||o.vigencia as orden ";
-                $cadenaSql .= " FROM orden o, contrato_general cg ";
-                $cadenaSql .= " WHERE o.numero_contrato = cg.numero_contrato and o.vigencia = cg.vigencia and cg.unidad_ejecutora ='" . $variable . "' ";
-                $cadenaSql .= " and cg.estado_aprobacion = 'f'  and tipo_orden = 246;";
+                $cadenaSql .= " FROM orden o, contrato_general cg, contrato_estado ce, estado_contrato ec  ";
+                $cadenaSql .= " WHERE o.numero_contrato = cg.numero_contrato and o.vigencia = cg.vigencia and  cg.unidad_ejecutora ='" . $variable . "' ";
+                $cadenaSql .= " AND cg.numero_contrato = ce.numero_contrato and cg.vigencia = ce.vigencia and ce.estado = ec.id ";
+                $cadenaSql .= " AND ce.fecha_registro = (SELECT MAX(cee.fecha_registro) from contrato_estado cee where o.numero_contrato = cee.numero_contrato and  o.vigencia = cee.vigencia) ";
+                $cadenaSql .= " and tipo_orden = 246 and cg.estado_aprobacion = 'f' AND ec.id = 1 ;";
 
                 break;
 
@@ -194,13 +198,14 @@ class Sql extends \Sql {
 
             case "registrarServicio" :
                 $cadenaSql = " INSERT INTO servicio_orden(descripcion, nombre, fecha_registro, ";
-                $cadenaSql.= " numero_contrato, vigencia, codigo_ciiu, usuario)";
+                $cadenaSql.= " numero_contrato, vigencia,valor_servicio, codigo_ciiu, usuario)";
                 $cadenaSql.= " VALUES ( ";
                 $cadenaSql.= "'" . $variable['descripcion'] . "',";
                 $cadenaSql.= "'" . $variable['resumen_servicio'] . "',";
                 $cadenaSql.= "'" . $variable['fecha'] . "',";
                 $cadenaSql.= "'" . $variable['numero_contrato'] . "',";
                 $cadenaSql.= $variable['vigencia'] . ",";
+                $cadenaSql.= $variable['valor_servicio'] . ",";
                 $cadenaSql.= "'" .$variable['codigo_ciiu'] . "',";
                 $cadenaSql.= "'" . $variable['usuario'] . "'";
 

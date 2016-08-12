@@ -83,6 +83,9 @@ class RegistradorOrden {
             'numero_cdp' => $_REQUEST ['numero_cdp'],
             'nombre_proveedor' => $_REQUEST['nombre_razon_proveedor'],
             'proveedor' => $_REQUEST ['identifcacion_proveedor'],
+            'condiciones' => $_REQUEST ['condiciones'],
+            'justificacion' => $_REQUEST ['justificacion'],
+            'descripcion_forma_pago' => $_REQUEST ['descripcion_forma_pago'],
             'valor_contrato' => $_REQUEST ['valor_contrato'],
             'unidad_ejecucion' => $_REQUEST['unidad_ejecucion'],
         );
