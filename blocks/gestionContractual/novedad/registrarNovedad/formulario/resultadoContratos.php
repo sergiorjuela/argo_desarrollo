@@ -26,6 +26,7 @@ class registrarForm {
 
     function miForm() {
 
+
         // Rescatar los datos de este bloque
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
         $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
@@ -36,7 +37,7 @@ class registrarForm {
 
         $rutaBloque = $this->miConfigurador->getVariableConfiguracion("host");
         $rutaBloque .= $this->miConfigurador->getVariableConfiguracion("site") . "/blocks/";
-        $rutaBloque .= $esteBloque ['grupo'] . $esteBloque ['nombre'];
+        $rutaBloque .= $esteBloque ['grupo'] . "/" . $esteBloque ['nombre'];
 
         // ---------------- SECCION: Parámetros Globales del Formulario ----------------------------------
         /**
@@ -48,8 +49,118 @@ class registrarForm {
          * $atributos= array_merge($atributos,$atributosGlobales);
          */
         $atributosGlobales ['campoSeguro'] = 'true';
+     
+       
+        
 
-        // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
+        $conexion = "contractual";
+        $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        $conexionFrameWork = "estructura";
+        $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
+
+
+        if (isset($_REQUEST ['numero_orden']) && $_REQUEST ['numero_orden'] != '') {
+            $numero_orden = explode("-", $_REQUEST ['numero_orden']);
+        } else {
+            $numero_orden = array('', '');
+        }
+        if (isset($_REQUEST ['tipo_contrato']) && $_REQUEST ['tipo_contrato'] != '') {
+            $tipo_orden = $_REQUEST ['tipo_contrato'];
+        } else {
+            $tipo_orden = '';
+        }
+
+        if (isset($_REQUEST ['id_proveedor']) && $_REQUEST ['id_proveedor'] != '') {
+            $nit = $_REQUEST ['id_proveedor'];
+        } else {
+            $nit = '';
+        }
+
+        if (isset($_REQUEST ['sedeConsulta']) && $_REQUEST ['sedeConsulta'] != '') {
+            $sede = $_REQUEST ['sedeConsulta'];
+        } else {
+            $sede = '';
+        }
+
+        if (isset($_REQUEST ['dependenciaConsulta']) && $_REQUEST ['dependenciaConsulta'] != '') {
+            $dependencia = $_REQUEST ['dependenciaConsulta'];
+        } else {
+            $dependencia = '';
+        }
+
+        if (isset($_REQUEST ['fecha_inicio']) && $_REQUEST ['fecha_inicio'] != '') {
+            $fecha_inicio = $_REQUEST ['fecha_inicio'];
+        } else {
+            $fecha_inicio = '';
+        }
+
+        if (isset($_REQUEST ['fecha_final']) && $_REQUEST ['fecha_final'] != '') {
+            $fecha_final = $_REQUEST ['fecha_final'];
+        } else {
+            $fecha_final = '';
+        }
+
+        if (isset($_REQUEST ['convenio_solicitante']) && $_REQUEST ['convenio_solicitante'] != '') {
+            $convenio = $_REQUEST ['convenio_solicitante'];
+        } else {
+            $convenio = '';
+        }
+
+
+
+
+
+        $id_usuario = $_REQUEST['usuario'];
+        $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
+        $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
+
+
+        if (isset($numero_orden[1])) {
+            $vigencia = $numero_orden[1];
+        } else {
+            $vigencia = "";
+        }
+        if ($unidadEjecutora[0]['unidad_ejecutora'] == 1) {
+            $unidadEjecutora = 209;
+            $arreglo = array(
+                'tipo_contrato' => $tipo_orden,
+                'numero_contrato' => $numero_orden[0],
+                'vigencia' => $vigencia,
+                'nit' => $nit,
+                'fecha_inicial' => $fecha_inicio,
+                'fecha_final' => $fecha_final,
+                'unidad_ejecutora' => $unidadEjecutora,
+                'sede' => $sede,
+                'dependencia' => $dependencia,
+            );
+            $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenGeneral', $arreglo);
+
+            $contratos = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        } else {
+
+            $unidadEjecutora = 208;
+            $arreglo = array(
+                'tipo_contrato' => $tipo_orden,
+                'numero_contrato' => $numero_orden[0],
+                'vigencia' => $vigencia,
+                'nit' => $nit,
+                'fecha_inicial' => $fecha_inicio,
+                'fecha_final' => $fecha_final,
+                'unidad_ejecutora' => $unidadEjecutora,
+                'sede' => $sede,
+                'dependencia' => $convenio,
+            );
+
+
+            $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenIdexud', $arreglo);
+
+            $contratos = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        }
+        $arreglo = serialize($arreglo);
+      
+        
+      
+    // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
         $esteCampo = $esteBloque ['nombre'];
         $atributos ['id'] = $esteCampo;
         $atributos ['nombre'] = $esteCampo;
@@ -68,65 +179,6 @@ class registrarForm {
         // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
         $atributos ['tipoEtiqueta'] = 'inicio';
         echo $this->miFormulario->formulario($atributos);
-        
-        
-         /*
-         * PROCESAR VARIABLES DE CONSULTA
-         */ {
-
-            $conexion = "contractual";
-            $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
-
-
-            if (isset($_REQUEST ['id_contrato']) && $_REQUEST ['id_contrato'] != '') {
-                $contrato = $_REQUEST ['id_contrato'];
-            } else {
-                $contrato = '';
-            }
-
-            if (isset($_REQUEST ['unidad_ejecutora']) && $_REQUEST ['unidad_ejecutora'] != '') {
-                $unidad_ejecutora = $_REQUEST ['unidad_ejecutora'];
-            } else {
-                $unidad_ejecutora = '';
-            }
-
-            if (isset($_REQUEST ['clase_contrato']) && $_REQUEST ['clase_contrato'] != '') {
-                $clase_contrato = $_REQUEST ['clase_contrato'];
-            } else {
-                $clase_contrato = '';
-            }
-
-            if (isset($_REQUEST ['id_contratista']) && $_REQUEST ['id_contratista'] != '') {
-                $contratista = $_REQUEST ['id_contratista'];
-            } else {
-                $contratista = '';
-            }
-
-            if (isset($_REQUEST ['dependencia']) && $_REQUEST ['dependencia'] != '') {
-                $dependencia = $_REQUEST ['dependencia'];
-            } else {
-                $dependencia = '';
-            }
-
-            if (isset($_REQUEST ['vigencia']) && $_REQUEST ['vigencia'] != '') {
-                $vigencia = $_REQUEST ['vigencia'];
-            } else {
-                $vigencia = '';
-            }
-
-            $arreglo = array(
-                'vigencia' => $vigencia,
-                'id_contrato' => $contrato,
-                'unidad_ejecutora' => $unidad_ejecutora,
-                'clase_contrato' => $clase_contrato,
-                'id_contratista' => $contratista,
-                'dependencia' => $dependencia
-            );
-      
-            $cadenaSql = $this->miSql->getCadenaSql('consultarContrato', $arreglo);
-            $contratos = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-        
-        }
 
         $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
 
@@ -135,7 +187,6 @@ class registrarForm {
         $directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");
 
         $variable = "pagina=" . $miPaginaActual;
-        $variable .= "&usuario=" . $_REQUEST ['usuario'];
         $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
 
         // ---------------- SECCION: Controles del Formulario -----------------------------------------------
@@ -144,50 +195,109 @@ class registrarForm {
         $atributos ['id'] = $esteCampo;
         $atributos ["estilo"] = "jqueryui";
         $atributos ['tipoEtiqueta'] = 'inicio';
-        $atributos ["leyenda"] = "Consultar Contratos";
+        $atributos ["leyenda"] = "Consulta de Ordenes";
         echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
+
+        // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+        $esteCampo = 'botonRegresar';
+        $atributos ['id'] = $esteCampo;
+        $atributos ['enlace'] = $variable;
+        $atributos ['tabIndex'] = 1;
+        $atributos ['estilo'] = 'textoSubtitulo';
+        $atributos ['enlaceTexto'] = $this->lenguaje->getCadena($esteCampo);
+        $atributos ['ancho'] = '10%';
+        $atributos ['alto'] = '10%';
+        $atributos ['redirLugar'] = true;
+        echo $this->miFormulario->enlace($atributos);
+        unset($atributos);
 
         if ($contratos) {
 
-            echo "<table id='tabla'>";
-
+            echo "<table id='tablaTitulos'>";
             echo "<thead>
                              <tr>
-                                <th>Vigencia</th>
-                    		<th>Número Contrato</th>            
-            			<th>Identificacion<br>Contratista</th>
-                                <th>Solicitud Necesidad<br>Contratista</th>
-                                <th>Clase Contrato</th>
-                                <th>Novedad</th>
+                                <th>Tipo de Contrato</th>
+                                <th>Número Contrato</th>
+                                <th>Vigencia</th>   
+                                <th>Solicitud de Necedidad</th>
+                                <th>Numero CDP</th>
+                                <th>Identificación<br>Nombre Contratista</th>
+                                <th>Sede-Dependencia</th>
+                                <th>Fecha de Registro</th>
+                                <th>Estado</th>
+                                <th>Documento Otros SI</th>
+                                <th>Registrar Novedad a la Orden</th>
+                                <th>Consultar Novedades</th>
+                        	
                              </tr>
-                             </thead>
-                             <tbody>";
+                          </thead>
+                    <tbody>";
 
-            foreach ($contratos as $valor) {
+            for ($i = 0; $i < count($contratos); $i ++) {
                 $variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-                $variable .= "&opcion=registrar";
-                $variable .= "&id_contrato=" . $valor ['id_contrato_normal'];
-                $variable .= "&id_contratista=" . $valor ['id_contratista'];
-                $variable .= "&vigencia=" . $valor ['vigencia'];
-                $variable .= "&numero_contrato=" . $valor ['numero_contrato'];
+                $variable .= "&opcion=nuevaNovedad";
+                $variable .= "&numero_contrato=" . $contratos [$i] ['numero_contrato'];
+                $variable .= "&id_orden=" . $contratos [$i] ['id_contrato_normal'];
+                $variable .= "&vigencia=" . $contratos [$i] ['vigencia'];
+                $variable .= "&id_contratista=" . $contratos [$i] ['proveedor'];
+                $variable .= "&arreglo=" . $arreglo;
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
-                $variable .= "&bloqueNombre=" . $_REQUEST['bloque'];
-                $variable .= "&bloqueGrupo=" . $_REQUEST['bloqueGrupo'];
-                $variable .= "&tiempo=" . $_REQUEST['tiempo'];
+                $variable .= "&mensaje_titulo=" . $contratos [$i] ['descripcion'] . "  VIGENCIA Y/O NÚMERO ORDEN : " . $contratos [$i] ['numero_contrato'];
                 $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
 
+
+                $variable_documento = "action=" . $esteBloque ["nombre"];
+                $variable_documento .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion('pagina');
+                $variable_documento .= "&bloque=" . $esteBloque ['nombre'];
+                $variable_documento .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+                $variable_documento .= "&opcion=generarDocumentoOtrosSI";
+                $variable_documento .= "&id_orden=" . $contratos [$i] ['id_contrato_normal'];
+                $variable_documento .= "&numero_contrato=" . $contratos [$i] ['numero_contrato'];
+                $variable_documento .= "&vigencia=" . $contratos [$i] ['vigencia'];
+                $variable_documento .= "&usuario=" . $_REQUEST ['usuario'];
+                $variable_documento .= "&mensaje_titulo=" . $contratos [$i] ['descripcion'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $contratos [$i] ['numero_contrato'];
+                $variable_documento = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable_documento, $directorio);
+
+
+
+                $variableConsultaNoveades = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+                $variableConsultaNoveades .= "&opcion=consultanovedades";
+                $variableConsultaNoveades .= "&numero_contrato=" . $contratos [$i] ['numero_contrato'];
+                $variableConsultaNoveades .= "&id_orden=" . $contratos [$i] ['id_contrato_normal'];
+                $variableConsultaNoveades .= "&vigencia=" . $contratos [$i] ['vigencia'];
+                $variableConsultaNoveades .= "&id_contratista=" . $contratos [$i] ['proveedor'];
+                $variableConsultaNoveades .= "&arreglo=" . $arreglo;
+                $variableConsultaNoveades .= "&usuario=" . $_REQUEST ['usuario'];
+                $variableConsultaNoveades .= "&mensaje_titulo=" . $contratos [$i] ['descripcion'] . "  VIGENCIA Y/O NÚMERO ORDEN : " . $contratos [$i] ['numero_contrato'];
+                $variableConsultaNoveades = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableConsultaNoveades, $directorio);
+
                 $mostrarHtml = "<tr>
-                    <td><center>" . $valor ['vigencia'] . "</center></td>
-                    <td><center>" . $valor ['numero_contrato'] . "</center></td>
-                    <td><center>" . $valor ['contratista'] . "</center></td>
-                    <td><center>" . $valor ['solicitud_necesidad'] . "</center></td>
-                    <td><center>" . $valor ['descripcion'] . "</center></td>
-                    <td><center>
-                    	<a href='" . $variable . "'>
-                            <img src='" . $rutaBloque . "/css/images/modificar.png' width='15px'>
-                        </a></center>
-                  	 </td>
-                         </tr>";
+                                <td><center>" . $contratos [$i] ['descripcion'] . "</center></td>
+                                <td><center>" . $contratos [$i] ['numero_contrato'] . "</center></td>		
+                                <td><center>" . $contratos [$i] ['vigencia'] . "</center></td>
+                                <td><center>" . $contratos [$i] ['numero_solicitud_necesidad'] . "</center></td>		
+                                <td><center>" . $contratos [$i] ['numero_cdp'] . "</center></td>		
+                                <td><center>" . $contratos [$i] ['proveedor'] . "</center></td>
+                                <td><center>" . $contratos [$i] ['sededependencia'] . "</center></td>
+                                <td><center>" . $contratos [$i] ['fecha_registro'] . "</center></td>
+                                <td><center>" . $contratos [$i] ['nombre_estado'] . "</center></td>
+                                <td><center>
+                                    <a href='" . $variable_documento . "'>
+                                        <img src='" . $rutaBloque . "/css/images/documento.png' width='15px'>
+                                    </a>
+                                </center> </td>
+                                <td><center>
+                                    <a href='" . $variable . "'>
+                                        <img src='" . $rutaBloque . "/css/images/novedad.png' width='15px'>
+                                    </a>
+                                </center> </td>
+                                <td><center>
+                                    <a href='" . $variableConsultaNoveades . "'>
+                                        <img src='" . $rutaBloque . "/css/images/consulta.png' width='15px'>
+                                    </a>
+                                </center> </td>
+                		     		
+                                </tr>";
                 echo $mostrarHtml;
                 unset($mostrarHtml);
                 unset($variable);
@@ -196,12 +306,10 @@ class registrarForm {
             echo "</tbody>";
 
             echo "</table>";
-
-            // Fin de Conjunto de Controles
-            // echo $this->miFormulario->marcoAgrupacion("fin");
+            echo "<br>";
         } else {
 
-            $mensaje = "No Se Encontraron Contratos<br>Verifique los Parámetros de Busqueda";
+            $mensaje = "No Se Encontraron<br>Ordenes.";
 
             // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
             $esteCampo = 'mensajeRegistro';
@@ -235,12 +343,9 @@ class registrarForm {
         // En este formulario se utiliza el mecanismo (b) para pasar las siguientes variables:
         // Paso 1: crear el listado de variables
 
-        $valorCodificado = "actionBloque=" . $esteBloque ["nombre"];
-        $valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion('pagina');
-        $valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
-        $valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-        $valorCodificado .= "&opcion=regresar";
-        $valorCodificado .= "&redireccionar=regresar";
+        $valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion('pagina');
+        $valorCodificado .= "&opcion=aprobarContratoMultiple";
+
         /**
          * SARA permite que los nombres de los campos sean dinámicos.
          * Para ello utiliza la hora en que es creado el formulario para

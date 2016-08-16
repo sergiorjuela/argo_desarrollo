@@ -59,10 +59,10 @@ class registrarForm {
         $esteRecursoDBAgora = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionAgora);
 
 
-
+     
         $cadenaSql = $this->miSql->getCadenaSql('consultarElementosOrden', $_REQUEST ['id_orden']);
         $ElementosOrden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-     
+        
 
         $datos = array(
             $_REQUEST['numerocontrato'],
@@ -138,7 +138,7 @@ class registrarForm {
 
 
         if ($ElementosOrden) {
-            
+
             echo "<center><h3>Elementos Asociados a la Orden</h3></center>";
 
             echo "<table id='tablaElmentos'>";
@@ -210,7 +210,7 @@ class registrarForm {
             echo "</table>";
         } if ($ServiciosOrden) {
 
-             echo "<center><h3>Servicios Asociados a la Orden</h3></center>";
+            echo "<center><h3>Servicios Asociados a la Orden</h3></center>";
             echo "<table id='tablaServicios'>";
 
             echo "<thead>

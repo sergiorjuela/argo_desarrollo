@@ -23,6 +23,8 @@ class redireccion {
                 $variable .= "&mensaje=Inserto";
                 $variable .= "&numero_contrato=" . $valor['numero_contrato'];
                 $variable .= "&vigencia=" . $valor['vigencia'];
+                $variable .= "&tipo_novedad=" . $valor['tipo_novedad'];
+                $variable .= "&acto_administrativo=" . $valor['acto_administrativo'];
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
 
                 break;
@@ -34,7 +36,66 @@ class redireccion {
                 $variable .= "&opcion=mensaje";
                 $variable .= "&numero_contrato=" . $valor['numero_contrato'];
                 $variable .= "&vigencia=" . $valor['vigencia'];
+                $variable .= "&tipo_novedad=" . $valor['tipo_novedad'];
+                $variable .= "&acto_administrativo=" . $valor['acto_administrativo'];
                 $variable .= "&mensaje=noInserto";
+                $variable .= "&usuario=" . $_REQUEST ['usuario'];
+                break;
+            case "actualizo" :
+
+                $variable = "pagina=" . $miPaginaActual;
+                $variable .= "&bloque=" . $_REQUEST ['bloque'];
+                $variable .= "&bloqueGrupo=" . $_REQUEST ["bloqueGrupo"];
+                $variable .= "&opcion=mensaje";
+                $variable .= "&mensaje=actualizo";
+                $variable .= "&numero_contrato=" . $valor['numero_contrato'];
+                $variable .= "&vigencia=" . $valor['vigencia'];
+                $variable .= "&tipo_novedad=" . $valor['tipo_novedad'];
+                $variable .= "&acto_administrativo=" . $valor['acto_administrativo'];
+                $variable .= "&usuario=" . $_REQUEST ['usuario'];
+
+
+                break;
+
+            case "ErrorActualizo" :
+                $variable = "pagina=" . $miPaginaActual;
+                $variable .= "&bloque=" . $_REQUEST ['bloque'];
+                $variable .= "&bloqueGrupo=" . $_REQUEST ["bloqueGrupo"];
+                $variable .= "&opcion=mensaje";
+                $variable .= "&mensaje=ErrorActualizo";
+                $variable .= "&numero_contrato=" . $valor['numero_contrato'];
+                $variable .= "&vigencia=" . $valor['vigencia'];
+                $variable .= "&tipo_novedad=" . $valor['tipo_novedad'];
+                $variable .= "&acto_administrativo=" . $valor['acto_administrativo'];
+                $variable .= "&usuario=" . $_REQUEST ['usuario'];
+                break;
+            
+            case "errorVigencia" :
+                $variable = "pagina=" . $miPaginaActual;
+                $variable .= "&bloque=" . $_REQUEST ['bloque'];
+                $variable .= "&bloqueGrupo=" . $_REQUEST ["bloqueGrupo"];
+                $variable .= "&opcion=mensaje";
+                $variable .= "&mensaje=errorVigencia";
+                $variable .= "&vigencia_novedad=" . $valor['vigencia_novedad'];
+                $variable .= "&tipo_novedad=" . $valor['tipo_novedad'];
+                $variable .= "&numero_contrato=" . $valor['numero_contrato'];
+                $variable .= "&vigencia=" . $valor['vigencia'];
+                $variable .= "&usuario=" . $_REQUEST ['usuario'];
+                break;
+
+            case "rebasaOtroSi" :
+                $variable = "pagina=" . $miPaginaActual;
+                $variable .= "&bloque=" . $_REQUEST ['bloque'];
+                $variable .= "&bloqueGrupo=" . $_REQUEST ["bloqueGrupo"];
+                $variable .= "&opcion=mensaje";
+                $variable .= "&acumulado=" . $valor['acumulado'];
+                $variable .= "&valor_tope=" . $valor['valor_tope'];
+                $variable .= "&valor_contrado=" . $valor['valor_contrado'];
+                $variable .= "&tipo_novedad=" . $valor['tipo_novedad'];
+                $variable .= "&numero_contrato=" . $valor['numero_contrato'];
+                $variable .= "&vigencia=" . $valor['vigencia'];
+                $variable .= "&valor_adicion=" . $valor['valor_adicion'];
+                $variable .= "&mensaje=rebasaOtroSI";
                 $variable .= "&usuario=" . $_REQUEST ['usuario'];
                 break;
         }

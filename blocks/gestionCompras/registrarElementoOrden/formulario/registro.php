@@ -40,7 +40,7 @@ class registrarForm {
          */
         $rutaBloque = $this->miConfigurador->getVariableConfiguracion("raizDocumento") . "/blocks/inventarios/gestionActa/";
         $rutaBloque .= $esteBloque ['nombre'];
-        $host = $this->miConfigurador->getVariableConfiguracion("host") . $this->miConfigurador->getVariableConfiguracion("site") . "/blocks/gestionCompras/" . $esteBloque ['nombre'] . "/plantilla/archivo_elementos.xlsx";
+        $host = $this->miConfigurador->getVariableConfiguracion("host") . $this->miConfigurador->getVariableConfiguracion("site") . "/blocks/gestionCompras/" . $esteBloque ['nombre'] . "/plantilla/archivo_elementos_plantilla.xlsx";
 
         $atributosGlobales ['campoSeguro'] = 'true';
 

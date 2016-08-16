@@ -49,6 +49,9 @@ class registrarForm {
         $conexion = "contractual";
 
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexionSICA = "sicapital";
+        $DBSICA = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionSICA);
 
         $seccion ['tiempo'] = $tiempo;
 
@@ -748,7 +751,7 @@ class registrarForm {
                         $atributos ['ajax_function'] = "";
                         $atributos ['ajax_control'] = $esteCampo;
                         $atributos ['estilo'] = "jqueryui";
-                        $atributos ['validar'] = "required";
+                        $atributos ['validar'] = "";
                         $atributos ['limitar'] = true;
                         $atributos ['anchoCaja'] = 52;
                         $atributos ['miEvento'] = '';
@@ -759,7 +762,7 @@ class registrarForm {
                                 ' '
                             )
                         );
-                        $matrizItems = $esteRecursoDB->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+                        $matrizItems = $DBSICA->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
                         $atributos ['matrizItems'] = $matrizItems;
 
                         $atributos = array_merge($atributos, $atributosGlobales);

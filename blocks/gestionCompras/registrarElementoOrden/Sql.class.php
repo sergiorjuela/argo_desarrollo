@@ -528,10 +528,9 @@ class Sql extends \Sql {
 
             case "ingresar_elemento_tipo_1" :
                 $cadenaSql = " INSERT INTO ";
-                $cadenaSql .= " elemento_acta_recibido(
-							             fecha_registro, nivel, tipo_bien, descripcion, 
-							            cantidad, unidad, valor, iva, subtotal_sin_iva, total_iva, total_iva_con, 
-							             marca, serie,referencia,placa, observacion,codigo_dependencia,funcionario, id_orden) ";
+                $cadenaSql .= " elemento_acta_recibido(fecha_registro, nivel, tipo_bien, descripcion, 
+						cantidad, unidad, valor, iva, subtotal_sin_iva, total_iva, total_iva_con,
+                                                codigo_dependencia,funcionario, id_orden) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= "'" . $variable [0] . "',";
                 $cadenaSql .= "'" . $variable [1] . "',";
@@ -546,11 +545,6 @@ class Sql extends \Sql {
                 $cadenaSql .= "'" . $variable [10] . "',";
                 $cadenaSql .= (is_null($variable [11]) == true) ? ' NULL , ' : "'" . $variable [11] . "',";
                 $cadenaSql .= (is_null($variable [12]) == true) ? ' NULL , ' : "'" . $variable [12] . "',";
-                $cadenaSql .= (is_null($variable [14]) == true) ? ' NULL , ' : "'" . $variable [14] . "',";
-                $cadenaSql .= (is_null($variable [15]) == true) ? ' NULL , ' : "'" . $variable [15] . "',";
-                $cadenaSql .= (is_null($variable [16]) == true) ? ' NULL , ' : "'" . $variable [16] . "',";
-                $cadenaSql .= (is_null($variable [17]) == true) ? ' NULL , ' : "'" . $variable [17] . "',";
-                $cadenaSql .= (is_null($variable [18]) == true) ? ' NULL , ' : "'" . $variable [18] . "',";
                 $cadenaSql .= "'" . $variable [13] . "') ";
                 $cadenaSql .= "RETURNING  id_elemento_ac ";
 
@@ -703,7 +697,7 @@ class Sql extends \Sql {
 
 
 
-                   
+
             case "buscar_numero_orden" :
 
                 $cadenaSql = " 	SELECT 	o.numero_contrato ||'-'|| o.vigencia as value, o.numero_contrato ||'-'||o.vigencia as orden ";
