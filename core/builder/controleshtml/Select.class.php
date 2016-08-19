@@ -122,6 +122,7 @@ class Select extends HtmlBase {
 			$this->cadena_html .= "disabled ";
 		}
 		
+		
 		if ($this->atributos [self::ID] != '') {
 			$this->cadena_html .= "id='" . $this->atributos [self::ID] . "' ";
 		}

@@ -72,7 +72,7 @@ class Bloque implements \Bloque {
             $this->miFuncion->setSql($this->miSql);
             //$this->miFuncion->setLenguaje ( $this->miLenguaje );
 
-            if (!isset($_GET ['servicio'])) {
+            if (isset($_GET ['servicio'])) {
 
 
                 $enlace = $this->miConfigurador->getVariableConfiguracion("enlace");

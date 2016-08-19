@@ -40,10 +40,9 @@ class registrarForm {
          */
         $atributosGlobales ['campoSeguro'] = 'true';
 
-        $_REQUEST ['tiempo'] = time();
         //-----Esto es una Actualizacion del repositorio 
         // -------------------------------------------------------------------------------------------------
-             
+
         $conexionContractual = "contractual";
         $DBContractual = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionContractual);
 
@@ -92,6 +91,14 @@ class registrarForm {
         $atributos ['tipoEtiqueta'] = 'inicio';
         $atributos ["leyenda"] = "Consultar Solicitud de Necesidad y CDP";
         echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
+
+        var_dump($_REQUEST['tiempo']);
+
+
+        $_REQUEST['tiempo'] = (int) substr($_REQUEST['tiempo'], 0, -2);
+        $_REQUEST['tiempo'] = $_REQUEST['tiempo'] * pow(10, 2);
+
+        var_dump($_REQUEST['tiempo']);
 
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
         $esteCampo = 'vigencia_solicitud_consulta';
@@ -313,11 +320,11 @@ class registrarForm {
 
         $sqlConsultaSolicitudRegistradas = $this->miSql->getCadenaSql("cdpRegistradas");
         $resultado = $DBContractual->ejecutarAcceso($sqlConsultaSolicitudRegistradas, "busqueda");
-        if($resultado[0][0]==null){
-            $resultado[0][0]="0";
+        if ($resultado[0][0] == null) {
+            $resultado[0][0] = "0";
         }
-      
-        
+
+
         $esteCampo = 'cdpRegistradas';
         $atributos ['id'] = $esteCampo;
         $atributos ['nombre'] = $esteCampo;

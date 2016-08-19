@@ -28,13 +28,12 @@ if ($esteBloque ["grupo"] == "") {
 	$rutaBloque .= "/blocks/" . $esteBloque ["grupo"] . "/" . $esteBloque ["nombre"];
 }
 
-$_REQUEST['tiempo']=time();
-
+var_dump($_REQUEST['tiempo']);
 
 if (isset ( $funcion [0] )) {
 	foreach ( $funcion as $clave => $nombre ) {
 		if (! isset ( $embebido [$clave] )) {
-			echo "\n<script type='text/javascript' src='" . $rutaBloque . "/script/" . $nombre . "'>\n</script>\n";
+			echo "\n<script type='text/javascript' src='" . $rutaBloque . "/script/" . $nombre . "' >\n</script>\n";
 		} else {
 			echo "\n<script type='text/javascript'>";
 			include ($nombre);

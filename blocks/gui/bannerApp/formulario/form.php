@@ -42,9 +42,11 @@ class Formulario {
             $atributos['estilo'] = $esteCampo;
             $atributos['etiqueta'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
             $atributos['ancho'] = '100%';
-            $atributos['alto'] = '5%';
+            $atributos['alto'] = '1%';
             echo $this->miFormulario->campoImagen($atributos);
             unset($atributos);
+            
+            
         }
 
         // ---------------------Fin Division -----------------------------------
