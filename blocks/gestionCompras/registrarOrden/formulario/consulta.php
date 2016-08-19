@@ -92,13 +92,7 @@ class registrarForm {
         $atributos ["leyenda"] = "Consultar Solicitud de Necesidad y CDP";
         echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
 
-        var_dump($_REQUEST['tiempo']);
-
-
-        $_REQUEST['tiempo'] = (int) substr($_REQUEST['tiempo'], 0, -2);
-        $_REQUEST['tiempo'] = $_REQUEST['tiempo'] * pow(10, 2);
-
-        var_dump($_REQUEST['tiempo']);
+     
 
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
         $esteCampo = 'vigencia_solicitud_consulta';

@@ -28,8 +28,6 @@ if ($esteBloque ["grupo"] == "") {
 	$rutaBloque .= "/blocks/" . $esteBloque ["grupo"] . "/" . $esteBloque ["nombre"];
 }
 
-var_dump($_REQUEST['tiempo']);
-
 if (isset ( $funcion [0] )) {
 	foreach ( $funcion as $clave => $nombre ) {
 		if (! isset ( $embebido [$clave] )) {

@@ -33,7 +33,7 @@ class RegistradorContrato {
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         $SQLs = [];
 
-            
+
         //Validacion campos nulos de tipo compromiso y clase contratista
 
         if ($_REQUEST ['tipo_compromiso'] != '34') {
@@ -85,34 +85,48 @@ class RegistradorContrato {
             $clausula_presupuesto = 'false';
         }
 
-        $SqlCargoSupervisor = $this->miSql->getCadenaSql('obtener_cargo_supervisro', 
-                $_REQUEST ['supervisor']);
+        $SqlCargoSupervisor = $this->miSql->getCadenaSql('obtener_cargo_supervisro', $_REQUEST ['supervisor']);
         $cargo = $esteRecursoDB->ejecutarAcceso($SqlCargoSupervisor, "busqueda");
-      
+
         $arreglo_contrato_general = array('vigencia' => (int) date('Y'),
             'id_orden_contrato' => 0,
             'tipo_contrato' => $_REQUEST['clase_contrato'],
             'unidad_ejecutura' => $unidad_ejecutura,
             'objeto_contrato' => $_REQUEST ['objeto_contrato'],
-            'fecha_inicio' =>$fecha_inicio_poliza,
+            'fecha_inicio' => $fecha_inicio_poliza,
             'fecha_fin' => $fecha_final_poliza,
             'plazo_ejecucion' => $_REQUEST ['plazo_ejecucion'],
             'clausula_presupuesto' => $clausula_presupuesto,
             'ordenador_gasto' => $_REQUEST ['ordenador_gasto'],
             'supervisor' => $_REQUEST ['supervisor'],
             'cargo_supervisor' => $cargo[0]['cargo'],
-            'numero_solicitud_necesidad' =>$_REQUEST ['numero_solicitud_necesidad'],
+            'numero_solicitud_necesidad' => $_REQUEST ['numero_solicitud_necesidad'],
             'numero_cdp' => $_REQUEST ['numero_cdp'],
             'contratista' => $_REQUEST ['numero_identificacion'],
             'nombre_contratista' => $_REQUEST ['nombre_Razon_Social'],
             "valor_contrato" => $_REQUEST ['valor_contrato'],
             "unidad_ejecucion_tiempo" => $_REQUEST ['unidad_ejecucion_tiempo'],
             'forma_pago' => $_REQUEST ['formaPago']);
-        
+
         $SqlcontratoGeneral = $this->miSql->getCadenaSql('insertarContratoGeneral', $arreglo_contrato_general);
         array_push($SQLs, $SqlcontratoGeneral);
+
+        $datosEstado = array(
+            'numero_contrato' => "currval('numero_unico_contrato_seq')",
+            'vigencia' => (int) date('Y'),
+            'fecha' => date('Y-m-d H:i:s'),
+            'usuario' => $_REQUEST['usuario'],
+            'estado' => 1
+        );
+
+        // Registro Estado Contrato General
+        $SQLsEstadoContratoGeneral = $this->miSql->getCadenaSql('insertarEstadoContratoGeneral', $datosEstado);
+        array_push($SQLs, $SQLsEstadoContratoGeneral);
+
+
+
         $arreglo_contrato = array(
-            "vigencia" => (int)date('Y'),
+            "vigencia" => (int) date('Y'),
             "numero_contrato" => "currval('contractual.numero_unico_contrato_seq')",
             "tipo_configuracion" => 0,
             "clase_contratista" => $_REQUEST ['clase_contratista'],
@@ -129,7 +143,7 @@ class RegistradorContrato {
             "modalidad_seleccion" => $_REQUEST ['modalidad_seleccion'],
             "procedimiento" => $_REQUEST ['procedimiento'],
             "regimen_contratación" => $_REQUEST ['regimen_contratación'],
-            "tipo_moneda" => $_REQUEST ['tipo_moneda'],            
+            "tipo_moneda" => $_REQUEST ['tipo_moneda'],
             "tipo_gasto" => $_REQUEST ['tipo_gasto'],
             "origen_recursos" => $_REQUEST ['origen_recursos'],
             "origen_presupuesto" => $_REQUEST ['origen_presupuesto'],
@@ -148,14 +162,15 @@ class RegistradorContrato {
 
         $SqlContrato = $this->miSql->getCadenaSql('registrar_contrato', $arreglo_contrato);
         array_push($SQLs, $SqlContrato);
-        
+
+
 
         $trans_Registro_contrato = $esteRecursoDB->transaccion($SQLs);
         $sqlNumeroContrato = $this->miSql->getCadenaSql('obtenerInfoOrden');
         $resultado = $esteRecursoDB->ejecutarAcceso($sqlNumeroContrato, "busqueda");
-        $identificadorOrden = $resultado[0];
-        $datos= array("numero_contrato"=> $identificadorOrden['numero_contrato'],
-            "vigencia"=> date("Y"));
+        $identificadorOrden = $resultado[0][0];
+        $datos = array("numero_contrato" => $identificadorOrden,
+            "vigencia" => date("Y"));
         if ($trans_Registro_contrato != false) {
             $cadenaVerificarTemp = $this->miSql->getCadenaSql('obtenerInfoTemporal', str_replace(";", "", $_REQUEST["atributosContratoTempHidden"]));
             $infoTemp = $esteRecursoDB->ejecutarAcceso($cadenaVerificarTemp, "busqueda");
@@ -168,7 +183,7 @@ class RegistradorContrato {
             exit;
         } else {
 
-            redireccion::redireccionar("ErrorRegistro",$datos);
+            redireccion::redireccionar("ErrorRegistro", $datos);
             exit;
         }
     }

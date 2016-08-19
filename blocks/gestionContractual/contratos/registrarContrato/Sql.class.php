@@ -135,6 +135,18 @@ class Sql extends \Sql {
 
                 break;
 
+            case "insertarEstadoContratoGeneral" :
+                $cadenaSql = " INSERT INTO contrato_estado(";
+                $cadenaSql .= " numero_contrato, vigencia,fecha_registro,usuario,estado ) ";
+                $cadenaSql .= " VALUES (";
+                $cadenaSql .= $variable ['numero_contrato'] . ",";
+                $cadenaSql .= $variable ['vigencia'] . ",";
+                $cadenaSql .= "'" . $variable ['fecha'] . "',";
+                $cadenaSql .= "'" . $variable ['usuario'] . "',";
+                $cadenaSql .= $variable ['estado'] . ");";
+
+                break;
+
 
 
 
@@ -234,7 +246,7 @@ class Sql extends \Sql {
                 break;
 
             case "obtenerInfoOrden" :
-                $cadenaSql = " SELECT MAX(numero_contrato) as numero_contrato";
+                $cadenaSql = " SELECT MAX(CAST(numero_contrato AS integer)) as numero_contrato";
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= "contrato_general; ";
 

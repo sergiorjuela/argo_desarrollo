@@ -73,6 +73,13 @@ $this->idioma ["correoTitulo"] = "Ingrese Correo Electrónico";
 $this->idioma ["perfil"] = "Perfil: ";
 $this->idioma ["perfilTitulo"] = "Seleccione Perfil";
 
+
+$this->idioma ["botonAprobacionMultiple"] = "Aprobación Multiple ";
+$this->idioma ["botonAprobarMultiple"] = "Aprobar Contratos ";
+
+$this->idioma ["botonRegresar"] = "<-- Regresar  ";
+$this->idioma ["botonAceptarAprobacion"] = "Aprobar Contrato";
+
 $this->idioma ["profesion"] = "Profesión: ";
 $this->idioma ["profesionTitulo"] = "Ingrese Profesión";
 

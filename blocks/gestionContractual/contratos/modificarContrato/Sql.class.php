@@ -35,7 +35,7 @@ class Sql extends \Sql {
              * Clausulas específicas
              */
             case 'buscar_contrato' :
-                $cadenaSql = " SELECT  numero_contrato AS  data, numero_contrato||' - ('||vigencia||')'  AS value  ";
+                $cadenaSql = " SELECT  numero_contrato||'-('||vigencia||')' AS  data, numero_contrato||' - ('||vigencia||')'  AS value  ";
                 $cadenaSql .= " FROM contrato ";
                 $cadenaSql .= "WHERE cast(numero_contrato as text) LIKE '%" . $variable . "%' ";
                 $cadenaSql .= "OR cast(vigencia as text ) LIKE '%" . $variable . "%' LIMIT 10; ";
@@ -119,6 +119,38 @@ class Sql extends \Sql {
                 $cadenaSql .= " where \"ORG_ESTADO\" = 'A' and \"ORG_ORDENADOR_GASTO\" <> 'DIRECTOR IDEXUD'; ";
 
                 break;
+
+            case "updateEstadoAprobacion" :
+                $cadenaSql = " UPDATE contrato_general SET estado_aprobacion='t' ";
+                $cadenaSql.=" WHERE numero_contrato= '" . $variable['numero_contrato'] . "' and vigencia = " . $variable['vigencia'] . ";";
+
+                break;
+
+            case "aprobarContrato" :
+                $cadenaSql = " INSERT INTO contrato_aprobado( ";
+                $cadenaSql.=" numero_contrato, vigencia, fecha_aprobacion, usuario)";
+                $cadenaSql.=" VALUES ('" . $variable['numero_contrato'] . "', " . $variable['vigencia'] . ", ";
+                $cadenaSql.=" '" . $variable['fecha_aprobacion'] . "', '" . $variable['usuario'] . "');";
+
+                break;
+
+            case "cambioEstadoAprobarContrato" :
+                $cadenaSql = " INSERT INTO contrato_estado(";
+                $cadenaSql .= " numero_contrato, vigencia,fecha_registro,usuario,estado ) ";
+                $cadenaSql .= " VALUES (";
+                $cadenaSql .= "'" . $variable ['numero_contrato'] . "',";
+                $cadenaSql .= $variable ['vigencia'] . ",";
+                $cadenaSql .= "'" . $variable ['fecha_aprobacion'] . "',";
+                $cadenaSql .= "'" . $variable ['usuario'] . "',";
+                $cadenaSql .= $variable ['estado'] . ");";
+
+                break;
+            
+            case "obteneConsecutivoContratoAprobado" :
+                $cadenaSql = " SELECT MAX(consecutivo_contrato) as consecutivo_contrato FROM contrato_aprobado; ";
+
+                break;
+
 
             /**
              * Clausulas genéricas.
@@ -263,6 +295,45 @@ class Sql extends \Sql {
                 $cadenaSql .= "WHERE rl.descripcion ='nacionalidad'; ";
 
                 break;
+
+
+            case "consultarContratosGeneral" :
+
+                $cadenaSql = "SELECT DISTINCT c.id_contrato_normal, p.descripcion, c.numero_contrato, c.vigencia, c.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,cg.tipo_contrato, "
+                        . "  cg.numero_solicitud_necesidad,cg.numero_cdp, ec.nombre_estado, ce.fecha_registro as fecha_registro_estado ";
+                $cadenaSql .= "FROM contrato c, parametros p, contrato_general cg, ";
+                $cadenaSql .= "contrato_estado ce, estado_contrato ec  ";
+                $cadenaSql .= "WHERE cg.tipo_contrato = p.id_parametro ";
+                $cadenaSql .= "AND cg.numero_contrato = ce.numero_contrato and cg.vigencia = ce.vigencia and ce.estado = ec.id ";
+                $cadenaSql .= "AND ce.fecha_registro = (SELECT MAX(cee.fecha_registro) from contrato_estado cee where c.numero_contrato = cee.numero_contrato and  c.vigencia = cee.vigencia) ";
+                $cadenaSql .= "AND c.numero_contrato = cg.numero_contrato ";
+                $cadenaSql .= "AND c.vigencia = cg.vigencia ";
+                $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
+                $cadenaSql .= "AND c.estado_registro = 'true' AND cg.estado_aprobacion = 'f' ";
+                if ($variable ['clase_contrato'] != '') {
+                    $cadenaSql .= " AND cg.tipo_contrato = '" . $variable ['clase_contrato'] . "' ";
+                }
+                if ($variable ['numero_contrato'] != '') {
+                    $cadenaSql .= " AND c.numero_contrato = '" . $variable ['numero_contrato'] . "' ";
+                }
+                if ($variable ['vigencia'] != '') {
+                    $cadenaSql .= " AND c.vigencia = '" . $variable ['vigencia'] . "' ";
+                }
+
+                if ($variable ['nit'] != '') {
+                    $cadenaSql .= " AND cg.contratista = '" . $variable ['nit'] . "' ";
+                }
+
+                if ($variable ['fecha_inicial'] != '' && $variable ['fecha_final'] != '') {
+                    $cadenaSql .= " AND c.fecha_registro BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
+                    $cadenaSql .= " AND  CAST ( '" . $variable ['fecha_final'] . "' AS DATE)  ";
+                }
+
+                $cadenaSql .= " ; ";
+
+                break;
+
+
 
             case "tipo_cuenta" :
 

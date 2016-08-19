@@ -6,6 +6,7 @@ $estilo[$indice++]="select2.css";
 $estilo[$indice++]="select2.min.css";
 $estilo[$indice++]="jquery.steps.css";
 $estilo[$indice++]="jquery.auto-complete.css";
+$estilo[$indice++]="modal.css";
 
 /*
  * Estilo Personalizado del Bloque actual
