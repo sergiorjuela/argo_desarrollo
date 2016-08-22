@@ -52,6 +52,7 @@ class registrarForm {
 
         $atributos ['id'] = $esteCampo;
         $atributos ['nombre'] = $esteCampo;
+        
 
         /**
          * Nuevo a partir de la versión 1.0.0.2, se utiliza para crear de manera rápida el js asociado a
@@ -88,7 +89,7 @@ class registrarForm {
         $atributos ['id'] = $esteCampo;
         $atributos ["estilo"] = "jqueryui";
         $atributos ['tipoEtiqueta'] = 'inicio';
-        $atributos ["leyenda"] = "Consultar Solicitud de Necesidad";
+        $atributos ["leyenda"] = "Consultar Contratos Aprobados";
         echo $this->miFormulario->marcoAgrupacion('inicio', $atributos); {
             
             

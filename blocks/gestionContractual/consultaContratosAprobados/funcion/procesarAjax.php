@@ -288,131 +288,6 @@ if ($_REQUEST ['funcion'] == 'SeleccionOrdenador') {
     echo $resultado;
 }
 
-if ($_REQUEST ['funcion'] == 'SeleccionCargo') {
-
-    $cadenaSql = $this->sql->getCadenaSql('informacion_cargo_jefe', $_REQUEST ['cargo']);
-
-    $resultadoItems = $esteRecursoDBO->ejecutarAcceso($cadenaSql, "busqueda");
-
-    $resultado = json_encode($resultadoItems [0]);
-
-    echo $resultado;
-}
-
-if ($_REQUEST ['funcion'] == 'consultarConvenio') {
-
-    $conexion = "contractual";
-    $esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
-    $cadenaSql = $this->sql->getCadenaSql('buscar_nombre_convenio', $_REQUEST ['valor']);
-    $resultado = $esteRecursoDBO->ejecutarAcceso($cadenaSql, "busqueda");
-    $resultado = json_encode($resultado[0]);
-    echo $resultado;
-}
-
-if ($_REQUEST ['funcion'] == 'disponibilidades') {
-
-    $cadenaSql = $this->sql->getCadenaSql('buscar_disponibilidad', array(
-        $_REQUEST ['vigencia'],
-        $_REQUEST ['unidad']
-            ));
-
-    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-    $resultado = json_encode($resultadoItems);
-
-    echo $resultado;
-}
-
-if ($_REQUEST ['funcion'] == 'consultarConveniosxvigencia') {
-
-    $cadenaSql = $this->sql->getCadenaSql('conveniosxvigencia', $_REQUEST ['valor']);
-
-    $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-    $resultado = json_encode($resultado);
-
-    echo $resultado;
-}
-
-if ($_REQUEST ['funcion'] == 'Infodisponibilidades') {
-
-    $arreglo = array(
-        $_REQUEST ['disponibilidad'],
-        $_REQUEST ['vigencia']
-    );
-
-    $cadenaSql = $this->sql->getCadenaSql('info_disponibilidad', $arreglo);
-    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-    $resultado = json_encode($resultadoItems [0]);
-
-    echo $resultado;
-}
-
-if ($_REQUEST ['funcion'] == 'registroPresupuestal') {
-
-    $arreglo = array(
-        $_REQUEST ['vigencia'],
-        $_REQUEST ['disponibilidad'],
-        $_REQUEST ['unidad']
-    );
-
-    $cadenaSql = $this->sql->getCadenaSql('buscar_registro', $arreglo);
-
-    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-    $resultado = json_encode($resultadoItems);
-
-    echo $resultado;
-}
-
-if ($_REQUEST ['funcion'] == 'Inforegistro') {
-
-    $arreglo = array(
-        $_REQUEST ['registro'],
-        $_REQUEST ['vigencia']
-    );
-
-    $cadenaSql = $this->sql->getCadenaSql('info_registro', $arreglo);
-    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-    $resultado = json_encode($resultadoItems [0]);
-
-    echo $resultado;
-}
-
-if ($_REQUEST ['funcion'] == 'consultarContratistas') {
-
-    $cadenaSql = $this->sql->getCadenaSql('buscar_contratista', $_REQUEST ['vigencia']);
-    $resultadoItems = $esteRecursoDBO->ejecutarAcceso($cadenaSql, "busqueda");
-
-    $resultado = json_encode($resultadoItems);
-
-    echo $resultado;
-}
-
-if ($_REQUEST ['funcion'] == 'SeleccionProveedor') {
-
-    $cadenaSql = $this->sql->getCadenaSql('informacion_proveedor', $_REQUEST ['proveedor']);
-
-    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-    $resultado = json_encode($resultadoItems [0]);
-
-    echo $resultado;
-}
-
-if ($_REQUEST ['funcion'] == 'consultarCargoSuper') {
-
-    $cadenaSql = $this->sql->getCadenaSql('cargoSuper', $_REQUEST ['valor']);
-   
-    $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-    $resultado = json_encode($resultado [0]);
-  
-
-    echo $resultado;
-}
 
 //------------------------obtener Numero de Ordenes a partit de la calsificacion tipo de orden -------------------------
 if ($_REQUEST ['funcion'] == 'consultarNumeroOrden') {
@@ -436,7 +311,7 @@ if ($_REQUEST ['funcion'] == 'consultarProveedorFiltro') {
         );
         $resultado [$key] = array_intersect_key($resultadoItems [$key], array_flip($keys));
     }
-  
+
     echo '{"suggestions":' . json_encode($resultado) . '}';
 }
 
@@ -464,24 +339,20 @@ if ($_REQUEST ['funcion'] == 'consultarDependencia') {
     $resultado = json_encode($resultado);
     echo $resultado;
 }
+if ($_REQUEST ['funcion'] == 'consultaContrato') {
 
-if ($_REQUEST ['funcion'] == 'SeleccionTipoBien') {
+    $cadenaSql = $this->sql->getCadenaSql('buscar_contrato', $_GET ['query']);
 
-    $cadenaSql = $this->sql->getCadenaSql('ConsultaTipoBien', $_REQUEST ['valor']);
     $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-    $resultadoItems = $resultadoItems [0];
+  
+    foreach ($resultadoItems as $key => $values) {
+        $keys = array(
+            'value',
+            'data'
+        );
+        $resultado [$key] = array_intersect_key($resultadoItems [$key], array_flip($keys));
+    }
 
-    echo json_encode($resultadoItems);
-}
-
-if ($_REQUEST ['funcion'] == 'consultarIva') {
-
-    $cadenaSql = $this->sql->getCadenaSql('consultar_tipo_iva');
-
-    $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-    $resultado = json_encode($resultado);
-
-    echo $resultado;
+    echo '{"suggestions":' . json_encode($resultado) . '}';
 }
 ?>

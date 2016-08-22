@@ -31,7 +31,7 @@ include_once ("Lenguaje.class.php");
 
 include_once ('funcion/redireccionar.php');
 
-use gestionCompras\consultaOrdenesAprobadas\funcion\redireccion;
+use gestionContractual\consultaContratosAprobados\funcion\redireccion;
 // ------------------
 
 // Esta clase actua como control del bloque en un patron FCE
