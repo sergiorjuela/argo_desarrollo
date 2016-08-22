@@ -69,7 +69,7 @@ class registrarForm {
         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo);
         // Si no se coloca, entonces toma el valor predeterminado.
         $atributos ['estilo'] = '';
-        $atributos ['marco'] = false;
+        $atributos ['marco'] = true;
         $tab = 1;
         // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
         // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
@@ -79,9 +79,7 @@ class registrarForm {
         // ---------------- SECCION: Controles del Formulario -----------------------------------------------
         $conexionFrameWork = "estructura";
         $DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
-        $miSesion = Sesion::singleton();
-        $id_usuario = $miSesion->idUsuario();
-        $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
+        $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $_REQUEST['usuario']);
         $unidad = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
 
@@ -209,13 +207,7 @@ class registrarForm {
             $atributos = array_merge($atributos, $atributosGlobales);
             echo $this->miFormulario->campoCuadroLista($atributos);
             unset($atributos);
-
-
-
-
-
-
-            // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+   // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
             $esteCampo = 'contratista';
             $atributos ['id'] = $esteCampo;
             $atributos ['nombre'] = $esteCampo;

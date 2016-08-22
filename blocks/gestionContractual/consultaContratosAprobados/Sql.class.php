@@ -197,13 +197,21 @@ class Sql extends \Sql {
                 break;
 
 
-            case 'buscar_contrato' :
+          
+            
+              case 'buscar_contrato' :
                 $cadenaSql = " SELECT  DISTINCT c.numero_contrato||'-('||c.vigencia||')' AS  data, c.numero_contrato||' - ('||c.vigencia||')'  AS value  ";
-                $cadenaSql .= " FROM contrato c, contrato_general cg ";
-                $cadenaSql .= "WHERE c.numero_contrato = cg.numero_contrato AND c.vigencia = cg.vigencia AND cg.estado_aprobacion = 't' AND cast(c.numero_contrato as text) LIKE '%" . $variable . "%' ";
-                $cadenaSql .= "OR cast(c.vigencia as text ) LIKE '%" . $variable . "%'  ";
+                $cadenaSql .= " FROM contrato c, contrato_general cg, contrato_estado ce, estado_contrato ec  ";
+                $cadenaSql .= " WHERE c.numero_contrato = cg.numero_contrato and c.vigencia = cg.vigencia and  cg.unidad_ejecutora ='" . $variable['unidad'] . "' ";
+                $cadenaSql .= " AND cg.numero_contrato = ce.numero_contrato and cg.vigencia = ce.vigencia and ce.estado = ec.id ";
+                $cadenaSql .= " AND ce.fecha_registro = (SELECT MAX(cee.fecha_registro) from contrato_estado cee where c.numero_contrato = cee.numero_contrato and  c.vigencia = cee.vigencia) ";
+                $cadenaSql .= " AND cg.estado_aprobacion = 't' AND ec.id = 3  ";
+                $cadenaSql .= " AND cast(c.numero_contrato as text) LIKE '%" . $variable['parametro'] . "%' ";
+                $cadenaSql .= "OR cast(c.vigencia as text ) LIKE '%" . $variable['parametro'] . "%'  ";
                 $cadenaSql .= "   LIMIT 10;";
                 break;
+
+
             case "sede" :
 
             case "obtenerInfoUsuario" :

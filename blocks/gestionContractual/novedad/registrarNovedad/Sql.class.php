@@ -271,14 +271,12 @@ class Sql extends \Sql {
             case "consultarOrdenGeneral" :
 
                 $cadenaSql = "SELECT DISTINCT c.id_contrato_normal, p.descripcion, cg.tipo_contrato, c.numero_contrato, c.vigencia, c.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,"
-                        . " se.\"ESF_SEDE\" ||'-'|| dep.\"ESF_DEP_ENCARGADA\" as SedeDependencia, cg.numero_solicitud_necesidad,cg.numero_cdp, ec.nombre_estado, ce.fecha_registro as fecha_registro_estado ";
-                $cadenaSql .= "FROM contrato c, parametros p, contrato_general cg, \"SICapital\".\"sedes_SIC\" se, \"SICapital\".\"dependencia_SIC\" dep, ";
+                        . "  cg.numero_solicitud_necesidad,cg.numero_cdp, ec.nombre_estado, ce.fecha_registro as fecha_registro_estado ";
+                $cadenaSql .= "FROM contrato c, parametros p, contrato_general cg,  ";
                 $cadenaSql .= "contrato_estado ce, estado_contrato ec  ";
-                $cadenaSql .= "WHERE  cg.tipo_contrato = p.id_parametro and ";
-                $cadenaSql .= "se.\"ESF_ID_SEDE\" = cg.sede_solicitante ";
+                $cadenaSql .= "WHERE  cg.tipo_contrato = p.id_parametro  ";
                 $cadenaSql .= "AND cg.numero_contrato = ce.numero_contrato and cg.vigencia = ce.vigencia and ce.estado = ec.id ";
                 $cadenaSql .= "AND ce.fecha_registro = (SELECT MAX(cee.fecha_registro) from contrato_estado cee where c.numero_contrato = cee.numero_contrato and  c.vigencia = cee.vigencia) ";
-                $cadenaSql .= "AND dep.\"ESF_CODIGO_DEP\" = cg.dependencia_solicitante ";
                 $cadenaSql .= "AND c.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND c.vigencia = cg.vigencia ";
                 $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
@@ -316,26 +314,26 @@ class Sql extends \Sql {
 
             case "consultarOrdenIdexud" :
 
-                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,"
+                $cadenaSql = "SELECT DISTINCT c.id_contrato_normal, p.descripcion,cg.tipo_contrato, c.numero_contrato, c.vigencia, c.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,"
                         . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia , cg.numero_solicitud_necesidad,cg.numero_cdp, ec.nombre_estado, ce.fecha_registro as fecha_registro_estado ";
                 $cadenaSql .= "FROM orden o, parametros p,  contrato_general cg, convenio conv, ";
                 $cadenaSql .= "contrato_estado ce, estado_contrato ec  ";
-                $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
+                $cadenaSql .= "WHERE cg.tipo_contrato = p.id_parametro ";
                 $cadenaSql .= "AND conv.\"NUMERO_PRO\"  = cg.convenio_solicitante ";
                 $cadenaSql .= "AND cg.numero_contrato = ce.numero_contrato and cg.vigencia = ce.vigencia and ce.estado = ec.id ";
                 $cadenaSql .= "AND ce.fecha_registro = (SELECT MAX(cee.fecha_registro) from contrato_estado cee where o.numero_contrato = cee.numero_contrato and  o.vigencia = cee.vigencia) ";
-                $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
-                $cadenaSql .= "AND o.vigencia = cg.vigencia ";
+                $cadenaSql .= "AND c.numero_contrato = cg.numero_contrato ";
+                $cadenaSql .= "AND c.vigencia = cg.vigencia ";
                 $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
-                $cadenaSql .= "AND o.estado = 'true' AND cg.estado_aprobacion = 't' AND ec.id = 4 ";
+                $cadenaSql .= "AND c.estado_registro = 'true' AND cg.estado_aprobacion = 't' AND ec.id = 4 ";
                 if ($variable ['tipo_orden'] != '') {
-                    $cadenaSql .= " AND o.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
+                    $cadenaSql .= " AND cg.tipo_contrato = '" . $variable ['tipo_orden'] . "' ";
                 }
                 if ($variable ['numero_contrato'] != '') {
-                    $cadenaSql .= " AND o.numero_contrato = '" . $variable ['numero_contrato'] . "' ";
+                    $cadenaSql .= " AND c.numero_contrato = '" . $variable ['numero_contrato'] . "' ";
                 }
                 if ($variable ['vigencia'] != '') {
-                    $cadenaSql .= " AND o.vigencia = '" . $variable ['vigencia'] . "' ";
+                    $cadenaSql .= " AND c.vigencia = '" . $variable ['vigencia'] . "' ";
                 }
 
                 if ($variable ['nit'] != '') {
@@ -346,10 +344,9 @@ class Sql extends \Sql {
                     $cadenaSql .= " AND conv.\"NUMERO_PRO\" = '" . $variable ['dependencia'] . "' ";
                 }
                 if ($variable ['fecha_inicial'] != '' && $variable ['fecha_final'] != '') {
-                    $cadenaSql .= " AND o.fecha_registro BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
+                    $cadenaSql .= " AND c.fecha_registro BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
                     $cadenaSql .= " AND  CAST ( '" . $variable ['fecha_final'] . "' AS DATE)  ";
                 }
-
                 $cadenaSql .= " ; ";
 
                 break;

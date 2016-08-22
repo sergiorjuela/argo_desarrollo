@@ -3,6 +3,9 @@
 $conexion = "contractual";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
+$conexionFrameWork = "estructura";
+$DBFrameWork = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexionFrameWork);
+
 class EnLetras {
 
     var $Void = "";
@@ -341,8 +344,15 @@ if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 }
 if ($_REQUEST ['funcion'] == 'consultaContrato') {
 
-    $cadenaSql = $this->sql->getCadenaSql('buscar_contrato', $_GET ['query']);
-
+    $cadenaSqlUnidad = $this->sql->getCadenaSql("obtenerInfoUsuario", $_REQUEST['usuario']);
+    $unidad = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
+    if($unidad[0]['unidad_ejecutora']==1){
+        $unidad_ejecutora = 209;
+    }
+    else{
+        $unidad_ejecutora= 208;
+    }
+    $cadenaSql = $this->sql->getCadenaSql('buscar_contrato', array('parametro' => $_GET ['query'], 'unidad' => $unidad_ejecutora));
     $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
   
     foreach ($resultadoItems as $key => $values) {

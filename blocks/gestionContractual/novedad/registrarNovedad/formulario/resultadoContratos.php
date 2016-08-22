@@ -49,9 +49,9 @@ class registrarForm {
          * $atributos= array_merge($atributos,$atributosGlobales);
          */
         $atributosGlobales ['campoSeguro'] = 'true';
-     
-       
-        
+
+
+
 
         $conexion = "contractual";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
@@ -76,17 +76,17 @@ class registrarForm {
             $nit = '';
         }
 
-        if (isset($_REQUEST ['sedeConsulta']) && $_REQUEST ['sedeConsulta'] != '') {
-            $sede = $_REQUEST ['sedeConsulta'];
-        } else {
-            $sede = '';
-        }
-
-        if (isset($_REQUEST ['dependenciaConsulta']) && $_REQUEST ['dependenciaConsulta'] != '') {
-            $dependencia = $_REQUEST ['dependenciaConsulta'];
-        } else {
-            $dependencia = '';
-        }
+//        if (isset($_REQUEST ['sedeConsulta']) && $_REQUEST ['sedeConsulta'] != '') {
+//            $sede = $_REQUEST ['sedeConsulta'];
+//        } else {
+//            $sede = '';
+//        }
+//
+//        if (isset($_REQUEST ['dependenciaConsulta']) && $_REQUEST ['dependenciaConsulta'] != '') {
+//            $dependencia = $_REQUEST ['dependenciaConsulta'];
+//        } else {
+//            $dependencia = '';
+//        }
 
         if (isset($_REQUEST ['fecha_inicio']) && $_REQUEST ['fecha_inicio'] != '') {
             $fecha_inicio = $_REQUEST ['fecha_inicio'];
@@ -106,10 +106,6 @@ class registrarForm {
             $convenio = '';
         }
 
-
-
-
-
         $id_usuario = $_REQUEST['usuario'];
         $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
@@ -122,45 +118,34 @@ class registrarForm {
         }
         if ($unidadEjecutora[0]['unidad_ejecutora'] == 1) {
             $unidadEjecutora = 209;
-            $arreglo = array(
-                'tipo_contrato' => $tipo_orden,
-                'numero_contrato' => $numero_orden[0],
-                'vigencia' => $vigencia,
-                'nit' => $nit,
-                'fecha_inicial' => $fecha_inicio,
-                'fecha_final' => $fecha_final,
-                'unidad_ejecutora' => $unidadEjecutora,
-                'sede' => $sede,
-                'dependencia' => $dependencia,
-            );
-            $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenGeneral', $arreglo);
 
-            $contratos = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         } else {
 
             $unidadEjecutora = 208;
-            $arreglo = array(
-                'tipo_contrato' => $tipo_orden,
-                'numero_contrato' => $numero_orden[0],
-                'vigencia' => $vigencia,
-                'nit' => $nit,
-                'fecha_inicial' => $fecha_inicio,
-                'fecha_final' => $fecha_final,
-                'unidad_ejecutora' => $unidadEjecutora,
-                'sede' => $sede,
-                'dependencia' => $convenio,
-            );
-
-
-            $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenIdexud', $arreglo);
-
-            $contratos = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         }
-        $arreglo = serialize($arreglo);
-      
         
-      
-    // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
+        $arreglo = array(
+            'tipo_contrato' => $tipo_orden,
+            'numero_contrato' => $numero_orden[0],
+            'vigencia' => $vigencia,
+            'nit' => $nit,
+            'fecha_inicial' => $fecha_inicio,
+            'fecha_final' => $fecha_final,
+            'unidad_ejecutora' => $unidadEjecutora,
+            'sede' => "",
+            'dependencia' => "",
+        );
+
+
+        $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenGeneral', $arreglo);
+
+        $contratos = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+        $arreglo = serialize($arreglo);
+
+
+
+        // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
         $esteCampo = $esteBloque ['nombre'];
         $atributos ['id'] = $esteCampo;
         $atributos ['nombre'] = $esteCampo;
@@ -278,7 +263,7 @@ class registrarForm {
                                 <td><center>" . $contratos [$i] ['numero_solicitud_necesidad'] . "</center></td>		
                                 <td><center>" . $contratos [$i] ['numero_cdp'] . "</center></td>		
                                 <td><center>" . $contratos [$i] ['proveedor'] . "</center></td>
-                                <td><center>" . $contratos [$i] ['sededependencia'] . "</center></td>
+                                <td><center>Sede -Dependencia</center></td>
                                 <td><center>" . $contratos [$i] ['fecha_registro'] . "</center></td>
                                 <td><center>" . $contratos [$i] ['nombre_estado'] . "</center></td>
                                 <td><center>
