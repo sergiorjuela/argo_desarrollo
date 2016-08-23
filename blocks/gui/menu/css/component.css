@@ -1,10 +1,11 @@
 .cbp-hrmenu {
     width: 100%;
-    margin-top: 0;
+    margin-top: -50px;
     border-bottom: 3px solid #2c3670;
 /*    position: fixed;*/
-    top: 130px;
+    top: 140px;
     z-index: 1;
+    
     background-color: #fff;
 
 }

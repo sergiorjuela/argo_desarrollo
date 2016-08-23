@@ -10,19 +10,13 @@ $directorio .= $this->miConfigurador->getVariableConfiguracion("site") . "/index
 $directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");
 ?>
 <div id="espacio_trabajo">
-    <div id="slider1_container" style="position: relative; top: 0px; left: 0px; width: 1800px; height: 500px; overflow: hidden;">
+    <div id="slider1_container" style="position: relative; top: 0px; left: 0px; width: 1900px; height: 500px; overflow: hidden;">
         <!-- Slides Container -->
-        <div u="slides" style="cursor: move; position: absolute; overflow: hidden; left: 0px; top: 0px; width: 1800px; height: 500px; overflow: hidden;">
+        <div u="slides" style="cursor: move; position: relative; overflow: hidden; left: 0px; top: 0px; width: 1900px; height: 500px; overflow: hidden;">
             <div><img u="image" src="<?php echo $rutaBloque ?>/images/Fractales1.jpg" /></div>
-            <div><img u="image" src="<?php echo $rutaBloque ?>/images/Fractales12.jpg" /></div>
-            <div><img u="image" src="<?php echo $rutaBloque ?>/images/Fractales13.jpg" /></div>
             <div><img u="image" src="<?php echo $rutaBloque ?>/images/Fractales2.jpg" /></div>
             <div><img u="image" src="<?php echo $rutaBloque ?>/images/Fractales4.jpg" /></div>
             <div><img u="image" src="<?php echo $rutaBloque ?>/images/Fractales3.jpg" /></div>
-            <div><img u="image" src="<?php echo $rutaBloque ?>/images/Fractales10.jpg" /></div>
-            <div><img u="image" src="<?php echo $rutaBloque ?>/images/Fractales11.jpg" /></div>
-
-
         </div>
     </div>
 </div>

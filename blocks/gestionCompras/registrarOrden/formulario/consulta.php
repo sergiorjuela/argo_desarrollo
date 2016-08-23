@@ -40,6 +40,7 @@ class registrarForm {
          */
         $atributosGlobales ['campoSeguro'] = 'true';
 
+        $_REQUEST ['tiempo'] = time();
         //-----Esto es una Actualizacion del repositorio 
         // -------------------------------------------------------------------------------------------------
 
@@ -92,7 +93,7 @@ class registrarForm {
         $atributos ["leyenda"] = "Consultar Solicitud de Necesidad y CDP";
         echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
 
-     
+
 
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
         $esteCampo = 'vigencia_solicitud_consulta';

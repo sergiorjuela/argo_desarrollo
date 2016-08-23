@@ -104,7 +104,7 @@ class registrarForm {
         // $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
         // Si no se coloca, entonces toma el valor predeterminado.
         $atributos ['estilo'] = '';
-        $atributos ['marco'] = false;
+        $atributos ['marco'] = true;
         $tab = 1;
         // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
         // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
