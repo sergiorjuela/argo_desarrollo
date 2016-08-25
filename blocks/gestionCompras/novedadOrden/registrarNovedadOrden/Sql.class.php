@@ -133,7 +133,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " dependencia.\"ESF_DEP_ENCARGADA\", cg.supervisor, cg.valor_contrato  FROM ";
                 $cadenaSql .= " contractual.contrato_general cg, contractual.parametros pr, \"SICapital\".\"sedes_SIC\" sede, ";
                 $cadenaSql .= " \"SICapital\".\"dependencia_SIC\" dependencia ";
-                $cadenaSql .= " WHERE cg.unidad_ejecutora = CAST(pr.id_parametro as text) and ";
+                $cadenaSql .= " WHERE cg.unidad_ejecutora = pr.id_parametro and ";
                 $cadenaSql .= " sede.\"ESF_ID_SEDE\" = cg.sede_solicitante  and ";
                 $cadenaSql .= " dependencia.\"ESF_CODIGO_DEP\" = cg.dependencia_solicitante  and ";
                 $cadenaSql .= " cg.numero_contrato='" . $variable['numero_contrato'] . "' and ";
@@ -146,7 +146,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " pr.descripcion, cg.numero_solicitud_necesidad, cg.numero_cdp, conv.\"NOMBRE\" ,  ";
                 $cadenaSql .= " conv.\"ENTIDAD\", cg.supervisor, cg.valor_contrato FROM ";
                 $cadenaSql .= " contractual.contrato_general cg, contractual.parametros pr, convenio conv ";
-                $cadenaSql .= " WHERE cg.unidad_ejecutora = CAST(pr.id_parametro as text) and ";
+                $cadenaSql .= " WHERE cg.unidad_ejecutora = pr.id_parametro  and ";
                 $cadenaSql .= " conv.\"NUMERO_PRO\" = cg.convenio_solicitante  and ";
                 $cadenaSql .= " cg.numero_contrato='" . $variable['numero_contrato'] . "' and ";
                 $cadenaSql .= " cg.vigencia = " . $variable['vigencia'] . " ; ";
@@ -286,7 +286,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "AND dep.\"ESF_CODIGO_DEP\" = cg.dependencia_solicitante ";
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
-                $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
+                $cadenaSql .= "AND cg.unidad_ejecutora = " . $variable ['unidad_ejecutora'] . " ";
                 $cadenaSql .= "AND o.estado = 'true' AND cg.estado_aprobacion = 't' AND ec.id = 4";
                 if ($variable ['tipo_orden'] != '') {
                     $cadenaSql .= " AND o.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
@@ -331,7 +331,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "AND ce.fecha_registro = (SELECT MAX(cee.fecha_registro) from contrato_estado cee where o.numero_contrato = cee.numero_contrato and  o.vigencia = cee.vigencia) ";
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
-                $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
+                $cadenaSql .= "AND cg.unidad_ejecutora = " . $variable ['unidad_ejecutora'] . " ";
                 $cadenaSql .= "AND o.estado = 'true' AND cg.estado_aprobacion = 't' AND ec.id = 4 ";
                 if ($variable ['tipo_orden'] != '') {
                     $cadenaSql .= " AND o.tipo_orden = '" . $variable ['tipo_orden'] . "' ";

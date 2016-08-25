@@ -117,11 +117,11 @@ class registrarForm {
             $vigencia = "";
         }
         if ($unidadEjecutora[0]['unidad_ejecutora'] == 1) {
-            $unidadEjecutora = 209;
+            $unidadEjecutora = 1;
 
         } else {
 
-            $unidadEjecutora = 208;
+            $unidadEjecutora = 2;
         }
         
         $arreglo = array(
@@ -138,6 +138,7 @@ class registrarForm {
 
 
         $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenGeneral', $arreglo);
+       
 
         $contratos = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 

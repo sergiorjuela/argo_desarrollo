@@ -279,7 +279,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "AND ce.fecha_registro = (SELECT MAX(cee.fecha_registro) from contrato_estado cee where c.numero_contrato = cee.numero_contrato and  c.vigencia = cee.vigencia) ";
                 $cadenaSql .= "AND c.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND c.vigencia = cg.vigencia ";
-                $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
+                $cadenaSql .= "AND cg.unidad_ejecutora = " . $variable ['unidad_ejecutora'] . " ";
                 $cadenaSql .= "AND cg.estado_aprobacion = 't' AND ec.id = 4";
                 if ($variable ['tipo_contrato'] != '') {
                     $cadenaSql .= " AND cg.tipo_contrato = '" . $variable ['tipo_contrato'] . "' ";

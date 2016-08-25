@@ -112,7 +112,7 @@ class registrarForm {
         $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
         if ($unidadEjecutora[0]['unidad_ejecutora'] == 1) {
-            $unidadEjecutora = 209;
+            $unidadEjecutora = 1;
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,
                 'numero_contrato' => $numero_orden[0],
@@ -129,7 +129,7 @@ class registrarForm {
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         } else {
 
-            $unidadEjecutora = 208;
+            $unidadEjecutora = 2;
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,
                 'numero_contrato' => $numero_orden[0],
@@ -146,8 +146,8 @@ class registrarForm {
 
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         }
-        
-       
+
+
 
         $arreglo = base64_encode(serialize($arreglo));
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -241,10 +241,18 @@ class registrarForm {
                 $variable_documento .= "&opcion=generarDocumento";
                 $variable_documento .= "&id_orden=" . $Orden [$i] ['id_orden'];
                 $variable_documento .= "&usuario=" . $_REQUEST['usuario'];
+
+                if ($Orden [$i] ['unidad_ejecutora'] == 1) {
+                    $variable_documento .= "&opcion=generarDocumento";
+                } else {
+                    $variable_documento .= "&opcion=generarDocumentoIdexud";
+                }
                 $variable_documento = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable_documento, $directorio);
 
+
+
                 $documento = "<a href='" . $variable_documento . "'><img src='" . $rutaBloque . "/css/images/documento.png' width='15px'></a>";
-                
+
                 $variable_acta_inicio = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
                 $variable_acta_inicio .= "&opcion=actainicio";
                 $variable_acta_inicio .= "&numerocontrato=" . $Orden [$i] ['numero_contrato'];
@@ -252,8 +260,8 @@ class registrarForm {
                 $variable_acta_inicio .= "&vigencia=" . $Orden [$i] ['vigencia'];
                 $variable_acta_inicio .= "&arreglo=" . $arreglo;
                 $variable_acta_inicio .= "&usuario=" . $_REQUEST ['usuario'];
-                $variable_acta_inicio .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "  VIGENCIA: ".$Orden [$i] ['vigencia']." | NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
-              
+                $variable_acta_inicio .= "&mensaje_titulo=" . $Orden [$i] ['descripcion'] . "  VIGENCIA: " . $Orden [$i] ['vigencia'] . " | NÚMERO ORDEN : " . $Orden [$i] ['numero_contrato'];
+
                 $variable_acta_inicio = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable_acta_inicio, $directorio);
 
                 $acta_inicio = "<a href='" . $variable_acta_inicio . "'><img src='" . $rutaBloque . "/css/images/acta_inicio.png' width='15px'></a>";

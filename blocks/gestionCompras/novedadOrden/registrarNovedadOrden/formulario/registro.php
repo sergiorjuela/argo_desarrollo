@@ -111,7 +111,7 @@ class registrarForm {
                 $sede = 'Convenio';
                 $dependencia = 'Entidad';
             }
-
+            
             $etiquetas = array(
                 0 => 'Vigencia',
                 1 => 'Número Contrato',
@@ -144,7 +144,6 @@ class registrarForm {
 
 
             $cadenaSql = $this->miSql->getCadenaSql('consultarValorElementos', $_REQUEST ['id_orden']);
-
 
 
             $sqlSupervisor = $this->miSql->getCadenaSql("consultaSupervisor", $datosContratista[0][8]);

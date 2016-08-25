@@ -159,9 +159,9 @@ class registrarForm {
             $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("unidad_ejecutora_gasto");
             $tab ++;
             if ($unidad[0]['unidad_ejecutora']==1) {
-                $atributos ['seleccion'] = 209;
+                $atributos ['seleccion'] = 1;
             } else {
-                $atributos ['seleccion'] = 208;
+                $atributos ['seleccion'] = 2;
             }
 
             $matrizItems = array(

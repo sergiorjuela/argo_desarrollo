@@ -119,7 +119,7 @@ class registrarForm {
             $vigencia = "";
         }
         if ($unidadEjecutora[0]['unidad_ejecutora'] == 1) {
-            $unidadEjecutora = 209;
+            $unidadEjecutora = 1;
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,
                 'numero_contrato' => $numero_orden[0],
@@ -136,7 +136,7 @@ class registrarForm {
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         } else {
 
-            $unidadEjecutora = 208;
+            $unidadEjecutora = 2;
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,
                 'numero_contrato' => $numero_orden[0],

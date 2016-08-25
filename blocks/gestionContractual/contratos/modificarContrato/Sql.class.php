@@ -34,7 +34,7 @@ class Sql extends \Sql {
             /**
              * Clausulas específicas
              */
-             case 'buscar_contrato' :
+            case 'buscar_contrato' :
                 $cadenaSql = " SELECT  DISTINCT c.numero_contrato||'-('||c.vigencia||')' AS  data, c.numero_contrato||' - ('||c.vigencia||')'  AS value  ";
                 $cadenaSql .= " FROM contrato c, contrato_general cg, contrato_estado ce, estado_contrato ec  ";
                 $cadenaSql .= " WHERE c.numero_contrato = cg.numero_contrato and c.vigencia = cg.vigencia and  cg.unidad_ejecutora ='" . $variable['unidad'] . "' ";
@@ -150,7 +150,7 @@ class Sql extends \Sql {
                 $cadenaSql .= $variable ['estado'] . ");";
 
                 break;
-            
+
             case "obteneConsecutivoContratoAprobado" :
                 $cadenaSql = " SELECT MAX(consecutivo_contrato) as consecutivo_contrato FROM contrato_aprobado; ";
 
@@ -313,7 +313,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "AND ce.fecha_registro = (SELECT MAX(cee.fecha_registro) from contrato_estado cee where c.numero_contrato = cee.numero_contrato and  c.vigencia = cee.vigencia) ";
                 $cadenaSql .= "AND c.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND c.vigencia = cg.vigencia ";
-                $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
+                $cadenaSql .= "AND cg.unidad_ejecutora = " . $variable ['unidad_ejecutora'] . " ";
                 $cadenaSql .= "AND c.estado_registro = 'true' AND cg.estado_aprobacion = 'f' ";
                 if ($variable ['clase_contrato'] != '') {
                     $cadenaSql .= " AND cg.tipo_contrato = '" . $variable ['clase_contrato'] . "' ";
@@ -719,10 +719,9 @@ class Sql extends \Sql {
 
             case "unidad_ejecutora_gasto" :
 
-                $cadenaSql = "SELECT id_parametro  id, pr.descripcion valor   ";
-                $cadenaSql .= " FROM relacion_parametro rl ";
-                $cadenaSql .= "JOIN parametros pr ON pr.rel_parametro=rl.id_rel_parametro ";
-                $cadenaSql .= "WHERE rl.descripcion ='unidad_ejecutora_gasto' ORDER BY id_parametro DESC ; ";
+                $cadenaSql = " SELECT id , nombre   ";
+                $cadenaSql .= " FROM unidad_ejecutora; ";
+
                 break;
 
             case "consultarContrato" :

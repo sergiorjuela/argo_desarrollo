@@ -95,7 +95,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "AND dep.\"ESF_CODIGO_DEP\" = cg.dependencia_solicitante ";
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
-                $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
+                $cadenaSql .= "AND cg.unidad_ejecutora = " . $variable ['unidad_ejecutora'] . " ";
                 $cadenaSql .= "AND o.estado = 'true' AND cg.estado_aprobacion = 'f'  ";
                 if ($variable ['tipo_orden'] != '') {
                     $cadenaSql .= " AND o.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
@@ -140,7 +140,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "AND ce.fecha_registro = (SELECT MAX(cee.fecha_registro) from contrato_estado cee where o.numero_contrato = cee.numero_contrato and  o.vigencia = cee.vigencia) ";
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
-                $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
+                $cadenaSql .= "AND cg.unidad_ejecutora = " . $variable ['unidad_ejecutora'] . " ";
                 $cadenaSql .= "AND o.estado = 'true' AND cg.estado_aprobacion = 'f' ";
                 if ($variable ['tipo_orden'] != '') {
                     $cadenaSql .= " AND o.tipo_orden = '" . $variable ['tipo_orden'] . "' ";

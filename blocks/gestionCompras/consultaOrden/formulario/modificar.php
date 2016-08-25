@@ -252,7 +252,7 @@ class registrarForm {
                 $atributos ['leyenda'] = "Información del Solicitante";
                 echo $this->miFormulario->agrupacion('inicio', $atributos); {
 
-                    if ($Orden ['unidad_ejecutora'] == 208) {
+                    if ($Orden ['unidad_ejecutora'] == 2) {
                         $esteCampo = 'sede_idexud';
                         $atributos ['id'] = $esteCampo;
                         $atributos ['nombre'] = $esteCampo;
@@ -1835,7 +1835,7 @@ class registrarForm {
                     $atributos ['anchoCaja'] = 40;
                     $atributos ['miEvento'] = '';
 
-                    if ($Orden ['unidad_ejecutora'] == 209) {
+                    if ($Orden ['unidad_ejecutora'] == 1) {
                         $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("ordenadores_orden");
                     } else {
                         $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("ordenadores_orden_idexud");

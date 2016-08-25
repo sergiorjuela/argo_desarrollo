@@ -27,6 +27,13 @@
                 }
             });
         });
+        
+$("#ventanaEmergenteConvenio" ).dialog({
+height: 700,
+width: 500,
+title: "Datos Convenio",
+autoOpen: false,
+});
 
                                      
 $("#tablaModalOrdenes").dataTable().fnDestroy();            

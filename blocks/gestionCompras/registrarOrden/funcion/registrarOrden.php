@@ -37,11 +37,10 @@ class RegistradorOrden {
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
         if ($_REQUEST ['numero_unidad_ejecutora'] == '1') {
-            $unidad_ejecutura = 209;
             $sede_solicitante = $_REQUEST ['sede'];
             $dependencia_solicitante = $_REQUEST ['dependencia_solicitante'];
         } else {
-            $unidad_ejecutura = 208;
+           
             $sede_solicitante = $_REQUEST ['sede_idexud'];
             $dependencia_solicitante = $_REQUEST ['convenio_solicitante'];
         }
@@ -65,7 +64,7 @@ class RegistradorOrden {
         $datosContratoGeneral = array('vigencia' => (int) date('Y'),
             'id_orden_contrato' => 0,
             'tipo_contrato' => 98,
-            'unidad_ejecutura' => $unidad_ejecutura,
+            'unidad_ejecutura' => (int)$_REQUEST ['numero_unidad_ejecutora'],
             'objeto_contrato' => $_REQUEST ['objeto_contrato'],
             'fecha_inicio' => $fecha_inicio,
             'fecha_fin' => $fecha_fin,

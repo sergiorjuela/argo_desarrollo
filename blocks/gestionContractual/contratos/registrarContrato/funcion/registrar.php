@@ -72,12 +72,8 @@ class RegistradorContrato {
             $tasa_cambio = 0;
         }
         // Determinar la Unidad Ejecutora
-        $unidad_ejecutura = strpos($_REQUEST ['unidad_ejecutora'], 'IDEXUD');
-        if ($unidad_ejecutura == false) {
-            $unidad_ejecutura = 209;
-        } else {
-            $unidad_ejecutura = 208;
-        }
+       
+        
         //Obtener la Clausula de Presupuesto
         if (isset($_POST['clausula_presupuesto'])) {
             $clausula_presupuesto = $_POST['clausula_presupuesto'];
@@ -91,7 +87,7 @@ class RegistradorContrato {
         $arreglo_contrato_general = array('vigencia' => (int) date('Y'),
             'id_orden_contrato' => 0,
             'tipo_contrato' => $_REQUEST['clase_contrato'],
-            'unidad_ejecutura' => $unidad_ejecutura,
+            'unidad_ejecutura' =>  $_REQUEST ['unidad_ejecutora_hidden'],
             'objeto_contrato' => $_REQUEST ['objeto_contrato'],
             'fecha_inicio' => $fecha_inicio_poliza,
             'fecha_fin' => $fecha_final_poliza,

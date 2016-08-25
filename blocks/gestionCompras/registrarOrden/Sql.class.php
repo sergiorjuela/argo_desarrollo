@@ -257,7 +257,7 @@ class Sql extends \Sql {
             case "insertarContratoGeneral" :
 
 
-                if ($variable['unidad_ejecutura'] == 209) {
+                if ($variable['unidad_ejecutura'] == 1) {
                     $campo = " dependencia_solicitante ";
                 } else {
                     $campo = " convenio_solicitante ";
@@ -332,12 +332,14 @@ class Sql extends \Sql {
 
                 break;
 
-            case "obtenerInfoOrden" :
-                $cadenaSql = " SELECT MAX(numero_contrato) as numero_contrato";
+                      
+             case "obtenerInfoOrden" :
+                $cadenaSql = " SELECT MAX(CAST(numero_contrato AS integer)) as numero_contrato";
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= "contrato_general; ";
 
                 break;
+
 
             case "validarContratista" :
                 $cadenaSql = "SELECT * From contratista WHERE identificacion=" . $variable;

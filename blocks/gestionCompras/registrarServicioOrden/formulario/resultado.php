@@ -111,7 +111,7 @@ class registrarForm {
         $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
         if ($unidadEjecutora[0]['unidad_ejecutora'] == 1) {
-            $unidadEjecutora = 209;
+            $unidadEjecutora = 1;
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,
                 'numero_contrato' => $numero_orden[0],
@@ -128,7 +128,7 @@ class registrarForm {
             $arreglo = serialize($arreglo);
         } else {
 
-            $unidadEjecutora = 208;
+            $unidadEjecutora = 2;
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,
                 'numero_contrato' => $numero_orden[0],
@@ -144,7 +144,7 @@ class registrarForm {
             $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenIdexud', $arreglo);
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
             $arreglo = serialize($arreglo);
-            echo $arreglo;
+       
         }
 
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------

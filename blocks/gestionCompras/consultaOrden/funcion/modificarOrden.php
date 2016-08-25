@@ -39,11 +39,11 @@ class RegistradorOrden {
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
         if ($_REQUEST ['identificador_unidad'] == 1) {
-            $unidad_ejecutura = 209;
+            $unidad_ejecutura = 1;
             $sede_solicitante = $_REQUEST ['sede'];
             $dependencia_solicitante = $_REQUEST ['dependencia_solicitante'];
         } else {
-            $unidad_ejecutura = 208;
+            $unidad_ejecutura = 2;
             $sede_solicitante = $_REQUEST ['sede_idexud'];
             $dependencia_solicitante = $_REQUEST ['convenio_solicitante'];
         }

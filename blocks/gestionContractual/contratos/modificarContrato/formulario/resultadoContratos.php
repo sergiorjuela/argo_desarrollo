@@ -126,10 +126,10 @@ class registrarForm {
             $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
             if ($unidadEjecutora[0]['unidad_ejecutora'] == 1) {
-                $unidadEjecutora = 209;
+                $unidadEjecutora = 1;
             } else {
 
-                $unidadEjecutora = 208;
+                $unidadEjecutora = 2;
             }
 
             $arreglo = array(

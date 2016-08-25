@@ -391,7 +391,7 @@ class RegistradorOrden {
         $formaPago = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         $formaPago = $formaPago[0][0];
 
-        if ($orden['unidad_ejecutora'] == '208') {
+        if ($orden['unidad_ejecutora'] == '2') {
             $cadenaSql = $this->miSql->getCadenaSql('consultarConvenioDocumento', $orden ['convenio_solicitante']);
             $dependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
             $dependencia = $dependencia[0][0];

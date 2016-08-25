@@ -137,11 +137,20 @@ class Sql extends \Sql {
                 $cadenaSql .= " WHERE ";
                 $cadenaSql .= " \"NUMERO_PRO\" = '$variable' ";
                 break;
+            
+            case "informacion_convenio" :
+                $cadenaSql = " SELECT ";
+                $cadenaSql .= " * ";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " convenio";
+                $cadenaSql .= " WHERE ";
+                $cadenaSql .= " \"NUMERO_PRO\" = '$variable' ";
+                break;
 
             case "consultarOrdenGeneral" :
 
                 $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,o.tipo_orden,"
-                        . " se.\"ESF_SEDE\" ||'-'|| dep.\"ESF_DEP_ENCARGADA\" as SedeDependencia, cg.numero_solicitud_necesidad,cg.numero_cdp, ec.nombre_estado, ce.fecha_registro as fecha_registro_estado ";
+                        . " se.\"ESF_SEDE\" ||'-'|| dep.\"ESF_DEP_ENCARGADA\" as SedeDependencia, cg.numero_solicitud_necesidad,cg.numero_cdp, ec.nombre_estado, ce.fecha_registro as fecha_registro_estado,cg.unidad_ejecutora  ";
                 $cadenaSql .= "FROM orden o, parametros p, contrato_general cg, \"SICapital\".\"sedes_SIC\" se, \"SICapital\".\"dependencia_SIC\" dep, ";
                 $cadenaSql .= "contrato_estado ce, estado_contrato ec  ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
@@ -151,7 +160,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "AND dep.\"ESF_CODIGO_DEP\" = cg.dependencia_solicitante ";
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
-                $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
+                $cadenaSql .= "AND cg.unidad_ejecutora = " . $variable ['unidad_ejecutora'] . " ";
                 $cadenaSql .= "AND o.estado = 'true' AND cg.estado_aprobacion = 'f' ";
                 if ($variable ['tipo_orden'] != '') {
                     $cadenaSql .= " AND o.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
@@ -185,8 +194,8 @@ class Sql extends \Sql {
 
             case "consultarOrdenIdexud" :
 
-                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,"
-                        . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia , cg.numero_solicitud_necesidad,cg.numero_cdp, ec.nombre_estado, ce.fecha_registro as fecha_registro_estado ";
+                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,conv.\"NUMERO_PRO\","
+                        . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia , cg.numero_solicitud_necesidad,cg.numero_cdp, ec.nombre_estado, ce.fecha_registro as fecha_registro_estado ,cg.unidad_ejecutora ";
                 $cadenaSql .= "FROM orden o, parametros p,  contrato_general cg, convenio conv, ";
                 $cadenaSql .= "contrato_estado ce, estado_contrato ec  ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
@@ -195,7 +204,7 @@ class Sql extends \Sql {
                 $cadenaSql .= "AND ce.fecha_registro = (SELECT MAX(cee.fecha_registro) from contrato_estado cee where o.numero_contrato = cee.numero_contrato and  o.vigencia = cee.vigencia) ";
                 $cadenaSql .= "AND o.numero_contrato = cg.numero_contrato ";
                 $cadenaSql .= "AND o.vigencia = cg.vigencia ";
-                $cadenaSql .= "AND cg.unidad_ejecutora = '" . $variable ['unidad_ejecutora'] . "' ";
+                $cadenaSql .= "AND cg.unidad_ejecutora = " . $variable ['unidad_ejecutora'] . " ";
                 $cadenaSql .= "AND o.estado = 'true' AND cg.estado_aprobacion = 'f' ";
                 if ($variable ['tipo_orden'] != '') {
                     $cadenaSql .= " AND o.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
@@ -449,7 +458,7 @@ class Sql extends \Sql {
 
             case "updateContratoGeneral":
 
-                if ($variable['unidad_ejecutura'] == 209) {
+                if ($variable['unidad_ejecutura'] == 1) {
                     $campo = " dependencia_solicitante ";
                 } else {
                     $campo = " convenio_solicitante ";

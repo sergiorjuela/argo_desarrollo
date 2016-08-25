@@ -113,7 +113,8 @@ class registrarForm {
         $unidadEjecutora = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
         if ($unidadEjecutora[0]['unidad_ejecutora'] == 1) {
-            $unidadEjecutora = 209;
+            $unidadEjecutora = 1;
+            $titulo_tabla = "Sede-Dependencia";
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,
                 'numero_contrato' => $numero_orden[0],
@@ -130,7 +131,8 @@ class registrarForm {
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         } else {
 
-            $unidadEjecutora = 208;
+            $unidadEjecutora = 2;
+            $titulo_tabla = "Convenio";
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,
                 'numero_contrato' => $numero_orden[0],
@@ -147,7 +149,7 @@ class registrarForm {
 
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         }
-        
+
 
 
         $arreglo = base64_encode(serialize($arreglo));
@@ -309,9 +311,10 @@ class registrarForm {
         echo " </div></div>";
 
 
-
-
         if ($Orden) {
+
+
+
 
             echo "<table id='tablaTitulos'>";
             echo "<thead>
@@ -322,7 +325,7 @@ class registrarForm {
                                 <th>Numero CDP</th>
                     		<th>Vigencia</th>            
             			<th>Identificación<br>Nombre Contratista</th>
-                                <th>Sede-Dependencia</th>
+                                <th>" . $titulo_tabla . "</th>
                                 <th>Fecha de Registro</th>
                                 <th>Estado</th>
                                 <th>Modificar Orden</th>
@@ -366,7 +369,7 @@ class registrarForm {
                 $variable_documento .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion('pagina');
                 $variable_documento .= "&bloque=" . $esteBloque ['nombre'];
                 $variable_documento .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-                if ($Orden [$i] ['descripcion'] == 246) {
+                if ($Orden [$i] ['unidad_ejecutora'] == 1) {
                     $variable_documento .= "&opcion=generarDocumento";
                 } else {
                     $variable_documento .= "&opcion=generarDocumentoIdexud";
@@ -402,9 +405,13 @@ class registrarForm {
                                 <td><center>" . $Orden [$i] ['numero_solicitud_necesidad'] . "</center></td>		
                                 <td><center>" . $Orden [$i] ['numero_cdp'] . "</center></td>		
                                 <td><center>" . $Orden [$i] ['vigencia'] . "</center></td>
-                                <td><center>" . $Orden [$i] ['proveedor'] . "</center></td>
-                                <td><center>" . $Orden [$i] ['sededependencia'] . "</center></td>
-                                <td><center>" . $Orden [$i] ['fecha_registro'] . "</center></td>
+                                <td><center>" . $Orden [$i] ['proveedor'] . "</center></td>";
+                if ($Orden [$i] ['unidad_ejecutora'] == 1) {
+                    $mostrarHtml .="<td><center>" . $Orden [$i] ['sededependencia'] . "</center></td>";
+                } else {
+                    $mostrarHtml .= "<td><center>" . substr($Orden [$i] ['sededependencia'], 0, 30) . "...<a href='javascript:void(0);' onclick='VerInfoConvenio(" . $Orden [$i] ['NUMERO_PRO'] . ");'> Ver Mas</a></center></td>";
+                }
+                $mostrarHtml .= "<td><center>" . $Orden [$i] ['fecha_registro'] . "</center></td>
                                 <td><center> " . $Orden [$i] ['nombre_estado'] . "</center></td>
                                 <td><center>
                                     <a href='" . $variable . "'>
@@ -430,6 +437,29 @@ class registrarForm {
             echo $this->miFormulario->division("inicio", $atributos);
             echo "<button id='myBtn'>Aprobación Multiple</button>";
             echo $this->miFormulario->division('fin');
+
+
+            $atributos ["id"] = "ventanaEmergenteConvenio";
+            $atributos ["estilo"] = " ";
+            echo $this->miFormulario->division("inicio", $atributos);
+
+            // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+            $esteCampo = 'infoConvenio';
+            $atributos ['id'] = $esteCampo;
+            $atributos ['tipo'] = 'information';
+            $atributos ['estilo'] = 'textoNotasFormulario';
+            $atributos ['mensaje'] = "";
+            $atributos ['span'] = "spandid";
+
+            $tab ++;
+
+            // Aplica atributos globales al control
+            $atributos = array_merge($atributos, $atributosGlobales);
+            echo $this->miFormulario->cuadroMensaje($atributos);
+            unset($atributos);
+
+            echo $this->miFormulario->division("fin");
+            unset($atributos);
         } else {
 
             $mensaje = "No Se Encontraron<br>Ordenes.";

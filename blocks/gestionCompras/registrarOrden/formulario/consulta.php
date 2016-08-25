@@ -74,12 +74,6 @@ class registrarForm {
         $cadenaSqlUnidad = $this->miSql->getCadenaSql("obtenerInfoUsuario", $id_usuario);
         $unidad = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
-        if ($unidad [0]['unidad_ejecutora'] == 1) {
-            $unidadEjecutora = 209;
-        } else {
-            $unidadEjecutora = 208;
-        }
-
         // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
         // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
         $atributos ['tipoEtiqueta'] = 'inicio';
@@ -214,39 +208,6 @@ class registrarForm {
         echo $this->miFormulario->campoCuadroLista($atributos);
         unset($atributos);
 
-        // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-//        $esteCampo = 'dependencia_solicitud';
-//        $atributos ['columnas'] = 2;
-//        $atributos ['nombre'] = $esteCampo;
-//        $atributos ['id'] = $esteCampo;
-//        $atributos ['evento'] = '';
-//        $atributos ['deshabilitado'] = false;
-//        $atributos ["etiquetaObligatorio"] = false;
-//        $atributos ['tab'] = $tab;
-//        $atributos ['tamanno'] = 1;
-//        $atributos ['estilo'] = 'jqueryui';
-//        $atributos ['validar'] = '';
-//        $atributos ['limitar'] = true;
-//        $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-//        $atributos ['anchoEtiqueta'] = 200;
-//
-//        if (isset($_REQUEST [$esteCampo])) {
-//            $atributos ['seleccion'] = $_REQUEST [$esteCampo];
-//        } else {
-//            $atributos ['seleccion'] = - 1;
-//        }
-//
-//        $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("dependencia_solicitud_consulta");
-//        $matrizItems = $DBSICA->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
-//        $atributos ['matrizItems'] = $matrizItems;
-//
-//        // Utilizar lo siguiente cuando no se pase un arreglo:
-//        // $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
-//        // $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
-//        $tab ++;
-//        $atributos = array_merge($atributos, $atributosGlobales);
-//        echo $this->miFormulario->campoCuadroLista($atributos);
-//        unset($atributos);
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 
         $esteCampo = 'fecha_inicial';

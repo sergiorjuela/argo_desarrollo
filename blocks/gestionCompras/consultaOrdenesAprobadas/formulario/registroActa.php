@@ -72,9 +72,9 @@ class registrarForm {
         $unidad = $DBFrameWork->ejecutarAcceso($cadenaSqlUnidad, "busqueda");
 
         if ($unidad[0]['unidad_ejecutora'] == 1) {
-            $unidadEjecutora = 209;
+            $unidadEjecutora = 1;
         } else {
-            $unidadEjecutora = 208;
+            $unidadEjecutora = 2;
         }
 
         // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
