@@ -56,7 +56,7 @@ if ($_REQUEST ['funcion'] == 'consultaContratista') {
 if ($_REQUEST ['funcion'] == 'ObtenerCdps') {
 
     $datos = array(1 => $_REQUEST ['numsol'], 0 => $_REQUEST ['vigencia'], 2 => $_REQUEST ['unidad'], 3 => $_REQUEST ['cdps'],
-        4=>$_REQUEST ['cdpsNovedades']);
+        4 => $_REQUEST ['cdpsNovedades']);
     $cadenaSql = $this->sql->getCadenaSql('obtener_cdp_numerosol', $datos);
     $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
     $resultado = json_encode($resultadoItems);
@@ -116,6 +116,16 @@ if ($_REQUEST ['funcion'] == 'Infodisponibilidades') {
 
     $cadenaSql = $this->sql->getCadenaSql('info_disponibilidad', $arreglo);
     $resultadoItems = $DBSICA->ejecutarAcceso($cadenaSql, "busqueda");
+    $resultado = json_encode($resultadoItems [0]);
+
+    echo $resultado;
+}
+
+if ($_REQUEST ['funcion'] == 'consultarInfoConvenio') {
+
+    $cadenaSql = $this->sql->getCadenaSql('informacion_convenio', $_REQUEST['codigo']);
+    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
     $resultado = json_encode($resultadoItems [0]);
 
     echo $resultado;

@@ -3,6 +3,14 @@ $_REQUEST ['tiempo'] = time();
 ?>
 
 
+$("#ventanaEmergenteConvenio" ).dialog({
+height: 700,
+width: 700,
+title: "Datos Convenio",
+autoOpen: false,
+});
+
+
 $('#<?php echo $this->campoSeguro('fecha_inicio_cesion') ?>').datepicker({
 dateFormat: 'yy-mm-dd',
 changeYear: true,

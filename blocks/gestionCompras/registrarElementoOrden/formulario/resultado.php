@@ -112,6 +112,7 @@ class registrarForm {
 
         if ($unidadEjecutora[0]['unidad_ejecutora'] == 1) {
             $unidadEjecutora = 1;
+            $titulo_tabla = "Sede-Dependencia";
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,
                 'numero_contrato' => $numero_orden[0],
@@ -129,6 +130,7 @@ class registrarForm {
         } else {
 
             $unidadEjecutora = 2;
+            $titulo_tabla = "Convenio";
             $arreglo = array(
                 'tipo_orden' => $tipo_orden,
                 'numero_contrato' => $numero_orden[0],
@@ -144,8 +146,8 @@ class registrarForm {
             $cadenaSql = $this->miSql->getCadenaSql('consultarOrdenIdexud', $arreglo);
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
             $arreglo = serialize($arreglo);
-            
         }
+        
 
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
         $esteCampo = $esteBloque ['nombre'];
@@ -209,7 +211,7 @@ class registrarForm {
                                 <th>Vigencia y Número Orden</th>            
             			<th>Identificación<br>Nombre Contratista</th>
                                 <th>Vigencia</th>
-                                <th>Sede-Dependencia o Convenio</th>
+                                <th>" . $titulo_tabla . "</th>
                                 <th>Estado</th>
                                 <th>Cargar Elementos</th>
                                 
@@ -234,9 +236,13 @@ class registrarForm {
                     <td><center>" . $Orden [$i] ['descripcion'] . "</center></td>
                     <td><center>" . $Orden [$i] ['numero_contrato'] . " -- " . $Orden [$i] ['vigencia'] . "</center></td>		
                     <td><center>" . $Orden [$i] ['proveedor'] . "</center></td>
-                    <td><center>" . $Orden [$i] ['vigencia'] . "</center></td>
-                    <td><center>" . $Orden [$i] ['sededependencia'] . "</center></td>
-                    <td><center>" . $Orden [$i] ['nombre_estado'] . "</center></td>
+                    <td><center>" . $Orden [$i] ['vigencia'] . "</center></td>";
+                if ($Orden [$i] ['unidad_ejecutora'] == 1) {
+                    $mostrarHtml .="<td><center>" . $Orden [$i] ['sededependencia'] . "</center></td>";
+                } else {
+                    $mostrarHtml .= "<td><center>" . substr($Orden [$i] ['sededependencia'], 0, 30) . "...<a href='javascript:void(0);' onclick='VerInfoConvenio(" . $Orden [$i] ['NUMERO_PRO'] . ");'> Ver Mas</a></center></td>";
+                }
+                $mostrarHtml .= "<td><center>" . $Orden [$i] ['nombre_estado'] . "</center></td>
                     <td><center>
                     	<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/item.png' width='15px'>
@@ -251,6 +257,25 @@ class registrarForm {
             echo "</tbody>";
 
             echo "</table>";
+
+            $atributos ["id"] = "ventanaEmergenteConvenio";
+            $atributos ["estilo"] = " ";
+            echo $this->miFormulario->division("inicio", $atributos);
+
+            // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+            $esteCampo = 'infoConvenio';
+            $atributos ['id'] = $esteCampo;
+            $atributos ['tipo'] = 'information';
+            $atributos ['estilo'] = 'textoNotasFormulario';
+            $atributos ['mensaje'] = "";
+            $atributos ['span'] = "spandid";
+
+            $tab ++;
+
+            // Aplica atributos globales al control
+            $atributos = array_merge($atributos, $atributosGlobales);
+            echo $this->miFormulario->cuadroMensaje($atributos);
+            unset($atributos);
 
             // Fin de Conjunto de Controles
             // echo $this->miFormulario->marcoAgrupacion("fin");

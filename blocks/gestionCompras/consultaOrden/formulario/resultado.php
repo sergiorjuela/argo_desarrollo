@@ -149,8 +149,7 @@ class registrarForm {
 
             $Orden = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         }
-
-
+        
 
         $arreglo = base64_encode(serialize($arreglo));
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -214,7 +213,7 @@ class registrarForm {
         $atributos ['id'] = $esteCampo;
         $atributos ["estilo"] = "jqueryui";
         $atributos ['tipoEtiqueta'] = 'inicio';
-        $atributos ["leyenda"] = "Aprobacion Multiple";
+        $atributos ["leyenda"] = "Suscripción Multiple";
         echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
 
 
@@ -284,7 +283,7 @@ class registrarForm {
             $atributos ["estilo"] = "marcoBotones";
             echo $this->miFormulario->division("inicio", $atributos);
 
-            $esteCampo = 'botonAprobarMultiple';
+            $esteCampo = 'botonSuscribirMultipleModal';
             $atributos ["id"] = $esteCampo;
             $atributos ["tabIndex"] = $tab;
             $atributos ["tipo"] = 'boton';
@@ -331,7 +330,7 @@ class registrarForm {
                                 <th>Modificar Orden</th>
                         	<th>Modificar Elementos <br>o Servicios</th>
 				<th>Documento Orden</th>
-				<th>Revisar<br>Aprobar Contrato</th>
+				<th>Suscribir Contrato</th>
                              </tr>
                           </thead>
                           
@@ -435,7 +434,7 @@ class registrarForm {
             $atributos ["id"] = "botones";
             $atributos ["estilo"] = "marcoBotones";
             echo $this->miFormulario->division("inicio", $atributos);
-            echo "<button id='myBtn'>Aprobación Multiple</button>";
+            echo "<button id='myBtn'>Suscripción Multiple</button>";
             echo $this->miFormulario->division('fin');
 
 

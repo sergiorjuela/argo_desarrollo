@@ -43,14 +43,15 @@ class RegistradorOrden {
                 $datosAprobacion = array(
                     'numero_contrato' => $datos[$i]['numero_contrato'],
                     'vigencia' => $datos[$i]['vigencia'],
-                    'fecha_aprobacion' => date("Y-m-d"),
+                    'fecha_registro' => date("Y-m-d"),
                     'usuario' => $_REQUEST['usuario'],
+                    'fecha_suscripcion' => $_REQUEST['fecha_suscripcion'],
                     'estado' => 3
                 );
                 $datosestado = array(
                     'numero_contrato' => $datos[$i]['numero_contrato'],
                     'vigencia' => $datos[$i]['vigencia'],
-                    'fecha_aprobacion' => date('Y-m-d H:i:s'),
+                    'fecha_registro' => date('Y-m-d H:i:s'),
                     'usuario' => $_REQUEST['usuario'],
                     'estado' => 3
                 );
@@ -72,6 +73,7 @@ class RegistradorOrden {
                 'id_orden' => $_REQUEST['id_orden'],
                 'numero_contrato' => $_REQUEST['numero_contrato'],
                 'vigencia' => $_REQUEST['vigencia'],
+                'fecha_suscripcion' => $_REQUEST['fecha_suscripcion'],
             );
 
 
@@ -82,8 +84,9 @@ class RegistradorOrden {
                 'id_orden' => $_REQUEST['id_orden'],
                 'numero_contrato' => $_REQUEST['numero_contrato'],
                 'vigencia' => $_REQUEST['vigencia'],
-                'fecha_aprobacion' => date("Y-m-d"),
-                'usuario' => $_REQUEST['usuario']
+                'fecha_registro' => date("Y-m-d"),
+                'usuario' => $_REQUEST['usuario'],
+                'fecha_suscripcion' => $_REQUEST['fecha_suscripcion']
             );
 
 
@@ -94,16 +97,16 @@ class RegistradorOrden {
             $datosEstadoContrato = array(
                 'numero_contrato' => $_REQUEST['numero_contrato'],
                 'vigencia' => $_REQUEST['vigencia'],
-                'fecha_aprobacion' => date('Y-m-d H:i:s'),
+                'fecha_registro' => date('Y-m-d H:i:s'),
                 'usuario' => $_REQUEST['usuario'],
                 'estado' => 3
             );
 
             $SQLEstadoContrato = $this->miSql->getCadenaSql('cambioEstadoAprobarContrato', $datosEstadoContrato);
             array_push($SQLs, $SQLEstadoContrato);
-
             $trans_aprobar_contrato = $esteRecursoDB->transaccion($SQLs);
-
+            
+            
             if ($trans_aprobar_contrato != false) {
                 $sqlConsecutivoContrato = $this->miSql->getCadenaSql('obteneConsecutivoContratoAprobado');
                 $resultado = $esteRecursoDB->ejecutarAcceso($sqlConsecutivoContrato, "busqueda");

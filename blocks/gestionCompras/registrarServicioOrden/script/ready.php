@@ -30,7 +30,12 @@
               
               
               
-              
+      $("#ventanaEmergenteConvenio" ).dialog({
+            height: 700,
+            width: 700,
+            title: "Datos Convenio",
+            autoOpen: false,
+       });        
                               
         $( "#<?php echo $this->campoSeguro('cantidad')?>" ).keyup(function() {
         

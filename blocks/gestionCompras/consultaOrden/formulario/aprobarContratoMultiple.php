@@ -38,8 +38,11 @@ class registrarForm {
          * $atributos= array_merge($atributos,$atributosGlobales);
          */
         $atributosGlobales ['campoSeguro'] = 'true';
+        $conexion = "contractual";
+        $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
-   
+
+
         // -------------------------------------------------------------------------------------------------
         // -------------------------------------------------------------------------------------------------
         // Limpia Items Tabla temporal
@@ -64,7 +67,8 @@ class registrarForm {
         // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
         // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
         $atributos ['tipoEtiqueta'] = 'inicio';
-        echo $this->miFormulario->formulario($atributos); {
+        echo $this->miFormulario->formulario($atributos);
+        {
             // ---------------- SECCION: Controles del Formulario -----------------------------------------------
 
             $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
@@ -73,11 +77,44 @@ class registrarForm {
             $directorio .= $this->miConfigurador->getVariableConfiguracion("site") . "/index.php?";
             $directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");
 
+
+            $temporalFechaminima = "";
+            if (count($_POST) > 2) {
+
+                array_pop($_POST);
+                array_pop($_POST);
+                $datos = [];
+                $i = 0;
+                foreach ($_POST as $valor) {
+                    $temporal = explode("-", $valor);
+                    $datos[$i]['numero_contrato'] = $temporal[0];
+                    $temporalFechaminima = $temporalFechaminima . $temporal[0] . ",";
+                    $datos[$i]['vigencia'] = $temporal[1];
+                    $i = $i + 1;
+                }
+            }
+
+            $rango = substr($temporalFechaminima, 0, -1);
+            $cadenaSql = $this->miSql->getCadenaSql('consultarFechaMinimaParaSuscribir', $rango);
+            $fecha_minima_registro_sistema = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+            
+            $esteCampo = 'fecha_registro_validacion';
+            $atributos ["id"] = $esteCampo; // No cambiar este nombre
+            $atributos ["tipo"] = "hidden";
+            $atributos ['estilo'] = '';
+            $atributos ["obligatorio"] = false;
+            $atributos ['marco'] = true;
+            $atributos ["etiqueta"] = "";
+            $atributos ['valor'] = $fecha_minima_registro_sistema[0][0];
+            $atributos = array_merge($atributos, $atributosGlobales);
+            echo $this->miFormulario->campoCuadroTexto($atributos);
+            unset($atributos);
+
             $esteCampo = "marcoDatosBasicos";
             $atributos ['id'] = $esteCampo;
             $atributos ["estilo"] = "jqueryui";
             $atributos ['tipoEtiqueta'] = 'inicio';
-            $atributos ["leyenda"] = "Aprobación Multiple de Contrato";
+            $atributos ["leyenda"] = "Suscripción Multiple de Contrato";
             echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
 
             // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -99,6 +136,34 @@ class registrarForm {
             echo $this->miFormulario->enlace($atributos);
             unset($atributos);
 
+            echo "<center><h3>Seleccione la Fecha de Suscripción:</h3>";
+
+            $esteCampo = 'fecha_suscripcion';
+            $atributos ['id'] = $esteCampo;
+            $atributos ['nombre'] = $esteCampo;
+            $atributos ['tipo'] = 'text';
+            $atributos ['estilo'] = 'jqueryui';
+            $atributos ['marco'] = true;
+            $atributos ['estiloMarco'] = '';
+            $atributos ["etiquetaObligatorio"] = true;
+            $atributos ['columnas'] = 1;
+            $atributos ['dobleLinea'] = 0;
+            $atributos ['tabIndex'] = $tab;
+            $atributos ['validar'] = 'required';
+            $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+            $atributos ['deshabilitado'] = false;
+            $atributos ['tamanno'] = 8;
+            $atributos ['maximoTamanno'] = '';
+            $atributos ['anchoEtiqueta'] = 200;
+            $tab ++;
+
+            // Aplica atributos globales al control
+            $atributos = array_merge($atributos, $atributosGlobales);
+            echo $this->miFormulario->campoCuadroTexto($atributos);
+
+
+            echo "</center><br><br><br>";
+
 
             $mensajeAlerta = "UNA VEZ REALIZADA ESTA ACTUALIZACION, BAJO NINGUNA CIRCUSTANCIA SE PODRA REVERSAR.";
 
@@ -113,40 +178,26 @@ class registrarForm {
 
             // Aplica atributos globales al control
             $atributos = array_merge($atributos, $atributosGlobales);
-            if (count($_POST) > 2) {
 
-                array_pop($_POST);
-                array_pop($_POST);
-                $datos = [];
-                $i = 0;
-                foreach ($_POST as $valor) {
-                    $temporal = explode("-", $valor);
-                    $datos[$i]['numero_contrato'] = $temporal[0];
-                    $datos[$i]['vigencia'] = $temporal[1];
-                    $i = $i + 1;
+
+            $mensaje = "<p><h3>SUSCRIPCIÓN DE CONTRATOS</h2></p> <br> <p><h4>LOS CONTRATOS DE ORDEN DE COMPRA REFERIDOS A CONTINUACIÓN: </h3></p> ";
+            for ($j = 0; $j < count($datos); $j++) {
+
+                $mensaje .= "NUMERO: " . $datos[$j]['numero_contrato'] .
+                        " CON VIGENCIA:  " . $datos[$j]['vigencia'] . " | </h4>";
+
+                if ($i % 3 == 0) {
+                    $mensaje .= "<br>";
                 }
             }
-           
-            $mensaje = "<p><h3>APROBACION DE CONTRATOS</h2></p> <br> <p><h4>LOS CONTRATOS DE ORDEN DE COMPRA REFERIDOS A CONTINUACIÓN: </h3></p> ";
-            for ($j = 0; $j < count($datos); $j++) {
-               
-                        $mensaje .= "NUMERO: " . $datos[$j]['numero_contrato'] .
-                                    " CON VIGENCIA:  " . $datos[$j]['vigencia'] . " | </h4>";
-                        
-                        if($i%3 == 0){
-                            $mensaje .= "<br>" ;
-                        }
-                        
- 
-            }
-            
-            $mensaje .= "</p><h4>SE APROBARAN Y OBTENDRA UN CONSECUTIVO UNICO". $this->miFormulario->cuadroMensaje($atributos) . "</h4></p>";
-            
-            
+
+            $mensaje .= "</p><h4>SE SUSCRIBIRAN BAJO LA MISMA FECHA." . $this->miFormulario->cuadroMensaje($atributos) . "</h4></p>";
+
+
             $datos = serialize($datos);
-            $datos =  urlencode ($datos);
-            
-          
+            $datos = urlencode($datos);
+
+
             // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
             $esteCampo = 'mensajeAprobacion';
             $atributos ['id'] = $esteCampo;
@@ -166,7 +217,7 @@ class registrarForm {
             echo $this->miFormulario->division("inicio", $atributos);
 
             // -----------------CONTROL: Botón ----------------------------------------------------------------
-            $esteCampo = 'botonAprobarMultiple';
+            $esteCampo = 'botonSuscribirMultiple';
             $atributos ["id"] = $esteCampo;
             $atributos ["tabIndex"] = $tab;
             $atributos ["tipo"] = 'boton';
@@ -227,7 +278,7 @@ class registrarForm {
         $valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
         $valorCodificado .= "&opcion=aprobarContratoFuncion";
         $valorCodificado .= "&multiple=true";
-        $valorCodificado .= "&datos=" .$datos;
+        $valorCodificado .= "&datos=" . $datos;
         $valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
 
         /**

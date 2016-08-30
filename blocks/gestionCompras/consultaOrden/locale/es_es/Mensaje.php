@@ -102,8 +102,8 @@ $this->idioma ["botonContratista"] = "Buscar Proveedor ";
 $this->idioma ["genero"] = "Genero: ";
 $this->idioma ["generoTitulo"] = "Genero del Proveedor";
 
-$this->idioma ["botonAprobacionMultiple"] = "Aprobación Multiple ";
-$this->idioma ["botonAprobarMultiple"] = "Aprobar Contratos ";
+$this->idioma ["botonSuscribirMultipleModal"] = "Suscripción Multiple ";
+$this->idioma ["botonSuscribirMultiple"] = "Suscribir Contratos ";
 
 $this->idioma ["botonAceptarElemento"] = "Actualizar Elemento ";
 
@@ -217,6 +217,10 @@ $this->idioma ["valor_registroTitulo"] = "Valor Registro Presupuestal";
 
 $this->idioma ["fecha_registro"] = "Fecha Registro : ";
 $this->idioma ["fecha_registroTitulo"] = "Fecha de Registro Presupuestal";
+
+
+$this->idioma ["fecha_suscripcion"] = "Fecha se Suscripción : ";
+$this->idioma ["fecha_suscripcionTitulo"] = "Seleccione la fecha de subscripcion recuerde que debe ser igual o superior a la fecha de registro del contrato en el sistema.";
 
 $this->idioma ["valorL_registro"] = "Valor en Letras : ";
 $this->idioma ["valorL_registroTitulo"] = "Valor en Letras  Registro Presupuestal";
@@ -384,7 +388,7 @@ $this->idioma ["ordenadorGasto"] = "Ordenador Gasto";
 $this->idioma ["botonAceptar"] = "Actualizar Orden";
 $this->idioma ["botonCancelar"] = "Cancelar";
 $this->idioma ["botonContinuar"] = "Continuar";
-$this->idioma ["botonAceptarAprobacion"] = "Aprobar Contrato";
+$this->idioma ["botonAceptarSuscripcion"] = "Suscribir Contrato";
 $this->idioma ["botonConsultar"] = "Consultar";
 $this->idioma ["botonRegresar"] = "< < Regresar";
 $this->idioma ["restablecerCargo"] = "Reestablecer Cargo";

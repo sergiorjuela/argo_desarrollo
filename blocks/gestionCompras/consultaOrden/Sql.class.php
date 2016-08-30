@@ -240,6 +240,22 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " poliza; ";
                 break;
+            
+            case "consultarFechaparaSuscribir" :
+                $cadenaSql = " SELECT ";
+                $cadenaSql .= " fecha_registro ";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " contrato_general ";
+                $cadenaSql .= " WHERE numero_contrato ='".$variable['numero_contrato']."' AND vigencia =".$variable['vigencia'].";  ";
+                break;
+            
+            case "consultarFechaMinimaParaSuscribir" :
+                $cadenaSql = " SELECT ";
+                $cadenaSql .= " MIN(fecha_registro) ";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " contrato_general ";
+                $cadenaSql .= " WHERE CAST(numero_contrato as integer) IN (".$variable.") ;  ";
+                break;
 
 
             case "cambioEstadoAprobarContrato" :
@@ -248,7 +264,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= "'".$variable ['numero_contrato'] . "',";
                 $cadenaSql .= $variable ['vigencia'] . ",";
-                $cadenaSql .= "'" . $variable ['fecha_aprobacion'] . "',";
+                $cadenaSql .= "'" . $variable ['fecha_registro'] . "',";
                 $cadenaSql .= "'" . $variable ['usuario'] . "',";
                 $cadenaSql .= $variable ['estado'] . ");";
 
@@ -514,10 +530,10 @@ class Sql extends \Sql {
                 break;
 
             case "aprobarContrato" :
-                $cadenaSql = " INSERT INTO contrato_aprobado( ";
-                $cadenaSql.=" numero_contrato, vigencia, fecha_aprobacion, usuario)";
+                $cadenaSql = " INSERT INTO contrato_suscrito( ";
+                $cadenaSql.=" numero_contrato, vigencia, fecha_registro, fecha_suscripcion, usuario)";
                 $cadenaSql.=" VALUES ('" . $variable['numero_contrato'] . "', " . $variable['vigencia'] . ", ";
-                $cadenaSql.=" '" . $variable['fecha_aprobacion'] . "', '" . $variable['usuario'] . "');";
+                $cadenaSql.=" '" . $variable['fecha_registro'] ."' ,'" . $variable['fecha_suscripcion'] . "', '" . $variable['usuario'] . "');";
 
                 break;
 

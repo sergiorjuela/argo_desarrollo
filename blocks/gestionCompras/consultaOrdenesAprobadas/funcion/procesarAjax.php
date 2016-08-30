@@ -323,6 +323,16 @@ if ($_REQUEST ['funcion'] == 'disponibilidades') {
     echo $resultado;
 }
 
+if ($_REQUEST ['funcion'] == 'consultarInfoConvenio') {
+
+    $cadenaSql = $this->sql->getCadenaSql('informacion_convenio', $_REQUEST['codigo']);
+    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+    $resultado = json_encode($resultadoItems [0]);
+
+    echo $resultado;
+}
+
 if ($_REQUEST ['funcion'] == 'consultarConveniosxvigencia') {
 
     $cadenaSql = $this->sql->getCadenaSql('conveniosxvigencia', $_REQUEST ['valor']);

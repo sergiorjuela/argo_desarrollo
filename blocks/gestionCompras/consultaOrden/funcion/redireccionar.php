@@ -50,6 +50,7 @@ class redireccion {
                 $variable .= "&opcion=mensaje";
                 $variable .= "&mensaje=aproboContrato";
                 $variable .= "&numero_contrato=" . $valor['numero_contrato'];
+                $variable .= "&fecha_suscripcion=" . $valor['fecha_suscripcion'];
                 $variable .= "&vigencia=" . $valor['vigencia'];
                 $variable .= "&fecha_aprobacion=" . $valor['fecha_aprobacion'];
                 $variable .= "&usuario=" . $valor['usuario'];

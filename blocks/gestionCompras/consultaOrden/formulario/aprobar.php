@@ -38,8 +38,11 @@ class registrarForm {
          * $atributos= array_merge($atributos,$atributosGlobales);
          */
         $atributosGlobales ['campoSeguro'] = 'true';
-        
-     
+
+        $conexion = "contractual";
+        $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+
         // -------------------------------------------------------------------------------------------------
         // Limpia Items Tabla temporal
         // $cadenaSql = $this->miSql->getCadenaSql ( 'limpiar_tabla_items' );
@@ -79,6 +82,25 @@ class registrarForm {
                 'mensaje' => $_REQUEST['mensaje_titulo']
             );
 
+
+
+            $cadenaSql = $this->miSql->getCadenaSql('consultarFechaparaSuscribir', $datos);
+
+            $fecha_registro_sistema = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+
+            $esteCampo = 'fecha_registro_validacion';
+            $atributos ["id"] = $esteCampo; // No cambiar este nombre
+            $atributos ["tipo"] = "hidden";
+            $atributos ['estilo'] = '';
+            $atributos ["obligatorio"] = false;
+            $atributos ['marco'] = true;
+            $atributos ["etiqueta"] = "";
+            $atributos ['valor'] = $fecha_registro_sistema[0][0];
+            $atributos = array_merge($atributos, $atributosGlobales);
+            echo $this->miFormulario->campoCuadroTexto($atributos);
+            unset($atributos);
+
             $esteCampo = "marcoDatosBasicos";
             $atributos ['id'] = $esteCampo;
             $atributos ["estilo"] = "jqueryui";
@@ -93,6 +115,11 @@ class registrarForm {
             $variable .= "&opcion=ConsultarOrden";
             $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
 
+
+
+
+
+
             $esteCampo = 'botonRegresar';
             $atributos ['id'] = $esteCampo;
             $atributos ['enlace'] = $variable;
@@ -106,10 +133,40 @@ class registrarForm {
             unset($atributos);
 
 
+
+            echo "<center><h3>Seleccione la Fecha de Suscripción:</h3>";
+
+            $esteCampo = 'fecha_suscripcion';
+            $atributos ['id'] = $esteCampo;
+            $atributos ['nombre'] = $esteCampo;
+            $atributos ['tipo'] = 'text';
+            $atributos ['estilo'] = 'jqueryui';
+            $atributos ['marco'] = true;
+            $atributos ['estiloMarco'] = '';
+            $atributos ["etiquetaObligatorio"] = true;
+            $atributos ['columnas'] = 1;
+            $atributos ['dobleLinea'] = 0;
+            $atributos ['tabIndex'] = $tab;
+            $atributos ['validar'] = 'required';
+            $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+            $atributos ['deshabilitado'] = false;
+            $atributos ['tamanno'] = 8;
+            $atributos ['maximoTamanno'] = '';
+            $atributos ['anchoEtiqueta'] = 200;
+            $tab ++;
+
+            // Aplica atributos globales al control
+            $atributos = array_merge($atributos, $atributosGlobales);
+            echo $this->miFormulario->campoCuadroTexto($atributos);
+
+
+            echo "</center><br><br><br>";
+
             $mensajeAlerta = "UNA VEZ REALIZADA ESTA ACTUALIZACION, BAJO NINGUNA CIRCUSTANCIA SE PODRA REVERSAR.";
 
             // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
             $esteCampo = 'mensajeAlerta';
+
             $atributos ['id'] = $esteCampo;
             $atributos ['tipo'] = 'error';
             $atributos ['estilo'] = 'textoCentrar';
@@ -121,8 +178,8 @@ class registrarForm {
             $atributos = array_merge($atributos, $atributosGlobales);
 
             // --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
-            $mensaje = "<h2>APROBACION DE CONTRATO</h2> <br> <h4>EL CONTRATO  DE ORDEN DE COMPRA <br> NUMERO: " . $datos['numero_contrato'] .
-                    " CON VIGENCIA:  " . $datos['vigencia'] . " SE APROBARA Y OBTENDRA UN CONSECUTIVO UNICO</h4>. <br> <h4>" .
+            $mensaje = "<h2>SUSCRIPCIÓN DE CONTRATO</h2> <br> <h4>EL CONTRATO  DE ORDEN DE COMPRA <br> NUMERO: " . $datos['numero_contrato'] .
+                    " CON VIGENCIA:  " . $datos['vigencia'] . " SE SUSCRIBIRA. </h4>. <br> <h4>" .
                     $this->miFormulario->cuadroMensaje($atributos) . "</h4>";
 
             // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -144,7 +201,7 @@ class registrarForm {
             echo $this->miFormulario->division("inicio", $atributos);
 
             // -----------------CONTROL: Botón ----------------------------------------------------------------
-            $esteCampo = 'botonAceptarAprobacion';
+            $esteCampo = 'botonAceptarSuscripcion';
             $atributos ["id"] = $esteCampo;
             $atributos ["tabIndex"] = $tab;
             $atributos ["tipo"] = 'boton';
@@ -208,7 +265,7 @@ class registrarForm {
         $valorCodificado .= "&numero_contrato=" . $datos ['numero_contrato'];
         $valorCodificado .= "&vigencia=" . $datos ['vigencia'];
         $valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
-       
+
         /**
          * SARA permite que los nombres de los campos sean dinámicos.
          * Para ello utiliza la hora en que es creado el formulario para

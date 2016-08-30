@@ -275,7 +275,7 @@ class Sql extends \Sql {
 
             case "consultarOrdenGeneral" :
 
-                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,"
+                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,cg.unidad_ejecutora, "
                         . " se.\"ESF_SEDE\" ||'-'|| dep.\"ESF_DEP_ENCARGADA\" as SedeDependencia, cg.numero_solicitud_necesidad,cg.numero_cdp, ec.nombre_estado, ce.fecha_registro as fecha_registro_estado ";
                 $cadenaSql .= "FROM orden o, parametros p, contrato_general cg, \"SICapital\".\"sedes_SIC\" se, \"SICapital\".\"dependencia_SIC\" dep, ";
                 $cadenaSql .= "contrato_estado ce, estado_contrato ec  ";
@@ -321,8 +321,8 @@ class Sql extends \Sql {
 
             case "consultarOrdenIdexud" :
 
-                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor,"
-                        . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia , cg.numero_solicitud_necesidad,cg.numero_cdp, ec.nombre_estado, ce.fecha_registro as fecha_registro_estado ";
+                $cadenaSql = "SELECT DISTINCT o.id_orden, p.descripcion, o.numero_contrato, o.vigencia, o.fecha_registro, cg.contratista ||'-'|| cg.nombre_contratista as proveedor, conv.\"NUMERO_PRO\","
+                        . " 'IDEXUD'||'-'||conv.\"NOMBRE\" as SedeDependencia , cg.numero_solicitud_necesidad,cg.numero_cdp, ec.nombre_estado, ce.fecha_registro as fecha_registro_estado, cg.unidad_ejecutora  ";
                 $cadenaSql .= "FROM orden o, parametros p,  contrato_general cg, convenio conv, ";
                 $cadenaSql .= "contrato_estado ce, estado_contrato ec  ";
                 $cadenaSql .= "WHERE o.tipo_orden = p.id_parametro ";
@@ -358,6 +358,16 @@ class Sql extends \Sql {
                 $cadenaSql .= " ; ";
 
                 break;
+
+            case "informacion_convenio" :
+                $cadenaSql = " SELECT ";
+                $cadenaSql .= " * ";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " convenio";
+                $cadenaSql .= " WHERE ";
+                $cadenaSql .= " \"NUMERO_PRO\" = '$variable' ";
+                break;
+
 
             case "obtenerInfoUsuario" :
                 $cadenaSql = "SELECT u.dependencia_especifica ||' - '|| u.dependencia as nombre, unidad_ejecutora ";

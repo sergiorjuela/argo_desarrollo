@@ -125,6 +125,21 @@ $cadenaDependencia = $this->miConfigurador->fabricaConexiones->crypto->codificar
 // URL definitiva
 $urlFinalDependencia = $url . $cadenaDependencia;
 
+$cadenaACodificarInformacionConvenio = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarInformacionConvenio .= "&procesarAjax=true";
+$cadenaACodificarInformacionConvenio .= "&action=index.php";
+$cadenaACodificarInformacionConvenio .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarInformacionConvenio .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarInformacionConvenio .= $cadenaACodificarInformacionConvenio . "&funcion=consultarInfoConvenio";
+$cadenaACodificarInformacionConvenio .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadenaACodificarInformacionConvenio = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarInformacionConvenio, $enlace);
+
+// URL definitiva
+$urlInformacionConvenio = $url . $cadenaACodificarInformacionConvenio;
+
 
 ?>
 <script type='text/javascript'>
@@ -419,6 +434,40 @@ $(function() {
   
     
 });
+
+
+
+ function VerInfoConvenio(informacionConvenio) {
+        $.ajax({
+            url: "<?php echo $urlInformacionConvenio ?>",
+            dataType: "json",
+            data: {codigo: informacionConvenio},
+            success: function (data) {
+                if (data[0] != " ") {
+
+                    var objetoSPAN = document.getElementById('spandid');
+                    objetoSPAN.innerHTML = "Información del Convenio :<br><br><br>" + "Numero de Convenio: "+ data[0]+" <br><br> "
+                    + "Vigencia: "+ data[3]+" <br><br>"
+                    + "Nombre: "+ data[5]+" <br><br>"
+                    + "Descripcion: "+ data[4]+" <br><br>"
+                    + "Entidad: "+ data[6]+" <br><br>"
+                    + "Codigo Tesoral: "+ data[7]+" <br><br>"
+                    + "Fecha Inicio: "+ data[8]+" <br><br>"
+                    + "Fecha de Finalizacion: "+ data[9]+" <br><br>"
+                    + "Situacion: "+ data[10]+" <br><br>"
+                    + "Unidad: "+ data[11]+" <br><br>"
+                    + "Estado: "+ data[12]+" <br><br>"
+                    + "Modalidad: "+ data[13]+" <br><br>";
+                    $("#ventanaEmergenteConvenio").dialog("open");
+                   
+
+                }
+            }
+
+        });
+
+    }
+
 
 </script>
 

@@ -155,11 +155,11 @@ class registrarForm {
                 }
                 if ($_REQUEST ['mensaje'] == 'aproboContrato') {
 
-                    $mensaje = "<h3>EL CONTRADO FUE APROBADO CON ÉXITO</h3> <br>"
+                    $mensaje = "<h3>EL CONTRADO FUE SUSCRITO CON ÉXITO</h3> <br>"
                             . " <h4>NUMERO  DE CONTRATO: " . $_REQUEST['numero_contrato'] . "<br>"
                             . " VIGENCIA: " . $_REQUEST['vigencia'] . "<br>"
-                            . " FECHA DE APROBACIÓN: " . $_REQUEST['fecha_aprobacion'] . "<br>"
-                            . " USUARIO QUE REALIZO LA APROBACIÓN: " . $_REQUEST['usuario'] . "</h4><br>";
+                            . " FECHA DE SUSCRIPCIÓN: " . $_REQUEST['fecha_suscripcion'] . "<br>"
+                            . " USUARIO QUE REALIZO LA SUSCRIPCIÓN: " . $_REQUEST['usuario'] . "</h4><br>";
 
                     $mensaje .="<h2> EL ESTADO DEL CONTRATO SE ACTUALIZO  Y <br>"
                             . "EL NUMERO CONSECUTIVO UNICO DEL CONTRATO ES: " . $_REQUEST['numero_contrato'] . " </h2>";
@@ -180,7 +180,7 @@ class registrarForm {
                 }
                 if ($_REQUEST ['mensaje'] == 'noAproboContrato') {
 
-                    $mensaje = "EL CONTRATO NO FUE APROBADO, <br> VERIFIQUE LA INFORMACIÓN E INTENTE DE NUEVO.";
+                    $mensaje = "EL CONTRATO NO FUE SUSCRITO, <br> VERIFIQUE LA INFORMACIÓN E INTENTE DE NUEVO.";
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'mensajeRegistro';
@@ -203,7 +203,7 @@ class registrarForm {
                     $datos = urldecode($datos);
                     $datos = unserialize($datos);
 
-                    $mensaje = "<h3>LOS SIGUIENTES CONTRATOS FUERON APROBADOS CON ÉXITO</h3> <br>";
+                    $mensaje = "<h3>LOS SIGUIENTES CONTRATOS FUERON SUSCRITOS CON ÉXITO</h3> <br>";
 
                     for ($j = 0; $j < count($datos); $j++) {
                     $mensaje .= " <p><h5>NUMERO  DE CONTRATO: " . $datos[$j]['numero_contrato'] . ""
@@ -216,8 +216,8 @@ class registrarForm {
                         }
                     }
                     
-                    $mensaje .= " <br> FECHA DE APROBACIÓN: " . date("Y-m-d") . ""
-                                . " USUARIO QUE REALIZO LA APROBACIÓN: " . $_REQUEST['usuario'] . "</p>";
+                    $mensaje .= " <br> FECHA DE SUSCRIPCIÓN: " . date("Y-m-d") . ""
+                                . " USUARIO QUE REALIZO LA SUSCRIPCIÓN: " . $_REQUEST['usuario'] . "</p>";
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'mensajeRegistro';
                     $atributos ['id'] = $esteCampo;
